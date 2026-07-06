@@ -1,0 +1,11 @@
+# Lean / Lake build artifacts
+/lean/.lake/
+/lean/build/
+**/.lake/
+*.olean
+*.ilean
+*.trace
+
+# Editor / OS
+.DS_Store
+*.swp
