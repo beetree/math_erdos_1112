@@ -119,6 +119,10 @@ $
 The trust base — which axioms the proof rests on, and why nothing else is admitted — is covered in
 [Appendix D](proof/appendix-D-lean.md) (§D.2, Trust base).
 
+Prefer not to build it yourself? A public run of this `lake build` — completing with no `sorry`s — is
+inspectable in one click as a
+[Kaggle notebook](https://www.kaggle.com/code/johanland/erdos-1112?scriptVersionId=333092350).
+
 ---
 
 # Paper proof
