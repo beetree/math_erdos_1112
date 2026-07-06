@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this proof or its formalization, please cite it as below."
+title: "Erdős Problem #1112: the dichotomy r_k(d1,d2) exists iff d2 >= k+1 (machine-checked proof)"
+abstract: >-
+  A complete proof of Erdős Problem #1112: for k >= 3 and 1 <= d1 < d2, the number
+  r_k(d1,d2) exists if and only if d2 >= k+1, with the explicit bound r_k(d1,d2) <= 192*d2
+  on the existence side and strong non-existence otherwise. The entire dichotomy is formally
+  verified in Lean 4, sorry-free, depending only on the three standard foundational axioms.
+authors:
+  - family-names: Land
+    given-names: Johan
+keywords:
+  - Erdős problems
+  - additive combinatorics
+  - lacunary sequences
+  - sumsets
+  - Sturmian words
+  - Lean 4
+  - formal verification
+license: Apache-2.0
+date-released: "2026-07-05"
+repository-code: "https://github.com/beetree/math_erdos_1112"
