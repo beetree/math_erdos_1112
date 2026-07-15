@@ -252,11 +252,12 @@ already a natural; if $r < 0$ the ratio condition is vacuous — `B` is positive
 $r\,b_i \le 0 < b_{i+1}$ for every positive strictly increasing `B` — hence the admissible class is
 the same as at $r = 0$, and $0$ is a natural witness. Either way a natural witness exists.
 
-The lemma `RatioWorks.mono` (if `r` works then every `r' ≥ r` works, because a larger ratio only
-shrinks the admissible class of `B`) is the one piece of this reduction rendered as machine-checked
-Lean. The file does *not* define an integer-ratio predicate, so the full `ℤ`→`ℕ` bridge is an
-informal justification of the modeling choice, not a proved equivalence; a formal bridge would add a
-`RatioWorksInt` and prove it equivalent to `Question`.
+This reduction is now machine-checked in full. The frozen file defines the integer-ratio predicates
+`IsLacunaryWithInt`, `RatioWorksInt` and `QuestionInt` (the problem's literal phrasing, with
+`r : ℤ`) and proves `question_iff_questionInt : Question ↔ QuestionInt`; the headline theorem
+`erdos_1112_int` states the dichotomy for the integer form. (`RatioWorks.mono` — a larger ratio only
+shrinks the admissible class of `B` — remains an ingredient.) So the `ℤ`→`ℕ` step is a proved
+equivalence, not merely an informal justification.
 
 ### 3.9 The three theorems and the genuine `↔`
 `erdos_1112` is a real bi-implication `Question k d₁ d₂ ↔ k + 1 ≤ d₂` under `3 ≤ k`,
