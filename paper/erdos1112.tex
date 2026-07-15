@@ -67,7 +67,7 @@
 \author{Johan Land}
 \address{Independent researcher}
 \email{johan.land@gmail.com}
-\date{\today}
+\date{July 5, 2026}
 
 \thanks{Source, data and the Lean development: \repo. See \S\ref{sec:data} for the release and
 reproduction instructions, and \S\ref{sec:provenance} for a statement of how this work was
@@ -91,10 +91,12 @@ however rapidly growing, a single $B$ meets the $k$-fold sumset of every admissi
 
 The existence half uses a Beatty construction whose $k$-fold sumset threads the gaps a lacunary $B$
 must leave. The non-existence half reduces, through a word-combinatorial analysis of the gap
-sequence, to a finite subset-sum theorem which we prove: every finite set $G$ of at least three
+sequence, to a bounded subset-sum theorem which we prove: every finite set $G$ of at least three
 positive integers with $\gcd(G) = 1$ and $\max(G) = M$ admits a multiset of at most $M-1$ of its
-elements whose subset sums contain $M$ consecutive integers. The dichotomy has been formally
-verified in Lean~4, in the problem's literal integer phrasing.
+elements whose subset sums contain $M$ consecutive integers. Its proof combines symbolic reductions
+with a finite certificate layer of a few hundred explicit instances, so the argument is
+computer-assisted. The dichotomy, including the certificate layer, has been formally verified in
+Lean~4, in the problem's literal integer phrasing.
 \end{abstract}
 
 \maketitle
@@ -189,10 +191,11 @@ Theorem~\ref{thm:main} is stated for $k \ge 3$, as is the problem. For context, 
 convention of \cite{Ch00}, which permits real ratios; under the integer convention of this paper a
 witness is automatically $\ge 2$). The strong form of non-existence is
 \emph{not} claimed at $k = 2$, and the hypothesis $k \ge 3$ in \S\ref{sec:nonex} is not an artifact
-of the method: the width machinery genuinely fails there. A mirror-extension word with palindromic
-prefixes at lengths $94, 190, 382, 766, \dots$ forces the two-index antidiagonal width $W_2$ to
-vanish infinitely often, so Lemma~\ref{lem:boundary-width} --- which converts a single antidiagonal
-of width $\ge 2$ into a width bound for all large $s$ --- has nothing to work with. The existence
+of the method: the width machinery genuinely fails there. There are balanced words whose two-index
+antidiagonal width $W_2$ vanishes infinitely often --- mirror-extension words, built so that
+palindromic prefixes recur along a geometric ladder of lengths --- so Lemma~\ref{lem:boundary-width}
+--- which converts a single antidiagonal of width $\ge 2$ into a width bound for all large $s$ ---
+has nothing to work with at $k = 2$. The existence
 half (Theorem~\ref{thm:existence}), by contrast, is proved here for all $k \ge 2$.
 \end{remark}
 
@@ -271,7 +274,9 @@ from Theorem~\ref{thm:sharp} in a way that turns out to be decisive. The nearest
 finite addition theorems for subset sums of S\'ark\"ozy \cite{Sarkozy89,Sarkozy94} and Lev
 \cite{Lev03}: for a set $A \subseteq [1,m]$ of size $|A| \gtrsim \sqrt{m \log m}$, the subset sums
 of $A$ contain an arithmetic progression, with a bounded but generally $> 1$ common difference (Lev
-\cite{Lev03} sharpens the constant). Szemer\'edi and Vu \cite{SzemerediVu06}, and the homogeneous
+\cite{Lev03} sharpens the constant; Chen, Mao and Zhang \cite{CMZ25} make the S\'ark\"ozy results
+constructive, with a near-linear algorithm returning the progression and a representation of each of
+its terms, but still an arithmetic progression whose common difference need not be $1$). Szemer\'edi and Vu \cite{SzemerediVu06}, and the homogeneous
 strengthening of Conlon, Fox and Pham \cite{CFP21}, likewise obtain a long progression in the subset
 sums of a set $A \subseteq [n]$ with $|A| \ge c\sqrt{n}$. All of these produce a \emph{progression},
 whose common difference cannot in general be forced to $1$ (so not an interval of consecutive
@@ -1894,15 +1899,15 @@ $t = a - \eta$, the offsets are $\bar e(j - tk)$ and $\{j - tk\} = [-tZ,\ t-1]$,
 length $t(Z+1) \ge a$. Either way we obtain a complete residue system, multiplication by the unit
 $\bar e$ being a bijection.
 
-\emph{Budget.} With the corner bound $S \le (t-1)b + ZM$ and $b \le M-1$,
+\emph{Budget.} Write $S_0 := (t-1)b + ZM$ for the corner bound on the representative height, so
+$S \le S_0$, and put $K := t - 1 + Z = \sigma - 1$. Then
 \[
-\begin{aligned}
-  B \;&\le\; \Big\lceil \frac{M - 1 + (t-1)b + ZM}{a} \Big\rceil + (t-1) + Z \;\le\; M-1 \\
-    &\iff\; M - 1 + S \le a(M - 1 - K), \qquad K := t - 1 + Z,
-\end{aligned}
+  B \;\le\; \Big\lceil \frac{M - 1 + S_0}{a} \Big\rceil + K ,
 \]
-and the right-hand side reduces to $M\sigma + a\sigma \le aM + t$, which is implied by
-$M(a - \sigma) \ge a\sigma$.
+so it \emph{suffices} that $M - 1 + S_0 \le a(M - 1 - K)$: this forces
+$\lceil (M-1+S_0)/a \rceil \le M-1-K$ and hence $B \le M-1$. Using $b \le M-1$ we have
+$M - 1 + S_0 \le M\sigma - t$, while $a(M-1-K) = a(M-\sigma)$, so the sufficient inequality is in
+turn implied by $M\sigma + a\sigma \le aM + t$, and hence by $M(a - \sigma) \ge a\sigma$.
 
 \emph{Threshold.} We have $\sigma \le t + (a-1)/t$, whose maximum over $t \in [2, a/2]$ is attained
 at an endpoint, by convexity: $\sigma \le \max\big(\tfrac{a+3}{2},\ \tfrac{a}{2} + 2\big) =
@@ -1936,6 +1941,41 @@ merge of Lemma~\ref{lem:staircase}(b), whose merge condition its choice of $z$ e
 $g \ge 2$ variant uses the base form of Lemma~\ref{lem:staircase}(d), which needs no merge
 hypothesis. In particular Case~T does not use the short merge, Lemma~\ref{lem:staircase}(c).
 \end{lemma}
+
+\begin{proof}
+Both variants instantiate Lemma~\ref{lem:staircase} with the multiset $(x,y,z)$ and $y = \mu'-1$,
+whose budget is $x + y + z$; we verify the hypotheses and the run length. Throughout,
+$V' - C' = y e' + z\mu' - 2C'$, and the two branches of the maximum defining $z$ play distinct
+roles: the constant branch keeps $z \ge e'-1$, the standing hypothesis of Lemma~\ref{lem:staircase},
+while the ceiling branch supplies the run length.
+
+\emph{Variant~A ($g = 1$; here $e' = e$, $\mu' = \mu$, $C = C'$).} The ceiling branch gives
+$z\mu \ge \max(a,\mu) - 1 + 2C - ye$, hence
+\[
+  V - C \;=\; ye + z\mu - 2C \;\ge\; \max(a,\mu) - 1 \;\ge\; a - 1 ,
+\]
+which is exactly the two-frame merge condition of Lemma~\ref{lem:staircase}(b). With $x = c+1$, that
+part covers $[\,ca + C,\ (c+1)a + V\,]$, an interval of length $a + (V-C) + 1 \ge a + \max(a,\mu) \ge
+a + \mu = M$; so the subset sums contain $M$ consecutive integers. The budget is $x + y + z = 2c+1$.
+
+\emph{Variant $g \ge 2$.} The ceiling branch gives
+$z\mu' \ge a + \lceil (\mu-1)/g \rceil + 2C' - ye'$, hence
+\[
+  V' - C' \;=\; ye' + z\mu' - 2C' \;\ge\; a + \Big\lceil \tfrac{\mu-1}{g} \Big\rceil \;\ge\;
+  a + \tfrac{\mu-1}{g} .
+\]
+With $x = c+g$, the base form of Lemma~\ref{lem:staircase}(d) --- which needs \emph{no} merge
+hypothesis --- covers a solid interval of length
+\[
+  g(V' - C') - (g-1)a + 1 \;\ge\; g\Big(a + \tfrac{\mu-1}{g}\Big) - (g-1)a + 1 \;=\; a + \mu \;=\; M .
+\]
+The budget is $x + y + z = 2c + g$.
+
+Since $g = \gcd(e,\mu) \ge 1$, exactly one variant applies to each line, and both invoke only
+parts~(b) and~(d) of Lemma~\ref{lem:staircase}, never the short merge~(c). The coverage hypotheses
+above hold for every $a$; the only quantity that can violate the certificate is the budget
+$2c + v$ ($v \in \{1,g\}$), through its dependence on $z$.
+\end{proof}
 
 Only the budget inequality $2c + v \le M-1$ can fail, and it fails only finitely often.
 
@@ -1975,7 +2015,9 @@ lines and all $a \le 3000$, this happens for precisely $172$ triples, and never 
 \begin{lemma}[T-tail]\label{lem:t-tail}
 \phantom{.}
 \begin{enumerate}
-\item For every line and every $a \le 3000$, the minimal variant budget was computed exactly; it
+\item For every line and every $a \le 3000$, the minimal variant budget was computed exactly (the
+finite enumeration of Appendix~\ref{app:verification}, whose failing triples are re-verified
+row-by-row by \texttt{gen-tables.py} and decided by the Lean kernel); it
 exceeds $M-1$ for precisely $172$ triples, all with $a \le 29$ --- these are Table~\ref{tab:A} of
 Appendix~\ref{app:tables} --- and each of those carries a verified modulo-$a$ box certificate with
 $Y + Z \le a-1$ and budget $\le M-1$.
@@ -1985,8 +2027,13 @@ $Y + Z \le a-1$ and budget $\le M-1$.
 \]
 of slope $2/\mu' \le 2/3$ in $a$ (using $\lceil u \rceil \le u+1$ and $\mu' \ge 3$), while the target
 $\tau(a) = a + \mu - 1$ has slope $1$. (The $z$-formulas of Lemma~\ref{lem:T} are maxima; $\beta$
-bounds their ceiling branch, which is the one that dominates for large $a$, the competing branch
---- $e-1$, respectively $e'-1$ --- being constant in $a$.) The margin $\tau - \beta$ is therefore nondecreasing in $a$, at rate at least $1/3$.
+bounds their ceiling branch, and that branch is the \emph{active} one throughout $a \ge 3000$: on
+every line its argument is at least $2899/11 > 260$ --- the numerator is at least
+$3000 - 1 - ye \ge 2899$, since $y \le \mu' - 1 \le 10$ and $e' \le e \le 10$ give $ye \le 100$, and
+the denominator is $\mu' \le 11$ --- whereas the competing branch, $e-1$ respectively $e'-1$, is at
+most $9$. Being increasing in $a$ against a constant, the ceiling branch stays active for all
+$a \ge 3000$, so there the cheapest budget equals its ceiling value and $\beta$ bounds it above.)
+The margin $\tau - \beta$ is therefore nondecreasing in $a$, at rate at least $1/3$.
 
 It remains to check that the margin is positive at $a = 3000$. We compare the target against
 $\beta$, the \emph{proved upper bound} on the cheapest variant budget, and not against the exact
@@ -2651,6 +2698,11 @@ Discrete Math.\ \textbf{175} (1997), no.~1--3, 253--257.
 D.~Conlon, J.~Fox and H.~T.~Pham,
 \emph{Subset sums, completeness and colorings},
 preprint, arXiv:2104.14766 (2021).
+
+\bibitem[CMZ25]{CMZ25}
+L.~Chen, Y.~Mao and G.~Zhang,
+\emph{Long arithmetic progressions in sumsets and subset sums: constructive proofs and efficient witnesses},
+preprint, arXiv:2503.19299 (2025).
 
 \bibitem[Ch00]{Ch00}
 Y.-G.~Chen,

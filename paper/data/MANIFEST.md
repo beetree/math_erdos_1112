@@ -12,21 +12,20 @@ Y of b, Z of M) contain M consecutive integers, by exact bitmask.
 Case P contributes NO certificate rows: it is closed in prose (one closed-form
 multiset for the whole line, plus the single triple (3,4,5) checked inline).
 
-## Prose route vs Lean route
+## Printed rows vs kernel rows (the paper's Section 6 reconciliation)
 
-The Lean development decides MORE rows than the paper prints, because it declines to
-use the short-merge staircase variant and compensates with extra decided rows:
+The paper and the Lean development follow ONE route through Case T, so Table A is the
+same 172 rows in both. Table B differs only by a transcription artifact: the
+kernel decides a 30-row supplement on top of the 172 main rows, of which 24
+duplicate main rows and 6 are new bases (the six diagonal ebar = h classes), so
+172 + 6 = 178 DISTINCT classes are what the paper prints.
 
-| | Rows |
-|---|---:|
-| Table A, as printed and as transcribed | 172 |
-| Table B, printed distinct classes | 178 |
-| Table B, as transcribed into Lean (main + 30-row supplement) | 202 |
-| ... of which duplicate main rows | 24 |
-| ... genuinely new bases (the six diagonal ebar = h classes) | 6 |
-| Subtotal decided by `certTableA_ok` / `certTableB_ok` | 360 |
-| Supplementary `tSuppT` rows (replace the variant-B route) | 14 |
-| **Total rows decided by the Lean kernel** | **374** |
+| | Printed | Kernel rows |
+|---|---:|---:|
+| Table A (Case T) | 172 | 172 |
+| Table B (Case B) | 178 | 202 |
+| Case P | 0 | 0 |
+| **Total** | **350** | **374** |
 
-Reconciliation: 172 main + 6 new = 178 distinct Table-B classes, which is what
-the paper prints; 158 + 202 = 360; 360 + 14 = 374.
+The 350-vs-374 difference is exactly the 24 duplicated Table-B rows
+(178 printed classes + 24 duplicates + Table A's 172 = 374).

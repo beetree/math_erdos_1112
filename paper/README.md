@@ -19,7 +19,7 @@ $ make          # regenerates the tables, then builds erdos1112.pdf
 
 ## The tables are generated, not transcribed
 
-Appendix B prints 158 + 178 certificate rows. These are the finite layer of the
+Appendix B prints 172 + 178 certificate rows. These are the finite layer of the
 (SHARP) proof, and they are also transcribed into Lean (`Sharp/TablesData.lean`)
 where the kernel decides them. Typesetting them by hand would risk a silent
 divergence between what the paper prints and what the kernel checks.
@@ -42,9 +42,9 @@ Appendix C and the Lean kernel.
 
 | File | Contents |
 |---|---|
-| `table-A.csv` | the 158 Case-T certificate rows |
+| `table-A.csv` | the 172 Case-T certificate rows |
 | `table-B.csv` | the 178 Case-B class bases |
-| `MANIFEST.md` | which rows serve the prose route vs the Lean route, with the 336-vs-374 reconciliation |
+| `MANIFEST.md` | printed rows vs kernel rows, with the 350-vs-374 reconciliation (paper §6) |
 | `SHA256SUMS` | checksums of the CSVs |
 
 ## Repository layout

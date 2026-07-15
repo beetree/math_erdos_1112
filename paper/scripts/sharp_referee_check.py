@@ -472,9 +472,13 @@ def part_tables(TA, TB):
         # entry must genuinely be an exception (else table is padding)
         if any(sum(c) <= M - 1 for c in T_candidates(a, e, h)):
             report("WARN", f"Table A entry ({a},{b},{M}) is NOT actually a T-line failure")
-    print(f"  Table A: {len(TA)} entries checked (claimed 158), invalid: {bad}")
+    print(f"  Table A: {len(TA)} entries checked, invalid: {bad} "
+          f"(this harness's variant-B route expects 158; the paper's merge-robust route has 172 "
+          f"-- either way every loaded row is validated)")
     if len(TA) != 158:
-        report("WARN", f"Table A has {len(TA)} entries, claimed 158")
+        report("WARN", f"Table A has {len(TA)} entries; this harness's variant-B route expects 158, "
+                       f"the paper's merge-robust route 172 -- all {len(TA)} loaded rows still "
+                       f"validated (invalid: {bad}). See scripts/README.md, route note.")
     bad = 0
     for (a, ebar, h), (ba, bb, bM, x, Y, Z) in TB.items():
         e = bb - ba
