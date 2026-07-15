@@ -54,9 +54,12 @@
 \newcommand{\RR}{\mathbb{R}}
 \newcommand{\Ginf}{G_\infty}
 \newcommand{\ssum}{\operatorname{subset-sums}}
-\newcommand{\SHARP}{the bounded subset-sum interval theorem}
-\newcommand{\SHARPshort}{Theorem~\ref{thm:sharp}}
+\newcommand{\SHARP}{the bounded subset-sum covering lemma}
+\newcommand{\SHARPshort}{Lemma~\ref{lem:sharp}}
 \newcommand{\repo}{\url{https://github.com/beetree/math_erdos_1112}}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,patterns,decorations.pathreplacing}
 
 \begin{document}
 
@@ -67,7 +70,7 @@
 \author{Johan Land}
 \address{Independent researcher}
 \email{johan.land@gmail.com}
-\date{July 5, 2026}
+\date{July 2026}
 
 \thanks{Source, data and the Lean development: \repo. See \S\ref{sec:data} for the release and
 reproduction instructions, and \S\ref{sec:provenance} for a statement of how this work was
@@ -91,7 +94,7 @@ however rapidly growing, a single $B$ meets the $k$-fold sumset of every admissi
 
 The existence half uses a Beatty construction whose $k$-fold sumset threads the gaps a lacunary $B$
 must leave. The non-existence half reduces, through a word-combinatorial analysis of the gap
-sequence, to a bounded subset-sum theorem which we prove: every finite set $G$ of at least three
+sequence, to a bounded subset-sum lemma which we prove: every finite set $G$ of at least three
 positive integers with $\gcd(G) = 1$ and $\max(G) = M$ admits a multiset of at most $M-1$ of its
 elements whose subset sums contain $M$ consecutive integers. Its proof combines symbolic reductions
 with a finite certificate layer of a few hundred explicit instances, so the argument is
@@ -179,8 +182,8 @@ Note that $d_1$ is irrelevant to the threshold. The constant $192$ is not optimi
 claim about the true order of $r_k(d_1,d_2)$. Part (2) is genuinely stronger than the negation of
 the question. It says that no prescribed sequence of \emph{pointwise lower bounds on the successive
 ratios} of $B$ --- however rapidly growing, and fixed in advance --- can rescue the existence of $A$.
-We state the scope exactly: the quantification is over ratio sequences $(r_i)$, not over arbitrary
-structural or arithmetic conditions that one might instead impose on $B$.
+The quantification is over ratio sequences $(r_i)$, not over other structural or arithmetic
+conditions one might impose on $B$.
 
 The consecutive-window dichotomy ``$r_k(d,d+1)$ exists $\iff d \ge k$'' is exactly the
 $d_2 = d+1$ slice of Theorem~\ref{thm:main}, for every $k \ge 3$.
@@ -199,10 +202,8 @@ has nothing to work with at $k = 2$. The existence
 half (Theorem~\ref{thm:existence}), by contrast, is proved here for all $k \ge 2$.
 \end{remark}
 
-The non-existence half rests on a finite additive-combinatorics statement which is of independent
-interest. A documented search of the subset-sum and additive-basis literature did not locate it, and
-it appears to be new; we set out the closest known results, and the caution proper to a negative
-novelty claim, in \S\ref{sec:novelty}. For a finite multiset $S$ of positive integers
+The non-existence half turns on a self-contained combinatorial fact about subset sums, which we
+isolate as a lemma and prove in \S\ref{sec:sharp}. For a finite multiset $S$ of positive integers
 write $\ssum(S) := \{\sum_{x \in T} x : T \subseteq S\}$ (a selection of a sub-multiset), and for a
 finite set $G$ of positive integers with $M := \max G$ put
 \begin{equation}\label{eq:mG}
@@ -212,10 +213,10 @@ finite set $G$ of positive integers with $M := \max G$ put
 \end{aligned}
 \end{equation}
 
-\begin{maintheorem}[Bounded subset-sum interval theorem]\label{thm:sharp}
+\begin{lemma}[Bounded subset-sum covering]\label{lem:sharp}
 For every finite $G \subset \ZZ_{\ge 1}$ with $|G| \ge 3$, $\gcd(G) = 1$ and $\max(G) = M$, we have
 $m(G) \le M - 1$.
-\end{maintheorem}
+\end{lemma}
 
 We should say precisely what this bound does and does not assert. It is \emph{not} the claim that
 $M-1$ is the exact value of $m(G)$ for every $G$; typically $m(G)$ is far smaller. Rather, $M-1$ is
@@ -248,131 +249,31 @@ a run of $3$.
 consecutive triples $G = \{a, a+1, a+2\}$ we find $m(G) = M - 1 = a+1$ for every $a$ with
 $2 \le a \le 40$. We have not proved this in general, and do not need it.
 
-\subsection{Relation to the literature, and a caveat on novelty}\label{sec:novelty}
-There is a substantial body of work on interval structure in \emph{higher} sumsets. Nathanson
-\cite{Nathanson72} showed that for finite $A$ with $\min A = 0$, $\gcd(A) = 1$ and $|A| = n \ge 3$,
-the $m$-fold sumset $mA$ equals a fixed head, a long block of consecutive integers, and a shifted
-tail once $m \ge (\max A)^2(n-1)$; Granville and Shakan \cite{GS20} described $NA$ for large $N$, and
-Granville and Walker \cite[Thm.~1.1]{GW21} proved the sharp form --- for $N \ge \max A - (n-2)$, the
-set $NA$ is the whole interval $[0,\,N\max A]$ minus two fixed end-caps --- while Lev
-\cite[Thm.~3]{Lev21} showed the threshold $m \ge \max A - n + 2$ is best possible and quantified the
-central block. Lev's earlier theorem on consecutive integers in high-multiplicity sumsets \cite{Lev}
-is in the same vein.
+\subsection{Relation to the literature}\label{sec:novelty}
+Although we use Lemma~\ref{lem:sharp} only as a tool, it may be of independent interest, so we place
+it briefly. The subset-sum results that produce long intervals or progressions --- S\'ark\"ozy
+\cite{Sarkozy89,Sarkozy94}, Lev \cite{Lev03}, Szemer\'edi--Vu \cite{SzemerediVu06}, Conlon--Fox--Pham
+\cite{CFP21}, Alon--Freiman \cite{AlonFreiman88} --- work with a \emph{dense} set ($|A| \gtrsim
+\sqrt{n}$) and yield an arithmetic progression whose common difference need not be $1$. The closest
+antecedent, Lev's consecutive-subset-sum theorem \cite[Thm.~1]{Lev98}, does give a genuine interval
+of consecutive integers among the subset sums of a set, but again only a \emph{dense} one ($|A|
+\gtrsim \tfrac23 M$), vacuous when $|G| = 3$. Lemma~\ref{lem:sharp} is the \emph{density-free,
+multiset} analogue: it trades density for repetition, covering an interval of length exactly $M$ at
+uniform cost $|S| \le M-1$ from an arbitrary $\gcd$-$1$ set down to $|G| = 3$. The higher-sumset
+structure theorems (Nathanson \cite{Nathanson72}, Granville--Walker \cite{GW21}, Lev \cite{Lev21})
+are density-free but describe the $m$-fold sumset $mG$ with $m$ large --- a total-degree ``simplex''
+of coefficients, of which the subset sums of a bounded multiset are a per-generator ``box'' inside,
+so their conclusion is a weaker statement about a larger set. The completeness, Frobenius and
+postage-stamp traditions \cite{Gr64,ErGr80,Alfonsin} concern infinite sequences, or use unboundedly
+many summands, or optimise the generating set; none bounds a multiset drawn from an arbitrary given
+set.
 
-These results are adjacent to Theorem~\ref{thm:sharp} but do not imply it, for a structural reason
-best stated in coefficient space. In the normalization $\min A = 0$ used above (pad any sum with
-copies of $0$), the $m$-fold sumset of $G = \{g_1, \dots, g_k\}$ is
-\[
-  mG \;=\; \Big\{ \textstyle\sum_i c_i g_i \;:\; c_i \ge 0,\ \sum_i c_i \le m \Big\},
-\]
-a \emph{simplex} of coefficient vectors --- one total-degree cap, each $c_i$ otherwise unbounded ---
-and the interesting regime is $m$ \emph{large}. The subset sums of a multiset $S$ with $n_i$ copies
-of $g_i$ are instead
-\[
-  \ssum(S) \;=\; \Big\{ \textstyle\sum_i c_i g_i \;:\; 0 \le c_i \le n_i \Big\},
-\]
-a \emph{box}, with an independent cap on each generator. Whenever the budgets agree,
-$\sum_i n_i \le m$, the box is \emph{contained in} the simplex, so ``$mG$ contains $M$ consecutive
-integers'' is a \emph{weaker} statement about a \emph{larger} set than the conclusion of
-Theorem~\ref{thm:sharp}. The two shapes coincide only when $k = 2$ (a one-dimensional coefficient
-space), which Theorem~\ref{thm:sharp} excludes. Even the numerical agreement at $k = 3$, where the
-Granville--Walker/Lev threshold is $\max G - 1$ and our budget is $M - 1 = \max G - 1$, is
-superficial: their bound permits each of the $k-1$ nontrivial generators up to $\max G - 1$ times ---
-an implicit multiset of size $\approx 2M$ --- and fills the whole of $[0, N\max G]$, whereas
-Theorem~\ref{thm:sharp} spends a \emph{total} of at most $M-1$ summands to cover a run of exactly
-$M$. A statement about $mG$ for large $m$ thus says nothing about which sums are reachable from a
-\emph{bounded} multiset.
-
-The closer literature is not the higher-sumset one but the work on \emph{subset sums} proper. Here
-the object is right --- $0/1$ coefficients on a set or multiset --- but the known theorems differ
-from Theorem~\ref{thm:sharp} in a way that turns out to be decisive. The nearest results are the
-finite addition theorems for subset sums of S\'ark\"ozy \cite{Sarkozy89,Sarkozy94} and Lev
-\cite{Lev03}: for a set $A \subseteq [1,m]$ of size $|A| \gtrsim \sqrt{m \log m}$, the subset sums
-of $A$ contain an arithmetic progression, with a bounded but generally $> 1$ common difference (Lev
-\cite{Lev03} sharpens the constant; Chen, Mao and Zhang \cite{CMZ25} make the S\'ark\"ozy results
-constructive, with a near-linear algorithm returning the progression and a representation of each of
-its terms, but still an arithmetic progression whose common difference need not be $1$). Alon and Freiman \cite{AlonFreiman88}, Szemer\'edi and Vu \cite{SzemerediVu06}, and the homogeneous
-strengthening of Conlon, Fox and Pham \cite{CFP21}, likewise obtain a long progression in the subset
-sums of a set $A \subseteq [n]$ of comparable density ($|A| \gtrsim \sqrt{n}$, up to logarithms). All of these produce a \emph{progression},
-whose common difference cannot in general be forced to $1$ (so not an interval of consecutive
-integers), from a \emph{set} of \emph{large} cardinality --- the opposite of Theorem~\ref{thm:sharp},
-which asks for consecutive integers, from a generating set as small as $|G| = 3$, using a bounded
-multiset. (Lev's earlier interval theorem \cite[Thm.~1]{Lev97} does give an interval of length
-$\max(A)+1$ --- the ``length equals the maximum'' feature Theorem~\ref{thm:sharp} shares --- but
-inside the $m$-fold sumset $mA$ with $m$ large, not among the subset sums of a bounded multiset.)
-
-The closest antecedent is Lev's theorem on \emph{consecutive subset sums} \cite[Thm.~1]{Lev98}: for
-a \emph{set} $A \subseteq [1,l]$ with $l \le \tfrac32|A| - 2$, the subset sums of $A$ contain the
-interval $[\,2l - 2|A| + 1,\ \Sigma - (2l - 2|A| + 1)\,]$ of consecutive integers, where
-$\Sigma = \sum A$. This is the same conclusion type as Theorem~\ref{thm:sharp} --- genuine $0/1$
-subset sums covering an interval of consecutive integers --- and Lev frames it as the subset-sum
-analogue of the extremal Frobenius problem. But it is a \emph{dense-set} statement: it forces
-$|A| \gtrsim \tfrac23 M$, so it is vacuous for $|G| = 3$, and it covers the subset sums of a
-\emph{fixed} set, with no freedom to choose a multiset. Theorem~\ref{thm:sharp} is the
-\emph{density-free, multiset} analogue: it trades the density hypothesis for repetition, covering an
-interval of consecutive integers --- of length exactly $M$, at uniform cost $|S| \le M-1$ --- from an
-arbitrary generating set down to $|G| = 3$. In short, none of these gives a \emph{uniform} bound on
-the \emph{$\ell^1$ size}
-$\sum_{g} n_g \le M-1$ of a bounded stock $(n_g)_{g \in G}$ whose subset sums cover $M$ consecutive
-integers, valid for every $G$ down to $|G| = 3$ --- exactly the feature that the density-threshold
-and large-multiplicity theorems do not provide. Lev's structural theorem on multisets with few subset sums \cite{Lev99} is on the right object --- a multiset, classified by its subset-sum set --- but characterizes the multisets whose subset sums are \emph{sparse}, an inverse problem to ours. Alon's ``Subset Sums'' \cite{Alon87} treats the inverse (avoidance) extremal problem and is orthogonal.
-
-A third tradition asks when subset sums fill an \emph{initial} segment, or all large integers. The
-completeness theorems of Folkman, Birch, Cassels and Graham \cite{Gr64,ErGr80} show that the subset
-sums of a suitable \emph{infinite} sequence contain every sufficiently large integer; the underlying
-``filling'' step --- if $[1,S]$ is covered and the next term is $\le S+1$, the covered interval
-extends --- is a device we too use, but these are statements about infinite sequences with an
-unbounded number of summands, not a uniform bound on a finite generating set. The Frobenius and
-numerical-semigroup literature \cite{Alfonsin} gives every integer past the Frobenius number as an
-\emph{unrestricted} nonnegative combination $\sum_g c_g g$ (each $c_g \ge 0$ unbounded); but the
-Frobenius number is generically of order $(\prod G)/\max G \gg M$, and the representations use
-arbitrarily many summands, so this yields neither a length-$M$ window nor a bounded multiset. The
-postage-stamp problem and restricted additive bases \cite{Alfonsin} \emph{do} bound the number of
-summands --- the right regime --- but there the generating set is \emph{chosen} to maximize an
-initial run $[1,N]$, whereas Theorem~\ref{thm:sharp} fixes an \emph{arbitrary} $G$ and asks only for
-a run of length exactly $M$, placed anywhere. In every case the gap is the same: economy of summands
-on a \emph{given} set, against an existence statement that may spend whatever it must.
-
-Table~\ref{tab:novelty} places Theorem~\ref{thm:sharp} against these neighbours.
-
-\begin{table}[htbp]\footnotesize
-\renewcommand{\arraystretch}{1.25}
-\begin{tabular}{@{}p{2.9cm}p{2.35cm}p{2.2cm}p{2.35cm}p{2.15cm}@{}}
-\toprule
-Result & Object summed & Summand budget & Output & Generating set \\
-\midrule
-\textbf{Thm~\ref{thm:sharp}} (this paper) & subset sums (box $0 \le c_g \le n_g$) & uniform, $\sum_g n_g \le M-1$ & interval of $M$ consecutive integers & any $G$, $\gcd 1$, $|G| \ge 3$ \\
-Nathanson \cite{Nathanson72}; Granville--Walker \cite{GW21}; Lev \cite{Lev21} & $m$-fold sumset (simplex $\sum c_g = m$) & $m \ge \max G - |G| + 2$; per-gen.\ unbounded & interval (minus caps), length $\approx m\max G$ & any finite $G$, $\gcd 1$ \\
-S\'ark\"ozy \cite{Sarkozy89,Sarkozy94}; Szemer\'edi--Vu \cite{SzemerediVu06}; Conlon--Fox--Pham \cite{CFP21}; Alon--Freiman \cite{AlonFreiman88} & subset sums of a set & none (many elements used) & AP, common difference generally $> 1$ & density $|A| \gtrsim \sqrt{n}$ \\
-Lev \cite[Thm.~1]{Lev98} (closest antecedent) & subset sums of a set & none (whole set) & interval of consecutive integers & dense, $|A| \gtrsim \tfrac23 M$ \\
-Lev \cite[Thm.~1]{Lev97} & $m$-fold sumset & $m$ large & interval of length $\max A + 1$ & finite $A$ \\
-completeness: Folkman, Birch, Graham \cite{Gr64,ErGr80} & subset sums of an infinite sequence & unbounded & all large integers & infinite, structural \\
-Frobenius / numerical semigroups \cite{Alfonsin} & nonneg.\ combinations (unbounded mult.) & unbounded & all integers past the Frobenius no.\ ($\gg M$) & finite $G$, $\gcd 1$ \\
-postage-stamp / restricted bases \cite{Alfonsin} & ${\le}\,h$-fold sumset & ${\le}\,h$ & initial run $[1,N]$ & set \emph{chosen} to maximize $N$ \\
-\bottomrule
-\end{tabular}
-\caption{Theorem~\ref{thm:sharp} against its nearest neighbours. It is the only row combining a
-uniform total budget $\sum_g n_g \le M-1$, an interval of consecutive integers, and an arbitrary
-given set down to $|G| = 3$.}\label{tab:novelty}
-\end{table}
-
-On the strength of a documented search\footnote{Conducted July 2026 over MathSciNet, zbMATH, arXiv
-and Google Scholar citation chains around the works cited here. Search terms combined \emph{subset
-sums} with \emph{interval}/\emph{consecutive integers}, and included \emph{finite addition theorem},
-\emph{complete sequence}, \emph{Frobenius}/\emph{postage-stamp}, \emph{restricted additive basis},
-and \emph{bounded-coefficient}/\emph{bounded-stock representation}; the record is in the repository
-(\texttt{paper/novelty-search.md}).} across these areas --- subset sums of sets and multisets,
-completeness and complete sequences, the Frobenius and postage-stamp problems, interval structure in
-higher sumsets, and the bounded-coefficient literature --- we have not found
-Theorem~\ref{thm:sharp}, or a result that immediately implies it (even with a worse constant), in
-the literature, and it appears to be new: a bounded-stock (bounded $\ell^1$-size), uniform sharpening of the
-subset-sum interval phenomenon. We state this with appropriate caution. Novelty in a mature area is
-hard to establish negatively, our search was not exhaustive, and a specialist in additive
-combinatorics should confirm it before it is relied upon; the sharpest place to look is Lev's
-consecutive-subset-sum theorem \cite{Lev98} and its dense-set neighbourhood, of which
-Theorem~\ref{thm:sharp} is the density-free, multiset analogue. What we claim without qualification is that
-Theorem~\ref{thm:sharp} is true, that we prove it, and that it is exactly what the non-existence half
-of Theorem~\ref{thm:main} requires.
+We are not aware of a result that implies Lemma~\ref{lem:sharp}, even with a worse constant, and
+after a documented search\footnote{Conducted July 2026 over MathSciNet, zbMATH, arXiv and Google
+Scholar citation chains around the works cited here; the record, with a full comparison table, is in
+the repository (\texttt{paper/novelty-search.md}).} it appears to be new. As with any negative claim
+in a mature area this warrants a specialist's confirmation; the sharpest place to look is the
+neighbourhood of Lev's consecutive-subset-sum theorem \cite{Lev98}.
 
 \subsection{Method}
 The two halves of Theorem~\ref{thm:main} are proved by unrelated methods.
@@ -393,7 +294,7 @@ reduces to proving that every $(d_1,d_2)$-sequence with $d_2 \le k$ is tail-cove
 by cases on the \emph{tail alphabet} $\Ginf$ of gap values occurring infinitely often. One and two
 letter alphabets require a word-combinatorial analysis culminating in the Sturmian case
 (Lemma~\ref{lem:sturmian}); alphabets with three or more letters are handled by an amortized slot
-argument (Lemma~\ref{lem:slot}) that reduces matters exactly to Theorem~\ref{thm:sharp}, proved in
+argument (Lemma~\ref{lem:slot}) that reduces matters exactly to Lemma~\ref{lem:sharp}, proved in
 \S\ref{sec:sharp} by a six-branch decision tree.
 
 \subsection{Formal verification and the trust base}\label{sec:trust-intro}
@@ -452,12 +353,12 @@ $d_2 \le k$ (non-existence, \S\ref{sec:nonex})
   & \quad\quad\quad\quad width $\ge 2$ $\to$ sweep (Lemmas~\ref{lem:width}, \ref{lem:sweep}), or \\
   & \quad\quad\quad\quad balanced $\to$ Prop.~\ref{prop:balanced} $\to$ Sturmian (Lemma~\ref{lem:sturmian}) \\
   & \quad\quad $|\Ginf| \ge 3$: slot lemma (Lemma~\ref{lem:slot}), which consumes \\
-  & \quad\quad\quad\quad \textbf{Theorem~\ref{thm:sharp}} (\S\ref{sec:sharp}, six branches D/P/L/E/T/B) \\
+  & \quad\quad\quad\quad \textbf{Lemma~\ref{lem:sharp}} (\S\ref{sec:sharp}, six branches D/P/L/E/T/B) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-The single point of contact between the two halves is Theorem~\ref{thm:sharp}: it is what the slot
+The single point of contact between the two halves is Lemma~\ref{lem:sharp}: it is what the slot
 lemma needs at its binding corner $k = d_2 = M$, and it is where the finite certificate data of
 Appendix~\ref{app:tables} enters.
 
@@ -514,7 +415,43 @@ $[\,b-kc,\ b-kc+k\,]$ in place of the half-open window of \eqref{eq:beatty-windo
 strengthens the requirement. No irrationality of $\gamma$ is needed anywhere.
 
 \subsection{The free-gap lemma}
-This is the engine of the construction.
+This is the engine of the construction. The idea (Figure~\ref{fig:freegap}) is geometric: the slopes
+$\gamma$ that would let $kA_{\gamma,c}$ hit a given element of $B$ form a sparse union of
+\emph{unsafe} intervals $[t/s,(t+k)/s]$, and instead of counting them we simply exhibit one explicit
+gap between consecutive unsafe intervals --- wide enough to hold a usable slope.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[>=Stealth, line width=0.4pt]
+  \draw[->] (-0.2,0) -- (7.7,0);
+  \node[anchor=west, font=\footnotesize] at (7.55,0.28) {scale};
+  \foreach \a/\b in {0.4/1.15, 1.85/2.6, 3.05/3.8}{
+    \fill[black!12] (\a,0) rectangle (\b,0.5);
+    \draw[black!35] (\a,0) rectangle (\b,0.5);
+  }
+  \foreach \a/\b in {5.0/5.8, 6.3/7.05}{
+    \fill[black!22] (\a,0) rectangle (\b,0.5);
+    \fill[pattern=north east lines, pattern color=black!45] (\a,0) rectangle (\b,0.5);
+    \draw[black!45] (\a,0) rectangle (\b,0.5);
+  }
+  \fill[green!14] (3.8,0) rectangle (5.0,0.5);
+  \draw[green!55!black, dashed] (3.8,0) rectangle (5.0,0.5);
+  \node[font=\normalsize] at (4.4,0.25) {$J$};
+  \draw (3.8,0) -- (3.8,-0.08);
+  \node[anchor=north, font=\scriptsize] at (3.8,-0.1) {$\tfrac{t+k}{s_1}$};
+  \draw (3.05,0) -- (3.05,-0.08);
+  \node[anchor=north, font=\scriptsize] at (3.05,-0.1) {$\tfrac{t}{s_1}$};
+  \draw (5.0,0) -- (5.0,-0.08);
+  \node[anchor=north, font=\scriptsize] at (5.0,-0.1) {$\tfrac{t'}{s_1+1}$};
+  \node[font=\scriptsize, black!60] at (2.2,-0.85) {denominator $s_1$};
+  \node[font=\scriptsize, black!60] at (6.0,-0.85) {denominator $s_1{+}1$};
+  \node[font=\footnotesize, align=center] (sp) at (4.4,1.35) {slope placed here};
+  \draw[->, green!55!black] (sp) -- (4.4,0.56);
+\end{tikzpicture}
+\caption{The unsafe intervals $[t/s,(t{+}k)/s]$ that a lacunary $B$ forces at denominators $s_1$ and
+$s_1+1$, and the free gap $J$ between them into which the construction places its slope.}
+\label{fig:freegap}
+\end{figure}
 
 \begin{lemma}[Free gap]\label{lem:freegap}
 Let $t \ge 32 d_2^2$ and let $I \subseteq [\,d_2 - \tfrac12,\ d_2\,]$ be a closed real interval with
@@ -650,7 +587,7 @@ Term & Formal content \\
 \end{tabular}
 \end{center}
 
-\section{Non-existence for \texorpdfstring{$d_2 \le k$}{d2 <= k}: reduction to Theorem~\ref{thm:sharp}}
+\section{Non-existence for \texorpdfstring{$d_2 \le k$}{d2 <= k}: reduction to Lemma~\ref{lem:sharp}}
 \label{sec:nonex}
 
 Throughout this section $k \ge 3$ and $d_2 \le k$.
@@ -752,6 +689,35 @@ follows by comparing multisets for $s$ and $s+1$ differing in a single index.
 If $w^+(s) - w^-(s) \ge d_2 - 1$ for all $s \ge S_0$, then $kA - k a_1$ contains all sufficiently
 large integers; in particular $A$ is tail-covering with $m = 1$.
 \end{lemma}
+
+The mechanism is the picture in Figure~\ref{fig:sweep}: as $s$ grows the window $[w^-(s),w^+(s)]$ of
+reachable values widens, while the target $w(s)$ needed to represent a fixed large $x$ descends;
+because a widening band cannot be stepped over by a descending target, some admissible $s$ lands the
+target inside the window, and that $s$ realizes $x$.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[>=Stealth]
+  \draw[->] (0,0) -- (7.4,0) node[right] {$s$};
+  \draw[->] (0,0) -- (0,5.2) node[above] {value};
+  \fill[blue!10]
+    plot[domain=0:7,samples=60] (\x,{0.7+0.13*\x})
+    -- plot[domain=7:0,samples=60] (\x,{1.1+0.48*\x})
+    -- cycle;
+  \draw[thick,blue!55!black,domain=0:7,samples=60,smooth]
+    plot (\x,{0.7+0.13*\x}) node[right] {$w^-(s)$};
+  \draw[thick,blue!55!black,domain=0:7,samples=60,smooth]
+    plot (\x,{1.1+0.48*\x}) node[right] {$w^+(s)$};
+  \draw[thick,red!70!black,domain=0:7,samples=60,smooth]
+    plot (\x,{4.7-0.52*\x}) node[right] {$w(s)$};
+  \fill (3.6,{4.7-0.52*3.6}) circle (2.2pt);
+  \draw[dashed] (3.6,0) node[below] {$s^\ast$} -- (3.6,{4.7-0.52*3.6});
+  \node[anchor=south west,font=\small] at (3.75,{4.7-0.52*3.6}) {coverage begins};
+\end{tikzpicture}
+\caption{The window $[w^-(s),w^+(s)]$ widens with $s$ while the target $w(s)$ descends into it; past
+the crossing $s^\ast$ every large value is reachable.}
+\label{fig:sweep}
+\end{figure}
 
 \begin{proof}
 Let $x$ be large. Representations $x = \delta s + e w$ force $s \equiv x \delta^{-1} \pmod e$, so
@@ -1279,12 +1245,12 @@ a full class tail modulo $g$ in general).
 
 The binding corner is $k = d_2 = M$ --- the adversary uses the maximal gap infinitely often and $k$
 is as small as the hypothesis $d_2 \le k$ allows. There the requirement $k - 1 \ge m(\Ginf)$ becomes
-\emph{exactly} $m(\Ginf) \le M - 1$, which is precisely Theorem~\ref{thm:sharp}. Granting it:
+\emph{exactly} $m(\Ginf) \le M - 1$, which is precisely Lemma~\ref{lem:sharp}. Granting it:
 $k - 1 \ge d_2 - 1 \ge M - 1 \ge m(\Ginf)$ for all $k \ge d_2$ (and for rescaled alphabets
 $M/g - 1 < d_2 - 1$ a fortiori).
 
 For perspective we record a short self-contained bound in the same direction. It is not needed
-below, but it exhibits the mechanism. It is genuinely weaker than Theorem~\ref{thm:sharp}: besides
+below, but it exhibits the mechanism. It is genuinely weaker than Lemma~\ref{lem:sharp}: besides
 the worse bound, its hypothesis can fail --- for $G = \{6,10,15\}$, of gcd $1$, no element is coprime
 to $\min G = 6$.
 
@@ -1304,34 +1270,84 @@ $a \le M - 2$.
 \subsection{Conclusion of the non-existence half}
 
 \begin{proposition}\label{prop:nonex}
-Modulo Theorem~\ref{thm:sharp}, every $(d_1,d_2)$-sequence with $d_2 \le k$ and $k \ge 3$ is
+Modulo Lemma~\ref{lem:sharp}, every $(d_1,d_2)$-sequence with $d_2 \le k$ and $k \ge 3$ is
 tail-covering.
 \end{proposition}
 
 \begin{proof}
 Tails with at most two letters are covered by Theorem~\ref{thm:twoletter}. Tails with three or more
-letters are covered by Lemma~\ref{lem:slot} together with Theorem~\ref{thm:sharp}, which supplies
+letters are covered by Lemma~\ref{lem:slot} together with Lemma~\ref{lem:sharp}, which supplies
 $m(\Ginf) \le \max(\Ginf) - 1 \le d_2 - 1 \le k-1$.
 \end{proof}
 
 With Lemma~\ref{lem:cert} this proves the non-existence half of Theorem~\ref{thm:main}, in the strong
-form. It remains to prove Theorem~\ref{thm:sharp}.
+form. It remains to prove Lemma~\ref{lem:sharp}.
 
 %======================================================================
-\section{The bounded subset-sum interval theorem}\label{sec:sharp}
+\section{The bounded subset-sum covering lemma}\label{sec:sharp}
+
+Before the details, the shape of the argument. We must cover $M$ consecutive integers with a bounded
+multiset drawn from $G$. The one mechanism (Figure~\ref{fig:frame}) is to cover a short interval ---
+a \emph{frame} --- with copies of the two largest generators, then slide and stack copies of the
+smallest generator $a$ until the frames merge into one solid run. Everything reduces to a
+\emph{three-generator hard core} $\{a,b,M\}$ (Lemmas~\ref{lem:graham}--\ref{lem:L4}), and there the
+behaviour is governed by two arithmetic questions --- whether $a \mid M$ and whether $a \mid b+M$ ---
+together with the size of $\mu = M-a$. These invariants carve the hard core into six cases; small
+$a$ or small $\mu$ leave only finitely many triples to check by explicit certificate, and the rest
+close by a uniform symbolic construction. The case map is Table~\ref{tab:cases}; the constant $M-1$
+is what the tightest of them spends.
 
 We restate the target.
 
-\begin{theorem}[= Theorem~\ref{thm:sharp}]\label{thm:sharp-body}
+\begin{lemma}[= Lemma~\ref{lem:sharp}]\label{lem:sharp-body}
 For every finite $G \subset \ZZ_{\ge 1}$ with $|G| \ge 3$, $\gcd(G) = 1$ and $\max(G) = M$, there is
 a multiset $S$ of elements of $G$ with $|S| \le M-1$ whose subset sums contain $M$ consecutive
 integers.
-\end{theorem}
+\end{lemma}
 
 If $a := \min G = 1$, take $M-1$ copies of $1$. So assume $a \ge 2$; the hard core below will force
 $a \ge 3$.
 
 \subsection{Machinery}
+The constructions below all work by the same picture (Figure~\ref{fig:frame}). Using a residue box
+of copies of $b$ and $M$ we cover one interval --- a \emph{frame} --- at each ``level'' (number of
+summands used); adding one more copy of $a$ shifts the whole frame right by $a$. Consecutive frames
+then abut into a single solid run of consecutive integers exactly when each frame is at least $a-1$
+long. The lemmas of this subsection make that quantitative.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=0.9cm,y=1cm,>={Stealth[length=5pt]},
+  every node/.style={font=\small}]
+  \def\Cc{0}\def\Vc{5}\def\Cn{3.5}\def\Vn{8.5}
+  \draw[gray!55] (-0.7,0) -- (9.3,0);
+  \node[gray!55,anchor=west,font=\footnotesize] at (9.3,0) {$\mathbb{Z}$};
+  \foreach \x in {\Cc,\Cn,\Vc,\Vn}{%
+    \draw[gray!45,dashed,thin] (\x,-0.7) -- (\x,1.85);
+    \draw[gray!70] (\x,0.07) -- (\x,-0.07);
+  }
+  \draw[very thick,blue!70!black] (\Cc,1.35) -- (\Vc,1.35);
+  \fill[blue!70!black] (\Cc,1.35) circle (1.6pt) (\Vc,1.35) circle (1.6pt);
+  \node[blue!70!black,anchor=south] at ({(\Cc+\Vc)/2},1.45) {level $c$: $[ca+C,\ ca+V]$};
+  \draw[very thick,orange!85!black] (\Cn,0.7) -- (\Vn,0.7);
+  \fill[orange!85!black] (\Cn,0.7) circle (1.6pt) (\Vn,0.7) circle (1.6pt);
+  \node[orange!85!black,anchor=south] at ({(\Cn+\Vn)/2},0.8) {level $c+1$: $[(c{+}1)a+C,\ (c{+}1)a+V]$};
+  \node[anchor=north] at (\Cc,-0.12) {$ca+C$};
+  \node[anchor=north] at (\Vc,-0.12) {$ca+V$};
+  \node[anchor=north] at (\Cn,-0.55) {$(c{+}1)a+C$};
+  \node[anchor=north] at (\Vn,-0.55) {$(c{+}1)a+V$};
+  \draw[<->,thick] (\Cc,2.5) -- (\Cn,2.5) node[midway,fill=white,inner sep=1pt] {$a$};
+  \draw[gray!45,dashed,thin] (\Cc,1.85) -- (\Cc,2.5);
+  \draw[gray!45,dashed,thin] (\Cn,0.7)  -- (\Cn,2.5);
+  \node[draw,rounded corners,fill=black!3,anchor=east,font=\small] at (9.3,2.35) {merge iff $V-C\ge a-1$};
+  \draw[decorate,decoration={brace,amplitude=6pt,mirror},thick]
+    (\Cc,-1.15) -- (\Vn,-1.15)
+    node[midway,below=8pt] {solid run $[ca+C,\ (c{+}1)a+V]$, length $a+(V-C)+1$};
+\end{tikzpicture}
+\caption{Two consecutive frames, offset by $a$, merge into one solid run of consecutive integers
+precisely when $V-C \ge a-1$.}
+\label{fig:frame}
+\end{figure}
 
 \begin{lemma}[Two-generator interval]\label{lem:twogen}
 Let $\alpha < \beta$ be coprime positive integers, and let $x \ge \beta - 1$, $y \ge \alpha - 1$.
@@ -1474,7 +1490,7 @@ Thus the budget grows by at most $Y + Z + 1 \le a$, while the target $M - 1$ gro
 \subsection{Reduction to the hard core}
 
 \begin{lemma}[Graham reduction]\label{lem:graham}
-Theorem~\ref{thm:sharp-body} for all alphabets follows from Theorem~\ref{thm:sharp-body} for
+Lemma~\ref{lem:sharp-body} for all alphabets follows from Lemma~\ref{lem:sharp-body} for
 \emph{irreducible} ones: those with $|G| = 3$, or with $|G| \ge 4$ and $G$ minimal (no proper subset
 of size $\ge 3$ has gcd $1$).
 \end{lemma}
@@ -1603,7 +1619,7 @@ except through $a \le \delta a' - 1$, so the case $a' = 1$ is subsumed.
 \end{proof}
 
 \subsection{The hard core}\label{sec:hardcore}
-By Lemmas~\ref{lem:graham}--\ref{lem:L4}, Theorem~\ref{thm:sharp-body} reduces to triples
+By Lemmas~\ref{lem:graham}--\ref{lem:L4}, Lemma~\ref{lem:sharp-body} reduces to triples
 $G = \{a, b, M\}$ with $\gcd(a,b) = 1$ and --- applying Lemmas~\ref{lem:L1} and \ref{lem:L2} to the
 pair $(a,b)$ --- with $\delta := a + b - M \ge 2$. We fix the following notation for the rest of the
 section:
@@ -1657,7 +1673,7 @@ one branch; exhaustiveness is checked in
 summarizes the tree; ``symbolic'' means the branch is closed by a closed-form construction valid for
 all parameters in its range, and ``finite'' means it additionally consumes a certificate table.
 
-\begin{center}\small
+\begin{table}[htbp]\small\centering
 \begin{tabular}{@{}llllc@{}}
 \toprule
 Branch & Condition & Construction & Budget mechanism & Closure \\
@@ -1674,7 +1690,10 @@ B & $a \le 11$, $\mu \ge 12$ & Table~B $+$ Lemma~\ref{lem:lift} & finite bases, 
   &                            &                                              &                                    & \quad (Table~B) \\
 \bottomrule
 \end{tabular}
-\end{center}
+\caption{The six-branch case tree for the hard core: routing is the ordered if--else evaluation, top
+to bottom. ``Symbolic'' branches close by a closed-form construction; ``finite'' branches also
+consume a certificate table.}\label{tab:cases}
+\end{table}
 
 Four of the six branches are closed symbolically; only T and B consume finite data, and between them
 they account for the whole of the finite layer (Proposition~\ref{prop:FV}).
@@ -2165,7 +2184,7 @@ $(11,29,36)$, $(11,30,38)$, $(11,31,40)$ --- must be based at a $\lambda \ge 1$ 
 $\lambda = 0$ member has $e = h$ and so belongs to Case L.
 \end{remark}
 
-\subsection{Proof of Theorem~\ref{thm:sharp-body}}\label{sec:sharp-proof}
+\subsection{Proof of Lemma~\ref{lem:sharp-body}}\label{sec:sharp-proof}
 
 \begin{proof}
 We argue by strong induction on $M$: in proving the statement for a given $M$ we may assume it for
@@ -2218,7 +2237,7 @@ $|\Ginf/g| = 2$, all $W_2 \le 1$ (balanced)
   & \quad Lemma~\ref{lem:periodic} or \ref{lem:sturmian} \\
 $|\Ginf/g| \ge 3$ & Lemma~\ref{lem:slot} (slot lemma), with \\
   & \quad $m(\Ginf/g) \le \max(\Ginf/g) - 1 \le d_2 - 1 \le k-1$ \\
-  & \quad by Theorem~\ref{thm:sharp} \\
+  & \quad by Lemma~\ref{lem:sharp} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -2453,46 +2472,27 @@ form, and its counterexample $(5,7,9)$ (Remark~\ref{rem:5-7-9}) is pinned as a d
 %======================================================================
 \section{Provenance and authorship}\label{sec:provenance}
 
-This work is human-orchestrated but was not carried out unaided, and we state the division of labour
-plainly, since a reader is entitled to know how the argument was produced before deciding how to
-check it.
+This work was produced with substantial assistance from automated systems, and we record the
+division of labour.
 
-The core mathematics --- the constructions, the case analyses, and the proofs of the lemmas above,
-together with the Lean formalization and the drafting of this paper --- was carried out by Claude
-(Anthropic; models Fable~5 and Opus~4.8) acting as the reasoning agent, under the author's direction.
-GPT-5.5 (OpenAI) and Gemini~3.1 (Google DeepMind) were consulted for advice and for adversarial
-review of drafts.
+The mathematical constructions, case analyses, and proofs, together with the Lean formalization and
+a first draft of this paper, were produced by Claude (Anthropic; models Fable~5 and Opus~4.8) acting
+as the reasoning agent, under the author's direction. GPT-5.5 (OpenAI) and Gemini~3.1 (Google
+DeepMind) were used for advice and for adversarial review of drafts.
 
-The author's role was that of principal investigator, not scribe. He selected the problem and fixed
-its formalization (the Erd\H{o}s Problems phrasing of \S\ref{sec:intro}); set the intermediate targets
-and the overall strategy; decided which candidate routes to pursue and which to abandon; ran the
-cross-model review cycles; audited each construction and proof; chose the formal statement whose
-fidelity is defended in \S\ref{sec:lean}; and made the final mathematical judgments. He takes full
-responsibility for the content, including any error that remains. We are deliberately exact about one
-point: the correctness of the argument does \emph{not} rest on a claim that a human re-derived every
-lemma unaided. It rests on the Lean kernel (\S\ref{sec:lean}), which checks the proof independently of
-who or what produced it, and on the finite certificates, which anyone can re-verify. The automated
-systems are tools, not authors --- they meet no authorship criterion and cannot take responsibility
-for the work --- and they are not listed as authors.
+The author selected the problem and fixed its formalization (the Erd\H{o}s Problems phrasing of
+\S\ref{sec:intro}); set the intermediate targets and overall strategy; decided which candidate routes
+to pursue and which to abandon; audited each construction and proof; chose the formal statement; and
+made the final mathematical judgments. He takes full responsibility for the content, including any
+error that remains, and can defend each part of the argument. The automated systems are tools, not
+authors: they meet no authorship criterion, cannot take responsibility for the work, and are not
+listed as authors.
 
-An argument produced this way warrants more scrutiny, not less. That is the reason the development
-has been formally verified in Lean~4 (\S\ref{sec:lean}) rather than merely asserted: the kernel is
-indifferent to the provenance of a proof, and a reader who distrusts the origin of this argument is
-not asked to extend trust, but invited to run the check. Its exact scope is stated once, in
-\S\ref{sec:formal-scope}.
-
-That said, formal verification settles only correctness relative to the formal statement. It does not
-establish novelty, attribution, or exposition, and it does not substitute for the author's
-understanding of the argument. The result may be checked by three \emph{complementary} routes ---
-reading the prose of \S\S\ref{sec:existence}--\ref{sec:assembly} together with the certificate tables
-of Appendix~\ref{app:tables}; running the Python harnesses of Appendix~\ref{app:verification} on the
-finite layer; or building the Lean development and inspecting the axiom audit
-(\S\ref{sec:trustbase}). We call these complementary rather than independent: they share the same
-mathematical architecture, the same case split, and the same witness constructions, so they give
-defence in depth against different failure modes, not three statistically independent
-confirmations. The one bridge no formalization can discharge on the reader's behalf --- that the
-formal statement means what the informal problem says --- is set out decision by decision in
-\S\ref{sec:lean}, and is where we invite the sharpest scrutiny.
+Formal verification settles correctness relative to the formal statement only; it does not establish
+novelty, attribution, or exposition. The development is machine-checked in Lean~4 (\S\ref{sec:lean}),
+and the finite certificates can be re-verified independently (Appendix~\ref{app:verification}). The
+one thing no formalization can settle on the reader's behalf --- that the formal statement means what
+the informal problem says --- is set out decision by decision in \S\ref{sec:lean}.
 
 \section{Declarations}\label{sec:declarations}
 
@@ -2774,7 +2774,7 @@ Lemmas~\ref{lem:T}, \ref{lem:t-tail} (Case T) & \texttt{caseT}, \texttt{T\_tail\
 Case B (+ descent) & \texttt{caseB}, \texttt{rowFor}, \texttt{caseBComplete} & \texttt{Sharp/CaseB.lean}, \\
   & & \quad \texttt{Sharp/CaseBClasses.lean} \\
 Tables A/B (data) & \texttt{certTableA\_ok}, \texttt{certTableB\_ok} & \texttt{Sharp/TablesData.lean} \\
-Theorem~\ref{thm:sharp} (bounded subset-sum) & \texttt{sharp} & \texttt{Sharp/Main.lean} \\
+Lemma~\ref{lem:sharp} (bounded subset-sum) & \texttt{sharp} & \texttt{Sharp/Main.lean} \\
 Axiom audit & three \texttt{\#print axioms} commands & \texttt{AxiomsCheck.lean} \\
 \bottomrule
 \end{tabular}
