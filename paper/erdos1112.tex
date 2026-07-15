@@ -299,7 +299,20 @@ integers), from a \emph{set} of \emph{large} cardinality --- the opposite of The
 which asks for consecutive integers, from a generating set as small as $|G| = 3$, using a bounded
 multiset. (Lev's earlier interval theorem \cite[Thm.~1]{Lev97} does give an interval of length
 $\max(A)+1$ --- the ``length equals the maximum'' feature Theorem~\ref{thm:sharp} shares --- but
-inside the $m$-fold sumset $mA$ with $m$ large, not among the subset sums of a bounded multiset.) In short, none of these gives a \emph{uniform} bound on the \emph{$\ell^1$ size}
+inside the $m$-fold sumset $mA$ with $m$ large, not among the subset sums of a bounded multiset.)
+
+The closest antecedent is Lev's theorem on \emph{consecutive subset sums} \cite[Thm.~1]{Lev98}: for
+a \emph{set} $A \subseteq [1,l]$ with $l \le \tfrac32|A| - 2$, the subset sums of $A$ contain the
+interval $[\,2l - 2|A| + 1,\ \Sigma - (2l - 2|A| + 1)\,]$ of consecutive integers, where
+$\Sigma = \sum A$. This is the same conclusion type as Theorem~\ref{thm:sharp} --- genuine $0/1$
+subset sums covering an interval of consecutive integers --- and Lev frames it as the subset-sum
+analogue of the extremal Frobenius problem. But it is a \emph{dense-set} statement: it forces
+$|A| \gtrsim \tfrac23 M$, so it is vacuous for $|G| = 3$, and it covers the subset sums of a
+\emph{fixed} set, with no freedom to choose a multiset. Theorem~\ref{thm:sharp} is the
+\emph{density-free, multiset} analogue: it trades the density hypothesis for repetition, covering an
+interval of consecutive integers --- of length exactly $M$, at uniform cost $|S| \le M-1$ --- from an
+arbitrary generating set down to $|G| = 3$. In short, none of these gives a \emph{uniform} bound on
+the \emph{$\ell^1$ size}
 $\sum_{g} n_g \le M-1$ of a bounded stock $(n_g)_{g \in G}$ whose subset sums cover $M$ consecutive
 integers, valid for every $G$ down to $|G| = 3$ --- exactly the feature that the density-threshold
 and large-multiplicity theorems do not provide. Lev's structural theorem on multisets with few subset sums \cite{Lev99} is on the right object --- a multiset, classified by its subset-sum set --- but characterizes the multisets whose subset sums are \emph{sparse}, an inverse problem to ours. Alon's ``Subset Sums'' \cite{Alon87} treats the inverse (avoidance) extremal problem and is orthogonal.
@@ -331,6 +344,7 @@ Result & Object summed & Summand budget & Output & Generating set \\
 \textbf{Thm~\ref{thm:sharp}} (this paper) & subset sums (box $0 \le c_g \le n_g$) & uniform, $\sum_g n_g \le M-1$ & interval of $M$ consecutive integers & any $G$, $\gcd 1$, $|G| \ge 3$ \\
 Nathanson \cite{Nathanson72}; Granville--Walker \cite{GW21}; Lev \cite{Lev21} & $m$-fold sumset (simplex $\sum c_g = m$) & $m \ge \max G - |G| + 2$; per-gen.\ unbounded & interval (minus caps), length $\approx m\max G$ & any finite $G$, $\gcd 1$ \\
 S\'ark\"ozy \cite{Sarkozy89,Sarkozy94}; Szemer\'edi--Vu \cite{SzemerediVu06}; Conlon--Fox--Pham \cite{CFP21}; Alon--Freiman \cite{AlonFreiman88} & subset sums of a set & none (many elements used) & AP, common difference generally $> 1$ & density $|A| \gtrsim \sqrt{n}$ \\
+Lev \cite[Thm.~1]{Lev98} (closest antecedent) & subset sums of a set & none (whole set) & interval of consecutive integers & dense, $|A| \gtrsim \tfrac23 M$ \\
 Lev \cite[Thm.~1]{Lev97} & $m$-fold sumset & $m$ large & interval of length $\max A + 1$ & finite $A$ \\
 completeness: Folkman, Birch, Graham \cite{Gr64,ErGr80} & subset sums of an infinite sequence & unbounded & all large integers & infinite, structural \\
 Frobenius / numerical semigroups \cite{Alfonsin} & nonneg.\ combinations (unbounded mult.) & unbounded & all integers past the Frobenius no.\ ($\gg M$) & finite $G$, $\gcd 1$ \\
@@ -354,9 +368,9 @@ Theorem~\ref{thm:sharp}, or a result that immediately implies it (even with a wo
 the literature, and it appears to be new: a bounded-stock (bounded $\ell^1$-size), uniform sharpening of the
 subset-sum interval phenomenon. We state this with appropriate caution. Novelty in a mature area is
 hard to establish negatively, our search was not exhaustive, and a specialist in additive
-combinatorics should confirm it before it is relied upon; the sharpest place to look is the
-immediate neighbourhood of Lev's finite addition theorems, with which Theorem~\ref{thm:sharp}
-shares the ``interval of length $\max$'' feature. What we claim without qualification is that
+combinatorics should confirm it before it is relied upon; the sharpest place to look is Lev's
+consecutive-subset-sum theorem \cite{Lev98} and its dense-set neighbourhood, of which
+Theorem~\ref{thm:sharp} is the density-free, multiset analogue. What we claim without qualification is that
 Theorem~\ref{thm:sharp} is true, that we prove it, and that it is exactly what the non-existence half
 of Theorem~\ref{thm:main} requires.
 
@@ -2858,6 +2872,11 @@ Proc.\ Amer.\ Math.\ Soc.\ \textbf{150} (2022), no.~12, 5165--5177.
 V.~F.~Lev,
 \emph{Optimal representations by sumsets and subset sums},
 J.\ Number Theory \textbf{62} (1997), 127--143.
+
+\bibitem[Lev98]{Lev98}
+V.~F.~Lev,
+\emph{On consecutive subset sums},
+Discrete Math.\ \textbf{187} (1998), no.~1--3, 151--160.
 
 \bibitem[Lev99]{Lev99}
 V.~F.~Lev,

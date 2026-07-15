@@ -32,6 +32,7 @@ interval phenomenon.
 
 | Result | What it gives | Why it does not imply Theorem B |
 |---|---|---|
+| **Lev**, *On consecutive subset sums* (*Discrete Math.* **187** (1998), Thm. 1) — **closest antecedent** | for a set $A\subseteq[1,l]$ with $l\le\tfrac32\lvert A\rvert-2$, the 0/1 subset sums of $A$ contain the interval $[2l-2\lvert A\rvert+1,\ \Sigma-(2l-2\lvert A\rvert+1)]$ | same conclusion type (interval, diff 1, genuine subset sums) but a **dense-set** theorem ($\lvert A\rvert\gtrsim\tfrac23 M$, vacuous at $\lvert G\rvert=3$) with no multiset choice; Theorem B is its density-free multiset analogue |
 | **Lev**, finite addition theorem I (*J. Number Theory* **62** (1997), Thm. 1) | an interval of length exactly $\max(A)+1$ | inside the $h$-fold sumset $(2k-1)A$ (unbounded multiplicities, many summands), under a density hypothesis — not 0/1 subset sums of a bounded multiset |
 | **Lev / Sárközy**, subset-sum addition theorem (finite addition thm II) | an AP in the 0/1 subset sums $S(A)$ | common difference $d \le 4m/n$ **cannot be forced to 1** (no consecutive integers); needs a large set $n \sim \sqrt{m\log m}$; vacuous at $|G|=3$ |
 | **Szemerédi–Vu**, *Ann. of Math.* **163** (2006) | subset sums of $A\subseteq[n]$ contain a length-$n$ AP | density threshold $\lvert A\rvert \ge c\sqrt n$; an AP, not necessarily consecutive integers; no uniform $\lvert S\rvert\le M-1$ bound |
@@ -62,6 +63,7 @@ Lev's finite addition theorems, with which Theorem B shares the "interval of len
 ## Primary sources consulted
 
 - V. F. Lev, *Optimal representations by sumsets and subset sums*, J. Number Theory **62** (1997), 127–143.
+- V. F. Lev, *On consecutive subset sums*, Discrete Math. **187** (1998), 151–160 — closest antecedent.
 - V. F. Lev, *The structure of multisets with a small number of subset sums*, Astérisque **258** (1999).
 - V. F. Lev, *The structure of higher sumsets*, Proc. Amer. Math. Soc. **150** (2022); arXiv:2110.03554.
 - E. Szemerédi, V. H. Vu, *Finite and infinite arithmetic progressions in sumsets*, Ann. of Math. (2) **163** (2006), 1–35.
