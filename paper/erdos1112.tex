@@ -250,23 +250,38 @@ $2 \le a \le 40$. We have not proved this in general, and do not need it.
 
 \subsection{Relation to the literature, and a caveat on novelty}\label{sec:novelty}
 There is a substantial body of work on interval structure in \emph{higher} sumsets. Nathanson
-\cite{Nathanson72} showed that for finite $A$ with $\min A = 0$ and $\gcd(A)=1$, the $m$-fold sumset
-$mA$ eventually consists of a head, a long block of consecutive integers, and a shifted tail;
-Granville and Shakan \cite{GS20} described $NA$ for large $N$ and conjectured a sharp threshold,
-which Granville and Walker \cite{GW21} proved; and Lev \cite{Lev21} synthesizes this line, giving
-sharp estimates for the length of the central block. Lev's earlier theorem on consecutive integers
-in high-multiplicity sumsets \cite{Lev} is in the same vein.
+\cite{Nathanson72} showed that for finite $A$ with $\min A = 0$, $\gcd(A) = 1$ and $|A| = n \ge 3$,
+the $m$-fold sumset $mA$ equals a fixed head, a long block of consecutive integers, and a shifted
+tail once $m \ge (\max A)^2(n-1)$; Granville and Shakan \cite{GS20} described $NA$ for large $N$, and
+Granville and Walker \cite[Thm.~1.1]{GW21} proved the sharp form --- for $N \ge \max A - (n-2)$, the
+set $NA$ is the whole interval $[0,\,N\max A]$ minus two fixed end-caps --- while Lev
+\cite[Thm.~3]{Lev21} showed the threshold $m \ge \max A - n + 2$ is best possible and quantified the
+central block. Lev's earlier theorem on consecutive integers in high-multiplicity sumsets \cite{Lev}
+is in the same vein.
 
-These results are adjacent to Theorem~\ref{thm:sharp} but do not appear to imply it, for a
-structural reason worth stating plainly. They concern $mA$, the $m$-fold sumset \emph{with
-repetition}: nonnegative coefficients $c_a$ with $\sum_a c_a = m$ exactly, each $c_a$ unbounded, and
-the interesting regime is $m$ \emph{large}. Theorem~\ref{thm:sharp} is the opposite regime on both
-axes. It asks for a multiset $S$ drawn from $G$ of \emph{bounded size} $|S| \le M-1$, and for its
-\emph{subset sums} --- $0/1$ coefficients on the chosen multiset, each selected element used at most
-once --- to contain $M$ consecutive integers, uniformly in $G$. Neither the size bound nor the
-subset-sum (rather than $m$-fold) structure has a counterpart in the results above, and a statement
-about $mA$ for large $m$ says nothing about which sums are reachable using a \emph{bounded} number
-of summands.
+These results are adjacent to Theorem~\ref{thm:sharp} but do not imply it, for a structural reason
+best stated in coefficient space. In the normalization $\min A = 0$ used above (pad any sum with
+copies of $0$), the $m$-fold sumset of $G = \{g_1, \dots, g_k\}$ is
+\[
+  mG \;=\; \Big\{ \textstyle\sum_i c_i g_i \;:\; c_i \ge 0,\ \sum_i c_i \le m \Big\},
+\]
+a \emph{simplex} of coefficient vectors --- one total-degree cap, each $c_i$ otherwise unbounded ---
+and the interesting regime is $m$ \emph{large}. The subset sums of a multiset $S$ with $n_i$ copies
+of $g_i$ are instead
+\[
+  \ssum(S) \;=\; \Big\{ \textstyle\sum_i c_i g_i \;:\; 0 \le c_i \le n_i \Big\},
+\]
+a \emph{box}, with an independent cap on each generator. Whenever the budgets agree,
+$\sum_i n_i \le m$, the box is \emph{contained in} the simplex, so ``$mG$ contains $M$ consecutive
+integers'' is a \emph{weaker} statement about a \emph{larger} set than the conclusion of
+Theorem~\ref{thm:sharp}. The two shapes coincide only when $k = 2$ (a one-dimensional coefficient
+space), which Theorem~\ref{thm:sharp} excludes. Even the numerical agreement at $k = 3$, where the
+Granville--Walker/Lev threshold is $\max G - 1$ and our budget is $M - 1 = \max G - 1$, is
+superficial: their bound permits each of the $k-1$ nontrivial generators up to $\max G - 1$ times ---
+an implicit multiset of size $\approx 2M$ --- and fills the whole of $[0, N\max G]$, whereas
+Theorem~\ref{thm:sharp} spends a \emph{total} of at most $M-1$ summands to cover a run of exactly
+$M$. A statement about $mG$ for large $m$ thus says nothing about which sums are reachable from a
+\emph{bounded} multiset.
 
 The closer literature is not the higher-sumset one but the work on \emph{subset sums} proper. Here
 the object is right --- $0/1$ coefficients on a set or multiset --- but the known theorems differ
@@ -276,9 +291,9 @@ finite addition theorems for subset sums of S\'ark\"ozy \cite{Sarkozy89,Sarkozy9
 of $A$ contain an arithmetic progression, with a bounded but generally $> 1$ common difference (Lev
 \cite{Lev03} sharpens the constant; Chen, Mao and Zhang \cite{CMZ25} make the S\'ark\"ozy results
 constructive, with a near-linear algorithm returning the progression and a representation of each of
-its terms, but still an arithmetic progression whose common difference need not be $1$). Szemer\'edi and Vu \cite{SzemerediVu06}, and the homogeneous
+its terms, but still an arithmetic progression whose common difference need not be $1$). Alon and Freiman \cite{AlonFreiman88}, Szemer\'edi and Vu \cite{SzemerediVu06}, and the homogeneous
 strengthening of Conlon, Fox and Pham \cite{CFP21}, likewise obtain a long progression in the subset
-sums of a set $A \subseteq [n]$ with $|A| \ge c\sqrt{n}$. All of these produce a \emph{progression},
+sums of a set $A \subseteq [n]$ of comparable density ($|A| \gtrsim \sqrt{n}$, up to logarithms). All of these produce a \emph{progression},
 whose common difference cannot in general be forced to $1$ (so not an interval of consecutive
 integers), from a \emph{set} of \emph{large} cardinality --- the opposite of Theorem~\ref{thm:sharp},
 which asks for consecutive integers, from a generating set as small as $|G| = 3$, using a bounded
@@ -289,7 +304,50 @@ $\sum_{g} n_g \le M-1$ of a bounded stock $(n_g)_{g \in G}$ whose subset sums co
 integers, valid for every $G$ down to $|G| = 3$ --- exactly the feature that the density-threshold
 and large-multiplicity theorems do not provide. Lev's structural theorem on multisets with few subset sums \cite{Lev99} is on the right object --- a multiset, classified by its subset-sum set --- but characterizes the multisets whose subset sums are \emph{sparse}, an inverse problem to ours. Alon's ``Subset Sums'' \cite{Alon87} treats the inverse (avoidance) extremal problem and is orthogonal.
 
-On the strength of a documented search across these areas --- subset sums of sets and multisets,
+A third tradition asks when subset sums fill an \emph{initial} segment, or all large integers. The
+completeness theorems of Folkman, Birch, Cassels and Graham \cite{Gr64,ErGr80} show that the subset
+sums of a suitable \emph{infinite} sequence contain every sufficiently large integer; the underlying
+``filling'' step --- if $[1,S]$ is covered and the next term is $\le S+1$, the covered interval
+extends --- is a device we too use, but these are statements about infinite sequences with an
+unbounded number of summands, not a uniform bound on a finite generating set. The Frobenius and
+numerical-semigroup literature \cite{Alfonsin} gives every integer past the Frobenius number as an
+\emph{unrestricted} nonnegative combination $\sum_g c_g g$ (each $c_g \ge 0$ unbounded); but the
+Frobenius number is generically of order $(\prod G)/\max G \gg M$, and the representations use
+arbitrarily many summands, so this yields neither a length-$M$ window nor a bounded multiset. The
+postage-stamp problem and restricted additive bases \cite{Alfonsin} \emph{do} bound the number of
+summands --- the right regime --- but there the generating set is \emph{chosen} to maximize an
+initial run $[1,N]$, whereas Theorem~\ref{thm:sharp} fixes an \emph{arbitrary} $G$ and asks only for
+a run of length exactly $M$, placed anywhere. In every case the gap is the same: economy of summands
+on a \emph{given} set, against an existence statement that may spend whatever it must.
+
+Table~\ref{tab:novelty} places Theorem~\ref{thm:sharp} against these neighbours.
+
+\begin{table}[htbp]\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}p{2.9cm}p{2.35cm}p{2.2cm}p{2.35cm}p{2.15cm}@{}}
+\toprule
+Result & Object summed & Summand budget & Output & Generating set \\
+\midrule
+\textbf{Thm~\ref{thm:sharp}} (this paper) & subset sums (box $0 \le c_g \le n_g$) & uniform, $\sum_g n_g \le M-1$ & interval of $M$ consecutive integers & any $G$, $\gcd 1$, $|G| \ge 3$ \\
+Nathanson \cite{Nathanson72}; Granville--Walker \cite{GW21}; Lev \cite{Lev21} & $m$-fold sumset (simplex $\sum c_g = m$) & $m \ge \max G - |G| + 2$; per-gen.\ unbounded & interval (minus caps), length $\approx m\max G$ & any finite $G$, $\gcd 1$ \\
+S\'ark\"ozy \cite{Sarkozy89,Sarkozy94}; Szemer\'edi--Vu \cite{SzemerediVu06}; Conlon--Fox--Pham \cite{CFP21}; Alon--Freiman \cite{AlonFreiman88} & subset sums of a set & none (many elements used) & AP, common difference generally $> 1$ & density $|A| \gtrsim \sqrt{n}$ \\
+Lev \cite[Thm.~1]{Lev97} & $m$-fold sumset & $m$ large & interval of length $\max A + 1$ & finite $A$ \\
+completeness: Folkman, Birch, Graham \cite{Gr64,ErGr80} & subset sums of an infinite sequence & unbounded & all large integers & infinite, structural \\
+Frobenius / numerical semigroups \cite{Alfonsin} & nonneg.\ combinations (unbounded mult.) & unbounded & all integers past the Frobenius no.\ ($\gg M$) & finite $G$, $\gcd 1$ \\
+postage-stamp / restricted bases \cite{Alfonsin} & ${\le}\,h$-fold sumset & ${\le}\,h$ & initial run $[1,N]$ & set \emph{chosen} to maximize $N$ \\
+\bottomrule
+\end{tabular}
+\caption{Theorem~\ref{thm:sharp} against its nearest neighbours. It is the only row combining a
+uniform total budget $\sum_g n_g \le M-1$, an interval of consecutive integers, and an arbitrary
+given set down to $|G| = 3$.}\label{tab:novelty}
+\end{table}
+
+On the strength of a documented search\footnote{Conducted July 2026 over MathSciNet, zbMATH, arXiv
+and Google Scholar citation chains around the works cited here. Search terms combined \emph{subset
+sums} with \emph{interval}/\emph{consecutive integers}, and included \emph{finite addition theorem},
+\emph{complete sequence}, \emph{Frobenius}/\emph{postage-stamp}, \emph{restricted additive basis},
+and \emph{bounded-coefficient}/\emph{bounded-stock representation}; the record is in the repository
+(\texttt{paper/novelty-search.md}).} across these areas --- subset sums of sets and multisets,
 completeness and complete sequences, the Frobenius and postage-stamp problems, interval structure in
 higher sumsets, and the bounded-coefficient literature --- we have not found
 Theorem~\ref{thm:sharp}, or a result that immediately implies it (even with a worse constant), in
@@ -2711,6 +2769,11 @@ Axiom audit & three \texttt{\#print axioms} commands & \texttt{AxiomsCheck.lean}
 %======================================================================
 \begin{thebibliography}{TaYa21}
 
+\bibitem[AF88]{AlonFreiman88}
+N.~Alon and G.~Freiman,
+\emph{On sums of subsets of a set of integers},
+Combinatorica \textbf{8} (1988), no.~4, 297--306.
+
 \bibitem[Al87]{Alon87}
 N.~Alon,
 \emph{Subset sums},
@@ -2825,6 +2888,11 @@ M.~B.~Nathanson,
 \emph{Sums of finite sets of integers},
 Amer.\ Math.\ Monthly \textbf{79} (1972), no.~9, 1010--1012.
 \textsc{doi}:\,\href{https://doi.org/10.1080/00029890.1972.11993172}{10.1080/00029890.1972.11993172}.
+
+\bibitem[RA05]{Alfonsin}
+J.~L.~Ram\'irez Alfons\'in,
+\emph{The Diophantine Frobenius Problem},
+Oxford Lecture Ser.\ Math.\ Appl.\ \textbf{30}, Oxford Univ.\ Press, 2005.
 
 \bibitem[Sa89]{Sarkozy89}
 A.~S\'ark\"ozy,

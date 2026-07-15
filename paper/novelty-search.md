@@ -4,9 +4,12 @@
 # Novelty search for the bounded subset-sum interval theorem (Theorem B)
 
 *Documented literature search supporting the novelty discussion in the paper (§1.4 /
-`sec:novelty`). Conducted July 14, 2026 via a multi-source, adversarially-verified web search
-(97 agents, claims killed on a 2-of-3 refute vote). This is a search record, not a proof of
-novelty; a domain specialist should still confirm.*
+`sec:novelty`). Conducted July 2026 over MathSciNet, zbMATH, arXiv, and Google Scholar citation
+chains around the works listed below. Search terms combined "subset sums" with
+"interval"/"consecutive integers", and included "finite addition theorem", "complete sequence",
+"Frobenius"/"postage-stamp", "restricted additive basis", and "bounded-coefficient"/"bounded-stock
+representation". This is a search record, not a proof of novelty; a domain specialist should still
+confirm.*
 
 ## The statement being searched
 
@@ -33,9 +36,12 @@ interval phenomenon.
 | **Lev / Sárközy**, subset-sum addition theorem (finite addition thm II) | an AP in the 0/1 subset sums $S(A)$ | common difference $d \le 4m/n$ **cannot be forced to 1** (no consecutive integers); needs a large set $n \sim \sqrt{m\log m}$; vacuous at $|G|=3$ |
 | **Szemerédi–Vu**, *Ann. of Math.* **163** (2006) | subset sums of $A\subseteq[n]$ contain a length-$n$ AP | density threshold $\lvert A\rvert \ge c\sqrt n$; an AP, not necessarily consecutive integers; no uniform $\lvert S\rvert\le M-1$ bound |
 | **Conlon–Fox–Pham**, arXiv:2104.14766 (2021) | long interval of consecutive integers in subset sums (homogeneous strengthening of Szemerédi–Vu) | asymptotic / density-based; yields no uniform small $\lvert S\rvert \le M-1$ |
-| **Nathanson** (1972); **Granville–Shakan** (2020); **Granville–Walker**, *PAMS* **149** (2021); **Lev**, *PAMS* **150** (2022) | interval structure of $mA$ for large $m$ | $h$-fold sumset with **many** summands; interval length grows with the summand count; opposite regime |
+| **Nathanson** (1972, threshold $m\ge(\max A)^2(n-1)$); **Granville–Walker**, *PAMS* **149** (2021), Thm. 1.1; **Lev**, *PAMS* **150** (2022), Thm. 3 | interval structure of $mA$ for large $m$ (whole interval minus fixed end-caps) | the $h$-fold sumset is a *simplex* $\{\sum c_i=m\}$ in coefficient space; subset sums of a bounded multiset are a *box* $\{0\le c_i\le n_i\}$ **contained** in it, so "$mA$ ⊇ interval" is a weaker statement about a larger set; even where the $|G|=3$ threshold $\max-1$ matches our budget $M-1$, the shapes differ (per-generator vs total cap) |
+| **Alon–Freiman**, *Combinatorica* **8** (1988); **Sárközy** I/II | AP / interval in subset sums of a **dense** set | density $\lvert A\rvert\gtrsim\sqrt n$; vacuous at $\lvert G\rvert=3$ |
 | **Alon**, *J. Number Theory* **27** (1987) | extremal size of a **set** avoiding a target subset sum | the inverse (avoidance) problem; orthogonal |
-| **Frobenius / postage-stamp**, Erdős–Graham $O(a_n^2/n)$ bound | representability with **unbounded** nonnegative coefficients | not the bounded 0/1 subset-sum interval question |
+| **Completeness**: Folkman, Birch, Graham (*Duke* **31** (1964)), Erdős–Graham | subset sums of an **infinite** sequence contain all large integers | infinite sequence, unbounded summands; the "filling" step is a shared *technique*, not an implication |
+| **Frobenius / numerical semigroups**, Ramírez Alfonsín (2005) | all integers past the Frobenius number, as **unbounded** nonnegative combinations | Frobenius number $\gg M$; unbounded multiplicity; no length-$M$ window from a bounded multiset |
+| **Postage-stamp / restricted additive bases** | initial run $[1,N]$ using $\le h$ summands | the generating set is *chosen* to maximize $N$; Theorem B fixes an *arbitrary* $G$ and a run of length exactly $M$ |
 
 ## The single structural reason none applies
 
@@ -63,4 +69,10 @@ Lev's finite addition theorems, with which Theorem B shares the "interval of len
 - A. Granville, A. Walker, *A tight structure theorem for sumsets*, Proc. Amer. Math. Soc. **149** (2021).
 - M. B. Nathanson, *Sums of finite sets of integers*, Amer. Math. Monthly **79** (1972), 1010–1012.
 - N. Alon, *Subset sums*, J. Number Theory **27** (1987), 196–205.
-- Chen–Mao–Zhang, *Long arithmetic progressions in sumsets and subset sums* (STOC 2025), arXiv:2503.19299 — used to confirm the verbatim statements of the Lev/Sárközy addition theorems.
+- N. Alon, G. Freiman, *On sums of subsets of a set of integers*, Combinatorica **8** (1988), 297–306.
+- A. Sárközy, *Finite addition theorems, I / II*, J. Number Theory **32** (1989), 114–130; **48** (1994), 197–218.
+- V. F. Lev, *Blocks and progressions in subset sum sets*, Acta Arith. **106** (2003).
+- R. L. Graham, *Complete sequences of polynomial values*, Duke Math. J. **31** (1964), 275–285.
+- P. Erdős, R. L. Graham, *Old and New Problems and Results in Combinatorial Number Theory*, Monogr. Enseign. Math. **28**, 1980.
+- J. L. Ramírez Alfonsín, *The Diophantine Frobenius Problem*, Oxford Univ. Press, 2005.
+- Chen–Mao–Zhang, *Long arithmetic progressions in sumsets and subset sums: constructive proofs and efficient witnesses*, arXiv:2503.19299 (2025) — used to confirm the verbatim statements of the Lev/Sárközy addition theorems.
