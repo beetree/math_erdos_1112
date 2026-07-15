@@ -101,4 +101,51 @@ lemma isVarLacunaryWith_const_iff {r : ℕ} {b : ℕ → ℕ} :
     IsVarLacunaryWith (fun _ => r) b ↔ IsLacunaryWith r b :=
   Iff.rfl
 
+/-! ### The ℤ-to-ℕ bridge
+
+The problem asks for an *integer* `r`; the development quantifies `r : ℕ`. The two
+existence questions are equivalent. Rather than argue this only in prose, we state
+the integer form and prove the equivalence. -/
+
+/-- `B` is lacunary with an *integer* ratio `r`: the problem's literal phrasing. -/
+def IsLacunaryWithInt (r : ℤ) (b : ℕ → ℕ) : Prop :=
+  0 < b 0 ∧ StrictMono b ∧ ∀ i, r * (b i : ℤ) ≤ (b (i + 1) : ℤ)
+
+/-- `RatioWorks` with the ratio quantified over `ℤ`. -/
+def RatioWorksInt (k d₁ d₂ : ℕ) (r : ℤ) : Prop :=
+  ∀ b : ℕ → ℕ, IsLacunaryWithInt r b →
+    ∃ a : ℕ → ℕ, HasGapsIn d₁ d₂ a ∧
+      Disjoint (kFoldSumset k a) (Set.range b)
+
+/-- **The problem exactly as posed**: does *some integer* `r` work? -/
+def QuestionInt (k d₁ d₂ : ℕ) : Prop :=
+  ∃ r : ℤ, RatioWorksInt k d₁ d₂ r
+
+/-- **The ℤ-to-ℕ bridge.** Quantifying the ratio over `ℤ` gives exactly the same
+existence question as quantifying it over `ℕ`.
+
+Forward: a natural witness is an integer witness. Backward: given an integer witness
+`r`, take `r.toNat`. If `r ≤ 0` the integer ratio condition is vacuous (`B` is
+positive), so every `B` admissible at `r.toNat = 0` is admissible at `r`; if `r > 0`
+then `(r.toNat : ℤ) = r` and the two conditions coincide. -/
+theorem question_iff_questionInt (k d₁ d₂ : ℕ) :
+    Question k d₁ d₂ ↔ QuestionInt k d₁ d₂ := by
+  constructor
+  · rintro ⟨r, hr⟩
+    refine ⟨(r : ℤ), fun b hb => hr b ⟨hb.1, hb.2.1, fun i => ?_⟩⟩
+    have h := hb.2.2 i
+    exact_mod_cast h
+  · rintro ⟨r, hr⟩
+    refine ⟨r.toNat, fun b hb => hr b ⟨hb.1, hb.2.1, fun i => ?_⟩⟩
+    have hb0 : (0 : ℤ) ≤ (b i : ℤ) := Int.natCast_nonneg _
+    have hb1 : (0 : ℤ) ≤ (b (i + 1) : ℤ) := Int.natCast_nonneg _
+    by_cases h : r ≤ 0
+    · nlinarith
+    · push_neg at h
+      have hrt : (r.toNat : ℤ) = r := Int.toNat_of_nonneg h.le
+      have hn : (r.toNat) * b i ≤ b (i + 1) := hb.2.2 i
+      have hz : ((r.toNat * b i : ℕ) : ℤ) ≤ ((b (i + 1) : ℕ) : ℤ) := by exact_mod_cast hn
+      rw [Nat.cast_mul, hrt] at hz
+      exact hz
+
 end Erdos1112

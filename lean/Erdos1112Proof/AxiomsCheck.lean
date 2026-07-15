@@ -9,3 +9,5 @@ import Erdos1112Proof.Final
 #print axioms Erdos1112.erdos_1112
 #print axioms Erdos1112.erdos_1112_existence_bound
 #print axioms Erdos1112.erdos_1112_strong_nonexistence
+#print axioms Erdos1112.erdos_1112_int
+#print axioms Erdos1112.question_iff_questionInt

@@ -44,4 +44,14 @@ theorem erdos_1112 (k d₁ d₂ : ℕ) (hk : 3 ≤ k) (hd₁ : 1 ≤ d₁) (hd :
   · intro h
     exact ⟨192 * d₂, erdos_1112_existence_bound k d₁ d₂ hk hd₁ hd h⟩
 
+/-- **Erdős Problem 1112, in the problem's literal integer phrasing.**
+
+The problem asks for an *integer* `r`. `QuestionInt` quantifies `r : ℤ`; by the bridge
+`question_iff_questionInt` this is equivalent to `Question`, so the dichotomy holds
+verbatim for the integer form too. This closes the one modelling step that was
+previously argued only in prose. -/
+theorem erdos_1112_int (k d₁ d₂ : ℕ) (hk : 3 ≤ k) (hd₁ : 1 ≤ d₁) (hd : d₁ < d₂) :
+    QuestionInt k d₁ d₂ ↔ k + 1 ≤ d₂ :=
+  (question_iff_questionInt k d₁ d₂).symm.trans (erdos_1112 k d₁ d₂ hk hd₁ hd)
+
 end Erdos1112

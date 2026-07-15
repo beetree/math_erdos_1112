@@ -84,9 +84,10 @@ of modeling choices carry the weight; if you spot-check only a few, check these:
   injectivity, so summands may repeat — the intended `kA`, not the smaller distinct-summand set.
 - **Quantifier order.** `Question := ∃ r, ∀ B, ∃ A …` places `A` after `B` — "for every `B` there is
   an `A`", not the easier `∃ A ∀ B`.
-- **Ratio over `ℕ`.** Quantifying `r : ℕ` preserves the existence question for an integer ratio
-  witness; `RatioWorks.mono` (a larger `r` only shrinks the admissible class of `B`) is the
-  machine-checked piece of that reduction.
+- **Ratio over `ℕ` (machine-checked bridge).** The site says "an integer `r`"; quantifying `r : ℕ`
+  loses no existence content, and this is now proved, not just argued: the frozen file defines the
+  integer form `QuestionInt` and proves `question_iff_questionInt : Question ↔ QuestionInt`, so the
+  dichotomy holds verbatim for the literal integer phrasing (`erdos_1112_int`).
 - **A genuine, non-vacuous `↔`.** Both directions are separately witnessed — existence by the
   explicit ratio `192·d₂` when `d₂ ≥ k+1`, strong non-existence (no prescribed pointwise lower-ratio
   growth sequence for `B` suffices) when `d₂ ≤ k` — and each side of the iff is inhabited.
