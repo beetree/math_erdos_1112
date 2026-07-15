@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the LaTeX certificate tables (Appendix B) from proof/certificate-data.md.
+"""Generate the LaTeX certificate tables (Appendix B) from data/certificate-data.md.
 
 The tables are the finite layer of the (SHARP) proof; they are also transcribed into
 Lean (Sharp/TablesData.lean) and checked by the kernel. Typesetting them by hand would
@@ -15,9 +15,8 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "proof" / "certificate-data.md"
 OUT = Path(__file__).resolve().parent
+SRC = OUT / "data" / "certificate-data.md"
 
 ROW_A = re.compile(r"\((\d+),(\d+),(\d+)\)\s*(?:→|->)\s*\((\d+),(\d+),(\d+)\)")
 ROW_B = re.compile(

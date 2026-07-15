@@ -2,7 +2,7 @@
 
 A complete, machine-checked proof of the dichotomy for
 [Erdős Problem #1112](https://www.erdosproblems.com/1112). The prose proof it follows is in
-[`../proof/`](../proof); start at the [proof index](../README.md).
+the [paper](../paper/erdos1112.pdf) and the repository [README](../README.md).
 
 ## What is proved
 

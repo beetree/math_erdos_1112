@@ -24,7 +24,7 @@ Appendix B prints 158 + 178 certificate rows. These are the finite layer of the
 where the kernel decides them. Typesetting them by hand would risk a silent
 divergence between what the paper prints and what the kernel checks.
 
-So `gen-tables.py` parses the canonical source (`proof/certificate-data.md`) and,
+So `gen-tables.py` parses the canonical source (`data/certificate-data.md`) and,
 for every row, independently re-checks
 
 - **budget:** `x + Y + Z ≤ M - 1`, and
@@ -47,13 +47,13 @@ Appendix C and the Lean kernel.
 | `MANIFEST.md` | which rows serve the prose route vs the Lean route, with the 336-vs-374 reconciliation |
 | `SHA256SUMS` | checksums of the CSVs |
 
-## Relationship to the repository docs
+## Repository layout
 
-**The paper is authoritative.** The `proof/*.md` files are superseded working
-documents, retained as development notes; where they differ from the paper, the paper
-is correct. See the top-level README for the two known material divergences (Case P,
-and the balanced classification, whose rational branch is *false as stated* in the old
-prose).
+This `paper/` directory holds the paper and everything supporting it: the source and PDF, the build
+tooling, the canonical certificate data (`data/certificate-data.md`) and its machine-readable
+exports (`data/`), the two Python verification harnesses (`scripts/`), and the prior-art search
+(`novelty-search.md`). The formal proof is under `lean/`. The paper is the authoritative
+human-readable proof; the Lean development is the authoritative formal proof.
 
 `lean/` is the machine-checked proof. The paper's Appendix C maps every numbered result
 to its Lean declaration, and marks with ALT the two places where the formal development

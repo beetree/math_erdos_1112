@@ -1,6 +1,6 @@
 # Build the journal paper.
 #
-# The certificate tables (Appendix B) are GENERATED from proof/certificate-data.md
+# The certificate tables (Appendix B) are GENERATED from data/certificate-data.md
 # by gen-tables.py, which re-verifies every row (budget <= M-1, and coverage of M
 # consecutive integers by exact bitmask subset-sum) before emitting LaTeX. A failing
 # row aborts the build, so the printed tables cannot silently diverge from the data
@@ -12,7 +12,7 @@ all: erdos1112.pdf
 
 tables: table-a.tex table-b.tex
 
-table-a.tex table-b.tex: gen-tables.py ../proof/certificate-data.md
+table-a.tex table-b.tex: gen-tables.py data/certificate-data.md
 	python3 gen-tables.py
 
 erdos1112.pdf: erdos1112.tex table-a.tex table-b.tex
