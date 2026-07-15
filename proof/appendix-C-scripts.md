@@ -1,5 +1,10 @@
 *Erdős #1112 · [Index](../README.md) · Appendix C*
 
+> **Live scripts.** This file embeds the two Python harnesses, which are still current. The prose
+> commentary around them may lag the paper ([`paper/erdos1112.tex`](../paper/erdos1112.tex)), which
+> is authoritative for the mathematics.
+
+
 ## Appendix C. Verification scripts (complete source)
 
 This appendix embeds the complete, verbatim source of the two verification harnesses referenced

@@ -6,6 +6,20 @@
 *.ilean
 *.trace
 
+# LaTeX build artifacts (the PDF and generated tables are reproducible via `make`)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+paper/*.toc
+paper/build.log
+paper/table-a.tex
+paper/table-b.tex
+# paper/erdos1112.pdf is committed: it is the submission artifact.
+# It is fully reproducible with `make` (which regenerates and re-verifies the tables).
+
 # Editor / OS
 .DS_Store
 *.swp
