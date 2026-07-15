@@ -4,7 +4,7 @@ LaTeX source for the paper version of the Erdős #1112 resolution, targeting an
 arXiv preprint and journal submission.
 
 ```console
-$ make          # regenerates the tables, then builds erdos1112.pdf
+$ make          # regenerates the tables, then builds erdos1112.pdf + the supplement
 ```
 
 ## Files
@@ -13,16 +13,20 @@ $ make          # regenerates the tables, then builds erdos1112.pdf
 |---|---|
 | `erdos1112.tex` | the paper (amsart, self-contained; no `.bib` — bibliography is inline) |
 | `erdos1112.pdf` | the built paper (committed as the submission artifact; reproducible with `make`) |
-| `gen-tables.py` | generates **and re-verifies** the Appendix B certificate tables |
-| `table-a.tex`, `table-b.tex` | generated — do not edit by hand |
+| `erdos1112-supplement.tex` | supplement: the full certificate tables (Table A + Table B) |
+| `erdos1112-supplement.pdf` | the built supplement (reproducible with `make`) |
+| `gen-tables.py` | generates **and re-verifies** the certificate tables |
+| `table-a.tex`, `table-b.tex` | generated — do not edit by hand (typeset in the supplement) |
 | `Makefile` | `make` / `make clean` |
 
 ## The tables are generated, not transcribed
 
-Appendix B prints 172 + 178 certificate rows. These are the finite layer of the
-(SHARP) proof, and they are also transcribed into Lean (`Sharp/TablesData.lean`)
-where the kernel decides them. Typesetting them by hand would risk a silent
-divergence between what the paper prints and what the kernel checks.
+The article prints only the certificate definition, one worked example of each table,
+and the counts; the **full** 172 + 178 certificate rows are typeset in the supplement
+(`erdos1112-supplement.pdf`) and exported to `data/table-A.csv` / `data/table-B.csv`.
+These are the finite layer of the proof, and they are also transcribed into Lean
+(`Sharp/TablesData.lean`) where the kernel decides them. Typesetting them by hand would
+risk a silent divergence between what is printed and what the kernel checks.
 
 So `gen-tables.py` parses the canonical source (`data/certificate-data.md`) and,
 for every row, independently re-checks

@@ -8,7 +8,12 @@
 
 .PHONY: all clean tables
 
-all: erdos1112.pdf
+# The full certificate tables are typeset in the supplement (erdos1112-supplement.pdf,
+# built from supplement.tex); the article prints only definitions, worked examples and
+# counts. Both PDFs depend on the generated tables so gen-tables.py re-verifies every
+# row on every build.
+
+all: erdos1112.pdf erdos1112-supplement.pdf
 
 tables: table-a.tex table-b.tex
 
@@ -17,6 +22,9 @@ table-a.tex table-b.tex: gen-tables.py data/certificate-data.md
 
 erdos1112.pdf: erdos1112.tex table-a.tex table-b.tex
 	latexmk -pdf -interaction=nonstopmode erdos1112.tex
+
+erdos1112-supplement.pdf: erdos1112-supplement.tex table-a.tex table-b.tex
+	latexmk -pdf -interaction=nonstopmode erdos1112-supplement.tex
 
 clean:
 	latexmk -C

@@ -337,11 +337,12 @@ We are explicit about what rests on what, and we keep three layers separate.
 \begin{itemize}
 \item The \textbf{prose} is the proof. A reader is asked to accept Theorem~\ref{thm:main} on the
       strength of the argument in \S\S\ref{sec:existence}--\ref{sec:assembly}, together with the
-      certificate tables of Appendix~\ref{app:tables}, which are printed in full. All infinite
+      certificate tables (defined and exemplified in Appendix~\ref{app:tables}; listed in full in the
+      supplement and the machine-readable exports). All infinite
       mathematical content --- the whole of \S\ref{sec:existence} and \S\ref{sec:nonex}, and every
       ``all $M$'' construction in \S\ref{sec:sharp} --- is proved here in the text, and nothing in
       the argument is delegated to the formalization.
-\item The \textbf{finite layer} is exactly Tables~\ref{tab:A} and \ref{tab:B} of
+\item The \textbf{finite layer} is exactly Tables~A and B of
       Appendix~\ref{app:tables} and the bounded scans of Appendix~\ref{app:verification}, isolated
       as a single statement (Proposition~\ref{prop:FV}). Each table row is a self-certifying
       subset-sum witness, checkable by hand. The layer is corroborated by two independent Python
@@ -1596,9 +1597,9 @@ P & $a \mid b+M$ & Lemma~\ref{lem:caseP} & $(b,M)$ pairs are residue-neutral & s
 L & $e = h$ & Lemma~\ref{lem:caseL} & staircase, extended form & symbolic \\
 E & $a, \mu \ge 12$ & Lemma~\ref{lem:etabox} & the $\eta$-box $(t{-}1, Z)$ & symbolic \\
 T & $\mu \le 11$ & Lemmas~\ref{lem:T}, \ref{lem:t-tail} & staircase + linear tail; & finite \\
-  &              &                                        & \quad $172$ exceptions & \quad (Table~\ref{tab:A}) \\
-B & $a \le 11$, $\mu \ge 12$ & Table~\ref{tab:B} $+$ Lemma~\ref{lem:lift} & finite bases, lifted in $\lambda$ & finite \\
-  &                            &                                              &                                    & \quad (Table~\ref{tab:B}) \\
+  &              &                                        & \quad $172$ exceptions & \quad (Table~A) \\
+B & $a \le 11$, $\mu \ge 12$ & Table~B $+$ Lemma~\ref{lem:lift} & finite bases, lifted in $\lambda$ & finite \\
+  &                            &                                              &                                    & \quad (Table~B) \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -2005,7 +2006,7 @@ $31$ & $10$ & $12$ & $25$ & $33$ & $8$ \\
 The budget grows with slope $2/\mu' = 2/3$ while the target grows with slope $1$, so the margin
 increases at rate $1/3$ and, once positive, stays positive. On this particular line the budget in
 fact never exceeds the target --- it is merely tight at $a = 7$ --- so the line contributes \emph{no}
-rows to Table~\ref{tab:A}. Other lines are less lucky: the line $(e,h) = (5,1)$ contributes the
+rows to Table~A. Other lines are less lucky: the line $(e,h) = (5,1)$ contributes the
 Table-A rows $(4,9,10)$, $(7,12,13)$ and $(8,13,14)$, among others, where the budget does exceed
 $M-1$ and an explicit box certificate is needed. Lemma~\ref{lem:t-tail} is exactly the statement that, over all
 lines and all $a \le 3000$, this happens for precisely $172$ triples, and never for $a > 3000$.
@@ -2018,7 +2019,7 @@ lines and all $a \le 3000$, this happens for precisely $172$ triples, and never 
 \item For every line and every $a \le 3000$, the minimal variant budget was computed exactly (the
 finite enumeration of Appendix~\ref{app:verification}, whose failing triples are re-verified
 row-by-row by \texttt{gen-tables.py} and decided by the Lean kernel); it
-exceeds $M-1$ for precisely $172$ triples, all with $a \le 29$ --- these are Table~\ref{tab:A} of
+exceeds $M-1$ for precisely $172$ triples, all with $a \le 29$ --- these are Table~A of
 Appendix~\ref{app:tables} --- and each of those carries a verified modulo-$a$ box certificate with
 $Y + Z \le a-1$ and budget $\le M-1$.
 \item For each line, the cheapest variant's budget is bounded above by the linear function
@@ -2044,7 +2045,7 @@ on each of the finitely many lines and minimizing gives
 \]
 as reported by the verification harness of Appendix~\ref{app:verification}. Since $\tau - \beta$ is
 nondecreasing, it stays positive for every $a > 3000$. Hence there are no budget failures with
-$a > 3000$, and the failure set is exactly Table~\ref{tab:A}.
+$a > 3000$, and the failure set is exactly Table~A.
 \end{enumerate}
 \end{lemma}
 
@@ -2054,15 +2055,15 @@ $a > 3000$, and the failure set is exactly Table~\ref{tab:A}.
 For $a \le 11$ the classes $(a, \bar e, h)$ with $\bar e \in [1, a-1]$ and $h \in [1, a-2]$ are finite
 in number, and the members of a class differ only in $\lambda = \lfloor e/a \rfloor$. For every class
 reaching this case, the member of smallest $M$ is certified by an explicit modulo-$a$ box with
-$Y + Z \le a-1$ and budget $\le M-1$ --- Table~\ref{tab:B} of Appendix~\ref{app:tables}, comprising
+$Y + Z \le a-1$ and budget $\le M-1$ --- Table~B of Appendix~\ref{app:tables}, comprising
 $178$ classes --- and by Lemma~\ref{lem:lift} the same box certifies every larger member of the class.
 
 Which branch a triple belongs to is class-invariant for D and P, since $M \bmod a$ and
 $(b+M) \bmod a$ depend only on $(\bar e, h)$; and an $e = h$ member can only be the $\lambda = 0$
-member. Table~\ref{tab:B} lists bases accordingly, taking the first branch-B member of each class.
+member. Table~B lists bases accordingly, taking the first branch-B member of each class.
 
 \begin{example}[a Case-B class and its lift]\label{ex:caseB}
-Take the class $[a;\bar e, h] = [5; 1, 1]$. Its base, listed in Table~\ref{tab:B}, is
+Take the class $[a;\bar e, h] = [5; 1, 1]$. Its base, listed in Table~B, is
 $(a,b,M) = (5,16,17)$ with box $(x,Y,Z) = (10,1,2)$: budget $10 + 1 + 2 = 13 \le M-1 = 16$. The
 members of the class are obtained by increasing $\lambda = \lfloor e/a \rfloor$, i.e. by
 $(a,b,M) \mapsto (a,\ b+5,\ M+5)$, giving $(5,21,22)$, $(5,26,27)$, and so on --- all with the same
@@ -2073,7 +2074,7 @@ residues of $jb + kM$ modulo $5$ are unchanged, so the same representative pairs
 representative height grows by at most $(Y+Z)\,a = 3 \cdot 5 = 15$, so the budget grows by at most
 $Y + Z + 1 = 4 \le a = 5$, while the target $M-1$ grows by exactly $a = 5$. The margin therefore
 never shrinks, and one finite check at the base settles the whole infinite class. This is why
-Table~\ref{tab:B} lists $178$ \emph{classes} rather than infinitely many triples.
+Table~B lists $178$ \emph{classes} rather than infinitely many triples.
 \end{example}
 
 \begin{remark}[The descent]\label{rem:descent}
@@ -2106,8 +2107,8 @@ Given a hard-core triple $(a,b,M)$: if $a \mid M$, apply Lemma~\ref{lem:caseD}; 
 apply Lemma~\ref{lem:caseP} (Proposition~\ref{prop:caseP-exhaust}); else if $e = h$, apply
 Lemma~\ref{lem:caseL}; else if
 $a \ge 12$ and $\mu \ge 12$, apply Lemma~\ref{lem:etabox}; else if $\mu \le 11$, apply
-Lemmas~\ref{lem:T} and \ref{lem:t-tail} together with Table~\ref{tab:A}; else $a \le 11$ and
-$\mu \ge 12$, and we apply Table~\ref{tab:B} with Lemma~\ref{lem:lift}.
+Lemmas~\ref{lem:T} and \ref{lem:t-tail} together with Table~A; else $a \le 11$ and
+$\mu \ge 12$, and we apply Table~B with Lemma~\ref{lem:lift}.
 
 \emph{Exhaustiveness.} Cases D and P are disjoint lines (\S\ref{sec:hardcore}). A triple with $e = h$
 and $a \mid b+M$ would need $a \mid 3e$, possible only for $a = 3$, $e = 1$, i.e. $(3,4,5)$, where
@@ -2369,7 +2370,7 @@ $\mathrm{hi}$ is the upper endpoint of the parent interval; cf.\ Lemma~\ref{lem:
 safety for
 all $s$ by monotonicity (Lemma~\ref{lem:freegap}).
 \item Case~T is run through the two merge-robust staircase variants only, in the text and in the
-formalization alike; neither uses Lemma~\ref{lem:staircase}(c). Table~\ref{tab:A} is the failure set
+formalization alike; neither uses Lemma~\ref{lem:staircase}(c). Table~A is the failure set
 of that route, and is the only certificate table Case~T needs.
 \item The strong non-existence theorem is stated in the constructive \texttt{Set.Nonempty} form.
 \end{enumerate}
@@ -2384,13 +2385,23 @@ This work is human-orchestrated but was not carried out unaided, and we state th
 plainly, since a reader is entitled to know how the argument was produced before deciding how to
 check it.
 
-The core mathematics --- the constructions, the case analyses, and the proofs of the lemmas above ---
-was carried out by Claude (Anthropic; models Fable~5 and Opus~4.8) acting as the reasoning agent.
-GPT-5.5 (OpenAI) and Gemini~3.1 (Google DeepMind) were consulted for advice and adversarial review.
-The author directed the work, set the problem and the intermediate targets, audited the output at
-every stage, and takes full responsibility for the result, including any error that remains. The
-automated systems are tools, not authors: they do not meet any authorship criterion (they cannot take
-responsibility for the work), and they are not listed as authors.
+The core mathematics --- the constructions, the case analyses, and the proofs of the lemmas above,
+together with the Lean formalization and the drafting of this paper --- was carried out by Claude
+(Anthropic; models Fable~5 and Opus~4.8) acting as the reasoning agent, under the author's direction.
+GPT-5.5 (OpenAI) and Gemini~3.1 (Google DeepMind) were consulted for advice and for adversarial
+review of drafts.
+
+The author's role was that of principal investigator, not scribe. He selected the problem and fixed
+its formalization (the Erd\H{o}s Problems phrasing of \S\ref{sec:intro}); set the intermediate targets
+and the overall strategy; decided which candidate routes to pursue and which to abandon; ran the
+cross-model review cycles; audited each construction and proof; chose the formal statement whose
+fidelity is defended in \S\ref{sec:lean}; and made the final mathematical judgments. He takes full
+responsibility for the content, including any error that remains. We are deliberately exact about one
+point: the correctness of the argument does \emph{not} rest on a claim that a human re-derived every
+lemma unaided. It rests on the Lean kernel (\S\ref{sec:lean}), which checks the proof independently of
+who or what produced it, and on the finite certificates, which anyone can re-verify. The automated
+systems are tools, not authors --- they meet no authorship criterion and cannot take responsibility
+for the work --- and they are not listed as authors.
 
 An argument produced this way warrants more scrutiny, not less. That is the reason the development
 has been formally verified in Lean~4 (\S\ref{sec:lean}) rather than merely asserted: the kernel is
@@ -2444,9 +2455,9 @@ produced a commit; they are not a claim of scholarly authorship, which is as sta
 Everything needed to check this paper is in the repository \repo. The stable \texttt{main} branch
 carries the Lean~4 development \cite{Lean4,Mathlib}, at commit
 \texttt{73af91479694cb8eddf5b1521d80f8f7aba8d2a6}; the complete package for the present paper --- this
-\LaTeX{} source, the machine-readable certificate exports (\texttt{table-A.csv},
-\texttt{table-B.csv}, \texttt{SHA256SUMS}), the table generator/re-verifier \texttt{gen-tables.py},
-and the two Python harnesses --- is on the branch \texttt{paper-review}.
+\LaTeX{} source (article and supplement), the machine-readable certificate exports
+(\texttt{table-A.csv}, \texttt{table-B.csv}, \texttt{SHA256SUMS}), the table generator/re-verifier
+\texttt{gen-tables.py}, and the two Python harnesses --- is on the branch \texttt{paper-review}.
 
 \emph{The machine-checked proof.} A clean checkout builds with the pinned toolchain
 (\texttt{leanprover/lean4:v4.27.0}; dependency revisions fixed in \texttt{lake-manifest.json}):
@@ -2454,20 +2465,29 @@ and the two Python harnesses --- is on the branch \texttt{paper-review}.
 of \S\ref{sec:trustbase}, reporting exactly \texttt{[propext, Classical.choice, Quot.sound]} for the
 headline theorems --- including \texttt{erdos\_1112\_int}, the literal integer form.
 
-\emph{The finite layer.} The certificate tables of Appendix~\ref{app:tables} are printed in full;
-each row is a self-certifying subset-sum witness, mechanically verifiable from the printed tuple, and
-the Lean kernel re-decides all of them in the build above. Running \texttt{make} in \texttt{paper/}
-regenerates the tables from the canonical data and re-checks every row (budget $\le M-1$ and coverage
-of $M$ consecutive integers, by exact bitmask, aborting on any failure), so the printed tables cannot
-silently diverge from the checked ones. The two Python harnesses of Appendix~\ref{app:verification}
-reproduce the branch counts and scans of Proposition~\ref{prop:FV}.
+\emph{The finite layer.} The complete certificate tables are typeset in the supplementary document
+\texttt{erdos1112-supplement.pdf} and exported as \texttt{data/table-A.csv} and
+\texttt{data/table-B.csv} (digests in \texttt{data/SHA256SUMS}); the article itself gives the
+definition and a worked example of each (appendix on the certificate tables). Each row is a
+self-certifying subset-sum witness, mechanically verifiable from its tuple, and the Lean kernel
+re-decides all of them in the build above. Running \texttt{make} in \texttt{paper/} regenerates both
+the supplement and the exports from the one canonical source and re-checks every row (budget
+$\le M-1$ and coverage of $M$ consecutive integers, by exact bitmask, aborting on any failure), so no
+listing --- printed, exported, or kernel-decided --- can silently diverge. The two Python harnesses
+of Appendix~\ref{app:verification} reproduce the branch counts and scans of
+Proposition~\ref{prop:FV}.
 
 \begin{center}
 \fbox{\parbox{0.92\textwidth}{\small
-\textbf{Note for submission.} The materials above are on a working branch, not yet an immutable
-release. A tagged, archived release --- a full commit hash and a permanent DOI, with this PDF built
-from it by a clean checkout --- will accompany submission; until then the certificate data of record
-is the printed Appendix~\ref{app:tables}.}}
+\textbf{Submission artifact.} This version is archived immutably in the repository \repo\ as the
+annotated Git tag \texttt{submission-2026-07}, which resolves to a single commit carrying this
+\LaTeX{} source, the machine-readable certificate data, the generator/re-verifier, and the two Python
+harnesses; the Lean~4 development is the \texttt{main}-branch commit cited above. This PDF is built
+from the tagged commit by a clean checkout. We take the commit hash to which \texttt{submission-2026-07}
+resolves (recoverable by \texttt{git rev-parse}) as the permanent identifier of record, in preference
+to a DOI: a Git commit fixes the source, the formal proof, and the certificate data together, and is
+verifiable by anyone with the repository. The full certificate tables are typeset in the supplement
+\texttt{erdos1112-supplement.pdf} and exported to \texttt{data/}.}}
 \end{center}
 
 \appendix
@@ -2478,13 +2498,13 @@ We isolate the entire finite content of the proof as a single statement, so that
 once rather than scattered through the argument.
 
 \begin{proposition}[Finite verification]\label{prop:FV}
-The finite certificate set --- Table~\ref{tab:A}, Table~\ref{tab:B} and the Table-B supplement ---
+The finite certificate set --- Table~A, Table~B and the Table-B supplement ---
 has the following properties, each a finite, mechanical check:
 \begin{enumerate}
 \item every certificate has budget $\le M-1$;
 \item the subset sums of every certificate contain $M$ consecutive integers;
 \item the Case-T line scan ($\mu \le 11$) over $a \le 3000$ produces exactly the $172$ exceptional
-      triples of Table~\ref{tab:A}, and none for $a > 3000$;
+      triples of Table~A, and none for $a > 3000$;
 \item the Case-B base classes ($a \le 11$) are complete;
 \item the $\lambda$-lift (Lemma~\ref{lem:lift}) applies to every larger member of each Table-B class.
 \end{enumerate}
@@ -2547,8 +2567,8 @@ The formalization re-verifies the entire finite layer inside the Lean kernel, wi
 relied upon.
 
 The paper and the formalization now follow \emph{one} route through Case~T (the merge-robust
-variants; see Lemma~\ref{lem:T}), so Table~\ref{tab:A} is the same object in both, with the same
-$172$ rows. The only count that differs is a transcription artifact in Table~\ref{tab:B}, and we
+variants; see Lemma~\ref{lem:T}), so Table~A is the same object in both, with the same
+$172$ rows. The only count that differs is a transcription artifact in Table~B, and we
 record it.
 
 \begin{center}\small
@@ -2556,8 +2576,8 @@ record it.
 \toprule
 Dataset & Printed & Kernel rows & Reason for any difference \\
 \midrule
-Table~\ref{tab:A} (Case T)   & $172$ & $172$ & none: identical \\
-Table~\ref{tab:B} (Case B)   & $178$ & $202$ & $172$ main rows $+$ a $30$-row supplement. Of the \\
+Table~A (Case T)   & $172$ & $172$ & none: identical \\
+Table~B (Case B)   & $178$ & $202$ & $172$ main rows $+$ a $30$-row supplement. Of the \\
                              &       &       & \quad supplement, $24$ duplicate main rows and $6$ \\
                              &       &       & \quad are new bases (the six diagonal $\bar e = h$ \\
                              &       &       & \quad classes of Remark~\ref{rem:descent}); so \\
@@ -2570,7 +2590,7 @@ Total                        & $350$ & $374$ & the $24$ duplicated Table-B rows 
 \end{tabular}
 \end{center}
 
-So the whole difference is the $24$ rows that the Lean transcription of Table~\ref{tab:B} carries
+So the whole difference is the $24$ rows that the Lean transcription of Table~B carries
 twice. There is no longer any route divergence in the certificate data: the prose proof and the
 formal proof use the same lemmas, the same variants and the same tables. All of this
 data is exported in machine-readable form (\S\ref{sec:data}).
@@ -2578,10 +2598,10 @@ data is exported in machine-readable form (\S\ref{sec:data}).
 The $a \le 3000$ Case-T scan is likewise redone as kernel \texttt{decide} sweeps, in chunks of
 $1000$ values.
 
-Finally, the tables printed in Appendix~\ref{app:tables} are generated mechanically from the same
-source data that the Lean development transcribes, and every printed row is re-verified at
-typesetting time (budget and coverage, by exact bitmask), so the printed tables cannot silently
-diverge from the checked ones.
+Finally, the certificate tables (typeset in full in the supplement, exported to \texttt{data/}, and
+exemplified in Appendix~\ref{app:tables}) are generated mechanically from the same source data that
+the Lean development transcribes, and every row is re-verified at generation time (budget and
+coverage, by exact bitmask), so no listing can silently diverge from the checked one.
 
 %----------------------------------------------------------------------
 \section{The certificate tables}\label{app:tables}
@@ -2605,14 +2625,22 @@ $5$, contain the run $[17,25]$, which is $9 = M$ consecutive integers. That sing
 exactly what the checker performs on each row.
 \end{example}
 
-Table~\ref{tab:A} lists the $172$ exceptional lines of Case T (Lemma~\ref{lem:t-tail}).
-Table~\ref{tab:B} lists one base per class $(a, \bar e, h)$ for Case B, extended to all larger members
-by Lemma~\ref{lem:lift}; the supplement re-bases the six diagonal classes of
-Remark~\ref{rem:descent}.
+Table~A lists the $172$ exceptional lines of Case T (Lemma~\ref{lem:t-tail}), all with $a \le 29$.
+Table~B lists one base per class $(a, \bar e, h)$ for Case B, extended to all larger members by
+Lemma~\ref{lem:lift} (the Lean transcription additionally re-bases the six diagonal classes of
+Remark~\ref{rem:descent}). A representative Table-B row is the class $[5;1,1]$ with base
+$(a,b,M) = (5,16,17)$ and box $(x,Y,Z) = (10,1,2)$: budget $10+1+2 = 13 \le M-1 = 16$, and the parts
+$16j + 17k$ ($j \le 1$, $k \le 2$) realize every residue modulo $5$, which the copies of $5$ lift to
+a run of $17 = M$ consecutive integers (cf.\ Example~\ref{ex:caseB}).
 
-\input{table-a}
-
-\input{table-b}
+Rather than fill several pages of the article with $172 + 178$ dense rows --- each an independently
+machine-checkable tuple, of little value read by eye --- we provide the \emph{complete} tables as
+supplementary material: the typeset listing \texttt{erdos1112-supplement.pdf} (built by the same
+\texttt{make}), and the machine-readable exports \texttt{data/table-A.csv} and \texttt{data/table-B.csv},
+whose SHA-256 digests are recorded in \texttt{data/SHA256SUMS}. All are generated from the one
+canonical source and re-verified row by row by \texttt{gen-tables.py} (\S\ref{sec:data}), and the same
+rows are decided by the Lean kernel (\S\ref{sec:trustbase}); the tables are thus present in full,
+simply not inlined here.
 
 
 %----------------------------------------------------------------------
