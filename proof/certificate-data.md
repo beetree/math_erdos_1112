@@ -1,4 +1,4 @@
-*Erdős #1112 · [Index](../README.md) · Appendix B*
+*Erdős #1112 · [Index](../README.md) · Certificate data*
 
 > **Canonical data.** This file is the *source of truth* for the certificate tables. It is parsed by
 > [`paper/gen-tables.py`](../paper/gen-tables.py), which re-verifies every row (budget and coverage)
@@ -152,4 +152,4 @@ diagonal $\bar e = h$ classes of §III.8.
 
 
 ---
-◀ [Attribution & status](attribution-and-status.md) · **Next ▶** [Appendix C — Verification scripts](appendix-C-scripts.md)
+**Verification scripts:** [`verification-scripts.md`](verification-scripts.md) · **Paper:** [`../paper/erdos1112.pdf`](../paper/erdos1112.pdf) (Appendix B)

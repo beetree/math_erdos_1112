@@ -8,10 +8,10 @@ From [erdosproblems.com/1112](https://www.erdosproblems.com/1112) (verbatim):
 > $d_1 \le a_{i+1} - a_i \le d_2$ for all $i \ge 1$ and $(kA) \cap B = \emptyset$, where $kA$ is the
 > $k$-fold sumset?
 
-Below is a complete resolution, in two forms:
+Below is a complete resolution in two forms — one machine-checked, one human-readable:
 
 - a **[Lean proof](#lean-proof)** — the machine-checked formalization, with a one-command way to verify it yourself;
-- a **[paper proof](#paper-proof)** — the human-readable argument, with each step linked to the Lean file that checks it.
+- a **[paper](#paper-proof)** — the human-readable proof, as a PDF ([`paper/erdos1112.pdf`](paper/erdos1112.pdf), source [`paper/erdos1112.tex`](paper/erdos1112.tex)), with every result mapped to the Lean file that checks it.
 
 ## ⚠ Which document is authoritative?
 
@@ -23,10 +23,10 @@ Markdown write-up; they are now **reduced to pointers** to the paper, so that no
 the proof can drift out of sync with it or with the Lean development.
 
 Three files in `proof/` are *not* pointers — they are live supporting material:
-[`appendix-B-tables.md`](proof/appendix-B-tables.md), the canonical certificate data (parsed and
-re-verified by `paper/gen-tables.py`); [`appendix-C-scripts.md`](proof/appendix-C-scripts.md), which
-embeds the two Python harnesses; and [`novelty-search.md`](proof/novelty-search.md), the documented
-prior-art search for the subset-sum theorem.
+[`certificate-data.md`](proof/certificate-data.md), the canonical certificate data (parsed and
+re-verified by `paper/gen-tables.py`); [`verification-scripts.md`](proof/verification-scripts.md),
+which embeds the two Python harnesses; and [`novelty-search.md`](proof/novelty-search.md), the
+documented prior-art search for the subset-sum theorem.
 
 ---
 
@@ -167,7 +167,7 @@ $\max(G) = M$ admits a multiset of at most $M - 1$ of its elements whose subset 
 consecutive integers. Proved in full via a six-branch decision tree (D / P / L / E / T / B). Its
 *finite certificate layer* is cross-checked by two separate Python harnesses (sharing no code) and
 by the Lean kernel.
-→ **Paper:** §4 · **Lean:** [`lean/Erdos1112Proof/Sharp/`](lean/Erdos1112Proof/Sharp) · **Reproduce (Python):** [Appendix C](proof/appendix-C-scripts.md)
+→ **Paper:** §4 · **Lean:** [`lean/Erdos1112Proof/Sharp/`](lean/Erdos1112Proof/Sharp) · **Reproduce (Python):** [verification scripts](proof/verification-scripts.md)
 
 ### 4 · Assembly
 The three Lean-facing theorems — `erdos_1112`, `erdos_1112_existence_bound`, and
@@ -184,8 +184,8 @@ from the two halves.
 | II — Non-existence | §3 | [`NonEx/`](lean/Erdos1112Proof/NonEx) |
 | III — bounded subset-sum theorem | §4 | [`Sharp/`](lean/Erdos1112Proof/Sharp) |
 | IV — Assembly | §5 | [`Final.lean`](lean/Erdos1112Proof/Final.lean) |
-| Verification / trust base | §6, Appendix A · [Python harnesses](proof/appendix-C-scripts.md) | [`AxiomsCheck.lean`](lean/Erdos1112Proof/AxiomsCheck.lean) |
-| Certificate tables | Appendix B · [canonical data](proof/appendix-B-tables.md) | — |
+| Verification / trust base | §6, Appendix A · [Python harnesses](proof/verification-scripts.md) | [`AxiomsCheck.lean`](lean/Erdos1112Proof/AxiomsCheck.lean) |
+| Certificate tables | Appendix B · [canonical data](proof/certificate-data.md) | — |
 
 The full lemma-by-lemma correspondence (paper result → Lean declaration → file) is in
 Appendix C of the paper.

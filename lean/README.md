@@ -19,10 +19,9 @@ carries the definitions and is never edited by the proof) and proved in the
 [`Erdos1112Proof/`](Erdos1112Proof) development (50 files):
 [`Erdos1112Proof/Final.lean`](Erdos1112Proof/Final.lean) states each theorem directly in terms of the
 single frozen definitions — so the audited statement is literally what is proved, with no separate
-copy to drift — and delegates the proofs to `namespace Erdos1112.Proof`. See the
-[Statement faithfulness](../proof/statement-faithfulness.md) section for why the frozen statement
-encodes the informal problem, and [`proof/appendix-D-lean.md`](../proof/appendix-D-lean.md) for the
-trust base and the full paper→Lean correspondence map.
+copy to drift — and delegates the proofs to `namespace Erdos1112.Proof`. See §6 of the
+paper ([`../paper/erdos1112.pdf`](../paper/erdos1112.pdf)) for why the frozen statement encodes the
+informal problem, the trust base, and the full paper→Lean correspondence map (Appendix C).
 
 ## The proof development
 
@@ -80,12 +79,12 @@ Two declarations are heavyweight and set a raised heartbeat budget locally
 
 Each part of the [prose proof](../README.md) maps to a directory here:
 
-| Prose | Lean |
+| Paper | Lean |
 |---|---|
-| [Part I — Existence](../proof/01-existence.md) | [`Erdos1112Proof/Existence/`](Erdos1112Proof/Existence) — `existence_bound`, `exists_safe_subinterval` |
-| [Part II — Non-existence](../proof/02-nonexistence.md) | [`Erdos1112Proof/NonEx/`](Erdos1112Proof/NonEx) — certificate, slot lemma, two-letter core, Sturmian/Morse–Hedlund |
-| [Part III — (SHARP)](../proof/03-sharp.md) | [`Erdos1112Proof/Sharp/`](Erdos1112Proof/Sharp) — the D/P/L/E/T/B case files, `hardcore_cases`, `sharp` |
-| [Part IV — Assembly](../proof/04-assembly.md) | [`Erdos1112Proof/Final.lean`](Erdos1112Proof/Final.lean) — the three theorems |
+| §2 — Existence | [`Erdos1112Proof/Existence/`](Erdos1112Proof/Existence) — `existence_bound`, `exists_safe_subinterval` |
+| §3 — Non-existence | [`Erdos1112Proof/NonEx/`](Erdos1112Proof/NonEx) — certificate, slot lemma, two-letter core, Sturmian/Morse–Hedlund |
+| §4 — bounded subset-sum theorem | [`Erdos1112Proof/Sharp/`](Erdos1112Proof/Sharp) — the D/P/L/E/T/B case files, `hardcore_cases`, `sharp` |
+| §5 — Assembly | [`Erdos1112Proof/Final.lean`](Erdos1112Proof/Final.lean) — the three theorems |
 
-The full lemma-by-lemma correspondence table is in
-[`proof/appendix-D-lean.md` §D.4](../proof/appendix-D-lean.md).
+The full lemma-by-lemma correspondence table is Appendix C of the
+paper ([`../paper/erdos1112.pdf`](../paper/erdos1112.pdf)).

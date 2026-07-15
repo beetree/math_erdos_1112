@@ -1,4 +1,4 @@
-*Erdős #1112 · [Index](../README.md) · Appendix C*
+*Erdős #1112 · [Index](../README.md) · Verification scripts*
 
 > **Live scripts.** This file embeds the two Python harnesses, which are still current. The prose
 > commentary around them may lag the paper ([`paper/erdos1112.tex`](../paper/erdos1112.tex)), which
@@ -1534,4 +1534,4 @@ TABLE B-supplement: classes (a<=11, ebar=h) whose lambda=0 member is Lg; base at
 
 
 ---
-◀ [Appendix B — Certificate tables](appendix-B-tables.md) · **Next ▶** [Appendix D — Formal verification (Lean)](appendix-D-lean.md)
+**Certificate data:** [`certificate-data.md`](certificate-data.md) · **Paper:** [`../paper/erdos1112.pdf`](../paper/erdos1112.pdf)

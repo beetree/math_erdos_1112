@@ -24,7 +24,7 @@ Appendix B prints 158 + 178 certificate rows. These are the finite layer of the
 where the kernel decides them. Typesetting them by hand would risk a silent
 divergence between what the paper prints and what the kernel checks.
 
-So `gen-tables.py` parses the canonical source (`proof/appendix-B-tables.md`) and,
+So `gen-tables.py` parses the canonical source (`proof/certificate-data.md`) and,
 for every row, independently re-checks
 
 - **budget:** `x + Y + Z ≤ M - 1`, and
