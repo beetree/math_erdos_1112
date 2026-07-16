@@ -1559,17 +1559,40 @@ $\gcd(d, M) = 1$ automatically --- then $m(G) \le M-1$.
 \end{lemma}
 
 \begin{proof}
-Write $a = d\alpha$, $b = d\beta$. Take $x = \beta - 1$ copies of $a$, $y = M - d - \beta + 1$ copies
-of $b$, and $d-1$ copies of $M$: the budget is exactly $M-1$. The $(a,b)$-grid gives, by
-Lemma~\ref{lem:twogen} scaled by $d$, an arithmetic progression of step $d$ and length
-$L = \alpha x + \beta y - 2(\alpha-1)(\beta-1) + 1$. The requirement $y \ge \alpha - 1$ follows from
-$M \ge d\beta + 1$ via $(d-1)(\beta-1) \ge \alpha - 2$. Moreover $L \ge M+1$: this is monotone in
-$M$, and at the worst case $M = d\beta + 1$ it reduces to
-$d\beta(\beta - 2) - \beta^2 - \alpha\beta + \alpha + 4\beta - 3 \ge 0$, which for $d \ge 2$ follows
-from $\beta(\beta - \alpha) + \alpha - 3 \ge 0$, true for all $1 \le \alpha < \beta$. Bridging the
-$d$ residues by $kM$ with $k \le d-1$ (using $\gcd(d,M) = 1$) covers
-$[\, d C_{\alpha\beta} + (d-1)M,\ d C_{\alpha\beta} + (L-1)d \,]$, of length $\ge M$; the requirement
-$(L-1)d \ge dM - 1$ is equivalent, both sides being considered modulo $d$, to $L \ge M+1$.
+Write $a = d\alpha$, $b = d\beta$ with $\gcd(\alpha,\beta) = 1$ and $1 \le \alpha < \beta$; note
+$\gcd(d,M) = 1$, since any common factor would divide $\gcd(a,b,M) = 1$.
+
+\emph{The multiset and its budget.} Use
+\[
+  x = \beta - 1 \ \text{copies of } a, \qquad
+  y = M - d - \beta + 1 \ \text{copies of } b, \qquad
+  d - 1 \ \text{copies of } M .
+\]
+Its size is $x + y + (d-1) = (\beta-1) + (M-d-\beta+1) + (d-1) = M-1$, meeting the budget exactly.
+
+\emph{The two-generator grid.} As $a = d\alpha$ and $b = d\beta$, the sub-sums using only $a$'s and
+$b$'s are $d$ times the $(\alpha,\beta)$-grid. Lemma~\ref{lem:twogen} needs $x \ge \beta-1$ (here an
+equality) and $y \ge \alpha-1$; the latter holds because $M > b = d\beta$ gives $M \ge d\beta+1$ and
+so $y \ge (d-1)(\beta-1)+1 \ge \beta > \alpha-1$. Writing $C := (\alpha-1)(\beta-1)$, that lemma
+scaled by $d$ yields an arithmetic progression of step $d$,
+\[
+  d \cdot [\,C,\ \alpha x + \beta y - C\,], \qquad
+  \text{of } L := \alpha x + \beta y - 2C + 1 \ \text{terms.}
+\]
+
+\emph{The grid is long enough: $L \ge M+1$.} $L$ increases with $M$ (through $y$), so it suffices to
+check the smallest admissible $M = d\beta+1$, where $L \ge M+1$ reduces to
+\[
+  d\beta(\beta-2) - \beta^2 - \alpha\beta + \alpha + 4\beta - 3 \;\ge\; 0 ,
+\]
+and for $d \ge 2$ this follows from $\beta(\beta-\alpha) + \alpha - 3 \ge 0$, true for all
+$1 \le \alpha < \beta$.
+
+\emph{Bridging the $d$ residues.} The $d-1$ copies of $M$ contribute $kM$ for $0 \le k \le d-1$;
+since $\gcd(d,M) = 1$ these run through all $d$ residues modulo $d$, so adding them to the step-$d$
+grid fills the gaps between consecutive grid points. The result is the solid block
+$[\, dC + (d-1)M,\ dC + (L-1)d \,]$ of consecutive integers, of length $\ge M$: the requirement
+$(L-1)d \ge dM - 1$ is, reducing both sides modulo $d$, exactly $L \ge M+1$, just shown.
 \end{proof}
 
 \begin{lemma}[Structure of minimal alphabets]\label{lem:minimal-struct}
@@ -1597,31 +1620,40 @@ If $G$ is minimal with $|G| \ge 4$, then $m(G) \le M-1$.
 \end{lemma}
 
 \begin{proof}
-Remove the smallest element $a$. Then $G' := G \setminus \{a\}$ has $\gcd(G') =: \delta \ge 2$ by
-minimality, contains $M$, and $H := G'/\delta$ is an alphabet with $\gcd(H) = 1$,
-$\max H = M/\delta < M$ and $|H| \ge 3$. By strong induction on $M$, a run of length $\max H$ costs
-$\le M/\delta - 1$ within $H$. Graham-filling with $a' := \min H$ up to length
-$\ell := \lceil (M - 1 + (\delta-1)a)/\delta \rceil + 1$ costs
-$\le (M/\delta - 1) + \lceil (\ell - M/\delta)/a' \rceil$. Scaling by $\delta$ and bridging the
-$\delta$ residues with $k \le \delta - 1$ copies of $a$ (legitimate since $\gcd(a,\delta) = 1$,
-because $\gcd(G) = 1$) covers an interval of length $\ge M$ at total budget
+\emph{Reduce to a smaller alphabet.} Remove the smallest element $a$. Then $G' := G \setminus \{a\}$
+has $\gcd(G') =: \delta \ge 2$ by minimality, still contains $M$, and $H := G'/\delta$ is an alphabet
+with $\gcd(H) = 1$, $\max H = M/\delta < M$ and $|H| \ge 3$.
+
+\emph{Induction, then Graham-fill.} By strong induction on $M$, a run of $\max H$ consecutive
+integers is covered within $H$ at cost $\le M/\delta - 1$. Put $a' := \min H$ and extend this run by
+Graham-filling with copies of $a'$ up to length $\ell := \lceil (M-1+(\delta-1)a)/\delta \rceil + 1$;
+the extra copies cost $\le \lceil (\ell - M/\delta)/a' \rceil$, so a run of $\ell$ consecutive
+integers in $H$ costs $\le (M/\delta - 1) + \lceil (\ell - M/\delta)/a' \rceil$.
+
+\emph{Scale and bridge.} Multiplying by $\delta$ turns this run into an arithmetic progression of
+step $\delta$; the $\delta$ residues modulo $\delta$ are bridged by $k \le \delta-1$ copies of $a$
+(legitimate since $\gcd(a,\delta) = 1$, because $\gcd(G) = 1$), which fills the gaps and covers a
+solid interval of length $\ge M$, at total budget
 \[
   T \;\le\; \Big(\frac{M}{\delta} - 1\Big)
         + \Big\lceil \frac{\ell - M/\delta}{a'} \Big\rceil
         + (\delta - 1).
 \]
-Now $a < \min G' = \delta a'$, i.e. $a \le \delta a' - 1$, whence
-$\ell - M/\delta \le (\delta-1)a/\delta + 2 < (\delta-1)a' + 2$ and
-$\lceil (\ell - M/\delta)/a' \rceil \le \delta + 1$. So $T \le M/\delta + 2\delta - 1$, and
+
+\emph{Bound the middle term.} From $a < \min G' = \delta a'$, i.e. $a \le \delta a' - 1$, we get
+$\ell - M/\delta \le (\delta-1)a/\delta + 2 < (\delta-1)a' + 2$, hence
+$\lceil (\ell - M/\delta)/a' \rceil \le \delta + 1$ and $T \le M/\delta + 2\delta - 1$.
+
+\emph{Close.} Then
 \[
   T \le M - 1
   \iff M\Big(1 - \tfrac1\delta\Big) \ge 2\delta
   \iff M \ge \frac{2\delta^2}{\delta - 1}.
 \]
-For $\delta \ge 3$ we have $2\delta^2/(\delta-1) \le 3\delta \le M$, since $G'$ contains at least
-three distinct multiples of $\delta$. For $\delta = 2$ the requirement is $M \ge 8$, which holds
-since every element is $\ge 30$ by Lemma~\ref{lem:minimal-struct}. The bound never divides by $a'$
-except through $a \le \delta a' - 1$, so the case $a' = 1$ is subsumed.
+For $\delta \ge 3$, $2\delta^2/(\delta-1) \le 3\delta \le M$, since $G'$ contains at least three
+distinct multiples of $\delta$. For $\delta = 2$ the requirement is $M \ge 8$, which holds since every
+element is $\ge 30$ (Lemma~\ref{lem:minimal-struct}). The bound uses $a'$ only through
+$a \le \delta a' - 1$, so the case $a' = 1$ is subsumed.
 \end{proof}
 
 \subsection{The hard core}\label{sec:hardcore}
