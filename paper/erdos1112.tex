@@ -296,35 +296,14 @@ argument (Lemma~\ref{lem:slot}) that reduces matters exactly to Lemma~\ref{lem:s
 The complete dichotomy --- all three theorems, including the strong non-existence form --- has been
 formalized in Lean~4 and machine-checked. The development is \texttt{sorry}-free and depends only on
 Lean's three standard foundational axioms (\texttt{propext}, \texttt{Classical.choice},
-\texttt{Quot.sound}); in particular it uses no \texttt{native\_decide}, so every finite check is
-discharged by the trusted kernel rather than by compiled code. Section~\ref{sec:lean} states the
-formal encoding, argues its faithfulness to the informal problem, and records the trust base;
-Appendix~\ref{app:lean} maps each load-bearing result of this paper to its Lean declaration.
-
-We are explicit about what rests on what, and we keep three layers separate.
-\begin{itemize}
-\item The \textbf{prose} is the proof. A reader is asked to accept Theorem~\ref{thm:main} on the
-      strength of the argument in \S\S\ref{sec:existence}--\ref{sec:assembly}, together with the
-      certificate tables (defined and exemplified in Appendix~\ref{app:tables}; listed in full in the
-      supplement and the machine-readable exports). All infinite
-      mathematical content --- the whole of \S\ref{sec:existence} and \S\ref{sec:nonex}, and every
-      ``all $M$'' construction in \S\ref{sec:sharp} --- is proved here in the text, and nothing in
-      the argument is delegated to the formalization.
-\item The \textbf{finite layer} is exactly Tables~A and B of
-      Appendix~\ref{app:tables} and the bounded scans of Appendix~\ref{app:verification}, isolated
-      as a single statement (Proposition~\ref{prop:FV}). Each table row is a self-certifying
-      subset-sum witness, checkable by hand. The layer is corroborated by two independent Python
-      harnesses that share no code, and re-decided inside the Lean kernel.
-\item The \textbf{Lean development} certifies the entire argument, finite and infinite together.
-\end{itemize}
-Accordingly, every step of this paper falls into exactly one of three auditable categories: an
-ordinary handwritten proof in the text; a finite certificate check with all data supplied
-(Appendices~\ref{app:verification}--\ref{app:tables}); or a Lean-verified statement with an exact
-theorem name and source file (Appendix~\ref{app:lean}). The Lean development is \emph{not} used as
-an oracle for unstated mathematics.
-
-A note on the origin of this work, and on the division of labour between the author and the
-automated systems used, is given in \S\ref{sec:provenance}.
+\texttt{Quot.sound}), with no \texttt{native\_decide}, so every finite check is discharged by the
+trusted kernel. The argument separates into three auditable layers: the \textbf{prose} proof of
+\S\S\ref{sec:existence}--\ref{sec:assembly}, which carries all infinite content; the \textbf{finite
+layer} --- the certificate tables and bounded scans, isolated as Proposition~\ref{prop:FV}, each row
+a self-certifying witness (also re-checked by two independent Python harnesses and re-decided in the
+kernel); and the \textbf{Lean development}, certifying both together. Section~\ref{sec:lean} gives the
+formal encoding and trust base, and Appendix~\ref{app:lean} maps each result to its Lean declaration.
+The division of labour with the automated systems used is set out in \S\ref{sec:provenance}.
 
 \subsection{Map of the proof}\label{sec:map}
 The two halves are unrelated, and the reader may take them in either order.
