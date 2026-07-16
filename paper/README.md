@@ -48,7 +48,7 @@ Appendix C and the Lean kernel.
 |---|---|
 | `table-A.csv` | the 172 Case-T certificate rows |
 | `table-B.csv` | the 178 Case-B class bases |
-| `MANIFEST.md` | printed rows vs kernel rows, with the 350-vs-374 reconciliation (paper §6) |
+| `MANIFEST.md` | printed rows vs kernel rows (all agree at 350 unique certificates) |
 | `SHA256SUMS` | checksums of the CSVs |
 
 ## Repository layout

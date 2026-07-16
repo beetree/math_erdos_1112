@@ -12,20 +12,17 @@ Y of b, Z of M) contain M consecutive integers, by exact bitmask.
 Case P contributes NO certificate rows: it is closed in prose (one closed-form
 multiset for the whole line, plus the single triple (3,4,5) checked inline).
 
-## Printed rows vs kernel rows (the paper's Section 6 reconciliation)
+## Printed rows vs kernel rows
 
-The paper and the Lean development follow ONE route through Case T, so Table A is the
-same 172 rows in both. Table B differs only by a transcription artifact: the
-kernel decides a 30-row supplement on top of the 172 main rows, of which 24
-duplicate main rows and 6 are new bases (the six diagonal ebar = h classes), so
-172 + 6 = 178 DISTINCT classes are what the paper prints.
+The printed tables and the kernel-decided data agree exactly: 172 Case-T rows,
+178 distinct Case-B classes, 350 certificates in all (Case P
+contributes none). The only internal detail is that Lean stores the 172 Table-A
+rows as two lists -- `certTableA` (158) and a 14-row supplement `tSuppT` discharging the
+merge-robust variant -- whose union is Table A.
 
 | | Printed | Kernel rows |
 |---|---:|---:|
 | Table A (Case T) | 172 | 172 |
-| Table B (Case B) | 178 | 202 |
+| Table B (Case B) | 178 | 178 |
 | Case P | 0 | 0 |
-| **Total** | **350** | **374** |
-
-The 350-vs-374 difference is exactly the 24 duplicated Table-B rows
-(178 printed classes + 24 duplicates + Table A's 172 = 374).
+| **Total** | **350** | **350** |

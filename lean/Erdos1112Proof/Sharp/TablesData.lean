@@ -2,10 +2,8 @@
 Certificate data for Part III, as 6-tuples `(a, b, M, x, Y, Z)`:
   * `certTableA` — the 158 T-line exceptions (paper §III.7 / Lemma 3.18,
     Appendix B Table A), each used at exactly its own triple;
-  * `certTableB` — the 202 class-base rows (paper §III.8, Appendix B
-    Table B: 172 rows, plus the 30 B-supplement rows re-basing the
-    λ=0-routes-to-CaseL classes; union = 178 distinct classes), each the
-    root of a λ-lift chain (Lemma 3.4).
+  * `certTableB` — the 178 class-base rows (paper §III.8, Appendix B
+    Table B), each the root of a λ-lift chain (Lemma 3.4).
 Every row is kernel-decided against `frameCertOK` — validity, budget and
 lift-stability (`Y+Z+1 ≤ a`) in one decided property (no native_decide).
 -/
@@ -347,36 +345,13 @@ def certTableB : List (ℕ × ℕ × ℕ × ℕ × ℕ × ℕ) := [
   (11, 21, 28, 13, 4, 2),
   (11, 21, 29, 12, 3, 2),
   (11, 21, 30, 13, 2, 3),
-  (4, 17, 18, 13, 1, 1),
-  (5, 16, 17, 10, 1, 2),
-  (5, 17, 19, 12, 1, 2),
-  (5, 18, 21, 13, 1, 2),
-  (6, 19, 20, 13, 1, 2),
-  (7, 22, 23, 13, 1, 3),
-  (7, 23, 25, 15, 1, 3),
-  (7, 17, 20, 12, 1, 3),
-  (7, 18, 22, 13, 1, 3),
-  (7, 19, 24, 14, 1, 3),
-  (8, 25, 26, 16, 1, 3),
-  (8, 19, 22, 14, 1, 3),
-  (8, 21, 26, 16, 1, 3),
-  (9, 28, 29, 16, 1, 4),
-  (9, 20, 22, 13, 1, 4),
-  (9, 22, 26, 15, 1, 4),
-  (9, 23, 28, 16, 1, 4),
   (9, 25, 32, 18, 1, 4),
-  (10, 21, 22, 13, 1, 4),
-  (10, 23, 26, 16, 1, 4),
   (10, 27, 34, 20, 1, 4),
-  (11, 23, 24, 13, 1, 5),
-  (11, 24, 26, 15, 1, 5),
-  (11, 25, 28, 16, 1, 5),
-  (11, 26, 30, 17, 1, 5),
-  (11, 27, 32, 18, 1, 5),
   (11, 28, 34, 19, 1, 5),
   (11, 29, 36, 20, 1, 5),
   (11, 30, 38, 21, 1, 5),
-  (11, 31, 40, 22, 1, 5)]
+  (11, 31, 40, 22, 1, 5)
+]
 
 set_option maxRecDepth 1000000 in
 theorem certTableA_ok : certTableA.all frameCertOK = true := by decide

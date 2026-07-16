@@ -2638,34 +2638,14 @@ The formalization re-verifies the entire finite layer inside the Lean kernel, wi
 \texttt{native\_decide} and no external process, so the Python harnesses are corroborated rather than
 relied upon.
 
-The paper and the formalization now follow \emph{one} route through Case~T (the merge-robust
-variants; see Lemma~\ref{lem:T}), so Table~A is the same object in both, with the same
-$172$ rows. The only count that differs is a transcription artifact in Table~B, and we
-record it.
-
-\begin{center}\small
-\begin{tabular}{@{}lrrl@{}}
-\toprule
-Dataset & Printed & Kernel rows & Reason for any difference \\
-\midrule
-Table~A (Case T)   & $172$ & $172$ & none: identical \\
-Table~B (Case B)   & $178$ & $202$ & $172$ main rows $+$ a $30$-row supplement. Of the \\
-                             &       &       & \quad supplement, $24$ duplicate main rows and $6$ \\
-                             &       &       & \quad are new bases (the six diagonal $\bar e = h$ \\
-                             &       &       & \quad classes of Remark~\ref{rem:descent}); so \\
-                             &       &       & \quad $172 + 6 = 178$ \emph{distinct} classes, which \\
-                             &       &       & \quad is what is printed \\
-Case P                       & $0$   & $0$   & closed in prose; no certificate needed \\
-\midrule
-Total                        & $350$ & $374$ & the $24$ duplicated Table-B rows \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-So the whole difference is the $24$ rows that the Lean transcription of Table~B carries
-twice. There is no longer any route divergence in the certificate data: the prose proof and the
-formal proof use the same lemmas, the same variants and the same tables. All of this
-data is exported in machine-readable form (\S\ref{sec:data}).
+The printed tables and the kernel-decided data now agree exactly: $172$ Case-T rows and $178$
+distinct Case-B classes, $350$ certificates in all, with Case~P contributing none (it is closed in
+prose). The prose proof and the formal proof use the same lemmas, the same merge-robust Case-T
+variants (Lemma~\ref{lem:T}), and the same tables; there is no route divergence in the certificate
+data. The only bookkeeping detail is internal to the Lean sources: the $172$ Table-A rows are stored
+as two lists --- \texttt{certTableA} ($158$ rows) and a $14$-row supplement \texttt{tSuppT} that
+discharges the merge-robust variant --- whose union is the printed Table~A. All of this data is
+exported in machine-readable form (\S\ref{sec:data}).
 
 The $a \le 3000$ Case-T scan is likewise redone as kernel \texttt{decide} sweeps, in chunks of
 $1000$ values.

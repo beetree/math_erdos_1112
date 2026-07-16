@@ -188,23 +188,20 @@ Y of b, Z of M) contain M consecutive integers, by exact bitmask.
 Case P contributes NO certificate rows: it is closed in prose (one closed-form
 multiset for the whole line, plus the single triple (3,4,5) checked inline).
 
-## Printed rows vs kernel rows (the paper's Section 6 reconciliation)
+## Printed rows vs kernel rows
 
-The paper and the Lean development follow ONE route through Case T, so Table A is the
-same {len(rows_a)} rows in both. Table B differs only by a transcription artifact: the
-kernel decides a 30-row supplement on top of the {len(rows_a)} main rows, of which 24
-duplicate main rows and 6 are new bases (the six diagonal ebar = h classes), so
-{len(rows_a)} + 6 = {len(rows_b)} DISTINCT classes are what the paper prints.
+The printed tables and the kernel-decided data agree exactly: {len(rows_a)} Case-T rows,
+{len(rows_b)} distinct Case-B classes, {printed_total} certificates in all (Case P
+contributes none). The only internal detail is that Lean stores the {len(rows_a)} Table-A
+rows as two lists -- `certTableA` (158) and a 14-row supplement `tSuppT` discharging the
+merge-robust variant -- whose union is Table A.
 
 | | Printed | Kernel rows |
 |---|---:|---:|
 | Table A (Case T) | {len(rows_a)} | {len(rows_a)} |
-| Table B (Case B) | {len(rows_b)} | 202 |
+| Table B (Case B) | {len(rows_b)} | {len(rows_b)} |
 | Case P | 0 | 0 |
-| **Total** | **{printed_total}** | **374** |
-
-The {printed_total}-vs-374 difference is exactly the 24 duplicated Table-B rows
-({len(rows_b)} printed classes + 24 duplicates + Table A's {len(rows_a)} = 374).
+| **Total** | **{printed_total}** | **{printed_total}** |
 """)
     print(f"wrote {data}/table-A.csv, table-B.csv, SHA256SUMS, MANIFEST.md")
 
