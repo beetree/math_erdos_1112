@@ -1,14 +1,14 @@
 /-
-Part III, Case T (Lemmas 3.17/3.18): the finitely many staircase lines
+Case T (the Case-T lemma and the T-tail proposition): the finitely many staircase lines
 `μ = e + h ≤ 11`, `e ≠ h`. Assembly:
   * `a ≤ 3000`: the kernel-decided per-line/per-block scan `T_scan_all`
-    (CaseTScan, Lemma 3.18(i)) plus its soundness `TlineGo_sound`
+    (CaseTScan, T-tail part (i)) plus its soundness `TlineGo_sound`
     (CaseTCore) — variant A / base-form staircase constructions, with the
     158 Table-A rows and the 14 supplementary rows (`tSuppT`, replacing the
     paper's variant B) discharged by frame certificates;
   * `a > 3000`: the generic linear tail `T_tail` (CaseTCore,
-    Lemma 3.18(ii)) — base form only, slope `2/μ' ≤ 2/3 < 1`.
-Paper: proof/03-sharp.md §III.7.
+    T-tail part (ii)) — base form only, slope `2/μ' ≤ 2/3 < 1`.
+Paper: the bounded subset-sum covering section.
 -/
 import Erdos1112Proof.Sharp.Staircase
 import Erdos1112Proof.Sharp.Tables

@@ -1,6 +1,6 @@
 /-
-Part III, Case D (Lemma 3.11): `a ∣ M` — half-price padding.
-Paper: proof/03-sharp.md §III.3.
+Case D (the Case-D lemma): `a ∣ M` — half-price padding.
+Paper: the bounded subset-sum covering section.
 
 Construction: residues mod `a` are covered by `a−1` copies of `b`
 (`gcd(a,b) = 1`); padding uses `x = q−1` copies of `a` and `z = xeff/q`

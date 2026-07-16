@@ -1,7 +1,7 @@
 /-
-Part I, (1.3)+(1.4): offset choice past the small elements of `B`, nested
-safe intervals, and the existence theorem with the explicit ratio `192·d₂`.
-Paper: proof/01-existence.md §Part I, Theorem 1.
+Offset choice past the small elements of `B`, nested safe intervals, and
+the existence theorem with the explicit ratio `192·d₂`.
+Paper: the existence section.
 
 Construction notes:
   * `j₀ := 4·d₂²` — since `b` is strictly monotone on ℕ, `b j₀ ≥ j₀ = 4d₂²`

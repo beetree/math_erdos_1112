@@ -1,5 +1,5 @@
 /-
-Part III, Case T scan dispatch (Lemma 3.18(i)): the 50 per-line scans
+Case T scan dispatch (T-tail, part (i)): the 50 per-line scans
 assembled into one statement over the line parameters. GENERATED FILE.
 -/
 import Erdos1112Proof.Sharp.CaseTScanE1
@@ -17,7 +17,7 @@ namespace Erdos1112
 namespace Proof
 
 set_option maxHeartbeats 4000000 in
-/-- **Lemma 3.18(i)**, decided: on every T-line (`1 ≤ e, h`, `e+h ≤ 11`,
+/-- **T-tail, part (i)**, decided: on every T-line (`1 ≤ e, h`, `e+h ≤ 11`,
 `e ≠ h`) and every `a ≤ 3000`, side conditions imply budget-or-table. -/
 theorem T_scan_all {e h a : ℕ} (he : 1 ≤ e) (hh : 1 ≤ h)
     (hμ : e + h ≤ 11) (hne : e ≠ h) (ha : a ≤ 3000) :

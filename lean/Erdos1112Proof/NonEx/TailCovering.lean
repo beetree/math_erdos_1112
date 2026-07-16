@@ -1,7 +1,7 @@
 /-
-Part II: the tail-covering property — `kA` eventually contains a full
-congruence class. Paper: proof/00-overview.md §3 (notation) and
-proof/02-nonexistence.md §II.1.
+The tail-covering property — `kA` eventually contains a full
+congruence class. Paper: the paper's notation subsection and
+the paper's non-existence section.
 -/
 import Erdos1112Proof.Basic
 

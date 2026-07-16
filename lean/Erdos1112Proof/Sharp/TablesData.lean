@@ -1,9 +1,11 @@
 /-
-Certificate data for Part III, as 6-tuples `(a, b, M, x, Y, Z)`:
-  * `certTableA` — the 158 T-line exceptions (paper §III.7 / Lemma 3.18,
-    Appendix B Table A), each used at exactly its own triple;
-  * `certTableB` — the 178 class-base rows (paper §III.8, Appendix B
-    Table B), each the root of a λ-lift chain (Lemma 3.4).
+Certificate data for the bounded subset-sum covering lemma, as 6-tuples
+`(a, b, M, x, Y, Z)`:
+  * `certTableA` — the 158 Case-T exceptions certified directly here; with
+    the 14-row `tSuppT` supplement (CaseTCore.lean) these form the paper's
+    172-row Table A, each row used at exactly its own triple;
+  * `certTableB` — the 178 Case-B class-base rows (the paper's Table B),
+    each the root of a λ-lift chain (the paper's λ-lift lemma).
 Every row is kernel-decided against `frameCertOK` — validity, budget and
 lift-stability (`Y+Z+1 ≤ a`) in one decided property (no native_decide).
 -/

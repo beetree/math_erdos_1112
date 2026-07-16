@@ -1,11 +1,11 @@
 /-
-Part II, Lemma 2.1: the diagonal certificate. Given any ratio sequence `R`,
+The diagonal certificate lemma. Given any ratio sequence `R`,
 a single `B` (hitting every congruence class at arbitrarily large heights,
 while growing as fast as `R` demands) defeats every tail-covering `A`.
-Paper: proof/02-nonexistence.md §II.1.
+Paper: the non-existence section.
 
 `hall` supplies the normalized covering `TailCoveringN` (reduced residue
-`ρ < m`; `NonEx/Kit.lean`), the form exported by every Part II case lemma.
+`ρ < m`; `NonEx/Kit.lean`), the form exported by every non-existence case lemma.
 -/
 import Erdos1112Proof.NonEx.Kit
 
@@ -86,7 +86,7 @@ lemma certB_lacunary (R : ℕ → ℕ) : IsVarLacunaryWith R (certB R) := by
   · have := (certB_succ_spec R i).1
     omega
 
-/-- **Lemma 2.1 (certificate).** If every `(d₁,d₂)`-sequence is tail-covering
+/-- **the corresponding paper lemma (certificate).** If every `(d₁,d₂)`-sequence is tail-covering
 (normalized form), then for every ratio sequence `R` there is a single
 var-lacunary `B` meeting `kA` for every admissible `A`. The hypothesis uses
 the normalized covering `TailCoveringN` (reduced residue `ρ < m`). -/

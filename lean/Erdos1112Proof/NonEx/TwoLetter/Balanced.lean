@@ -1,5 +1,5 @@
 /-
-Part II: the Morse–Hedlund classification of balanced one-sided binary words.
+The Morse–Hedlund classification of balanced one-sided binary words.
 Design: slope via sSup, rational ⇒ ultimately periodic, irrational ⇒
 threshold separation ⇒ exact tail mechanicity.
 

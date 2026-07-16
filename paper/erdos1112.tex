@@ -87,10 +87,11 @@ $b_{i+1} \ge r\,b_i$ admits a sequence $A = \{a_1 < a_2 < \cdots\}$ of positive 
 in $[d_1,d_2]$ and $(kA) \cap B = \emptyset$, where $kA$ is the $k$-fold sumset; write
 $r_k(d_1,d_2)$ for the least such $r$.
 
-We prove that $r_k(d_1,d_2)$ exists if and only if $d_2 \ge k+1$, with the explicit bound
-$r_k(d_1,d_2) \le 192\,d_2$ when it exists. Below the threshold, non-existence holds in a strong
-form: for every prescribed sequence of pointwise lower bounds on the successive ratios of $B$,
-however rapidly growing, a single $B$ meets the $k$-fold sumset of every admissible $A$.
+We prove that $r_k(d_1,d_2)$ exists if and only if $d_2 \ge k+1$ --- so the answer to the recorded
+question is yes precisely when $d_2 \ge k+1$ --- with the explicit bound $r_k(d_1,d_2) \le 192\,d_2$
+when it exists. Below the threshold, non-existence holds in a strong form: for every prescribed
+sequence of pointwise lower bounds on the successive ratios of $B$, however rapidly growing, a
+single $B$ meets the $k$-fold sumset of every admissible $A$.
 
 The existence half uses a Beatty construction whose $k$-fold sumset threads the gaps a lacunary $B$
 must leave; the non-existence half reduces, through a word-combinatorial analysis of the gap
@@ -125,7 +126,9 @@ automatically at least $2$. Accordingly we define
   r_k(d_1,d_2) \;:=\; \text{the least integer } r \ge 2 \text{ with the stated property,}
 \]
 which is well defined precisely when the property holds for some $r$; ``$r_k(d_1,d_2)$ exists''
-abbreviates that. (The formalization quantifies $r$ over $\NN$; see \S\ref{sec:lean}.)
+abbreviates that. The quantity $r_k(d_1,d_2)$ was introduced by Bollob\'as, Hegyv\'ari and Jin
+\cite{BHJ97}; we use the problem page's integer-$r$ convention throughout. (The formalization
+quantifies $r$ over $\NN$; see \S\ref{sec:lean}.)
 
 Throughout, $A$ and $B$ are infinite sets of positive integers, identified with their strictly
 increasing enumerations, and
@@ -133,11 +136,10 @@ increasing enumerations, and
   kA \;=\; \{x_1 + \cdots + x_k \;:\; x_1, \dots, x_k \in A\}
 \]
 is the $k$-fold sumset \emph{with repetitions allowed}. We call a sequence $A$ with
-$d_1 \le a_{i+1} - a_i \le d_2$ for all $i$ a \emph{$(d_1,d_2)$-sequence}, and we write
-``$r_k(d_1,d_2)$ exists'' for the existence of a ratio $r$ as above. Explicitly, this means:
-there is an integer $r$ such that \emph{every} lacunary $B$ of ratio $r$ admits \emph{some}
-$(d_1,d_2)$-sequence $A$ with $(kA) \cap B = \emptyset$. The order of quantifiers matters: $A$ is
-chosen after $B$.
+$d_1 \le a_{i+1} - a_i \le d_2$ for all $i$ a \emph{$(d_1,d_2)$-sequence}. Explicitly,
+``$r_k(d_1,d_2)$ exists'' means: there is an integer $r$ such that \emph{every} lacunary $B$ of
+ratio $r$ admits \emph{some} $(d_1,d_2)$-sequence $A$ with $(kA) \cap B = \emptyset$; the order of
+quantifiers matters --- $A$ is chosen after $B$.
 
 \begin{remark}[Attribution]\label{rem:attribution}
 We solve the formulation recorded as Erd\H{o}s problem 1112 on \texttt{erdosproblems.com}. As that
@@ -152,11 +154,12 @@ The problem page records the following. Erd\H{o}s--Graham \cite{ErGr80} and Boll
 with $b \ne 2a$ (and $r_2(a,2a) \ge 2$, nontrivial only in the real-ratio convention of that
 paper); and \cite{BHJ97} shows that $r_3(2,3)$ does not
 exist, in a strong form. Tang and Yang \cite{TaYa21}
-prove, for $k \ge 3$, that if the difference sequence of $A$ is of \emph{block type} then there is a
-$B$ with $(kA) \cap B \ne \emptyset$. That restricted class is subsumed by our
-Lemma~\ref{lem:periodic} (eventually periodic tails); the difficulty in the general problem lies
+prove, for $k \ge 3$, that if the difference sequence of $A$ is restricted to a structured class
+(\emph{block type}) then there is a $B$ with $(kA) \cap B \ne \emptyset$ --- in the spirit of our
+eventually periodic case (Lemma~\ref{lem:periodic}); the difficulty in the general problem lies
 precisely in the non-periodic (Sturmian) tails, which we handle in \S\ref{sec:nonex}. The general
-existence question for $k \ge 3$ is listed as open.
+existence question for $k \ge 3$ is listed as open; as of July 2026 the problem page records no
+further progress on it, and we know of none elsewhere.
 
 \subsection{Results}
 Our main result answers the question completely.
@@ -543,13 +546,8 @@ $(d_1,d_2)$-sequence, this proves $r_k(d_1,d_2) \le 192 d_2$.
 This establishes part (1) of Theorem~\ref{thm:main}; the rest of the paper proves part (2).
 
 \begin{remark}\label{rem:k2-formal}
-Theorem~\ref{thm:existence} is stated and proved here for all $k \ge 2$. The Lean formalization
-covers $k \ge 3$ --- the range of the problem and of the dichotomy Theorem~\ref{thm:main} --- so the
-case $k = 2$ is established in prose only. This is deliberate: the problem fixes $k \ge 3$, and the
-formal development carries exactly the problem's hypotheses, so that every headline Lean theorem
-(\texttt{erdos\_1112}, \texttt{erdos\_1112\_existence\_bound},
-\texttt{erdos\_1112\_strong\_nonexistence}) reads with $3 \le k$, matching the statement on
-\texttt{erdosproblems.com}.
+Theorem~\ref{thm:existence} is stated and proved here for all $k \ge 2$; the formalization
+deliberately carries the problem's hypothesis $k \ge 3$ throughout (see \S\ref{sec:formal-scope}).
 \end{remark}
 
 \section{Non-existence for \texorpdfstring{$d_2 \le k$}{d2 <= k}: reduction to Lemma~\ref{lem:sharp}}
@@ -605,9 +603,18 @@ prescribed sequence need not be replaced by its nondecreasing envelope.
 Let $A$ be a $(d_1,d_2)$-sequence and pick $(m, \rho, X_0)$ with
 $kA \supseteq \{x \ge X_0 : x \equiv \rho \pmod m\}$. Choose an index $i \ge 2$ with
 $(m_i, \rho_i) = (m, \rho)$ and $b_i \ge X_0$; this is possible because the pair $(m,\rho)$ recurs
-infinitely often and $b_i \ge i \to \infty$ ($B$ is strictly increasing of positive integers). Then $b_i \equiv \rho \pmod m$ and $b_i \ge X_0$, so
-$b_i \in kA$.
+infinitely often and $b_i \ge i \to \infty$ ($B$ being a strictly increasing sequence of positive
+integers). Then $b_i \equiv \rho \pmod m$ and $b_i \ge X_0$, so $b_i \in kA$.
 \end{proof}
+
+\begin{remark}[One $B$ for all parameters]\label{rem:cert-uniform}
+The certificate $B$ depends only on the prescribed ratio sequence $R$ and the chosen enumeration of
+pairs --- not on $k$, $d_1$ or $d_2$. Since every $(d_1,d_2)$-sequence with $d_2 \le k$ turns out to
+be tail-covering (Proposition~\ref{prop:nonex}), this \emph{single} $B$ simultaneously defeats every
+$(d_1,d_2)$-sequence for every $k \ge 3$ with $d_2 \le k$: a strengthening of
+Theorem~\ref{thm:main}(2) beyond its statement. We also note that the strong form of \cite{BHJ97}
+prescribes an \emph{increasing} sequence of ratio bounds, whereas $(r_i)$ here is arbitrary.
+\end{remark}
 
 So it suffices to prove:
 
@@ -622,11 +629,12 @@ $5a_1 + \{0,1,3,4,6,7\} \pmod 8$.
 
 \subsection{Elementary reductions}
 
-\begin{lemma}[Tail]\label{lem:tail}
-Let $T$ be an index past which all gaps of $A$ lie in $\Ginf$. Since $kA$ contains the $k$-fold sums
-of $A \cap [a_T, \infty)$, it suffices to prove the tail-covering property for the tail. We do so
-silently from now on.
+\begin{lemma}[Tail reduction]\label{lem:tail}
+Let $T$ be an index past which every gap of $A$ lies in $\Ginf$. If the $k$-fold sums of the tail
+$A \cap [a_T, \infty)$ are tail-covering, then so is $A$, since $kA$ contains them. \qed
 \end{lemma}
+
+We pass to such a tail silently from now on.
 
 \begin{lemma}[One letter]\label{lem:one-letter}
 If $\Ginf = \{\delta\}$ then the tail of $A$ is an arithmetic progression and
@@ -640,11 +648,14 @@ $m'$, then $kA$ is tail-covering modulo $g m'$. Hence we may and do assume $\gcd
 \end{lemma}
 
 \begin{lemma}[Eventually periodic]\label{lem:periodic}
-If the gap word is eventually periodic then the tail of $A$ is a full pattern
-$(C + P\ZZ) \cap [T', \infty)$ for a finite set $C$ and period-sum $P$. For each $k$-element
-multiset of $C$ with sum $\sigma$, the sumset $kA$ then contains the entire class tail
-$\sigma + P\ZZ$ beyond a point; so $A$ is tail-covering. \qed
+If the gap word of $A$ is eventually periodic, then $A$ is tail-covering.
 \end{lemma}
+
+\begin{proof}
+The tail of $A$ is a full pattern $(C + P\ZZ) \cap [T', \infty)$ for a finite set $C$ and period-sum
+$P$. For each $k$-element multiset of $C$ with sum $\sigma$, the sumset $kA$ contains the entire
+class tail $\sigma + P\ZZ$ beyond a point; so $A$ is tail-covering.
+\end{proof}
 
 \subsection{The two-letter core}\label{sec:twoletter}
 Assume now $\Ginf = \{\delta < \delta'\}$ with $\gcd(\delta, \delta') = 1$ (Lemma~\ref{lem:rescale}),
@@ -777,8 +788,9 @@ irrational slope, and the latter is Lemma~\ref{lem:sturmian}.
 The boundary case is the delicate one, so we isolate its routing.
 
 \begin{proposition}[Boundary routing; $k$ even, $d_2 = k$]\label{prop:boundary-route}
-Let $k$ be even and $d_2 = k$. Then $A$ is tail-covering. Exactly one of three possibilities holds,
-each closing the case: if the gap word is eventually periodic, Lemma~\ref{lem:periodic} applies; if
+Let $k$ be even and $d_2 = k$. Then $A$ is tail-covering. At least one of three possibilities holds
+(they can overlap; route by the first that applies), and each closes the case: if the gap word is
+eventually periodic, Lemma~\ref{lem:periodic} applies; if
 some tail of the gap word is balanced, that tail (Lemma~\ref{lem:tail}) is ultimately periodic
 (Lemma~\ref{lem:periodic}) or Sturmian (Lemma~\ref{lem:sturmian}) by
 Proposition~\ref{prop:balanced}, and either gives tail-covering with no width argument; and if
@@ -910,9 +922,10 @@ carried out in the formalization (\texttt{disc\_osc\_le\_one}, \texttt{mechanica
 \texttt{walk\_enters}).
 
 \begin{lemma}[Boundary width; $k$ even, $k \ge 4$]\label{lem:boundary-width}
-Let $h$ use both letters infinitely often, let $W_2(\sigma_0) \ge 2$ for some $\sigma_0$, let $h$ be
-not eventually periodic, and suppose every tail of $h$ is unbalanced. Then
-$w^+(s) - w^-(s) \ge k-1$ for all sufficiently large $s$.
+Let $h$ use both letters infinitely often, let $h$ be not eventually periodic, and suppose every
+tail of $h$ is unbalanced. Then $w^+(s) - w^-(s) \ge k-1$ for all sufficiently large $s$. (No
+antidiagonal-width hypothesis is needed: the proof derives $W_2(\sigma) \ge 2$ for infinitely many
+$\sigma$ from unbalancedness.)
 \end{lemma}
 
 \begin{proof}
@@ -1208,9 +1221,10 @@ tail-covering.
 
 \begin{proof}
 Let $S$ realize $m(\Ginf)$: a multiset with $|S| = m \le k-1$, drawn from $\Ginf$, whose subset sums
-contain $\{c, c+1, \dots, c+M-1\}$. Enumerate $S = \{\delta_1, \dots, \delta_m\}$ (values in $\Ginf$,
-repeats allowed). Because each value of $\Ginf$ occurs infinitely often in the gap sequence, we may
-pick $m$ distinct, pairwise non-adjacent positions $n_1, \dots, n_m$ with $g_{n_t} = \delta_t$.
+contain $\{c, c+1, \dots, c+M-1\}$. Enumerate the elements of $S$ as $\delta_1, \dots, \delta_m$
+(values in $\Ginf$, with repetition). Because each value of $\Ginf$ occurs infinitely often in the
+gap sequence, we may pick $m$ distinct positions $n_1 < \cdots < n_m$ with $g_{n_t} = \delta_t$;
+distinctness is all that is needed, since repeated summand indices are permitted in $kA$.
 
 Call $t$ a \emph{fine slot}: a summand index $i_t \in \{n_t - 1,\ n_t\}$, contributing $p_{n_t - 1}$
 (``off'') or $p_{n_t - 1} + \delta_t$ (``on''). Over all on/off choices the $m$ fine slots contribute
@@ -1697,23 +1711,13 @@ Note that $\eta = 1$ is impossible ($\eta = 1 \iff a \mid h$, but $1 \le h \le a
 \]
 these two lines being disjoint (both would force $a \mid b$). The target budget is $M-1$ throughout.
 
-Each hard-core triple is routed to exactly one of six branches, evaluated top to bottom:
-\begin{itemize}
-\item \textbf{Case D} --- $a \mid M$ (\S\ref{sec:caseD});
-\item \textbf{Case P} --- else $a \mid b + M$, the $\eta = a-1$ line (\S\ref{sec:caseP});
-\item \textbf{Case L} --- else $e = h$, the scaled consecutive triples (\S\ref{sec:caseL});
-\item \textbf{Case E} --- else $a \ge 12$ and $\mu \ge 12$, the universal $\eta$-box
-      (\S\ref{sec:caseE});
-\item \textbf{Case T} --- else $\mu \le 11$, finitely many staircase lines (\S\ref{sec:caseT});
-\item \textbf{Case B} --- else $a \le 11$ and $\mu \ge 12$, finite bases plus the $\lambda$-lift
-      (\S\ref{sec:caseB}).
-\end{itemize}
-The branch \emph{conditions} can overlap --- e.g.\ $(3,4,5)$ satisfies both P and L --- but they
-are evaluated as an ordered if--else tree, so the routing assigns every hard-core triple to exactly
-one branch; exhaustiveness is checked in
-\S\ref{sec:sharp-proof}. Each yields a covering multiset of size $\le M-1$. The following table
-summarizes the tree; ``symbolic'' means the branch is closed by a closed-form construction valid for
-all parameters in its range, and ``finite'' means it additionally consumes a certificate table.
+Each hard-core triple is routed to exactly one of six branches --- the ordered if--else tree of
+Table~\ref{tab:cases}, evaluated top to bottom, treated in \S\S\ref{sec:caseD}--\ref{sec:caseB}. The
+branch \emph{conditions} can overlap --- e.g.\ $(3,4,5)$ satisfies both P and L --- but the ordered
+routing assigns every triple to exactly one branch; exhaustiveness is checked in
+\S\ref{sec:sharp-proof}. Each branch yields a covering multiset of size $\le M-1$. In the table,
+``symbolic'' means the branch is closed by a closed-form construction valid for all parameters in
+its range, and ``finite'' means it additionally consumes a certificate table.
 
 \begin{table}[htbp]\small\centering
 \begin{tabular}{@{}llllc@{}}
@@ -1726,7 +1730,7 @@ P \emph{(paired)} & $a \mid b+M$ & Lemma~\ref{lem:caseP} & $(b,M)$ pairs are res
   &              &                       & \quad movers worth $ra$ & \\
 L \emph{(linear)} & $e = h$ & Lemma~\ref{lem:caseL} & staircase, extended form & symbolic \\
 E \emph{($\eta$-box)} & $a, \mu \ge 12$ & Lemma~\ref{lem:etabox} & the $\eta$-box $(t{-}1, Z)$ & symbolic \\
-T \emph{(thin $\mu$)} & $\mu \le 11$ & Lemmas~\ref{lem:T}, \ref{lem:t-tail} & staircase + linear tail; & finite \\
+T \emph{(thin $\mu$)} & $\mu \le 11$ & Lemma~\ref{lem:T}, Prop.~\ref{lem:t-tail} & staircase + linear tail; & finite \\
   &              &                                        & \quad $172$ exceptions & \quad (Table~A) \\
 B \emph{(bounded $a$)} & $a \le 11$, $\mu \ge 12$ & Table~B $+$ Lemma~\ref{lem:lift} & finite bases, lifted in $\lambda$ & finite \\
   &                            &                                              &                                    & \quad (Table~B) \\
@@ -2139,21 +2143,29 @@ increases at rate $1/3$ and, once positive, stays positive. On this particular l
 fact never exceeds the target --- it is merely tight at $a = 7$ --- so the line contributes \emph{no}
 rows to Table~A. Other lines are less lucky: the line $(e,h) = (5,1)$ contributes the
 Table-A rows $(4,9,10)$, $(7,12,13)$ and $(8,13,14)$, among others, where the budget does exceed
-$M-1$ and an explicit box certificate is needed. Lemma~\ref{lem:t-tail} is exactly the statement that, over all
+$M-1$ and an explicit box certificate is needed. Proposition~\ref{lem:t-tail} is exactly the statement that, over all
 lines and all $a \le 3000$, this happens for precisely $172$ triples, and never for $a > 3000$.
 \end{example}
 
 
-\begin{lemma}[T-tail]\label{lem:t-tail}
-\phantom{.}
-\begin{enumerate}
-\item For every line and every $a \le 3000$, the minimal variant budget was computed exactly (the
-finite enumeration of Appendix~\ref{app:verification}, whose failing triples are re-verified
-row-by-row by \texttt{gen-tables.py} and decided by the Lean kernel); it
-exceeds $M-1$ for precisely $172$ triples, all with $a \le 29$ --- these are Table~A of
-Appendix~\ref{app:tables} --- and each of those carries a verified modulo-$a$ box certificate with
-$Y + Z \le a-1$ and budget $\le M-1$.
-\item For each line, the cheapest variant's budget is bounded above by the linear function
+\begin{proposition}[T-tail]\label{lem:t-tail}
+On every Case-T line, the cheaper of the two variant budgets of Lemma~\ref{lem:T} exceeds $M-1$ for
+precisely $172$ triples, all with $a \le 29$ --- these are Table~A of Appendix~\ref{app:tables},
+each carrying a verified modulo-$a$ box certificate with $Y + Z \le a-1$ and budget $\le M-1$ ---
+and for no triple with $a > 3000$. Hence the failure set of the Case-T construction is exactly
+Table~A.
+\end{proposition}
+
+\begin{proof}[Proof (computer-assisted for $a \le 3000$)]
+\emph{The finite range.} For every line and every $a \le 3000$, the minimal variant budget was
+computed exactly by the finite enumeration of Appendix~\ref{app:verification}
+(Proposition~\ref{prop:FV}(iii)); it exceeds $M-1$ for precisely the $172$ triples of Table~A, all
+with $a \le 29$. The failing triples are re-verified row-by-row by \texttt{gen-tables.py}, decided
+by the Lean kernel, and each carries its box certificate per
+Proposition~\ref{prop:FV}(i)--(ii).
+
+\emph{The tail $a > 3000$.} For each line, the cheapest variant's budget is bounded above by the
+linear function
 \[
   \beta(a) \;:=\; 2\Big[(\mu' - 1) + \frac{a + \mu + 2C' - (\mu'-1)e'}{\mu'} + 1\Big] + g ,
 \]
@@ -2176,11 +2188,10 @@ on each of the finitely many lines and minimizing gives
 \]
 as reported by the verification harness of Appendix~\ref{app:verification}. Since $\tau - \beta$ is
 nondecreasing, it stays positive for every $a > 3000$. Hence there are no budget failures with
-$a > 3000$, and the failure set is exactly Table~A. (The cutoff $3000$ is convenience, not
-necessity: any threshold at which every line's margin is positive would serve. It sits comfortably
-past the last actual failure at $a = 29$, and is small enough for the kernel-decided sweep.)
-\end{enumerate}
-\end{lemma}
+$a > 3000$. (The cutoff $3000$ is convenience, not necessity: any threshold at which every line's
+margin is positive would serve. It sits comfortably past the last actual failure at $a = 29$, and is
+small enough for the kernel-decided sweep.)
+\end{proof}
 
 
 
@@ -2240,7 +2251,7 @@ Given a hard-core triple $(a,b,M)$: if $a \mid M$, apply Lemma~\ref{lem:caseD}; 
 apply Lemma~\ref{lem:caseP} (Proposition~\ref{prop:caseP-exhaust}); else if $e = h$, apply
 Lemma~\ref{lem:caseL}; else if
 $a \ge 12$ and $\mu \ge 12$, apply Lemma~\ref{lem:etabox}; else if $\mu \le 11$, apply
-Lemmas~\ref{lem:T} and \ref{lem:t-tail} together with Table~A; else $a \le 11$ and
+Lemma~\ref{lem:T} and Proposition~\ref{lem:t-tail} together with Table~A; else $a \le 11$ and
 $\mu \ge 12$, and we apply Table~B with Lemma~\ref{lem:lift}.
 
 \emph{Exhaustiveness.} Cases D and P are disjoint lines (\S\ref{sec:hardcore}). A triple with $e = h$
@@ -2419,12 +2430,13 @@ Mathlib, and not the Lean compiler. The toolchain is pinned (\texttt{leanprover/
 Mathlib pinned via \texttt{lake-manifest.json}), so the audit is reproducible from a clean checkout:
 \begin{quote}\small
 \begin{verbatim}
-lake build                                          # compiles the development
-grep -rEn '\bsorry\b' --include='*.lean' Erdos1112Proof \
-  | grep -v -- '--' | grep -v 'sorry-free'          # expect no output
-lake env lean AxiomsCheck.lean                      # prints the 3-axiom list per theorem
+lake build                                    # compiles the development
+lake env lean Erdos1112Proof/AxiomsCheck.lean # the 3-axiom list, per theorem
 \end{verbatim}
 \end{quote}
+The axiom audit is itself the rigorous gap check: any \texttt{sorry} would surface as
+\texttt{sorryAx} in the reported list, and any \texttt{native\_decide} as
+\texttt{Lean.ofReduceBool}; neither appears.
 
 Two heavyweight declarations set a raised kernel heartbeat locally
 (\texttt{tailCovering\_of\_sturmian} and \texttt{exists\_safe\_subinterval}); this is an elaboration
@@ -2554,10 +2566,7 @@ systems are not authors: they cannot take responsibility for the work, and they 
 criterion. Every mathematical claim used in the proof of Theorem~\ref{thm:main} has been checked by at least one
 of the three routes described in \S\ref{sec:map} --- the prose argument, the finite certificates, and
 the Lean development --- and the dichotomy is machine-checked in Lean~4 within the scope of
-\S\ref{sec:formal-scope}. This declaration should be adapted to
-the requirements of the venue before submission; policies differ, and some require the exact model
-versions, the tasks for which each was used, and a statement of how the output was verified --- all
-of which are given here and in \S\ref{sec:provenance}.
+\S\ref{sec:formal-scope}.
 
 \emph{A note on repository metadata.} The version-control history of the accompanying repository
 contains \texttt{Co-Authored-By} trailers naming the automated system. These record which tooling
@@ -2567,12 +2576,12 @@ produced a commit; they are not a claim of scholarly authorship, which is as sta
 
 \section{Data availability and reproduction}\label{sec:data}
 
-Everything needed to check this paper is in the repository \repo. The stable \texttt{main} branch
-carries the Lean~4 development \cite{Lean4,Mathlib}, at commit
-\texttt{73af91479694cb8eddf5b1521d80f8f7aba8d2a6}; the complete package for the present paper --- this
-\LaTeX{} source (article and supplement), the machine-readable certificate exports
-(\texttt{table-A.csv}, \texttt{table-B.csv}, \texttt{SHA256SUMS}), the table generator/re-verifier
-\texttt{gen-tables.py}, and the two Python harnesses --- is on the branch \texttt{paper-review}.
+Everything needed to check this paper is contained in one commit of the repository \repo\ --- the
+commit to which the annotated tag \texttt{submission-2026-07} resolves. That single commit carries
+this \LaTeX{} source (article and supplement), the Lean~4 development \cite{Lean4,Mathlib}, the
+machine-readable certificate exports (\texttt{table-A.csv}, \texttt{table-B.csv},
+\texttt{SHA256SUMS}), the table generator/re-verifier \texttt{gen-tables.py}, and the two Python
+harnesses. All checks below refer to that commit.
 
 \emph{The machine-checked proof.} A clean checkout builds with the pinned toolchain
 (\texttt{leanprover/lean4:v4.27.0}; dependency revisions fixed in \texttt{lake-manifest.json}):
@@ -2594,15 +2603,14 @@ Proposition~\ref{prop:FV}.
 
 \begin{center}
 \fbox{\parbox{0.92\textwidth}{\small
-\textbf{Submission artifact.} This version is archived immutably in the repository \repo\ as the
-annotated Git tag \texttt{submission-2026-07}, which resolves to a single commit carrying this
-\LaTeX{} source, the machine-readable certificate data, the generator/re-verifier, and the two Python
-harnesses; the Lean~4 development is the \texttt{main}-branch commit cited above. This PDF is built
-from the tagged commit by a clean checkout. The commit hash to which \texttt{submission-2026-07}
-resolves (recoverable by \texttt{git rev-parse}) is the identifier for exact reproducibility; a
-DOI-backed archive of the same release will accompany the journal submission for scholarly citation.
-The full certificate tables are typeset in the supplement \texttt{erdos1112-supplement.pdf} and
-exported to \texttt{data/}.}}
+\textbf{Submission artifact.} This version is the annotated Git tag \texttt{submission-2026-07} of
+the repository \repo, resolving to a single commit that carries the article and supplement sources,
+the certificate data, the generator/re-verifier, the Python harnesses, \emph{and} the Lean~4
+development; the axiom audit of \S\ref{sec:trustbase} was re-run at that commit. This PDF is built
+from the tagged commit by a clean checkout. The commit hash (recoverable by \texttt{git rev-parse})
+is the identifier for exact reproducibility; a DOI-backed archive of the same release will accompany
+the journal submission for scholarly citation. The full certificate tables are typeset in the
+supplement \texttt{erdos1112-supplement.pdf} and exported to \texttt{data/}.}}
 \end{center}
 
 \appendix
@@ -2629,9 +2637,9 @@ has the following properties, each a finite, mechanical check:
 (i)--(ii) are direct finite checks: for each row, sum the budget and compute its subset-sum set by
 exact arbitrary-precision bitmask, verifying that it contains a run of length $M$. This is where
 Lemma~\ref{lem:frame} enters: a modulo-$a$ box with $Y + Z \le a-1$ certifies exactly such a run.
-(iii)--(iv) are exhaustive bounded scans --- the $a \le 3000$ line scan of Lemma~\ref{lem:t-tail}(i)
+(iii)--(iv) are exhaustive bounded scans --- the $a \le 3000$ line scan of Proposition~\ref{lem:t-tail}
 and the $a \le 11$, bounded-$b$ class enumeration of \S\ref{sec:caseB} --- made complete by the
-slope-tail argument of Lemma~\ref{lem:t-tail}(ii) for $a > 3000$ and by the descent of
+slope-tail argument in the proof of Proposition~\ref{lem:t-tail} for $a > 3000$ and by the descent of
 Remark~\ref{rem:descent} for larger $b$. Finally (v) is Lemma~\ref{lem:lift}. Note that Case~P
 contributes nothing to this proposition: by Remark~\ref{rem:caseP-clean} it is closed in the text,
 with no certificate.
@@ -2649,7 +2657,7 @@ carried three ad-hoc Case-P witnesses; these are now ordinary instances of the u
 and no longer appear as data.
 
 \emph{Finite scans closing crude constants of proved lemmas}: the Case-T line scan to $a = 3000$ with
-the slope-tail argument (Lemma~\ref{lem:t-tail}); and the minimal-alphabet enumeration to
+the slope-tail argument (Proposition~\ref{lem:t-tail}); and the minimal-alphabet enumeration to
 $M \le 130$ (Lemmas~\ref{lem:minimal-struct} and \ref{lem:L4}). Case P requires no scan
 (Remark~\ref{rem:caseP-clean}).
 
@@ -2720,7 +2728,7 @@ $5$, contain the run $[17,25]$, which is $9 = M$ consecutive integers. That sing
 exactly what the checker performs on each row.
 \end{example}
 
-Table~A lists the $172$ exceptional lines of Case T (Lemma~\ref{lem:t-tail}), all with $a \le 29$.
+Table~A lists the $172$ exceptional lines of Case T (Proposition~\ref{lem:t-tail}), all with $a \le 29$.
 Table~B lists one base per class $(a, \bar e, h)$ for Case B, extended to all larger members by
 Lemma~\ref{lem:lift} (the Lean transcription additionally re-bases the six diagonal classes of
 Remark~\ref{rem:descent}). A representative Table-B row is the class $[5;1,1]$ with base
@@ -2793,7 +2801,7 @@ Lemmas~\ref{lem:caseP}, \ref{lem:etaneg} (Case P) & \texttt{caseP\_pair}, \textt
   \quad \textsc{alt} (see above) & \quad \texttt{caseP\_r4}, \texttt{caseP\_large} & \\
 Lemma~\ref{lem:caseL} (Case L) & \texttt{caseL} & \texttt{Sharp/CaseL.lean} \\
 Lemma~\ref{lem:etabox} (Case E) & \texttt{caseE} & \texttt{Sharp/CaseE.lean} \\
-Lemmas~\ref{lem:T}, \ref{lem:t-tail} (Case T) & \texttt{caseT}, \texttt{T\_tail\_line}, \texttt{tSuppT} & \texttt{Sharp/CaseT*.lean} \\
+Lemma~\ref{lem:T}, Prop.~\ref{lem:t-tail} (Case T) & \texttt{caseT}, \texttt{T\_tail\_line}, \texttt{tSuppT} & \texttt{Sharp/CaseT*.lean} \\
 Case B (+ descent) & \texttt{caseB}, \texttt{rowFor}, \texttt{caseBComplete} & \texttt{Sharp/CaseB.lean}, \\
   & & \quad \texttt{Sharp/CaseBClasses.lean} \\
 Tables A/B (data) & \texttt{certTableA\_ok}, \texttt{certTableB\_ok} & \texttt{Sharp/TablesData.lean} \\
@@ -2824,8 +2832,10 @@ preprint, arXiv:2104.14766 (2021).
 
 \bibitem[CMZ25]{CMZ25}
 L.~Chen, Y.~Mao and G.~Zhang,
-\emph{Long arithmetic progressions in sumsets and subset sums: constructive proofs and efficient witnesses},
-to appear in Proc.\ 57th ACM Symposium on Theory of Computing (STOC~2025); arXiv:2503.19299.
+\emph{Long arithmetic progressions in sumsets and subset sums: constructive proofs and efficient
+witnesses},
+in: Proc.\ 57th Annual ACM Symposium on Theory of Computing (STOC~2025), ACM, 2025, 2086--2097.
+\textsc{doi}:\,\href{https://doi.org/10.1145/3717823.3718281}{10.1145/3717823.3718281}.
 
 \bibitem[Ch00]{Ch00}
 Y.-G.~Chen,
@@ -2834,7 +2844,8 @@ Discrete Math.\ \textbf{223} (2000), no.~1--3, 351--354.
 \textsc{doi}:\,\href{https://doi.org/10.1016/S0012-365X(00)00097-2}{10.1016/S0012-365X(00)00097-2}.
 
 \bibitem[E1112]{erdos1112}
-Erd\H{o}s problem 1112,
+T.~F.~Bloom,
+\emph{Erd\H{o}s problem \#1112},
 \url{https://www.erdosproblems.com/1112}. Accessed 13 July 2026.
 
 \bibitem[ErGr80]{ErGr80}

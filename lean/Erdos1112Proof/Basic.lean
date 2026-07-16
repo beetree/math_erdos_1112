@@ -40,7 +40,7 @@ lemma const_mem_kFoldSumset {k : ℕ} {a : ℕ → ℕ} (i : ℕ) :
   simp [Finset.sum_const]
 
 /-- Disjointness with `Set.range b`, unfolded to the pointwise form used
-throughout Part II. -/
+throughout the non-existence development. -/
 lemma disjoint_range_iff {k : ℕ} {a b : ℕ → ℕ} :
     Disjoint (kFoldSumset k a) (Set.range b) ↔
       ∀ n ∈ kFoldSumset k a, ∀ i, n ≠ b i := by

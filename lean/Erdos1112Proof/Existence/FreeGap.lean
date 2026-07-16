@@ -1,5 +1,5 @@
 /-
-Part I, (1.2): the free-gap lemma. Paper: proof/01-existence.md §Part I.
+The free-gap lemma. Paper: the existence section.
 
 Formalization note (deviation from the paper, safe direction): instead of the
 relevance-interval analysis we take `s₁ := ⌈t / hi⌉₊` and exhibit the single

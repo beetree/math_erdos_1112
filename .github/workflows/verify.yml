@@ -1,0 +1,46 @@
+name: verify
+
+on:
+  push:
+    branches: [paper-review, main]
+  workflow_dispatch:
+
+jobs:
+  finite-layer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Regenerate and re-verify the certificate tables (hard-asserted counts)
+        working-directory: paper
+        run: python3 gen-tables.py
+      - name: Constructive harness, exhaustive to M <= 60
+        working-directory: paper/scripts
+        run: python3 sharp6_final.py 60
+      - name: Referee-harness input from canonical data
+        working-directory: paper/scripts
+        run: python3 make_tables_file.py
+
+  lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Get Mathlib cache
+        working-directory: lean
+        run: lake exe cache get
+      - name: Build (kernel-checked, no native_decide)
+        working-directory: lean
+        run: lake build
+      - name: Axiom audit
+        working-directory: lean
+        run: |
+          lake env lean Erdos1112Proof/AxiomsCheck.lean | tee axioms.txt
+          test "$(grep -c 'depends on axioms: \[propext, Classical.choice, Quot.sound\]' axioms.txt)" -ge 5

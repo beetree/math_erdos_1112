@@ -1,8 +1,8 @@
 /-
-Part III, Case B (§III.8): `a ≤ 11`, `μ ≥ 12` — Table B base certificates
+Case B: `a ≤ 11`, `μ ≥ 12` — Table B base certificates
 (one per class `(a, ē, h)`, 178 classes, kernel-decided) extended to every
-larger member of the class by the λ-lift (Lemma 3.4). Completeness of the
-class table is a decidable sweep over the finite class space. Paper: proof/03-sharp.md §III.8.
+larger member of the class by the λ-lift (the lambda-lift lemma). Completeness of the
+class table is a decidable sweep over the finite class space. Paper: the bounded subset-sum covering section.
 -/
 import Erdos1112Proof.Sharp.CaseBClasses
 
