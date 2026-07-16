@@ -194,12 +194,11 @@ Theorem~\ref{thm:main} is stated for $k \ge 3$, as is the problem. For context, 
 convention of \cite{Ch00}, which permits real ratios; under the integer convention of this paper a
 witness is automatically $\ge 2$). The strong form of non-existence is
 \emph{not} claimed at $k = 2$, and the hypothesis $k \ge 3$ in \S\ref{sec:nonex} is not an artifact
-of the method: the width machinery genuinely fails there. There are balanced words whose two-index
-antidiagonal width $W_2$ vanishes infinitely often --- mirror-extension words, built so that
-palindromic prefixes recur along a geometric ladder of lengths --- so Lemma~\ref{lem:boundary-width}
---- which converts a single antidiagonal of width $\ge 2$ into a width bound for all large $s$ ---
-has nothing to work with at $k = 2$. The existence
-half (Theorem~\ref{thm:existence}), by contrast, is proved here for all $k \ge 2$.
+of the method: the width machinery does not extend to $k = 2$. Its engine, Lemma~\ref{lem:boundary-width},
+converts a single two-index antidiagonal of width $\ge 2$ into a width bound for all large $s$; at
+$k = 2$ there are balanced words whose two-index width $W_2$ vanishes infinitely often, leaving that
+lemma nothing to work with. (We do not pursue $k = 2$, and make no claim there.) The existence half
+(Theorem~\ref{thm:existence}), by contrast, is proved here for all $k \ge 2$.
 \end{remark}
 
 The non-existence half turns on a self-contained combinatorial fact about subset sums, which we
@@ -245,16 +244,13 @@ $\le 2$ have subset-sum sets $\{0,2\}$, $\{0,3\}$, $\{0,2,4\}$, $\{0,2,3,5\}$, $
 a run of $3$.
 \end{proof}
 
-\noindent Computation moreover suggests that the bound is attained along an infinite family: for the
-consecutive triples $G = \{a, a+1, a+2\}$ we find $m(G) = M - 1 = a+1$ for every $a$ with
-$2 \le a \le 40$. We have not proved this in general, and do not need it.
-
 \subsection{Relation to the literature}\label{sec:novelty}
 Although we use Lemma~\ref{lem:sharp} only as a tool, it may be of independent interest, so we place
 it briefly. The subset-sum results that produce long intervals or progressions --- S\'ark\"ozy
 \cite{Sarkozy89,Sarkozy94}, Lev \cite{Lev03}, Szemer\'edi--Vu \cite{SzemerediVu06}, Conlon--Fox--Pham
-\cite{CFP21}, Alon--Freiman \cite{AlonFreiman88} --- work with a \emph{dense} set ($|A| \gtrsim
-\sqrt{n}$) and yield an arithmetic progression whose common difference need not be $1$. The closest
+\cite{CFP21}, Alon--Freiman \cite{AlonFreiman88}, and constructively Chen--Mao--Zhang \cite{CMZ25}
+--- work with a \emph{dense} set ($|A| \gtrsim \sqrt{n}$) and yield an arithmetic progression whose
+common difference need not be $1$. The closest
 antecedent, Lev's consecutive-subset-sum theorem \cite[Thm.~1]{Lev98}, does give a genuine interval
 of consecutive integers among the subset sums of a set, but again only a \emph{dense} one ($|A|
 \gtrsim \tfrac23 M$), vacuous when $|G| = 3$. Lemma~\ref{lem:sharp} is the \emph{density-free,
@@ -264,9 +260,9 @@ structure theorems (Nathanson \cite{Nathanson72}, Granville--Walker \cite{GW21},
 are density-free but describe the $m$-fold sumset $mG$ with $m$ large --- a total-degree ``simplex''
 of coefficients, of which the subset sums of a bounded multiset are a per-generator ``box'' inside,
 so their conclusion is a weaker statement about a larger set. The completeness, Frobenius and
-postage-stamp traditions \cite{Gr64,ErGr80,Alfonsin} concern infinite sequences, or use unboundedly
-many summands, or optimise the generating set; none bounds a multiset drawn from an arbitrary given
-set.
+postage-stamp traditions \cite{Gr64,ErGr80,Alfonsin,GS20} concern infinite sequences, or use
+unboundedly many summands, or optimise the generating set; none bounds a multiset drawn from an
+arbitrary given set.
 
 We are not aware of a result that implies Lemma~\ref{lem:sharp}, even with a worse constant, and
 after a documented search\footnote{Conducted July 2026 over MathSciNet, zbMATH, arXiv and Google
@@ -358,9 +354,10 @@ $d_2 \le k$ (non-existence, \S\ref{sec:nonex})
 \end{tabular}
 \end{center}
 
-The single point of contact between the two halves is Lemma~\ref{lem:sharp}: it is what the slot
-lemma needs at its binding corner $k = d_2 = M$, and it is where the finite certificate data of
-Appendix~\ref{app:tables} enters.
+The only point at which \S\ref{sec:sharp} enters the proof of Theorem~\ref{thm:main} is through the
+slot lemma of the non-existence half: Lemma~\ref{lem:sharp} is what that lemma needs at its binding
+corner $k = d_2 = M$, and it is where the finite certificate data of Appendix~\ref{app:tables}
+enters.
 
 \subsection{Notation}\label{sec:notation}
 For a $(d_1,d_2)$-sequence $A = \{a_1 < a_2 < \cdots\}$ we write
@@ -720,7 +717,8 @@ the crossing $s^\ast$ every large value is reachable.}
 \end{figure}
 
 \begin{proof}
-Let $x$ be large. Representations $x = \delta s + e w$ force $s \equiv x \delta^{-1} \pmod e$, so
+Let $x$ be large. Representations $x = \delta s + e w$ force $\delta s \equiv x \pmod e$, a single
+residue class since $\gcd(\delta, e) = 1$, so
 the admissible $s$ form an arithmetic progression of common difference $e$, and for each such $s$
 the value $w(s) := (x - \delta s)/e$ increases by exactly $\delta$ when $s$ decreases by $e$. The
 windows $[w^-(s), w^+(s)]$ are nondecreasing in $s$ with increments in $[0,e]$ per admissible step
@@ -884,9 +882,8 @@ holds in the weak form $D_n \ge \beta - 1$ by the previous paragraph. So the ide
 when $D_n = \beta - 1$ exactly --- equivalently, when $n\alpha + \beta = q_n + 1$ is an integer, i.e.
 $\{n\alpha + \beta\} = 0$. If two indices $n_1 \ne n_2$ both had $n_i\alpha + \beta \in \ZZ$, then
 $(n_1 - n_2)\alpha \in \ZZ$, which is impossible for irrational $\alpha$. So there is \emph{at most
-one} exceptional index; call it $n_0$ if it exists, and set $n_0 := 0$ otherwise (recall $q_0 = 0 =
-\lfloor \beta \rfloor$ can be arranged, and in any case the index $0$ is discarded when we pass to
-the tail). Then
+one} exceptional index; call it $n_0$ if it exists, and set $n_0 := 0$ otherwise. Only indices
+$n \ge 1$ are used below, so no assertion at $n = 0$ is required. Then
 \[
   q_n \;=\; \lfloor n\alpha + \beta \rfloor \qquad \text{for every } n \ge 1 \text{ with } n \ne n_0 .
 \]
@@ -995,11 +992,12 @@ Fix any $N \ge 0$ and consider the $\lceil 1/\theta \rceil + 1$ indices
 \]
 all of which lie in the block $\{N+1, \dots, N+L\}$: indeed $n_0 \ge 1$, and the largest is
 $N + (\lceil 1/\theta \rceil + 1)\,n_0 = N + L$.
-The points $x_j := \{n_j \alpha + \beta\}$ satisfy $x_{j+1} = \{x_j \pm \theta\}$: they march around
-the circle in steps of the fixed length $\theta$, in a fixed direction, wrapping when they pass $0$
-(resp.\ $1$). In $\lceil 1/\theta \rceil$ such steps the total displacement is at least $1$, so the
-walk traverses the whole circle. Since each step has length $\theta < \varepsilon/2 < \varepsilon$,
-the walk cannot step over the arc $J$, which has length $\varepsilon$: some $x_j$ lies in $J$.
+The points $x_j := \{n_j \alpha + \beta\}$ satisfy $x_{j+1} = \{x_j + \theta\}$ after orienting the
+circle so the fixed step direction is positive; join each $x_j$ to $x_{j+1}$ by the positively
+oriented arc of length $\theta$. Over the $\lceil 1/\theta \rceil$ steps the total oriented length is
+at least $1$, so these arcs cover the whole circle. If no $x_j$ lay in the target arc $J$ (of length
+$\varepsilon$), some single step would have to jump across all of $J$; but each step has length
+$\theta < \varepsilon/2 < \varepsilon = |J|$, which is impossible. Hence some $x_j \in J$.
 
 Hence every block of
 \[
@@ -1099,57 +1097,58 @@ and hence Step 2.
 \begin{equation}\label{eq:eta-choice}
   \eta \;:=\; \tfrac14 \min(\alpha,\ 1 - \alpha) \;\in\; (0, \tfrac18],
 \end{equation}
-and fix the resulting $S_0$. Let $x$ be a large integer. Because $\gcd(\delta, e) = 1$, the equation
-$x = \delta s + e w$ in nonnegative integers admits, for each residue of $s$, at most one $w$; the
-admissible $s$ are exactly those with $s \equiv x \delta^{-1} \pmod e$, an arithmetic progression of
-common difference $e$, and for each we set $w(s) := (x - \delta s)/e \in \ZZ$. Define
+and fix the resulting $S_0$. Let $x$ be a large integer. Because $\gcd(\delta, e) = 1$, the congruence $\delta s \equiv x \pmod e$
+determines a single residue class; call its members the \emph{congruence-compatible} $s$, an
+arithmetic progression of common difference $e$. For each such $s$ set $w(s) := (x - \delta s)/e \in
+\ZZ$; the representation $x = \delta s + e\,w(s)$ uses nonnegative integers exactly when $s \ge 0$ and
+$w(s) \ge 0$, which we confirm at the crossing index below. Define
 \[
   \theta(s) \;:=\; X_s - w(s) \;=\; (s\alpha + k\beta) - \frac{x - \delta s}{e} .
 \]
-As $s$ advances by one admissible step ($s \mapsto s+e$), $X_s$ increases by $e\alpha$ while $w(s)$
+As $s$ advances by one congruence-compatible step ($s \mapsto s+e$), $X_s$ increases by $e\alpha$ while $w(s)$
 decreases by $\delta$, so
 \begin{equation}\label{eq:ladder-step}
-  \theta(s + e) - \theta(s) \;=\; e\alpha + \delta \;=:\; \gamma \;>\; 0 .
+  \theta(s + e) - \theta(s) \;=\; e\alpha + \delta \;=:\; \lambda \;>\; 0 .
 \end{equation}
-Thus $\theta$ is, along the admissible progression, a strictly increasing arithmetic sequence of
-common difference exactly $\gamma$.
+Thus $\theta$ is, along the congruence-compatible progression, a strictly increasing arithmetic sequence of
+common difference exactly $\lambda$.
 
 The sub-window \eqref{eq:subwindow} is the real interval $\theta \in [\eta, k-\eta]$, of length
 $k - 2\eta$. Using $\delta + e = \delta' \le k$ and \eqref{eq:eta-choice},
 \[
-  \gamma \;=\; \delta + e\alpha \;=\; (\delta + e) - e(1 - \alpha) \;=\; \delta' - e(1-\alpha)
+  \lambda \;=\; \delta + e\alpha \;=\; (\delta + e) - e(1 - \alpha) \;=\; \delta' - e(1-\alpha)
          \;\le\; k - (1 - \alpha),
 \]
 since $e \ge 1$ and $1 - \alpha > 0$. As $2\eta \le \tfrac12(1-\alpha) < 1 - \alpha$, we conclude
 \begin{equation}\label{eq:step-vs-window}
-  \gamma \;\le\; k - (1-\alpha) \;<\; k - 2\eta ,
+  \lambda \;\le\; k - (1-\alpha) \;<\; k - 2\eta ,
 \end{equation}
 i.e. the ladder step is \emph{strictly} shorter than the sub-window.
 
-A strictly increasing arithmetic sequence of common difference $\gamma$ cannot skip over a real
-interval of length $> \gamma$: if $\theta(s) < \eta$ and $\theta(s+e) > k - \eta$ for two consecutive
-admissible terms, then $\gamma > (k - \eta) - \eta = k - 2\eta$, contradicting
-\eqref{eq:step-vs-window}. As $s$ runs through the admissible progression, $\theta(s)$ increases
-without bound and is very negative for the smallest admissible $s$ (where $w(s) \approx x/e$
-dominates), so it crosses $[\eta, k-\eta]$; by the no-skip property some admissible $s^*$ has
+A strictly increasing arithmetic sequence of common difference $\lambda$ cannot skip over a real
+interval of length $> \lambda$: if $\theta(s) < \eta$ and $\theta(s+e) > k - \eta$ for two consecutive
+congruence-compatible terms, then $\lambda > (k - \eta) - \eta = k - 2\eta$, contradicting
+\eqref{eq:step-vs-window}. As $s$ runs through the congruence-compatible progression, $\theta(s)$ increases
+without bound and is very negative for the smallest congruence-compatible $s$ (where $w(s) \approx x/e$
+dominates), so it crosses $[\eta, k-\eta]$; by the no-skip property some congruence-compatible $s^*$ has
 $\theta(s^*) \in [\eta, k-\eta]$.
 
 It remains to say what ``$x$ large'' means, and we make the two thresholds explicit. Solving
-$\theta(s) = \theta$ for $s$ gives $s\gamma = x + e\theta - ek\beta$, so any $s^*$ with
+$\theta(s) = \theta$ for $s$ gives $s\lambda = x + e\theta - ek\beta$, so any $s^*$ with
 $\theta(s^*) \in [\eta, k-\eta] \subseteq [0,k]$ satisfies
 \begin{equation}\label{eq:sstar-range}
-  \frac{x - ek|\beta|}{\gamma} \;\le\; s^* \;\le\; \frac{x + ek(1 + |\beta|)}{\gamma}.
+  \frac{x - ek|\beta|}{\lambda} \;\le\; s^* \;\le\; \frac{x + ek(1 + |\beta|)}{\lambda}.
 \end{equation}
 Two conditions are needed.
 \begin{itemize}
 \item \emph{$s^* \ge S_0$, so that Step 2 applies.} By the left inequality of \eqref{eq:sstar-range}
-and $\gamma \le k$, it suffices that
+and $\lambda \le k$, it suffices that
 \[
   x \;\ge\; k\,S_0 + e\,k\,|\beta| .
 \]
 \item \emph{$w(s^*) \ge 0$, so that the representation $x = \delta s^* + e\,w(s^*)$ uses a
 nonnegative $w$.} This says $\delta s^* \le x$. By the right inequality of \eqref{eq:sstar-range}
-this holds as soon as $\delta\big(x + ek(1+|\beta|)\big) \le \gamma x = (\delta + e\alpha)x$, i.e.
+this holds as soon as $\delta\big(x + ek(1+|\beta|)\big) \le \lambda x = (\delta + e\alpha)x$, i.e.
 as soon as
 \[
   x \;\ge\; \frac{\delta\,k\,(1 + |\beta|)}{\alpha} ,
@@ -2380,7 +2379,7 @@ Mathlib pinned via \texttt{lake-manifest.json}), so the audit is reproducible fr
 lake build                                          # compiles the development
 grep -rEn '\bsorry\b' --include='*.lean' Erdos1112Proof \
   | grep -v -- '--' | grep -v 'sorry-free'          # expect no output
-#print axioms Erdos1112.erdos_1112                  # expect the 3-axiom list
+lake env lean AxiomsCheck.lean                      # prints the 3-axiom list per theorem
 \end{verbatim}
 \end{quote}
 
@@ -2509,9 +2508,10 @@ direction. GPT-5.5 (OpenAI) and Gemini~3.1 (Google DeepMind) were consulted for 
 adversarial review. The author set the problem and the intermediate targets, audited the output at
 every stage, and is responsible for the content, including any error that remains. The automated
 systems are not authors: they cannot take responsibility for the work, and they meet no authorship
-criterion. Every mathematical claim in this paper has been checked by at least one of the three
-routes of \S\ref{sec:provenance}, and the dichotomy of Theorem~\ref{thm:main} is machine-checked in
-Lean~4 within the scope stated in \S\ref{sec:formal-scope}. This declaration should be adapted to
+criterion. Every mathematical claim used in the proof of Theorem~\ref{thm:main} has been checked by at least one
+of the three routes described in \S\ref{sec:map} --- the prose argument, the finite certificates, and
+the Lean development --- and the dichotomy is machine-checked in Lean~4 within the scope of
+\S\ref{sec:formal-scope}. This declaration should be adapted to
 the requirements of the venue before submission; policies differ, and some require the exact model
 versions, the tasks for which each was used, and a statement of how the output was verified --- all
 of which are given here and in \S\ref{sec:provenance}.
@@ -2788,11 +2788,6 @@ N.~Alon and G.~Freiman,
 \emph{On sums of subsets of a set of integers},
 Combinatorica \textbf{8} (1988), no.~4, 297--306.
 
-\bibitem[Al87]{Alon87}
-N.~Alon,
-\emph{Subset sums},
-J.\ Number Theory \textbf{27} (1987), 196--205.
-
 \bibitem[BHJ97]{BHJ97}
 B.~Bollob\'as, N.~Hegyv\'ari and G.~Jin,
 \emph{On a problem of Erd\H{o}s and Graham},
@@ -2854,13 +2849,6 @@ V.~F.~Lev,
 \emph{Blocks and progressions in subset sum sets},
 Acta Arith.\ \textbf{106} (2003), no.~2, 123--142.
 
-\bibitem[Lev10]{Lev}
-V.~F.~Lev,
-\emph{Consecutive integers in high-multiplicity sumsets},
-Acta Math.\ Hungar.\ \textbf{129} (2010), no.~3, 245--253.
-\textsc{doi}:\,\href{https://doi.org/10.1007/s10474-010-0026-6}{10.1007/s10474-010-0026-6}.
-(arXiv:0806.4580.)
-
 \bibitem[Lev22]{Lev21}
 V.~F.~Lev,
 \emph{The structure of higher sumsets},
@@ -2868,20 +2856,10 @@ Proc.\ Amer.\ Math.\ Soc.\ \textbf{150} (2022), no.~12, 5165--5177.
 \textsc{doi}:\,\href{https://doi.org/10.1090/proc/16128}{10.1090/proc/16128}.
 (arXiv:2110.03554.)
 
-\bibitem[Lev97]{Lev97}
-V.~F.~Lev,
-\emph{Optimal representations by sumsets and subset sums},
-J.\ Number Theory \textbf{62} (1997), 127--143.
-
 \bibitem[Lev98]{Lev98}
 V.~F.~Lev,
 \emph{On consecutive subset sums},
 Discrete Math.\ \textbf{187} (1998), no.~1--3, 151--160.
-
-\bibitem[Lev99]{Lev99}
-V.~F.~Lev,
-\emph{The structure of multisets with a small number of subset sums},
-Ast\'erisque \textbf{258} (1999), 179--186.
 
 \bibitem[Lo02]{Lothaire}
 M.~Lothaire,
