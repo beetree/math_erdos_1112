@@ -767,13 +767,8 @@ antidiagonals contribute widths additively, and:
         exactly $k$ indices.
   \item \emph{$k$ even, $d_2 \le k-1$:} $(k/2 - 1)$ pairs at $\sigma_0$ plus one free pair at
         $\tau := s - (k/2 - 1)\sigma_0$ give width $\ge (k-2) + W_2(\tau) \ge k-2 \ge d_2 - 1$.
-  \item \emph{$k$ even, $d_2 = k$ (boundary):} three possibilities, treated in turn. If the gap
-        word is eventually periodic, Lemma~\ref{lem:periodic} applies. Otherwise, if some tail of the
-        gap word is balanced, pass to that tail (Lemma~\ref{lem:tail}) and apply the Morse--Hedlund
-        dichotomy as in part (b): the tail is ultimately periodic (Lemma~\ref{lem:periodic}) or
-        Sturmian (Lemma~\ref{lem:sturmian}), and either way $kA$ is tail-covering with no width
-        argument needed. Otherwise \emph{every} tail of the gap word is unbalanced, and
-        Lemma~\ref{lem:boundary-width} supplies width $\ge k-1$ for all large $s$.
+  \item \emph{$k$ even, $d_2 = k$ (boundary):} $A$ is tail-covering by
+        Proposition~\ref{prop:boundary-route} (which is independent of the hypothesis of part~(a)).
 \end{itemize}
 In every branch ending with a width bound, Lemma~\ref{lem:sweep} then gives tail-covering.
 \item[\textup{(b)}] Otherwise $W_2(\sigma) \le 1$ for all $\sigma$. Then for any equal-length windows
@@ -784,6 +779,18 @@ ultimately periodic (Lemma~\ref{lem:periodic}) or, after passing to a tail, mech
 irrational slope, and the latter is Lemma~\ref{lem:sturmian}.
 \end{enumerate}
 \end{lemma}
+
+The boundary case is the delicate one, so we isolate its routing.
+
+\begin{proposition}[Boundary routing; $k$ even, $d_2 = k$]\label{prop:boundary-route}
+Let $k$ be even and $d_2 = k$. Then $A$ is tail-covering. Exactly one of three possibilities holds,
+each closing the case: if the gap word is eventually periodic, Lemma~\ref{lem:periodic} applies; if
+some tail of the gap word is balanced, that tail (Lemma~\ref{lem:tail}) is ultimately periodic
+(Lemma~\ref{lem:periodic}) or Sturmian (Lemma~\ref{lem:sturmian}) by
+Proposition~\ref{prop:balanced}, and either gives tail-covering with no width argument; and if
+\emph{every} tail of the gap word is unbalanced, Lemma~\ref{lem:boundary-width} supplies width
+$\ge k-1$ for all large $s$, whence Lemma~\ref{lem:sweep} gives tail-covering.
+\end{proposition}
 
 The parity split in (a) is essential: when $k$ is even, $\lfloor k/2 \rfloor$ pairs plus a leftover
 index would consume $k+1$ indices.
