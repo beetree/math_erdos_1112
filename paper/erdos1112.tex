@@ -96,9 +96,8 @@ The existence half uses a Beatty construction whose $k$-fold sumset threads the 
 must leave; the non-existence half reduces, through a word-combinatorial analysis of the gap
 sequence, to a bounded subset-sum lemma (every finite $\gcd$-$1$ set $G$ with $\max G = M$ and
 $|G| \ge 3$ admits a multiset of at most $M-1$ of its elements whose subset sums contain $M$
-consecutive integers). The proof is computer-assisted --- its finite layer is $350$ explicit
-certificates --- and the full dichotomy is formally verified in Lean~4 in the problem's literal
-integer phrasing.
+consecutive integers). The proof is computer-assisted, with a finite certificate layer, and the full
+dichotomy is formally verified in Lean~4 in the problem's literal integer phrasing.
 \end{abstract}
 
 \maketitle
@@ -926,10 +925,11 @@ $0 \le i \le \tau - 1$: the prefix $h[1..\tau]$ is a palindrome. Likewise $h[1..
 palindrome. A palindromic prefix of a palindrome is also its suffix, so $h[1..\tau - \Delta]$ is a
 border of $h[1..\tau]$, and hence $h[1..\tau]$ has period $\Delta$: this is the classical
 border--period duality (a word $w$ with a border of length $\ell$ has period $|w| - \ell$, since the
-border condition $w_i = w_{i + |w| - \ell}$ holds for all $i \le \ell$; see \cite{Lothaire}). If the
-width bound failed for infinitely many $s$ then --- $\Delta$
-being fixed while $\tau(s)$ strictly increases --- the word $h$ would have period $\Delta$,
-contradicting non-periodicity.
+border condition $w_i = w_{i + |w| - \ell}$ holds for all $i \le \ell$; see \cite{Lothaire}). If the width bound failed for infinitely many $s$, then, $\Delta$ being fixed while $\tau(s)$
+strictly increases, we obtain prefixes $h[1..\tau]$ of period $\Delta$ with $\tau \to \infty$. For
+any fixed position $n$, choosing such a prefix of length $\tau > n + \Delta$ gives
+$h_n = h_{n+\Delta}$ from its period relation; as $n$ was arbitrary, the entire infinite word $h$ has
+period $\Delta$, contradicting non-periodicity.
 \end{proof}
 
 \begin{lemma}[Uniform hitting for irrational rotation]\label{lem:rotation-hit}
@@ -1695,15 +1695,15 @@ all parameters in its range, and ``finite'' means it additionally consumes a cer
 \toprule
 Branch & Condition & Construction & Budget mechanism & Closure \\
 \midrule
-D & $a \mid M$ & Lemma~\ref{lem:caseD} & $(a{-}1)$ copies of $b$ span $\ZZ_a$; & symbolic \\
+D \emph{(divisible)} & $a \mid M$ & Lemma~\ref{lem:caseD} & $(a{-}1)$ copies of $b$ span $\ZZ_a$; & symbolic \\
   &            &                        & \quad $a,M$ pad at ``half price'' & \\
-P & $a \mid b+M$ & Lemma~\ref{lem:caseP} & $(b,M)$ pairs are residue-neutral & symbolic \\
+P \emph{(paired)} & $a \mid b+M$ & Lemma~\ref{lem:caseP} & $(b,M)$ pairs are residue-neutral & symbolic \\
   &              &                       & \quad movers worth $ra$ & \\
-L & $e = h$ & Lemma~\ref{lem:caseL} & staircase, extended form & symbolic \\
-E & $a, \mu \ge 12$ & Lemma~\ref{lem:etabox} & the $\eta$-box $(t{-}1, Z)$ & symbolic \\
-T & $\mu \le 11$ & Lemmas~\ref{lem:T}, \ref{lem:t-tail} & staircase + linear tail; & finite \\
+L \emph{(linear)} & $e = h$ & Lemma~\ref{lem:caseL} & staircase, extended form & symbolic \\
+E \emph{($\eta$-box)} & $a, \mu \ge 12$ & Lemma~\ref{lem:etabox} & the $\eta$-box $(t{-}1, Z)$ & symbolic \\
+T \emph{(thin $\mu$)} & $\mu \le 11$ & Lemmas~\ref{lem:T}, \ref{lem:t-tail} & staircase + linear tail; & finite \\
   &              &                                        & \quad $172$ exceptions & \quad (Table~A) \\
-B & $a \le 11$, $\mu \ge 12$ & Table~B $+$ Lemma~\ref{lem:lift} & finite bases, lifted in $\lambda$ & finite \\
+B \emph{(bounded $a$)} & $a \le 11$, $\mu \ge 12$ & Table~B $+$ Lemma~\ref{lem:lift} & finite bases, lifted in $\lambda$ & finite \\
   &                            &                                              &                                    & \quad (Table~B) \\
 \bottomrule
 \end{tabular}
@@ -2573,11 +2573,11 @@ Proposition~\ref{prop:FV}.
 annotated Git tag \texttt{submission-2026-07}, which resolves to a single commit carrying this
 \LaTeX{} source, the machine-readable certificate data, the generator/re-verifier, and the two Python
 harnesses; the Lean~4 development is the \texttt{main}-branch commit cited above. This PDF is built
-from the tagged commit by a clean checkout. We take the commit hash to which \texttt{submission-2026-07}
-resolves (recoverable by \texttt{git rev-parse}) as the permanent identifier of record, in preference
-to a DOI: a Git commit fixes the source, the formal proof, and the certificate data together, and is
-verifiable by anyone with the repository. The full certificate tables are typeset in the supplement
-\texttt{erdos1112-supplement.pdf} and exported to \texttt{data/}.}}
+from the tagged commit by a clean checkout. The commit hash to which \texttt{submission-2026-07}
+resolves (recoverable by \texttt{git rev-parse}) is the identifier for exact reproducibility; a
+DOI-backed archive of the same release will accompany the journal submission for scholarly citation.
+The full certificate tables are typeset in the supplement \texttt{erdos1112-supplement.pdf} and
+exported to \texttt{data/}.}}
 \end{center}
 
 \appendix
@@ -2800,7 +2800,7 @@ preprint, arXiv:2104.14766 (2021).
 \bibitem[CMZ25]{CMZ25}
 L.~Chen, Y.~Mao and G.~Zhang,
 \emph{Long arithmetic progressions in sumsets and subset sums: constructive proofs and efficient witnesses},
-preprint, arXiv:2503.19299 (2025).
+to appear in Proc.\ 57th ACM Symposium on Theory of Computing (STOC~2025); arXiv:2503.19299.
 
 \bibitem[Ch00]{Ch00}
 Y.-G.~Chen,
