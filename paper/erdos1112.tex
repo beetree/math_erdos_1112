@@ -903,7 +903,7 @@ whose summand indices $i_t$ are all $\ge 1$.)
 
 Everything above rests on the near-additivity \eqref{eq:near-add} and the discrepancy bound
 \eqref{eq:disc-bound}, not on any density or equidistribution statement. Similarly, the uniform
-syndeticity used in Step 1 of Lemma~\ref{lem:sturmian} below is obtained from a single Dirichlet
+syndeticity of Lemma~\ref{lem:rotation-hit} below is obtained from a single Dirichlet
 approximation (a bounded circle walk), not from the three-distance theorem. This is the route
 carried out in the formalization (\texttt{disc\_osc\_le\_one}, \texttt{mechanical\_tail},
 \texttt{walk\_enters}).
@@ -946,6 +946,36 @@ being fixed while $\tau(s)$ strictly increases --- the word $h$ would have perio
 contradicting non-periodicity.
 \end{proof}
 
+\begin{lemma}[Uniform hitting for irrational rotation]\label{lem:rotation-hit}
+Let $\alpha \in (0,1)$ be irrational and $\beta \in \RR$. For every arc $J = (u,v) \subseteq (0,1)$
+with $\varepsilon := v - u > 0$ there is an integer $L = L(\alpha, \varepsilon)$, depending only on
+$\alpha$ and $\varepsilon$ --- not on the position of $J$, nor on $\beta$ --- such that every block
+of $L$ consecutive integers $\{N+1, \dots, N+L\}$ contains some $n$ with $\{n\alpha + \beta\} \in J$.
+\end{lemma}
+
+\begin{proof}
+An explicit \emph{circle walk}, using only Dirichlet's approximation theorem. Choose an integer
+$Q > 2/\varepsilon$. By Dirichlet's theorem there are integers $1 \le n_0 \le Q$ and $m$ with
+$|n_0\alpha - m| < 1/Q$. Set
+\[
+  \theta \;:=\; \| n_0 \alpha \| \;=\; |n_0\alpha - m| \;\in\; \big(0,\ \tfrac{\varepsilon}{2}\big),
+\]
+nonzero because $\alpha$ is irrational; one step of $n_0$ in the index moves $\{n\alpha + \beta\}$
+around the circle by exactly $\pm\theta$, the sign that of $n_0\alpha - m$ and the same at every step.
+Fix any $N \ge 0$ and consider the $\lceil 1/\theta \rceil + 1$ indices
+$n_j := N + (j+1)\,n_0$ ($j = 0, \dots, \lceil 1/\theta \rceil$), all lying in $\{N+1, \dots, N+L\}$
+with $L := n_0\big(\lceil 1/\theta \rceil + 1\big) \le Q\big(\lceil 1/\theta \rceil + 1\big)$. The
+points $x_j := \{n_j \alpha + \beta\}$ satisfy $x_{j+1} = \{x_j + \theta\}$ after orienting the circle
+so the fixed step direction is positive; join each $x_j$ to $x_{j+1}$ by the positively oriented arc
+of length $\theta$. Over the $\lceil 1/\theta \rceil$ steps the total oriented length is at least $1$,
+so these arcs cover the whole circle. If no $x_j$ lay in $J$, some single step would have to jump
+across all of $J$; but each step has length $\theta < \varepsilon/2 < \varepsilon = |J|$, which is
+impossible. Hence some $x_j \in J$. The constant $L$ depends only on $\alpha$ and $\varepsilon$ ---
+not on where $J$ sits, nor on $\beta$ --- the argument using only the step length $\theta$ and its
+direction. This is the route the formalization takes (\texttt{walk\_enters}), avoiding the
+three-distance theorem and any equidistribution input at the cost of a worse but explicit constant.
+\end{proof}
+
 \begin{lemma}[Sturmian case]\label{lem:sturmian}
 Let the two-letter tail of \S\ref{sec:twoletter} have $q_n = \lfloor n\alpha + \beta \rfloor$ for an
 irrational $\alpha \in (0,1)$ and some $\beta \in \RR$. Then $kA - k a_1$ contains all sufficiently
@@ -957,6 +987,13 @@ We keep the notation of \S\ref{sec:twoletter}: $e = \delta' - \delta \ge 1$,
 $\gcd(\delta, e) = 1$, and $\delta' = \delta + e \le k$ by \eqref{eq:letters-le-k}. Every
 $x \in kA - k a_1$ has the form $x = \delta s + e w$ with $s = \sum_t i_t$ (all $i_t \ge 1$, as we
 work in the tail) and $w = \sum_t q_{i_t} \in W_s$.
+
+\emph{Overview.} The real window $(X_s - k,\, X_s]$ of \eqref{eq:Ws-window} carries $W_s$ (Step~0).
+The uniform hitting lemma for the irrational rotation by $\alpha$ (Lemma~\ref{lem:rotation-hit}) lets
+us fill an interior sub-window: every integer of $[\eta, k-\eta]$-depth below $X_s$ is realized as
+some $\sum_t q_{i_t}$ (Step~2). Finally a congruence ladder is walked across that sub-window to
+represent an arbitrary large $x$, with explicit thresholds making the chosen indices and coefficient
+nonnegative (Step~3).
 
 \smallskip
 \emph{Step 0: the window carrying $W_s$.} From $q_n = n\alpha + \beta - \{n\alpha + \beta\}$,
@@ -970,46 +1007,10 @@ Each $\{i_t\alpha + \beta\} \in [0,1)$, so $\sum_t \{i_t\alpha + \beta\} \in [0,
 \end{equation}
 
 \smallskip
-\emph{Step 1: uniform syndeticity.} For every arc $J = (u,v) \subseteq (0,1)$ with $v - u > 0$ there
-is an integer $L = L(v-u)$, depending only on $\alpha$ and on the length $v-u$ --- not on the
-position of $J$, nor on $\beta$ --- such that every block of $L$ consecutive integers
-$\{N+1, \dots, N+L\}$ contains some $n$ with $\{n\alpha + \beta\} \in J$.
-
-We prove this by an explicit \emph{circle walk}, using only Dirichlet's approximation theorem. Put
-$\varepsilon := v - u > 0$ and choose an integer $Q > 2/\varepsilon$. By Dirichlet's theorem there
-are integers $1 \le n_0 \le Q$ and $m$ with $|n_0\alpha - m| < 1/Q$. Set
-\[
-  \theta \;:=\; \| n_0 \alpha \| \;=\; |n_0\alpha - m| \;\in\; \big(0,\ \tfrac{\varepsilon}{2}\big),
-\]
-which is nonzero because $\alpha$ is irrational. Thus one step of $n_0$ in the index moves the point
-$\{n\alpha + \beta\}$ around the circle by exactly $\pm\theta$, the sign being that of
-$n_0\alpha - m$ and the same at every step.
-
-Fix any $N \ge 0$ and consider the $\lceil 1/\theta \rceil + 1$ indices
-\[
-  n_j \;:=\; N + (j+1)\,n_0, \qquad j = 0, 1, \dots, \lceil 1/\theta \rceil ,
-\]
-all of which lie in the block $\{N+1, \dots, N+L\}$: indeed $n_0 \ge 1$, and the largest is
-$N + (\lceil 1/\theta \rceil + 1)\,n_0 = N + L$.
-The points $x_j := \{n_j \alpha + \beta\}$ satisfy $x_{j+1} = \{x_j + \theta\}$ after orienting the
-circle so the fixed step direction is positive; join each $x_j$ to $x_{j+1}$ by the positively
-oriented arc of length $\theta$. Over the $\lceil 1/\theta \rceil$ steps the total oriented length is
-at least $1$, so these arcs cover the whole circle. If no $x_j$ lay in the target arc $J$ (of length
-$\varepsilon$), some single step would have to jump across all of $J$; but each step has length
-$\theta < \varepsilon/2 < \varepsilon = |J|$, which is impossible. Hence some $x_j \in J$.
-
-Hence every block of
-\[
-  L \;:=\; n_0\big(\lceil 1/\theta \rceil + 1\big) \;\le\; Q\big(\lceil 1/\theta \rceil + 1\big)
-\]
-consecutive integers contains an index $n$ with $\{n\alpha + \beta\} \in J$. The bound $L$ depends
-only on $\alpha$ and on $\varepsilon = v-u$ --- not on where $J$ sits, and not on $\beta$, since the
-argument used only the step length $\theta$ and the direction, both independent of the starting
-point. Fix this $L$ for the specific arc used below.
-
-This is the route the formalization takes (\texttt{walk\_enters}); it avoids the three-distance
-theorem, and indeed any density or equidistribution statement, at the cost of a worse but perfectly
-explicit constant.
+\emph{Step 1 (uniform hitting).} This is Lemma~\ref{lem:rotation-hit}: for every arc
+$J \subseteq (0,1)$ of length $\varepsilon$, every block of $L = L(\alpha,\varepsilon)$ consecutive
+indices contains an $n$ with $\{n\alpha + \beta\} \in J$. Fix this $L$ for the specific arc chosen
+in Step~2.
 
 \smallskip
 \emph{Step 2: the sub-window claim.} Fix $\eta \in (0, \tfrac12)$. We claim there is
@@ -1044,10 +1045,10 @@ Pick any $T^* \in \mathcal{I}$ and set the target arc
   J \;:=\; \Big(\tfrac{T^*}{k-1} - \tfrac{\kappa}{k-1},\ \tfrac{T^*}{k-1} + \tfrac{\kappa}{k-1}\Big)
   \;\subseteq\; (0,1),
 \]
-of length $2\kappa/(k-1) > 0$; let $L = L\big(2\kappa/(k-1)\big)$ be its syndeticity constant from
-Step 1. Choose the $k-1$ \emph{free} indices $i_1 < \cdots < i_{k-1}$, all with
+of length $2\kappa/(k-1) > 0$; let $L = L\big(\alpha, 2\kappa/(k-1)\big)$ be its hitting constant from
+Lemma~\ref{lem:rotation-hit}. Choose the $k-1$ \emph{free} indices $i_1 < \cdots < i_{k-1}$, all with
 $\{i_t\alpha + \beta\} \in J$, from the lowest available blocks: for $j = 1, \dots, k-1$ the block
-$B_j := \{(j-1)L + 1, \dots, jL\}$ contains, by Step 1, at least one index $i_j$ with
+$B_j := \{(j-1)L + 1, \dots, jL\}$ contains, by Lemma~\ref{lem:rotation-hit}, at least one index $i_j$ with
 $\{i_j\alpha + \beta\} \in J$. These lie in disjoint blocks, so they are distinct, and
 \begin{equation}\label{eq:free-indices}
   i_j \le jL, \qquad
@@ -2451,8 +2452,8 @@ see Remark~\ref{rem:caseP-clean}.
 \item Case D closes uniformly on $(a-1)(q-2) \ge 0$, with no split on $q$
 (Lemma~\ref{lem:caseD}).
 \item The two-letter core takes a density-free route: the balanced classification via a
-discrepancy-oscillation iteration (Proposition~\ref{prop:balanced}), and the uniform syndeticity of
-Step~1 of Lemma~\ref{lem:sturmian} via an explicit Dirichlet-step circle walk, rather than the
+discrepancy-oscillation iteration (Proposition~\ref{prop:balanced}), and the uniform hitting of
+Lemma~\ref{lem:rotation-hit} via an explicit Dirichlet-step circle walk, rather than the
 three-distance theorem. Dirichlet's approximation theorem is the only analytic input.
 \item The free-gap lemma is proved at the single index $s_1 = \lceil t/\mathrm{hi} \rceil$ (where
 $\mathrm{hi}$ is the upper endpoint of the parent interval; cf.\ Lemma~\ref{lem:freegap}), with
