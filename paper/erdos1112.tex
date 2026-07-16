@@ -176,15 +176,22 @@ Hence $r_k(d_1,d_2)$ exists if and only if $d_2 \ge k+1$, and the answer to the 
 \emph{yes precisely when $d_2 \ge k+1$}.
 \end{maintheorem}
 
-Note that $d_1$ is irrelevant to the threshold. The constant $192$ is not optimized, and we make no
-claim about the true order of $r_k(d_1,d_2)$. Part (2) is genuinely stronger than the negation of
-the question. It says that no prescribed sequence of \emph{pointwise lower bounds on the successive
-ratios} of $B$ --- however rapidly growing, and fixed in advance --- can rescue the existence of $A$.
-The quantification is over ratio sequences $(r_i)$, not over other structural or arithmetic
-conditions one might impose on $B$.
+Note that $d_1$ is irrelevant to the threshold. This is visible in both halves of the proof: the
+existence construction uses only the two largest admissible gaps, $d_2 - 1$ and $d_2$, which lie in
+$[d_1, d_2]$ whatever $d_1$ is; and the non-existence argument works with the gap values that recur
+infinitely often, whose \emph{maximum} is what the budget of $k$ summands must pay for --- again
+independently of $d_1$, which enters only through $d_1 \ge 1$. The constant $192$ is not optimized,
+and we make no claim about the true order of $r_k(d_1,d_2)$. Part (2) is genuinely stronger than the
+negation of the question. It says that no prescribed sequence of \emph{pointwise lower bounds on the
+successive ratios} of $B$ --- however rapidly growing, and fixed in advance --- can rescue the
+existence of $A$. The quantification is over ratio sequences $(r_i)$, not over other structural or
+arithmetic conditions one might impose on $B$.
 
-The consecutive-window dichotomy ``$r_k(d,d+1)$ exists $\iff d \ge k$'' is exactly the
-$d_2 = d+1$ slice of Theorem~\ref{thm:main}, for every $k \ge 3$.
+\begin{corollary}[Consecutive gap windows]\label{cor:window}
+Let $k \ge 3$ and $d \ge 1$. Then $r_k(d,\, d+1)$ exists if and only if $d \ge k$.
+\end{corollary}
+
+\noindent This is the $d_2 = d + 1$ slice of Theorem~\ref{thm:main}.
 
 \begin{remark}[The case $k = 2$, and why \S\ref{sec:nonex} needs $k \ge 3$]\label{rem:k2}
 Theorem~\ref{thm:main} is stated for $k \ge 3$, as is the problem. For context, $r_2(2,3) = 2$
@@ -336,6 +343,12 @@ slot lemma of the non-existence half: Lemma~\ref{lem:sharp} is what that lemma n
 corner $k = d_2 = M$, and it is where the finite certificate data of Appendix~\ref{app:tables}
 enters.
 
+Three reading routes follow from this structure. A reader who wants the dichotomy may read
+\S\S\ref{sec:existence}, \ref{sec:nonex} and \ref{sec:assembly}, taking Lemma~\ref{lem:sharp} on
+faith. \S\ref{sec:sharp} is self-contained additive combinatorics and can be read independently,
+starting from its own roadmap. The verification material --- \S\ref{sec:lean}, the appendices, and
+the supplement --- is reference matter, needed for audit rather than for the mathematics.
+
 \subsection{Notation}\label{sec:notation}
 For a $(d_1,d_2)$-sequence $A = \{a_1 < a_2 < \cdots\}$ we write
 $g_n := a_{n+1} - a_n \in [d_1,d_2] \cap \ZZ$ for its \emph{gaps}, and
@@ -369,8 +382,9 @@ For real $\gamma \in (d_2 - 1, d_2)$ and an integer $c \ge 0$ set
   A_{\gamma,c} \;:=\; \{\, c + \lfloor i\gamma \rfloor \;:\; i \ge 1 \,\}.
 \]
 Its consecutive gaps are $\lfloor (i+1)\gamma \rfloor - \lfloor i \gamma \rfloor \in
-\{d_2 - 1, d_2\} \subseteq [d_1, d_2]$, so $A_{\gamma,c}$ is a $(d_1,d_2)$-sequence for every such
-$\gamma$ and $c$. For any $i_1, \dots, i_k \ge 1$ with $s := \sum_t i_t$ we have, from
+\{\lfloor\gamma\rfloor,\ \lfloor\gamma\rfloor + 1\} = \{d_2 - 1, d_2\} \subseteq [d_1, d_2]$ (note
+$\lfloor\gamma\rfloor = d_2 - 1$, as $d_2 - 1 < \gamma < d_2$), so $A_{\gamma,c}$ is a
+$(d_1,d_2)$-sequence for every such $\gamma$ and $c$. For any $i_1, \dots, i_k \ge 1$ with $s := \sum_t i_t$ we have, from
 $i_t\gamma - 1 < \lfloor i_t\gamma \rfloor \le i_t\gamma$,
 \[
   \sum_t \lfloor i_t \gamma \rfloor \;\in\; (\,s\gamma - k,\ s\gamma\,],
@@ -408,8 +422,7 @@ gap between consecutive unsafe intervals --- wide enough to hold a usable slope.
     \fill[pattern=north east lines, pattern color=black!45] (\a,0) rectangle (\b,0.5);
     \draw[black!45] (\a,0) rectangle (\b,0.5);
   }
-  \fill[green!14] (3.8,0) rectangle (5.0,0.5);
-  \draw[green!55!black, dashed] (3.8,0) rectangle (5.0,0.5);
+  \draw[green!45!black, dashed, very thick] (3.8,0) rectangle (5.0,0.5);
   \node[font=\normalsize] at (4.4,0.25) {$J$};
   \draw (3.8,0) -- (3.8,-0.08);
   \node[anchor=north, font=\scriptsize] at (3.8,-0.1) {$\tfrac{t+k}{s_1}$};
@@ -527,6 +540,8 @@ following it, $(k A_{\gamma^*, c}) \cap B = \emptyset$. As $A_{\gamma^*,c}$ is a
 $(d_1,d_2)$-sequence, this proves $r_k(d_1,d_2) \le 192 d_2$.
 \end{proof}
 
+This establishes part (1) of Theorem~\ref{thm:main}; the rest of the paper proves part (2).
+
 \begin{remark}\label{rem:k2-formal}
 Theorem~\ref{thm:existence} is stated and proved here for all $k \ge 2$. The Lean formalization
 covers $k \ge 3$ --- the range of the problem and of the dichotomy Theorem~\ref{thm:main} --- so the
@@ -537,7 +552,11 @@ formal development carries exactly the problem's hypotheses, so that every headl
 \texttt{erdosproblems.com}.
 \end{remark}
 
-%======================================================================
+\section{Non-existence for \texorpdfstring{$d_2 \le k$}{d2 <= k}: reduction to Lemma~\ref{lem:sharp}}
+\label{sec:nonex}
+
+Throughout this section $k \ge 3$ and $d_2 \le k$.
+
 \subsection*{Glossary of terms coined in \S\S\ref{sec:nonex}--\ref{sec:sharp}}
 Several constructions below are given short names. They are collected here with their formal content.
 
@@ -556,15 +575,11 @@ Term & Formal content \\
 \emph{frame} & a box $(Y,Z)$ mod $a$ covering $\ZZ_a$, lifted by copies of $a$ (Lemma~\ref{lem:frame}) \\
 \emph{budget} & the size $x+y+z$ of a multiset, to be compared with $M-1$ \\
 \emph{staircase} & the level-by-level decomposition of subset sums (Lemma~\ref{lem:staircase}) \\
-\emph{$\lambda$-lift} & the descent $b \mapsto b+a$, $M \mapsto M+a$ within a class (Lemma~\ref{lem:lift}) \\
+\emph{$\lambda$-lift} & transport of a base certificate up its class, $b \mapsto b+a$, $M \mapsto M+a$ (Lemma~\ref{lem:lift}) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\section{Non-existence for \texorpdfstring{$d_2 \le k$}{d2 <= k}: reduction to Lemma~\ref{lem:sharp}}
-\label{sec:nonex}
-
-Throughout this section $k \ge 3$ and $d_2 \le k$.
 
 \subsection{The certificate}
 
@@ -600,9 +615,10 @@ So it suffices to prove:
 \emph{every $(d_1,d_2)$-sequence with $d_2 \le k$ is tail-covering.}
 \end{quote}
 
-Full congruence-class tails are genuinely needed here, rather than merely ``all large integers'':
-the modulus can exceed $d_2$. For instance, gaps $3,5,3,5,\dots$ with $k = 5$ give exactly the six
-classes $5a_1 + \{0,1,3,4,6,7\} \pmod 8$.
+The nontrivial modulus in the definition of tail-covering is essential: $kA$ need not be cofinite,
+so one cannot always hope for ``all large integers'' ($m = 1$), and the modulus can even exceed
+$d_2$. For instance, gaps $3,5,3,5,\dots$ with $k = 5$ give exactly the six classes
+$5a_1 + \{0,1,3,4,6,7\} \pmod 8$.
 
 \subsection{Elementary reductions}
 
@@ -682,14 +698,14 @@ target inside the window, and that $s$ realizes $x$.
     plot (\x,{0.7+0.13*\x}) node[right] {$w^-(s)$};
   \draw[thick,blue!55!black,domain=0:7,samples=60,smooth]
     plot (\x,{1.1+0.48*\x}) node[right] {$w^+(s)$};
-  \draw[thick,red!70!black,domain=0:7,samples=60,smooth]
+  \draw[thick,red!70!black,dashed,domain=0:7,samples=60,smooth]
     plot (\x,{4.7-0.52*\x}) node[right] {$w(s)$};
   \fill (3.6,{4.7-0.52*3.6}) circle (2.2pt);
   \draw[dashed] (3.6,0) node[below] {$s^\ast$} -- (3.6,{4.7-0.52*3.6});
   \node[anchor=south west,font=\small] at (3.75,{4.7-0.52*3.6}) {coverage begins};
 \end{tikzpicture}
-\caption{The window $[w^-(s),w^+(s)]$ widens with $s$ while the target $w(s)$ descends into it; past
-the crossing $s^\ast$ every large value is reachable.}
+\caption{Schematic: the window $[w^-(s),w^+(s)]$ (solid boundaries) widens with $s$ while the target
+$w(s)$ (dashed) descends into it; past the crossing $s^\ast$ every large value is reachable.}
 \label{fig:sweep}
 \end{figure}
 
@@ -947,7 +963,8 @@ $|n_0\alpha - m| < 1/Q$. Set
   \theta \;:=\; \| n_0 \alpha \| \;=\; |n_0\alpha - m| \;\in\; \big(0,\ \tfrac{\varepsilon}{2}\big),
 \]
 nonzero because $\alpha$ is irrational; one step of $n_0$ in the index moves $\{n\alpha + \beta\}$
-around the circle by exactly $\pm\theta$, the sign that of $n_0\alpha - m$ and the same at every step.
+around the circle by exactly $\pm\theta$, the sign being that of $n_0\alpha - m$, the same at every
+step.
 Fix any $N \ge 0$ and consider the $\lceil 1/\theta \rceil + 1$ indices
 $n_j := N + (j+1)\,n_0$ ($j = 0, \dots, \lceil 1/\theta \rceil$), all lying in $\{N+1, \dots, N+L\}$
 with $L := n_0\big(\lceil 1/\theta \rceil + 1\big) \le Q\big(\lceil 1/\theta \rceil + 1\big)$. The
@@ -1032,7 +1049,9 @@ Pick any $T^* \in \mathcal{I}$ and set the target arc
   \;\subseteq\; (0,1),
 \]
 of length $2\kappa/(k-1) > 0$; let $L = L\big(\alpha, 2\kappa/(k-1)\big)$ be its hitting constant from
-Lemma~\ref{lem:rotation-hit}. Choose the $k-1$ \emph{free} indices $i_1 < \cdots < i_{k-1}$, all with
+Lemma~\ref{lem:rotation-hit}. The arc $J$ moves with $\theta$ (through $T^*$), but its \emph{length}
+does not, and Lemma~\ref{lem:rotation-hit} is uniform in the arc's position --- so this single $L$
+serves every target $w$ and every $s$. Choose the $k-1$ \emph{free} indices $i_1 < \cdots < i_{k-1}$, all with
 $\{i_t\alpha + \beta\} \in J$, from the lowest available blocks: for $j = 1, \dots, k-1$ the block
 $B_j := \{(j-1)L + 1, \dots, jL\}$ contains, by Lemma~\ref{lem:rotation-hit}, at least one index $i_j$ with
 $\{i_j\alpha + \beta\} \in J$. These lie in disjoint blocks, so they are distinct, and
@@ -1200,8 +1219,13 @@ Call $t$ a \emph{fine slot}: a summand index $i_t \in \{n_t - 1,\ n_t\}$, contri
   \qquad \mathrm{base} := \sum_t p_{n_t - 1}.
 \]
 Park the remaining $k - 1 - m$ summands at fixed indices, folding their contribution into
-$\mathrm{base}$ (repeated indices are allowed in $kA$). This uses $k-1$ of the $k$ summands and
-realizes every value of an interval of $M$ consecutive integers.
+$\mathrm{base}$ (repeated indices are allowed in $kA$). Together with the coarse dial below this
+accounts for all $k$ summands,
+\[
+  \underbrace{m}_{\text{fine slots}} \;+\; \underbrace{(k - 1 - m)}_{\text{parked}}
+  \;+\; \underbrace{1}_{\text{dial}} \;=\; k ,
+\]
+and the $k-1$ summands so far realize every value of an interval of $M$ consecutive integers.
 
 Two endpoint facts should be made explicit. First, each value of $\Ginf$ recurs infinitely often, so
 the positions $n_t$ may be taken as far out as we please; we take them all beyond the tail index $T$
@@ -1220,9 +1244,10 @@ and since $\phi$ decreases by at most $M$ in one step,
 \[
   \phi(n^*) \;>\; (c + M - 1) - M \;=\; c - 1, \qquad\text{i.e.}\qquad \phi(n^*) \;\ge\; c .
 \]
-Hence $\phi(n^*) \in [c,\ c+M-1]$, an interval realized by the fine slots. This first-crossing
-argument is exactly where a run of $M$ consecutive integers is needed: a run of length $M-1$ would
-not suffice, since the dial can step by $M$.
+Hence $\phi(n^*) \in [c,\ c+M-1]$, an interval realized by the fine slots. (The dial index $n^*$ may
+coincide with a fine-slot or parked index; that is harmless, since repetitions are allowed in $kA$.)
+This first-crossing argument is exactly where a run of $M$ consecutive integers is needed: a run of
+length $M-1$ would not suffice, since the dial can step by $M$.
 
 Therefore $x \in kA - k a_1$, and $kA - k a_1$ contains all large integers (in rescaled coordinates;
 a full class tail modulo $g$ in general).
@@ -1314,7 +1339,7 @@ long. The lemmas of this subsection make that quantitative.
   \draw[very thick,blue!70!black] (\Cc,1.35) -- (\Vc,1.35);
   \fill[blue!70!black] (\Cc,1.35) circle (1.6pt) (\Vc,1.35) circle (1.6pt);
   \node[blue!70!black,anchor=south] at ({(\Cc+\Vc)/2},1.45) {level $c$: $[ca+C,\ ca+V]$};
-  \draw[very thick,orange!85!black] (\Cn,0.7) -- (\Vn,0.7);
+  \draw[very thick,orange!85!black,dashed] (\Cn,0.7) -- (\Vn,0.7);
   \fill[orange!85!black] (\Cn,0.7) circle (1.6pt) (\Vn,0.7) circle (1.6pt);
   \node[orange!85!black,anchor=south] at ({(\Cn+\Vn)/2},0.8) {level $c+1$: $[(c{+}1)a+C,\ (c{+}1)a+V]$};
   \node[anchor=north] at (\Cc,-0.12) {$ca+C$};
@@ -1381,7 +1406,7 @@ $g_2$ and $t$ of $\nu$ realizes $n$.
 In all uses below $\nu = a \in G$, $(g_1, g_2) = (b, M)$ and $L = M$; the \emph{budget} of a box
 $(Y,Z)$ is
 \[
-  B \;=\; \Big\lceil \frac{M - 1 + S}{a} \Big\rceil + Y + Z ,
+  \mathcal{B} \;=\; \Big\lceil \frac{M - 1 + S}{a} \Big\rceil + Y + Z ,
 \]
 with $S$ the maximum, over residue classes, of the minimal representative height in the box.
 
@@ -1458,7 +1483,7 @@ as a decided guard in the formalization.
 
 \begin{lemma}[$\lambda$-lift]\label{lem:lift}
 Suppose the box $(Y,Z)$ modulo $a$ (Lemma~\ref{lem:frame} with $\nu = a$, $(g_1,g_2) = (b,M)$) covers
-all residues with budget $B \le M-1$ for the triple $(a,b,M)$, and $Y + Z \le a - 1$. Then the same
+all residues with budget $\mathcal{B} \le M-1$ for the triple $(a,b,M)$, and $Y + Z \le a - 1$. Then the same
 box has budget $\le M' - 1$ for the triple $(a,\ b+a,\ M+a)$, where $M' := M + a$.
 \end{lemma}
 
@@ -1600,39 +1625,39 @@ If $G$ is minimal with $|G| \ge 4$, then $m(G) \le M-1$.
 
 \begin{proof}
 \emph{Reduce to a smaller alphabet.} Remove the smallest element $a$. Then $G' := G \setminus \{a\}$
-has $\gcd(G') =: \delta \ge 2$ by minimality, still contains $M$, and $H := G'/\delta$ is an alphabet
-with $\gcd(H) = 1$, $\max H = M/\delta < M$ and $|H| \ge 3$.
+has $\gcd(G') =: d \ge 2$ by minimality, still contains $M$, and $H := G'/d$ is an alphabet
+with $\gcd(H) = 1$, $\max H = M/d < M$ and $|H| \ge 3$.
 
 \emph{Induction, then Graham-fill.} By strong induction on $M$, a run of $\max H$ consecutive
-integers is covered within $H$ at cost $\le M/\delta - 1$. Put $a' := \min H$ and extend this run by
-Graham-filling with copies of $a'$ up to length $\ell := \lceil (M-1+(\delta-1)a)/\delta \rceil + 1$;
-the extra copies cost $\le \lceil (\ell - M/\delta)/a' \rceil$, so a run of $\ell$ consecutive
-integers in $H$ costs $\le (M/\delta - 1) + \lceil (\ell - M/\delta)/a' \rceil$.
+integers is covered within $H$ at cost $\le M/d - 1$. Put $a' := \min H$ and extend this run by
+Graham-filling with copies of $a'$ up to length $\ell := \lceil (M-1+(d-1)a)/d \rceil + 1$;
+the extra copies cost $\le \lceil (\ell - M/d)/a' \rceil$, so a run of $\ell$ consecutive
+integers in $H$ costs $\le (M/d - 1) + \lceil (\ell - M/d)/a' \rceil$.
 
-\emph{Scale and bridge.} Multiplying by $\delta$ turns this run into an arithmetic progression of
-step $\delta$; the $\delta$ residues modulo $\delta$ are bridged by $k \le \delta-1$ copies of $a$
-(legitimate since $\gcd(a,\delta) = 1$, because $\gcd(G) = 1$), which fills the gaps and covers a
+\emph{Scale and bridge.} Multiplying by $d$ turns this run into an arithmetic progression of
+step $d$; the $d$ residues modulo $d$ are bridged by $k \le d-1$ copies of $a$
+(legitimate since $\gcd(a,d) = 1$, because $\gcd(G) = 1$), which fills the gaps and covers a
 solid interval of length $\ge M$, at total budget
 \[
-  T \;\le\; \Big(\frac{M}{\delta} - 1\Big)
-        + \Big\lceil \frac{\ell - M/\delta}{a'} \Big\rceil
-        + (\delta - 1).
+  T \;\le\; \Big(\frac{M}{d} - 1\Big)
+        + \Big\lceil \frac{\ell - M/d}{a'} \Big\rceil
+        + (d - 1).
 \]
 
-\emph{Bound the middle term.} From $a < \min G' = \delta a'$, i.e. $a \le \delta a' - 1$, we get
-$\ell - M/\delta \le (\delta-1)a/\delta + 2 < (\delta-1)a' + 2$, hence
-$\lceil (\ell - M/\delta)/a' \rceil \le \delta + 1$ and $T \le M/\delta + 2\delta - 1$.
+\emph{Bound the middle term.} From $a < \min G' = d a'$, i.e. $a \le d a' - 1$, we get
+$\ell - M/d \le (d-1)a/d + 2 < (d-1)a' + 2$, hence
+$\lceil (\ell - M/d)/a' \rceil \le d + 1$ and $T \le M/d + 2d - 1$.
 
 \emph{Close.} Then
 \[
   T \le M - 1
-  \iff M\Big(1 - \tfrac1\delta\Big) \ge 2\delta
-  \iff M \ge \frac{2\delta^2}{\delta - 1}.
+  \iff M\Big(1 - \tfrac1d\Big) \ge 2d
+  \iff M \ge \frac{2d^2}{d - 1}.
 \]
-For $\delta \ge 3$, $2\delta^2/(\delta-1) \le 3\delta \le M$, since $G'$ contains at least three
-distinct multiples of $\delta$. For $\delta = 2$ the requirement is $M \ge 8$, which holds since every
+For $d \ge 3$, $2d^2/(d-1) \le 3d \le M$, since $G'$ contains at least three
+distinct multiples of $d$. For $d = 2$ the requirement is $M \ge 8$, which holds since every
 element is $\ge 30$ (Lemma~\ref{lem:minimal-struct}). The bound uses $a'$ only through
-$a \le \delta a' - 1$, so the case $a' = 1$ is subsumed.
+$a \le d a' - 1$, so the case $a' = 1$ is subsumed.
 \end{proof}
 
 \subsection{The hard core}\label{sec:hardcore}
@@ -1660,7 +1685,7 @@ $h$ & $M - b \in [1, a-2]$                         & $C'$ & $(e'-1)(\mu'-1)$ \\
 $\mu$ & $e + h = M - a$                            & $V'$ & $y e' + z \mu' - C'$ \\
 $\delta$ & $a + b - M = a - h \ge 2$              & $(x,y,z)$ & copies of $a$, $b$, $M$ \\
 $\bar e$ & $e \bmod a \in [1, a-1]$              & $c$ & $y + z$ \\
-$\bar\mu$ & $M \bmod a$                          & $B$ & budget $= x + y + z$ \\
+$\bar\mu$ & $M \bmod a$                          & $\mathcal{B}$ & budget $= x + y + z$ \\
 $\eta$ & $\bar\mu\,\bar e^{-1} \bmod a$        & $\lambda$ & $\lfloor e/a \rfloor$ (the lift index) \\
 \bottomrule
 \end{tabular}
@@ -1675,7 +1700,7 @@ these two lines being disjoint (both would force $a \mid b$). The target budget 
 Each hard-core triple is routed to exactly one of six branches, evaluated top to bottom:
 \begin{itemize}
 \item \textbf{Case D} --- $a \mid M$ (\S\ref{sec:caseD});
-\item \textbf{Case P} --- else $a \mid b + M$, the $\eta = -1$ line (\S\ref{sec:caseP});
+\item \textbf{Case P} --- else $a \mid b + M$, the $\eta = a-1$ line (\S\ref{sec:caseP});
 \item \textbf{Case L} --- else $e = h$, the scaled consecutive triples (\S\ref{sec:caseL});
 \item \textbf{Case E} --- else $a \ge 12$ and $\mu \ge 12$, the universal $\eta$-box
       (\S\ref{sec:caseE});
@@ -1910,6 +1935,16 @@ All four inequalities of \eqref{eq:caseP-reach} therefore hold for every hard-co
 line $a \mid b + M$, which completes the proof.
 \end{proof}
 
+\begin{proposition}[Exhaustion of Case P]\label{prop:caseP-exhaust}
+Every hard-core triple with $a \mid b + M$ satisfies $m(G) \le M - 1$.
+\end{proposition}
+
+\begin{proof}
+Write $b + M = ra$. Since $a < b < M$ we have $b + M > 2a$, so $r \ge 3$, and
+Lemma~\ref{lem:caseP} applies. (Note $r = 2$, i.e. $M = 2a - b$, is impossible, as is $M = 2a$,
+which would force $a \mid b$.)
+\end{proof}
+
 \begin{remark}\label{rem:caseP-clean}
 Case P therefore requires no subset-sum search and no certificate table: a single closed-form
 multiset serves every triple on the line, and the only triple not covered by the estimate
@@ -1923,6 +1958,8 @@ than mathematics: it discharges \eqref{eq:caseP-reach} for $r \in \{3,4\}$ (\tex
 routes $M \ge 2a+4$ through the independent argument of Lemma~\ref{lem:etaneg}. Either route closes
 the case; we record both.
 \end{remark}
+
+Lemma~\ref{lem:caseP} already closes the case. We nonetheless record the following independent argument for the range $M \ge 2a + 4$, both because it is shorter there and because it is the route the formalization takes (Remark~\ref{rem:caseP-clean}).
 
 \begin{lemma}\label{lem:etaneg}
 If $a \mid b + M$ and $M \ge 2a + 4$, then the hard-core triple $(a,b,M)$ admits a multiset of budget
@@ -1945,20 +1982,6 @@ this line: $a \mid b+M$ forces $b+M \equiv 0 \pmod a$, so for even $a$ the sum $
 $b \ne M-1$ and therefore $b \le M-2$. With $b \le M-2$ the $Yb$ branch closes for $M \ge 2a+4$ as
 well. (In particular the $a$-even, $b = M-1$ corner is vacuous, not merely bounded.)
 \end{proof}
-
-\begin{proposition}[Exhaustion of Case P]\label{prop:caseP-exhaust}
-Every hard-core triple with $a \mid b + M$ satisfies $m(G) \le M - 1$.
-\end{proposition}
-
-\begin{proof}
-Write $b + M = ra$. Since $a < b < M$ we have $b + M > 2a$, so $r \ge 3$, and
-Lemma~\ref{lem:caseP} applies. (Note $r = 2$, i.e. $M = 2a - b$, is impossible, as is $M = 2a$,
-which would force $a \mid b$.)
-\end{proof}
-
-Lemma~\ref{lem:caseP} already closes the case. We nonetheless record the following independent
-argument for the range $M \ge 2a + 4$, both because it is shorter there and because it is the route
-the formalization takes (Remark~\ref{rem:caseP-clean}).
 
 \subsection{Case L: \texorpdfstring{$e = h = g$}{e = h = g}}\label{sec:caseL}
 
@@ -2011,10 +2034,10 @@ $\bar e$ being a bijection.
 \emph{Budget.} Write $S_0 := (t-1)b + ZM$ for the corner bound on the representative height, so
 $S \le S_0$, and put $K := t - 1 + Z = \sigma - 1$. Then
 \[
-  B \;\le\; \Big\lceil \frac{M - 1 + S_0}{a} \Big\rceil + K ,
+  \mathcal{B} \;\le\; \Big\lceil \frac{M - 1 + S_0}{a} \Big\rceil + K ,
 \]
 so it \emph{suffices} that $M - 1 + S_0 \le a(M - 1 - K)$: this forces
-$\lceil (M-1+S_0)/a \rceil \le M-1-K$ and hence $B \le M-1$. Using $b \le M-1$ we have
+$\lceil (M-1+S_0)/a \rceil \le M-1-K$ and hence $\mathcal{B} \le M-1$. Using $b \le M-1$ we have
 $M - 1 + S_0 \le M\sigma - t$, while $a(M-1-K) = a(M-\sigma)$, so the sufficient inequality is in
 turn implied by $M\sigma + a\sigma \le aM + t$, and hence by $M(a - \sigma) \ge a\sigma$.
 
@@ -2153,7 +2176,9 @@ on each of the finitely many lines and minimizing gives
 \]
 as reported by the verification harness of Appendix~\ref{app:verification}. Since $\tau - \beta$ is
 nondecreasing, it stays positive for every $a > 3000$. Hence there are no budget failures with
-$a > 3000$, and the failure set is exactly Table~A.
+$a > 3000$, and the failure set is exactly Table~A. (The cutoff $3000$ is convenience, not
+necessity: any threshold at which every line's margin is positive would serve. It sits comfortably
+past the last actual failure at $a = 29$, and is small enough for the kernel-decided sweep.)
 \end{enumerate}
 \end{lemma}
 
@@ -2206,7 +2231,7 @@ $\lambda = 0$ member has $e = h$ and so belongs to Case L.
 \begin{proof}
 We argue by strong induction on $M$: in proving the statement for a given $M$ we may assume it for
 every alphabet of smaller maximum. This is what Lemma~\ref{lem:L4} consumes, passing to the rescaled
-alphabet $H = G'/\delta$ of maximum $M/\delta < M$. No other branch appeals to the induction
+alphabet $H = G'/d$ of maximum $M/d < M$ (in the notation of that lemma). No other branch appeals to the induction
 hypothesis, and no hard-core branch re-enters Lemma~\ref{lem:L4} at a larger $M$, so the recursion
 is well founded.
 
