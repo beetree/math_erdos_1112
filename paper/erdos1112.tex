@@ -93,13 +93,12 @@ form: for every prescribed sequence of pointwise lower bounds on the successive 
 however rapidly growing, a single $B$ meets the $k$-fold sumset of every admissible $A$.
 
 The existence half uses a Beatty construction whose $k$-fold sumset threads the gaps a lacunary $B$
-must leave. The non-existence half reduces, through a word-combinatorial analysis of the gap
-sequence, to a bounded subset-sum lemma which we prove: every finite set $G$ of at least three
-positive integers with $\gcd(G) = 1$ and $\max(G) = M$ admits a multiset of at most $M-1$ of its
-elements whose subset sums contain $M$ consecutive integers. Its proof combines symbolic reductions
-with a finite certificate layer of a few hundred explicit instances, so the argument is
-computer-assisted. The dichotomy, including the certificate layer, has been formally verified in
-Lean~4, in the problem's literal integer phrasing.
+must leave; the non-existence half reduces, through a word-combinatorial analysis of the gap
+sequence, to a bounded subset-sum lemma (every finite $\gcd$-$1$ set $G$ with $\max G = M$ and
+$|G| \ge 3$ admits a multiset of at most $M-1$ of its elements whose subset sums contain $M$
+consecutive integers). The proof is computer-assisted --- its finite layer is $350$ explicit
+certificates --- and the full dichotomy is formally verified in Lean~4 in the problem's literal
+integer phrasing.
 \end{abstract}
 
 \maketitle
@@ -2257,8 +2256,8 @@ development, the verification scripts and build instructions are available at \r
 records the formal statement, argues its faithfulness to the informal problem, and states the trust
 base. Appendix~\ref{app:lean} maps each load-bearing result above to its Lean declaration.
 
-A \texttt{sorry}-free proof of the \emph{wrong} statement proves nothing, so the encoding is given in
-full and justified. The definitions live in a frozen statement file \texttt{Erdos1112.lean}, which is
+Because a formal proof certifies only its stated theorem, the encoding is given in full and justified
+below. The definitions live in a frozen statement file \texttt{Erdos1112.lean}, which is
 imported by the development but never edited by it; the three theorems are stated once each, directly
 over those definitions, in \texttt{Erdos1112Proof/Final.lean}. There is a single copy of each
 definition, so what is audited below is literally what the theorems assert.
