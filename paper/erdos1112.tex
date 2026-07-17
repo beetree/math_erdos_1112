@@ -95,10 +95,9 @@ single $B$ meets the $k$-fold sumset of every admissible $A$.
 
 The existence half uses a Beatty construction whose $k$-fold sumset threads the gaps a lacunary $B$
 must leave; the non-existence half reduces, through a word-combinatorial analysis of the gap
-sequence, to a bounded subset-sum lemma (every finite $\gcd$-$1$ set $G$ with $\max G = M$ and
-$|G| \ge 3$ admits a multiset of at most $M-1$ of its elements whose subset sums contain $M$
-consecutive integers). The proof is computer-assisted, with a finite certificate layer, and the full
-dichotomy is formally verified in Lean~4 in the problem's literal integer phrasing.
+sequence, to a bounded subset-sum covering lemma of possible independent interest. The proof is
+computer-assisted, with a finite certificate layer, and the full dichotomy is formally verified in
+Lean~4 in the problem's literal integer phrasing.
 \end{abstract}
 
 \maketitle
@@ -179,16 +178,26 @@ Hence $r_k(d_1,d_2)$ exists if and only if $d_2 \ge k+1$, and the answer to the 
 \emph{yes precisely when $d_2 \ge k+1$}.
 \end{maintheorem}
 
-Note that $d_1$ is irrelevant to the threshold. This is visible in both halves of the proof: the
+Why does the threshold sit at $d_2 = k+1$? Summing $k$ terms of a sequence with average gap
+$\gamma \le d_2$ confines $kA$, up to accumulated rounding, to windows of width $k$ hanging below the
+multiples of $\gamma$ (this is \eqref{eq:beatty-window} below). If $d_2 \ge k+1$, we may \emph{choose}
+$A$ with $\gamma \in (k, d_2)$: consecutive windows then leave gaps of width $\gamma - k > 0$, a fixed
+positive proportion of every scale, and the construction's only job is to steer $\gamma$ so that a
+lacunary $B$ falls into the gaps. If $d_2 \le k$, no admissible $A$ can spread out this way: every
+gap value is at most $k$, and $k$ summands turn out to be enough freedom to fill an entire congruence
+class --- at the binding corner $k = d_2$, exactly enough, which is where the subset-sum lemma below
+is spent. The two halves make these two sentences precise.
+
+Note that $d_1$ is irrelevant to the threshold, and this is visible in both halves of the proof. The
 existence construction uses only the two largest admissible gaps, $d_2 - 1$ and $d_2$, which lie in
-$[d_1, d_2]$ whatever $d_1$ is; and the non-existence argument works with the gap values that recur
-infinitely often, whose \emph{maximum} is what the budget of $k$ summands must pay for --- again
-independently of $d_1$, which enters only through $d_1 \ge 1$. The constant $192$ is not optimized,
+$[d_1, d_2]$ whatever $d_1$ is. The non-existence argument works with the gap values that recur
+infinitely often; their \emph{maximum} is what the budget of $k$ summands must pay for, again
+independently of $d_1$ (which enters only through $d_1 \ge 1$). The constant $192$ is not optimized,
 and we make no claim about the true order of $r_k(d_1,d_2)$. Part (2) is genuinely stronger than the
-negation of the question. It says that no prescribed sequence of \emph{pointwise lower bounds on the
-successive ratios} of $B$ --- however rapidly growing, and fixed in advance --- can rescue the
-existence of $A$. The quantification is over ratio sequences $(r_i)$, not over other structural or
-arithmetic conditions one might impose on $B$.
+negation of the question: no prescribed sequence of \emph{pointwise lower bounds on the successive
+ratios} of $B$ --- however rapidly growing, and fixed in advance --- can rescue the existence of $A$.
+The quantification is over ratio sequences $(r_i)$, not over other structural or arithmetic
+conditions one might impose on $B$.
 
 \begin{corollary}[Consecutive gap windows]\label{cor:window}
 Let $k \ge 3$ and $d \ge 1$. Then $r_k(d,\, d+1)$ exists if and only if $d \ge k$.
@@ -433,8 +442,10 @@ gap between consecutive unsafe intervals --- wide enough to hold a usable slope.
   \node[font=\footnotesize, align=center] (sp) at (4.4,1.35) {slope placed here};
   \draw[->, green!55!black] (sp) -- (4.4,0.56);
 \end{tikzpicture}
-\caption{The unsafe intervals $[t/s,(t{+}k)/s]$ that a lacunary $B$ forces at denominators $s_1$ and
-$s_1+1$, and the free gap $J$ between them into which the construction places its slope. Ticks mark
+\caption{(Lemma~\ref{lem:freegap}.) The unsafe intervals $[t/s,(t{+}k)/s]$ that a lacunary $B$
+forces at denominators $s_1$ and $s_1+1$ --- here $t$ is a shifted target $b - kc$, $s$ ranges over
+positive integers --- and the free gap $J$ between them, into which the construction places its
+slope. Ticks mark
 the endpoints $t/s_1$ and $(t{+}k)/s_1$ of the last denominator-$s_1$ interval and the start
 $t'/(s_1{+}1)$ of the first denominator-$(s_1{+}1)$ interval, where $t' = t + k$.}
 \label{fig:freegap}
@@ -656,6 +667,14 @@ class tail $\sigma + P\ZZ$ beyond a point; so $A$ is tail-covering.
 \end{proof}
 
 \subsection{The two-letter core}\label{sec:twoletter}
+For orientation, since this subsection borrows from combinatorics on words: a binary word is
+\emph{balanced} if any two equal-length windows have $1$-counts differing by at most one, and the
+aperiodic balanced words are exactly the \emph{Sturmian} (or \emph{mechanical}) words --- those with
+counting function $q_n = \lfloor n\alpha + \beta \rfloor$ for an irrational slope $\alpha$, the
+cutting sequences of lines of irrational slope. They matter here because they are the gap words with
+the least usable irregularity: regular enough to defeat the width arguments below, without ever
+becoming periodic. They are the delicate case of this section.
+
 Assume now $\Ginf = \{\delta < \delta'\}$ with $\gcd(\delta, \delta') = 1$ (Lemma~\ref{lem:rescale}),
 both letters occurring infinitely often, and set $e := \delta' - \delta \ge 1$. Since every gap lies
 in $[d_1,d_2]$ and $d_2 \le k$, the larger letter satisfies
@@ -713,8 +732,9 @@ target inside the window, and that $s$ realizes $x$.
   \draw[dashed] (3.6,0) node[below] {$s^\ast$} -- (3.6,{4.7-0.52*3.6});
   \node[anchor=south west,font=\small] at (3.75,{4.7-0.52*3.6}) {coverage begins};
 \end{tikzpicture}
-\caption{Schematic: the window $[w^-(s),w^+(s)]$ (solid boundaries) widens with $s$ while the target
-$w(s)$ (dashed) descends into it; past the crossing $s^\ast$ every large value is reachable.}
+\caption{(Lemma~\ref{lem:sweep}, schematic.) The window $[w^-(s),w^+(s)]$ of reachable values
+(solid boundaries) widens with $s$, while the target $w(s)$ for representing a fixed large $x$
+(dashed) descends into it; past the crossing $s^\ast$ every large value is reachable.}
 \label{fig:sweep}
 \end{figure}
 
@@ -762,38 +782,46 @@ For $\sigma \ge 0$ define the \emph{two-index antidiagonal width}
 \begin{lemma}[Width dichotomy]\label{lem:width}
 \phantom{.}
 \begin{enumerate}
-\item[\textup{(a)}] Suppose $W_2(\sigma_0) \ge 2$ for some $\sigma_0$. Disjoint index-pairs placed on
-antidiagonals contribute widths additively, and:
-\begin{itemize}
-  \item \emph{$k$ odd:} $(k-1)/2$ pairs at $\sigma_0$ plus one leftover index give
-        $w^+(s) - w^-(s) \ge k - 1 \ge d_2 - 1$ for all $s \ge \tfrac{k-1}{2}\sigma_0$, using
-        exactly $k$ indices.
-  \item \emph{$k$ even, $d_2 \le k-1$:} $(k/2 - 1)$ pairs at $\sigma_0$ plus one free pair at
-        $\tau := s - (k/2 - 1)\sigma_0$ give width $\ge (k-2) + W_2(\tau) \ge k-2 \ge d_2 - 1$.
-\end{itemize}
-In both branches Lemma~\ref{lem:sweep} then gives tail-covering.
-\item[\textup{(b)}] Otherwise $W_2(\sigma) \le 1$ for all $\sigma$. Then for any equal-length windows
-$(i,i']$ and $(j',j]$ one has $i + j = i' + j'$, whence
-$|(q_{i'} - q_i) - (q_j - q_{j'})| = |q_{i'} + q_{j'} - q_i - q_j| \le 1$: the word $h$ is
-\emph{balanced}. By Proposition~\ref{prop:balanced} a balanced one-sided infinite word is either
-ultimately periodic (Lemma~\ref{lem:periodic}) or, after passing to a tail, mechanical with
-irrational slope, and the latter is Lemma~\ref{lem:sturmian}.
+\item[\textup{(a)}] If $W_2(\sigma_0) \ge 2$ for some $\sigma_0$, and either $k$ is odd or
+$d_2 \le k - 1$, then $w^+(s) - w^-(s) \ge d_2 - 1$ for all sufficiently large $s$.
+\item[\textup{(b)}] If $W_2(\sigma) \le 1$ for every $\sigma$, then the word $h$ is
+\emph{balanced}.
 \end{enumerate}
 \end{lemma}
+
+\begin{proof}
+(a) Disjoint index-pairs placed on antidiagonals contribute widths additively. For $k$ odd,
+$(k-1)/2$ pairs at $\sigma_0$ plus one leftover index give $w^+(s) - w^-(s) \ge k - 1 \ge d_2 - 1$
+for all $s \ge \tfrac{k-1}{2}\sigma_0$, using exactly $k$ indices. For $k$ even and
+$d_2 \le k-1$, $(k/2 - 1)$ pairs at $\sigma_0$ plus one free pair at
+$\tau := s - (k/2 - 1)\sigma_0$ give width $\ge (k-2) + W_2(\tau) \ge k-2 \ge d_2 - 1$.
+
+(b) For any equal-length windows $(i,i']$ and $(j',j]$ one has $i + j = i' + j'$, whence
+$|(q_{i'} - q_i) - (q_j - q_{j'})| = |q_{i'} + q_{j'} - q_i - q_j| \le 1$: the word $h$ is
+balanced.
+\end{proof}
+
+The dichotomy routes as follows. In case (a), Lemma~\ref{lem:sweep} gives tail-covering. In case
+(b), Proposition~\ref{prop:balanced} classifies $h$: either ultimately periodic
+(Lemma~\ref{lem:periodic}), or, after passing to a tail, mechanical with irrational slope
+(Lemma~\ref{lem:sturmian}); either way $A$ is tail-covering.
 
 The remaining two-letter configuration --- $k$ even at the boundary $d_2 = k$ --- is the delicate
 one, and we route it at top level (independently of any width hypothesis):
 
 \begin{proposition}[Boundary routing; $k$ even, $d_2 = k$]\label{prop:boundary-route}
-Let $k$ be even and $d_2 = k$. Then $A$ is tail-covering. At least one of three possibilities holds
-(they can overlap; route by the first that applies), and each closes the case: if the gap word is
-eventually periodic, Lemma~\ref{lem:periodic} applies; if
-some tail of the gap word is balanced, that tail (Lemma~\ref{lem:tail}) is ultimately periodic
+Let $k$ be even and $d_2 = k$. Then $A$ is tail-covering.
+\end{proposition}
+
+\begin{proof}
+At least one of three possibilities holds (they can overlap; we route by the first that applies),
+and each closes the case. If the gap word is eventually periodic, Lemma~\ref{lem:periodic} applies.
+If some tail of the gap word is balanced, that tail (Lemma~\ref{lem:tail}) is ultimately periodic
 (Lemma~\ref{lem:periodic}) or Sturmian (Lemma~\ref{lem:sturmian}) by
-Proposition~\ref{prop:balanced}, and either gives tail-covering with no width argument; and if
+Proposition~\ref{prop:balanced}, and either gives tail-covering with no width argument. And if
 \emph{every} tail of the gap word is unbalanced, Lemma~\ref{lem:boundary-width} supplies width
 $\ge k-1$ for all large $s$, whence Lemma~\ref{lem:sweep} gives tail-covering.
-\end{proposition}
+\end{proof}
 
 The parity split in (a) is essential: when $k$ is even, $\lfloor k/2 \rfloor$ pairs plus a leftover
 index would consume $k+1$ indices.
@@ -1025,10 +1053,10 @@ nonnegative (Step~3, Figure~\ref{fig:ladder}).
   \node[anchor=west,font=\footnotesize,align=left] at (4.55,-0.6)
     {steps $\psi < k - 2\eta$:\\ the band cannot be skipped};
 \end{tikzpicture}
-\caption{Schematic of Step 3: along the congruence-compatible progression, the depth $\theta(s)$
-climbs in equal steps $\psi = e\alpha + \delta$; since $\psi$ is strictly smaller than the
-sub-window's height $k - 2\eta$, some $s^\ast$ lands inside the band, and Step 2 realizes the
-corresponding target.}
+\caption{(Lemma~\ref{lem:sturmian}, Step 3, schematic.) Along the congruence-compatible
+progression, the depth $\theta(s)$ climbs in equal steps $\psi = e\alpha + \delta$; since $\psi$
+is strictly smaller than the sub-window's height $k - 2\eta$, some $s^\ast$ lands inside the band,
+and Step 2 realizes the corresponding target.}
 \label{fig:ladder}
 \end{figure}
 
@@ -1207,6 +1235,21 @@ As $x$ was an arbitrary large integer, $kA - k a_1$ contains all large integers;
 unscaled coordinates this is a full congruence-class tail modulo $g$, so $A$ is tail-covering.
 \end{proof}
 
+\begin{example}[the Fibonacci tail, traced]\label{ex:sturmian}
+Take $k = 3$, letters $\{\delta, \delta'\} = \{1, 2\}$ (so $\delta = e = 1$), and the Fibonacci gap
+word: $q_n = \lfloor n\alpha + \beta \rfloor$ with $\alpha = (3-\sqrt5)/2 \approx 0.382$ and
+$\beta = \alpha$. Step 3's parameters are $\eta = \tfrac14\min(\alpha, 1-\alpha) = \alpha/4 \approx
+0.095$ and ladder step $\psi = e\alpha + \delta = 1 + \alpha \approx 1.382$, comfortably below the
+sub-window height $k - 2\eta \approx 2.81$. Since $e = 1$, every $s$ is congruence-compatible and
+$w(s) = x - s$. To represent $x = 100$: $\theta(s) = X_s - w(s) = (s+3)\alpha - 100 + s$ climbs by
+$\psi$ per step and first enters $[\eta,\, 3 - \eta]$ at $s^* = 72$, where
+$\theta(72) = 75\alpha - 28 \approx 0.647$. So $w = 28$, at depth $\approx 0.647$ inside the window
+$(X_{72} - 3,\ X_{72}] \approx (25.65,\ 28.65]$; Step 2 then supplies three distinct indices
+$i_1 < i_2 < i_3$ with $i_1 + i_2 + i_3 = 72$ and $q_{i_1} + q_{i_2} + q_{i_3} = 28$, whence
+$100 = 1 \cdot 72 + 1 \cdot 28 \in 3A - 3a_1$. This is the configuration of
+Figure~\ref{fig:ladder}.
+\end{example}
+
 \begin{theorem}[Two-letter core]\label{thm:twoletter}
 Let $k \ge 3$ and $d_2 \le k$. Every $(d_1,d_2)$-sequence whose tail alphabet has at most two letters
 is tail-covering. In particular, with Lemma~\ref{lem:cert}, $r_k(d_1, d_1+1)$ does not exist whenever
@@ -1333,15 +1376,15 @@ form. It remains to prove Lemma~\ref{lem:sharp}.
 \section{The bounded subset-sum covering lemma}\label{sec:sharp}
 
 Before the details, the shape of the argument. We must cover $M$ consecutive integers with a bounded
-multiset drawn from $G$. The one mechanism (Figure~\ref{fig:frame}) is to cover a short interval ---
+multiset drawn from $G$. There is one mechanism (Figure~\ref{fig:frame}): cover a short interval ---
 a \emph{frame} --- with copies of the two largest generators, then slide and stack copies of the
 smallest generator $a$ until the frames merge into one solid run. Everything reduces to a
-\emph{three-generator hard core} $\{a,b,M\}$ (Lemmas~\ref{lem:graham}--\ref{lem:L4}), and there the
-behaviour is governed by two arithmetic questions --- whether $a \mid M$ and whether $a \mid b+M$ ---
-together with the size of $\mu = M-a$. These invariants carve the hard core into six cases; small
-$a$ or small $\mu$ leave only finitely many triples to check by explicit certificate, and the rest
-close by a uniform symbolic construction. The case map is Table~\ref{tab:cases}; the constant $M-1$
-is what the tightest of them spends.
+\emph{three-generator hard core} $\{a,b,M\}$ (Lemmas~\ref{lem:graham}--\ref{lem:L4}). There the
+behaviour is governed by two arithmetic questions --- whether $a \mid M$, and whether
+$a \mid b+M$ --- together with the size of $\mu = M-a$. These invariants carve the hard core into
+six cases. Small $a$ or small $\mu$ leave only finitely many triples to check by explicit
+certificate; the rest close by uniform symbolic constructions. The case map is
+Table~\ref{tab:cases}, and the constant $M-1$ is what the tightest case spends.
 
 We restate the target.
 
@@ -1390,7 +1433,8 @@ long. The lemmas of this subsection make that quantitative.
     (\Cc,-1.15) -- (\Vn,-1.15)
     node[midway,below=8pt] {solid run $[ca+C,\ (c{+}1)a+V]$, length $a+(V-C)+1$};
 \end{tikzpicture}
-\caption{Two consecutive frames, offset by $a$, merge into one solid run of consecutive integers
+\caption{(Lemma~\ref{lem:staircase}, schematic.) Two consecutive frames --- the intervals covered
+at levels $c$ and $c+1$ --- are offset by $a$ and merge into one solid run of consecutive integers
 precisely when $V-C \ge a-1$.}
 \label{fig:frame}
 \end{figure}
@@ -1457,12 +1501,16 @@ $\gcd(a, g) = 1$: a common prime of $g$ and $a$ would divide $e$ and $a$, hence 
 persists through the rest of the section, and is collected together with the hard-core symbols in
 the table of \S\ref{sec:hardcore}.
 
+\emph{The level decomposition.} Fix a multiset $(x,y,z)$ of copies of $a$, $b$, $M$ with
+$y \ge \mu' - 1$ and $z \ge e' - 1$, and put $c := y + z$ and $V' := y e' + z \mu' - C'$. For
+$0 \le t \le x + y + z$, the subset sums using exactly $t$ elements --- \emph{level} $t$ --- form
+$ta + \mathcal{O}_t$, where
+\[
+  \mathcal{O}_t \;=\; \{\, je + k\mu \;:\; j \le y,\ k \le z,\ \max(0, t-x) \le j + k \le t \,\}.
+\]
+
 \begin{lemma}[Staircase windows and merges]\label{lem:staircase}
-Let $G = \{a, b, M\}$ be as above. Fix a multiset $(x,y,z)$ of copies
-of $a$, $b$, $M$ with $y \ge \mu' - 1$ and $z \ge e' - 1$, and put $c := y + z$ and
-$V' := y e' + z \mu' - C'$. For $0 \le t \le x + y + z$ the subset sums using exactly $t$ elements
-form $ta + \mathcal{O}_t$, where
-$\mathcal{O}_t = \{ je + k\mu : j \le y,\ k \le z,\ \max(0, t-x) \le j + k \le t \}$, and:
+In the level decomposition above:
 \begin{enumerate}
 \item[\textup{(a)}] if $c \le t \le x$ then $\mathcal{O}_t \supseteq g\,[C', V']$;
 \item[\textup{(b)}] \textup{(two-frame merge, $g = 1$)} if $x = c+1$ and $V - C \ge a - 1$ (writing
@@ -1940,9 +1988,10 @@ also reduces to (P2).
 \emph{(E1).} This is the binding inequality. Substituting $b = ra - M$ and using
 $z \ge (M - r - 1)/2$, it suffices that
 \[
-  2\big[(a-1)(ra - M) + M - 1\big] \;\le\; ar(M - r - 1) + 2a(r-1),
+  2\big[(a-1)(ra - M) + M - 1\big] \;\le\; ar(M - r - 1) + 2a(r-1).
 \]
-which, after expanding both sides, is
+Expanding, the left side is $2ra^2 - 2aM - 2ra + 4M - 2$ and the right side is
+$arM - ar^2 + ar - 2a$, so the inequality rearranges to
 \[
   0 \;\le\; M\,(ar + 2a - 4) \;-\; ar^2 \;-\; 2ra^2 \;+\; 3ar \;-\; 2a \;+\; 2 .
 \]
@@ -1988,36 +2037,10 @@ multiset serves every triple on the line, and the only triple not covered by the
 $(4,9,11)$, $(5,12,13)$ --- which earlier treatments carried as ad-hoc certificates for the
 $r \ge 5$, $M < 2a+4$ corner --- are ordinary instances of it, with $x = r - 1 = 4$.
 
-The formalization takes a slightly different route here, for reasons of tactic convenience rather
-than mathematics: it discharges \eqref{eq:caseP-reach} for $r \in \{3,4\}$ (\texttt{caseP\_r3},
-\texttt{caseP\_r4}), decides the finitely many $r \ge 5$ triples with $M < 2a+4$ directly, and
-routes $M \ge 2a+4$ through the independent argument of Lemma~\ref{lem:etaneg}. Either route closes
-the case; we record both.
+The formalization proves this case by a slightly different route; the deviation, and the short
+auxiliary lemma it uses, are recorded in \S\ref{sec:deviations}.
 \end{remark}
 
-Lemma~\ref{lem:caseP} already closes the case. We nonetheless record the following independent argument for the range $M \ge 2a + 4$, both because it is shorter there and because it is the route the formalization takes (Remark~\ref{rem:caseP-clean}).
-
-\begin{lemma}\label{lem:etaneg}
-If $a \mid b + M$ and $M \ge 2a + 4$, then the hard-core triple $(a,b,M)$ admits a multiset of budget
-$\le M-1$ whose subset sums contain $M$ consecutive integers.
-\end{lemma}
-
-\begin{proof}
-Since $\bar\mu = a - \bar e$, the representatives $jb + kM \equiv \bar e(j-k) \pmod a$ cover $\ZZ_a$
-with any box $(Y,Z)$ satisfying $Y + Z = a-1$, as $j - k$ then ranges over $[-Z, Y]$, a complete
-residue system. Choose $Y = \lceil (a-1)/2 \rceil$ and $Z = \lfloor (a-1)/2 \rfloor$. The minimal
-representative of the class $\bar e w$ has height $wb$ (for $w \ge 0$) or $|w|M$ (for $w < 0$), so
-$S \le \max(Yb,\ ZM)$, and the budget satisfies
-$\lceil (M - 1 + S)/a \rceil + (a-1) \le M-1$ iff $S \le (a-1)M - a^2 + 1$.
-
-The $ZM$ branch gives $ZM \le \tfrac{a-1}{2}M \le (a-1)M - a^2 + 1$ once $M \ge 2a+2$. For the $Yb$
-branch the parity of $a$ enters. If $a$ is odd then $Y = Z = (a-1)/2$ and the same computation
-applies. If $a$ is even then $Y = a/2$, and the bound $b \le M-1$ alone would require
-$M \ge 2a + 3 + \tfrac{4}{a-2}$, which exceeds $2a+4$ at $a = 4$. But $b \le M-1$ is not tight on
-this line: $a \mid b+M$ forces $b+M \equiv 0 \pmod a$, so for even $a$ the sum $b+M$ is even, whence
-$b \ne M-1$ and therefore $b \le M-2$. With $b \le M-2$ the $Yb$ branch closes for $M \ge 2a+4$ as
-well. (In particular the $a$-even, $b = M-1$ corner is vacuous, not merely bounded.)
-\end{proof}
 
 \subsection{Case L: \texorpdfstring{$e = h = g$}{e = h = g}}\label{sec:caseL}
 
@@ -2105,8 +2128,10 @@ $e \le 10$ and $h \le 10$, this case consists of finitely many \emph{lines}, eac
 $a$ alone. Recall $e' = e/g$ and $\mu' = \mu/g$ (primes: division by $g = \gcd(e,\mu)$); as
 $e \ne h$ and $e' < \mu'$, here $\mu' \ge 3$.
 
-\paragraph{Construction T.} Take $y = \mu' - 1$ (writing $C := C'$ and $V := V'$ when $g = 1$,
-where $e' = e$ and $\mu' = \mu$, so $C = (e-1)(\mu-1)$), and:
+\paragraph{Construction T.} In each variant, $z$ is a maximum of two branches with distinct jobs:
+the constant branch keeps $z \ge e' - 1$ (the standing hypothesis of the level decomposition), and
+the ceiling branch buys run length $\ge M$. Take $y = \mu' - 1$ (writing $C := C'$ and $V := V'$
+when $g = 1$, where $e' = e$ and $\mu' = \mu$, so $C = (e-1)(\mu-1)$), and:
 \begin{itemize}
 \item \emph{variant A} ($g = 1$):\quad
       $z = \max\big(e-1,\ \lceil (\max(a,\mu) - 1 + 2C - ye)/\mu \rceil\big)$ and $x = c+1$;
@@ -2270,21 +2295,30 @@ never shrinks, and one finite check at the base settles the whole infinite class
 Table~B lists $178$ \emph{classes} rather than infinitely many triples.
 \end{example}
 
-\begin{remark}[The descent]\label{rem:descent}
-The claim that every larger member of a class is certified by the same box is a descent. A triple's
-class is $(a,\ b \bmod a,\ h)$, and the class-level branch conditions --- $M \bmod a$,
-$(b+M) \bmod a$, and the box's residue coverage --- are invariant under the descent
-$b \mapsto b - a$, $M \mapsto M - a$ (this is where $\gcd(a, b-a) = \gcd(a,b)$ and the modulo-$a$
-recomputations enter, and $h = M - b$ is unchanged). The condition $e = h$ is \emph{not} invariant:
-$e = b - a$ drops by $a$ at each step while $h$ is fixed, so a member with $e = h$ can only be the
-$\lambda = 0$ (smallest) member of its class --- which then belongs to Case~L, its higher members
-($e > h$) belonging to Case~B. This is precisely why the six diagonal classes below must be based at
-$\lambda \ge 1$. Iterating the descent lands on the listed base $b_0 \le b$ with
-$b \equiv b_0 \pmod a$, and Lemma~\ref{lem:lift} transports the box upward. Concretely, the enumeration for $a \le 11$ has $178$ distinct classes, of
-which exactly six --- the diagonal $\bar e = h$ classes $(9,25,32)$, $(10,27,34)$, $(11,28,34)$,
-$(11,29,36)$, $(11,30,38)$, $(11,31,40)$ --- must be based at a $\lambda \ge 1$ member, because their
-$\lambda = 0$ member has $e = h$ and so belongs to Case L.
-\end{remark}
+\begin{lemma}[Descent]\label{rem:descent}
+Fix a class $(a,\ \bar e,\ h)$. Membership of Cases D and P is the same for every member of the
+class; a member with $e = h$ is necessarily its $\lambda = 0$ (smallest) member; and iterating the
+descent $b \mapsto b - a$, $M \mapsto M - a$ from any member lands on the class base $b_0 \le b$
+with $b \equiv b_0 \pmod a$, from which Lemma~\ref{lem:lift} transports the base's box upward to
+the member. Consequently, basing each class reaching Case~B at its first branch-B member certifies
+the entire class.
+\end{lemma}
+
+\begin{proof}
+The class-level branch conditions --- $M \bmod a$, $(b+M) \bmod a$, and the box's residue
+coverage --- are invariant under the descent $b \mapsto b - a$, $M \mapsto M - a$: here
+$\gcd(a, b-a) = \gcd(a,b)$, the modulo-$a$ quantities are unchanged, and $h = M - b$ is fixed. So
+D- and P-membership is class-invariant. The condition $e = h$ is \emph{not} invariant: $e = b - a$
+drops by $a$ at each step while $h$ is fixed, so a member with $e = h$ can only be the
+$\lambda = 0$ member --- which then belongs to Case~L, its higher members ($e > h$) to Case~B.
+Finally, the descent terminates at the base ($\lambda = 0$ or the first branch-B member), and
+Lemma~\ref{lem:lift} lifts its certificate back up, one step of $a$ at a time.
+\end{proof}
+
+Concretely, the enumeration for $a \le 11$ has $178$ distinct classes, of which exactly six --- the
+diagonal $\bar e = h$ classes $(9,25,32)$, $(10,27,34)$, $(11,28,34)$, $(11,29,36)$, $(11,30,38)$,
+$(11,31,40)$ --- must be based at a $\lambda \ge 1$ member, because their $\lambda = 0$ member has
+$e = h$ and so belongs to Case L.
 
 \subsection{Proof of Lemma~\ref{lem:sharp}}\label{sec:sharp-proof}
 
@@ -2337,7 +2371,8 @@ Part (1) is Theorem~\ref{thm:existence}.
 For part (2), let $d_2 \le k$ with $k \ge 3$, and let $(r_i)$ be any prescribed growth sequence.
 Build the certificate $B$ of Lemma~\ref{lem:cert}. Let $A$ be any $(d_1,d_2)$-sequence, let $\Ginf$
 be its tail alphabet and $g := \gcd(\Ginf)$. By Lemma~\ref{lem:tail} we may pass to the tail, and by
-Lemma~\ref{lem:rescale} we may assume $\gcd(\Ginf) = 1$ after rescaling. Then:
+Lemma~\ref{lem:rescale} we may assume $\gcd(\Ginf) = 1$ after rescaling. Then, retracing the map of
+\S\ref{sec:map}:
 
 \begin{center}\small
 \begin{tabular}{@{}ll@{}}
@@ -2568,6 +2603,31 @@ in Case P, in the text or in the formalization, and no certificate table is need
 construction is \texttt{caseP\_pair} (uniform in $r$, taking \eqref{eq:caseP-reach} as hypotheses),
 instantiated by \texttt{caseP\_r3} / \texttt{caseP\_r4} and completed by \texttt{caseP\_large};
 see Remark~\ref{rem:caseP-clean}.
+
+The route uses the following independent argument for the range $M \ge 2a + 4$, which is shorter
+there; in the text, Lemma~\ref{lem:caseP} alone closes the whole case.
+
+\begin{lemma}\label{lem:etaneg}
+If $a \mid b + M$ and $M \ge 2a + 4$, then the hard-core triple $(a,b,M)$ admits a multiset of budget
+$\le M-1$ whose subset sums contain $M$ consecutive integers.
+\end{lemma}
+
+\begin{proof}
+Since $\bar\mu = a - \bar e$, the representatives $jb + kM \equiv \bar e(j-k) \pmod a$ cover $\ZZ_a$
+with any box $(Y,Z)$ satisfying $Y + Z = a-1$, as $j - k$ then ranges over $[-Z, Y]$, a complete
+residue system. Choose $Y = \lceil (a-1)/2 \rceil$ and $Z = \lfloor (a-1)/2 \rfloor$. The minimal
+representative of the class $\bar e w$ has height $wb$ (for $w \ge 0$) or $|w|M$ (for $w < 0$), so
+$S \le \max(Yb,\ ZM)$, and the budget satisfies
+$\lceil (M - 1 + S)/a \rceil + (a-1) \le M-1$ iff $S \le (a-1)M - a^2 + 1$.
+
+The $ZM$ branch gives $ZM \le \tfrac{a-1}{2}M \le (a-1)M - a^2 + 1$ once $M \ge 2a+2$. For the $Yb$
+branch the parity of $a$ enters. If $a$ is odd then $Y = Z = (a-1)/2$ and the same computation
+applies. If $a$ is even then $Y = a/2$, and the bound $b \le M-1$ alone would require
+$M \ge 2a + 3 + \tfrac{4}{a-2}$, which exceeds $2a+4$ at $a = 4$. But $b \le M-1$ is not tight on
+this line: $a \mid b+M$ forces $b+M \equiv 0 \pmod a$, so for even $a$ the sum $b+M$ is even, whence
+$b \ne M-1$ and therefore $b \le M-2$. With $b \le M-2$ the $Yb$ branch closes for $M \ge 2a+4$ as
+well. (In particular the $a$-even, $b = M-1$ corner is vacuous, not merely bounded.)
+\end{proof}
 \item Case D closes uniformly on $(a-1)(q-2) \ge 0$, with no split on $q$
 (Lemma~\ref{lem:caseD}).
 \item The two-letter core takes a density-free route: the balanced classification via a
@@ -2700,7 +2760,7 @@ Lemma~\ref{lem:frame} enters: a modulo-$a$ box with $Y + Z \le a-1$ certifies ex
 (iii)--(iv) are exhaustive bounded scans --- the $a \le 3000$ line scan of Proposition~\ref{lem:t-tail}
 and the $a \le 11$, bounded-$b$ class enumeration of \S\ref{sec:caseB} --- made complete by the
 slope-tail argument in the proof of Proposition~\ref{lem:t-tail} for $a > 3000$ and by the descent of
-Remark~\ref{rem:descent} for larger $b$. Finally (v) is Lemma~\ref{lem:lift}. Note that Case~P
+Lemma~\ref{rem:descent} for larger $b$. Finally (v) is Lemma~\ref{lem:lift}. Note that Case~P
 contributes nothing to this proposition: by Remark~\ref{rem:caseP-clean} it is closed in the text,
 with no certificate.
 \end{proof}
@@ -2787,7 +2847,7 @@ exactly what the checker performs on each row.
 Table~A lists the $172$ exceptional lines of Case T (Proposition~\ref{lem:t-tail}), all with $a \le 29$.
 Table~B lists one base per class $(a, \bar e, h)$ for Case B, extended to all larger members by
 Lemma~\ref{lem:lift} (the Lean transcription additionally re-bases the six diagonal classes of
-Remark~\ref{rem:descent}). A representative Table-B row is the class $[5;1,1]$ with base
+Lemma~\ref{rem:descent}). A representative Table-B row is the class $[5;1,1]$ with base
 $(a,b,M) = (5,16,17)$ and box $(x,Y,Z) = (10,1,2)$: budget $10+1+2 = 13 \le M-1 = 16$, and the parts
 $16j + 17k$ ($j \le 1$, $k \le 2$) realize every residue modulo $5$, which the copies of $5$ lift to
 a run of $17 = M$ consecutive integers (cf.\ Example~\ref{ex:caseB}).
@@ -2868,6 +2928,29 @@ Axiom audit & three \texttt{\#print axioms} commands & \texttt{AxiomsCheck.lean}
 \end{center}
 
 %======================================================================
+\section*{Index of coined terms}
+
+For linear readers and auditors alike: each term of art used in this paper, with its definition
+site.
+
+\begin{center}\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Term & Defined & Term & Defined \\
+\midrule
+$(d_1,d_2)$-sequence & \S\ref{sec:intro} & frame & Lemma~\ref{lem:frame} \\
+tail-covering & \S\ref{sec:notation} & budget $\mathcal{B}$ & after Lemma~\ref{lem:frame} \\
+gap word, tail alphabet $\Ginf$ & \S\ref{sec:notation} & level, staircase & Lemma~\ref{lem:staircase} \\
+balanced, Sturmian, mechanical & \S\ref{sec:twoletter} & hard core & \S\ref{sec:hardcore} \\
+antidiagonal width $W_2$ & \S\ref{sec:twoletter} & line (Case T) & \S\ref{sec:caseT} \\
+congruence-compatible & Lemma~\ref{lem:sturmian} & class, class base & \S\ref{sec:caseB} \\
+fine slot, coarse dial & Lemma~\ref{lem:slot} & $\lambda$-lift, descent & Lemmas~\ref{lem:lift}, \ref{rem:descent} \\
+mover (Case P) & \S\ref{sec:caseP} & merge-robust & Lemma~\ref{lem:T} \\
+Construction T & \S\ref{sec:caseT} & box certificate & Appendix~\ref{app:tables} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
 \begin{thebibliography}{TaYa21}
 
 \bibitem[AF88]{AlonFreiman88}
