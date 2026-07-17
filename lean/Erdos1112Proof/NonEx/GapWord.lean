@@ -1,7 +1,7 @@
 /-
-Part II, reductions (Lemmas 2.2–2.5): tail alphabet `G∞`, the tail index,
+The non-existence reductions: tail alphabet `G∞`, the tail index,
 gcd rescaling, the one-letter case, and the eventually-periodic case.
-Paper: proof/02-nonexistence.md §II.2.
+Paper: the non-existence section.
 
 Interface notes:
 * `tailCovering_of_single_letter` and `tailCovering_of_eventually_periodic`
@@ -38,7 +38,7 @@ lemma mem_tailAlphabet_bounds (h : HasGapsIn d₁ d₂ a) {x : ℕ}
   exact ⟨h.le_gap n, h.gap_le n⟩
 
 /-- Past some index, every gap value belongs to the tail alphabet
-(Lemma 2.2's tail index; classical, uses finiteness of `[d₁, d₂]`). -/
+(the tail index; classical, uses finiteness of `[d₁, d₂]`). -/
 theorem exists_tail_index (h : HasGapsIn d₁ d₂ a) :
     ∃ T, ∀ n, T ≤ n → gap a n ∈ tailAlphabet a := by
   classical
@@ -59,7 +59,7 @@ theorem exists_tail_index (h : HasGapsIn d₁ d₂ a) :
     rw [hF]; simp [hbad]
   exact (key _ hbad).choose_spec n (by omega) rfl
 
-/-- **Lemma 2.3 (one letter)**, normalized form: a single-letter tail
+/-- **One letter**, normalized form: a single-letter tail
 alphabet gives an AP tail, hence tail-covering with `m = δ`. -/
 theorem tailCoveringN_of_single_letter (hk : 0 < k) (hd₁ : 1 ≤ d₁)
     (h : HasGapsIn d₁ d₂ a) (hone : ∃ δ, tailAlphabet a = {δ}) :
@@ -84,7 +84,7 @@ theorem tailCoveringN_of_single_letter (hk : 0 < k) (hd₁ : 1 ≤ d₁)
         ring
   exact tailCoveringN_of_AP hδpos fun j => kfold_AP_mem hk (fun j => T + j) key j
 
-/-- **Lemma 2.5 (eventually periodic)**, normalized form: an eventually
+/-- **Eventually periodic**, normalized form: an eventually
 periodic gap word gives tail-covering with `m = ` the period sum
 (single-anchor shortcut: `k` copies from one AP). -/
 theorem tailCoveringN_of_eventually_periodic (hk : 0 < k) (hd₁ : 1 ≤ d₁)
@@ -140,7 +140,7 @@ theorem tailCoveringN_of_eventually_periodic (hk : 0 < k) (hd₁ : 1 ≤ d₁)
         ring
   exact tailCoveringN_of_AP hspos fun j => kfold_AP_mem hk (fun j => T + j * p) key j
 
-/-- **Lemma 2.4 (rescaling)**, normalized form, redesigned interface: if past
+/-- **the corresponding paper lemma (rescaling)**, normalized form, redesigned interface: if past
 `T` the sequence is an affine image `a (T + n) = c + g · a' n` of some `a'`,
 then normalized tail-covering transports from `a'` to `a` (class modulus
 `g·m'`). No hypotheses on `a'` beyond the covering are needed. -/
@@ -181,14 +181,14 @@ theorem tailCoveringN_of_rescaled {k : ℕ} {a : ℕ → ℕ} (T g c : ℕ)
 
 /-! ### `TailCovering`-form wrappers -/
 
-/-- **Lemma 2.3 (one letter)**: a single-letter tail alphabet gives an AP
+/-- **One letter**: a single-letter tail alphabet gives an AP
 tail, hence tail-covering. (Requires `hd₁`; see the header note.) -/
 theorem tailCovering_of_single_letter (hk : 0 < k) (hd₁ : 1 ≤ d₁)
     (h : HasGapsIn d₁ d₂ a) (hone : ∃ δ, tailAlphabet a = {δ}) :
     TailCovering k a :=
   (tailCoveringN_of_single_letter hk hd₁ h hone).toTailCovering
 
-/-- **Lemma 2.5 (eventually periodic)**: an eventually periodic gap word
+/-- **Eventually periodic**: an eventually periodic gap word
 gives tail-covering. (Requires `hd₁`; see the header note.) -/
 theorem tailCovering_of_eventually_periodic (hk : 0 < k) (hd₁ : 1 ≤ d₁)
     (h : HasGapsIn d₁ d₂ a)
@@ -196,7 +196,7 @@ theorem tailCovering_of_eventually_periodic (hk : 0 < k) (hd₁ : 1 ≤ d₁)
     TailCovering k a :=
   (tailCoveringN_of_eventually_periodic hk hd₁ h hper).toTailCovering
 
-/-- **Lemma 2.4 (rescaling)**: transport of tail-covering along
+/-- **the corresponding paper lemma (rescaling)**: transport of tail-covering along
 `a (T + ·) = c + g · a' ·`. (Additive interface; see the header note.) -/
 theorem tailCovering_of_rescaled {k : ℕ} {a : ℕ → ℕ} (T g c : ℕ)
     (hg : 0 < g) (a' : ℕ → ℕ) (ha' : ∀ n, a (T + n) = c + g * a' n)

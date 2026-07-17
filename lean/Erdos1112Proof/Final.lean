@@ -30,7 +30,7 @@ theorem erdos_1112_strong_nonexistence (k d₁ d₂ : ℕ) (hk : 3 ≤ k)
   exact ⟨b, hb, fun a ha => Set.not_disjoint_iff_nonempty_inter.mp (hdef a ha)⟩
 
 /-- **Erdős Problem 1112, the dichotomy**: `r` exists iff
-`d₂ ≥ k + 1`. Derived from the two halves exactly as in paper Part IV. -/
+`d₂ ≥ k + 1`. Derived from the two halves exactly as in the paper's assembly section. -/
 theorem erdos_1112 (k d₁ d₂ : ℕ) (hk : 3 ≤ k) (hd₁ : 1 ≤ d₁) (hd : d₁ < d₂) :
     Question k d₁ d₂ ↔ k + 1 ≤ d₂ := by
   constructor

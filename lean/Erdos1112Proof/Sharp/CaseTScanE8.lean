@@ -1,5 +1,5 @@
 /-
-Part III, Case T scan blocks (Lemma 3.18(i)), lines `e = 8`:
+Case T scan blocks (T-tail, part (i)), lines `e = 8`:
 kernel-decided verification of `TlineGo 8 h a` for `a ≤ 3000`, chunked in
 three per-line blocks of ≤ 1001 values each (cacheable, failure-localizing).
 -/

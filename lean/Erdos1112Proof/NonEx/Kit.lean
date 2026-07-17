@@ -1,10 +1,10 @@
 /-
-Shared toolkit for the Part II "easy half" files (`NonEx/Certificate.lean`,
+Shared toolkit for the non-existence "easy half" files (`NonEx/Certificate.lean`,
 `NonEx/GapWord.lean`, `NonEx/TwoLetter/Core.lean`, `NonEx/SlotLemma.lean`).
 
 `TailCoveringN` is the normalized tail-covering notion (reduced residue
 `ρ < m`, so the covered congruence class is genuinely infinite). It is the
-form produced by all Part II case lemmas and consumed by Lemma 2.1 (the
+form produced by all non-existence case lemmas and consumed by the certificate lemma (the
 certificate). It coincides definitionally with `TailCovering`, which also
 requires `ρ < m`.
 -/
@@ -15,8 +15,8 @@ namespace Proof
 
 /-- Normalized tail-covering: `kA` contains the full congruence-class tail
 `{x ≥ X₀ : x ≡ ρ (mod m)}` with a *reduced* residue `ρ < m` (so the class is
-genuinely infinite). This is the notion produced by all Part II case lemmas
-and consumed by the Lemma 2.1 certificate. -/
+genuinely infinite). This is the notion produced by all non-existence case lemmas
+and consumed by the certificate lemma. -/
 def TailCoveringN (k : ℕ) (a : ℕ → ℕ) : Prop :=
   ∃ m, 0 < m ∧ ∃ ρ, ρ < m ∧ ∃ X₀, ∀ x, X₀ ≤ x → x % m = ρ → x ∈ kFoldSumset k a
 

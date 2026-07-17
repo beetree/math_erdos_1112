@@ -1,5 +1,5 @@
 /-
-Part III certificate layer: the kernel-decidable frame-certificate checker
+the subset-sum development certificate layer: the kernel-decidable frame-certificate checker
 and its soundness theorem. Certificate DATA lives in `Sharp/TablesData.lean`
 (6-tuples `(a, b, M, x, Y, Z)`, split into Table A and Table B).
 

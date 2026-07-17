@@ -1,10 +1,10 @@
 /-
-Part II, Lemma 2.10 (the Sturmian ladder): a two-letter tail with exactly
+The Sturmian ladder: a two-letter tail with exactly
 mechanical counting function (irrational slope) is tail-covering with m = 1.
 Steps: (0) window bookkeeping, (1) uniform syndeticity from a Dirichlet-step
 fract-walk (`MH/Walk.lean`; no three-gap needed), (2) exact fractional-sum
 completion via the mod-1 pinning (`MH/Subwindow.lean`), (3) the ladder lands.
-Paper: proof/02-nonexistence.md §II.3, (2.10.1)–(2.10.11), followed literally.
+Paper: the paper's non-existence section, (2.10.1)–(2.10.11), followed literally.
 -/
 import Erdos1112Proof.NonEx.TwoLetter.Balanced
 import Erdos1112Proof.NonEx.TwoLetter.MH.Walk
@@ -52,7 +52,7 @@ theorem uniform_syndeticity {α : ℝ} (hα : Irrational α) {ε : ℝ} (hε : 0
   · simpa only [hx_def] using hmem
 
 set_option maxHeartbeats 1200000 in
-/-- **Lemma 2.10 (Sturmian case)**: mechanical tail ⇒ tail-covering.
+/-- **Sturmian case**: mechanical tail ⇒ tail-covering.
 Interface in ambient terms.
 
 Step 3 (paper (2.10.7)–(2.10.11)):

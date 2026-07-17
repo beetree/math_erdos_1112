@@ -1,6 +1,6 @@
 /-
-Part I, (1.1): shifted Beatty sequences, their gaps, cluster containment,
-and the safety criterion. Paper: proof/01-existence.md §Part I.
+Shifted Beatty sequences, their gaps, cluster containment, and the safety
+criterion. Paper: the existence section.
 -/
 import Erdos1112Proof.Basic
 
