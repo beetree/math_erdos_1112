@@ -314,7 +314,9 @@ trusted kernel. The argument separates into three auditable layers: the \textbf{
 \S\S\ref{sec:existence}--\ref{sec:assembly}, which carries all infinite content; the \textbf{finite
 layer} --- the certificate tables and bounded scans, isolated as Proposition~\ref{prop:FV}, each row
 a self-certifying witness (also re-checked by two independent Python harnesses and re-decided in the
-kernel); and the \textbf{Lean development}, certifying both together. Section~\ref{sec:lean} gives the
+kernel); and the \textbf{Lean development}, certifying both together. Machine-checking establishes
+correctness relative to the formal statement; it cannot establish novelty or priority, which rest on
+\S\ref{sec:novelty}. Section~\ref{sec:lean} gives the
 formal encoding and trust base, and Appendix~\ref{app:lean} maps each result to its Lean declaration.
 The division of labour with the automated systems used is set out in \S\ref{sec:provenance}.
 
@@ -2226,7 +2228,7 @@ lines and all $a \le 3000$, this happens for precisely $172$ triples, and never 
 
 
 \begin{proposition}[T-tail]\label{lem:t-tail}
-On every Case-T line, the cheaper of the two variant budgets of Lemma~\ref{lem:T} exceeds $M-1$ for
+On every Case-T line, the budget of the applicable variant of Construction~T exceeds $M-1$ for
 precisely $172$ triples, all with $a \le 29$ --- these are Table~A of Appendix~\ref{app:tables},
 each carrying a verified modulo-$a$ box certificate with $Y + Z \le a-1$ and budget $\le M-1$ ---
 and for no triple with $a > 3000$. Hence the failure set of the Case-T construction is exactly
@@ -2234,14 +2236,15 @@ Table~A.
 \end{proposition}
 
 \begin{proof}[Proof (computer-assisted for $a \le 3000$)]
-\emph{The finite range.} For every line and every $a \le 3000$, the minimal variant budget was
-computed exactly by the finite enumeration of Appendix~\ref{app:verification}
+\emph{The finite range.} The applicable variant is determined by the line: variant~A when $g = 1$,
+the base form when $g \ge 2$; the scan evaluates that variant's budget and no other. For every line
+and every $a \le 3000$, this budget was computed exactly by the finite enumeration of Appendix~\ref{app:verification}
 (Proposition~\ref{prop:FV}(iii)); it exceeds $M-1$ for precisely the $172$ triples of Table~A, all
 with $a \le 29$. The failing triples are re-verified row-by-row by \texttt{gen-tables.py}, decided
 by the Lean kernel, and each carries its box certificate per
 Proposition~\ref{prop:FV}(i)--(ii).
 
-\emph{The tail $a > 3000$.} For each line, the cheapest variant's budget is bounded above by the
+\emph{The tail $a > 3000$.} For each line, the applicable variant's budget is bounded above by the
 linear function
 \[
   \beta(a) \;:=\; 2\Big[(\mu' - 1) + \frac{a + \mu + 2C' - (\mu'-1)e'}{\mu'} + 1\Big] + g ,
@@ -2249,18 +2252,18 @@ linear function
 of slope $2/\mu' \le 2/3$ in $a$ (using $\lceil u \rceil \le u+1$ and $\mu' \ge 3$), while the target
 $\tau(a) = a + \mu - 1$ has slope $1$.
 
-\emph{Why $\beta$ bounds the cheapest budget.} The $z$-formulas of Construction~T are maxima, and
+\emph{Why $\beta$ bounds the budget.} The $z$-formulas of Construction~T are maxima, and
 $\beta$ bounds their ceiling branch; that branch is the \emph{active} one throughout $a \ge 3000$.
 Indeed, on every line the ceiling's argument is at least $2899/11 > 260$ --- the numerator is at
 least $3000 - 1 - ye \ge 2899$, since $y \le \mu' - 1 \le 10$ and $e' \le e \le 10$ give
 $ye \le 100$, and the denominator is $\mu' \le 11$ --- whereas the competing branch, $e-1$
 respectively $e'-1$, is at most $9$. Being increasing in $a$ against a constant, the ceiling branch
-stays active for all $a \ge 3000$, so there the cheapest budget equals its ceiling value and $\beta$
+stays active for all $a \ge 3000$, so there the budget equals its ceiling value and $\beta$
 bounds it above. The margin $\tau - \beta$ is therefore nondecreasing in $a$, at rate at least
 $1/3$.
 
 It remains to check that the margin is positive at $a = 3000$. We compare the target against
-$\beta$, the \emph{proved upper bound} on the cheapest variant budget, and not against the exact
+$\beta$, the \emph{proved upper bound} on the applicable variant's budget, and not against the exact
 budget; no separate reconciliation of exact budgets is therefore required. Evaluating $\beta(3000)$
 on each of the finitely many lines and minimizing gives
 \[
@@ -2714,6 +2717,9 @@ harnesses. All checks below refer to that commit.
 (\texttt{leanprover/lean4:v4.27.0}; dependency revisions fixed in \texttt{lake-manifest.json}):
 \texttt{lake exe cache get} then \texttt{lake build} compiles every file and reproduces the axiom
 audit of \S\ref{sec:trustbase}, including for \texttt{erdos\_1112\_int}, the literal integer form.
+Continuous integration at the repository (\texttt{.github/workflows/verify.yml}) re-runs the pinned
+build, the axiom audit, the table re-verification, and the correspondence check of
+Appendix~\ref{app:lean} on every push; the public run logs serve as clean-build evidence.
 
 \emph{The finite layer.} The complete certificate tables are typeset in the supplementary document
 \texttt{erdos1112-supplement.pdf} and exported as \texttt{data/table-A.csv} and
@@ -2730,11 +2736,14 @@ Proposition~\ref{prop:FV}.
 \begin{center}
 \fbox{\parbox{0.92\textwidth}{\small
 \textbf{Submission artifact.} This version is the annotated Git tag \texttt{submission-2026-07} of
-the repository \repo, resolving to a single commit that carries the article and supplement sources,
-the certificate data, the generator/re-verifier, the Python harnesses, \emph{and} the Lean~4
-development; the axiom audit of \S\ref{sec:trustbase} was re-run at that commit. This PDF is built
-from the tagged commit by a clean checkout. The commit hash (recoverable by \texttt{git rev-parse})
-is the identifier for exact reproducibility; a DOI-backed archive of the same release will accompany
+the repository \repo. The article and supplement sources, the certificate data, the
+generator/re-verifier, the Python harnesses, and the Lean~4 development are the \emph{content
+commit}
+\begin{center}\texttt{@CONTENT-SHA@}\end{center}
+to which the tagged commit is the immediate successor, byte-identical except for embedding this
+identifier and the rebuilt PDFs (a commit cannot contain its own hash). The axiom audit of
+\S\ref{sec:trustbase} and the continuous-integration checks run at both commits. This PDF is built
+from the tagged commit by a clean checkout; a DOI-backed archive of the same release will accompany
 the journal submission for scholarly citation. The full certificate tables are typeset in the
 supplement \texttt{erdos1112-supplement.pdf} and exported to \texttt{data/}.}}
 \end{center}
@@ -2875,6 +2884,13 @@ Declarations live in the namespace \texttt{Erdos1112.Proof}, in files relative t
 \texttt{Erdos1112Proof/}, except the three headline theorems, which are in namespace
 \texttt{Erdos1112}. Every listed result is load-bearing: the development formalizes the full case
 tree rather than citing anything externally.
+
+The name-and-location layer of this table is checked mechanically: the script
+\texttt{scripts/check\_correspondence.py} extracts every declaration named below and verifies it
+exists in the Lean tree, and continuous integration re-runs the check on every push, so the table
+cannot silently rot as the development evolves. The \emph{statement-level} match --- that each
+declaration says what the prose result says --- remains a human judgment, as \S\ref{sec:trustbase}
+already cautions, and is where we invite scrutiny.
 
 The mapping is \emph{not} a claim of lemma-by-lemma identity everywhere. In one place the formal
 development proves the same conclusion by a different route, and we mark those rows \textsc{alt}:

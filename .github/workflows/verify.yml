@@ -22,6 +22,9 @@ jobs:
       - name: Referee-harness input from canonical data
         working-directory: paper/scripts
         run: python3 make_tables_file.py
+      - name: Appendix C correspondence check (paper declarations exist in Lean)
+        working-directory: paper/scripts
+        run: python3 check_correspondence.py
 
   lean:
     runs-on: ubuntu-latest
