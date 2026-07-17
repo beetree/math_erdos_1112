@@ -1,25 +1,51 @@
 #!/usr/bin/env python3
-"""FINAL decision-tree harness for (SHARP) hard core - mirrors the write-up.
+"""Constructive harness for the bounded subset-sum covering lemma (Erdos #1112 paper).
 
-Decision tree for hard-core (a,b,M) [gcd(a,b)=1, e=b-a>=1, h=M-b in [1,a-2]]:
- 1. a | M              -> Lemma D    (half-price ladder)
- 2. a | b+M:
-    2a. M < 2a         -> Lemma G'   (r=3 pair family, witness (2,~(M-3)/2,~))
-    2b. M = 2a+t       -> Lemma Gt   (r=4 pair family, witness (3,~(M-4)/2,~))
-    2c. M >= 2a+4      -> Lemma ETAneg (balanced box (Y,Z), Y+Z=a-1)
-    2d. else           -> TABLE
- 3. e == h (=g)        -> Lemma Lg   witness (floor((a-2)/2)+2g, 1, ceil((a-2)/2))
- 4. a>=12 and mu>=12   -> Lemma ETA  (t=min(eta,a-eta) box, threshold proved)
- 5. mu<=11             -> Lemma T-line (g-phase staircase, exact inequality);
-                          failures -> TABLE
- 6. a<=11, mu>=12      -> base TABLE (certified mod-a box) + lambda-lift
-Verify: every branch's constructed multiset covers M consecutive integers
-(exact bitmask), budget <= M-1. Output: any triple where the designated
-branch FAILS -> table entries. Zero unexplained failures required.
+Covers every hard-core triple (a,b,M) with max(G) <= Mmax by the multiset that the
+paper's CURRENT route designates -- the ordered case tree D / P / L / E / T / B of
+Section 4 -- and verifies each witness exactly (integer arithmetic only):
+
+    budget x+y+z <= M-1   and   subset sums contain >= M consecutive integers.
+
+  D  a | M          : y = a-1 copies of b, x = q-1 copies of a, z = cdiv(x_eff-(q-1), q)
+                      copies of M, x_eff = cdiv(M-1+(a-1)b, a)          [Lemma caseD]
+  P  a | b+M (r>=3) : (x,y,z) = (r-1, cdiv(M-r,2), (M-r)//2)            [Lemma caseP]
+  L  e = h = g      : (x,y,z) = ((a-2)//2 + 2g, 1, cdiv(a-2,2))         [Lemma caseL]
+  E  a,mu >= 12     : eta-box (Y,Z) = (t-1, cdiv(a-t,t)), t = min(eta, a-eta)
+                                                                        [Lemma etabox]
+  T  mu <= 11       : the APPLICABLE variant of Construction T -- variant A when
+                      g = 1, the base form when g >= 2, never the short merge; if
+                      its budget exceeds M-1 the triple must be a row of the
+                      canonical Table A (../data/table-A.csv), whose box certificate
+                      is then verified                                  [Lemma T / T-tail]
+  B  a <= 11, mu>=12: the triple's class (a, e mod a, h) must be a row of the
+                      canonical Table B (../data/table-B.csv); the base's box is
+                      lifted to the member and verified                 [lambda-lift]
+
+No searches, perturbations, or fallback witnesses anywhere: every multiset is the
+one designated by the corresponding lemma, or a canonical-table certificate.
+
+Exit status: 0 only if every triple verifies AND (at Mmax = 120) the totals match
+the paper's advertised counts (83,251 triples; the Table-A rows hit are exactly the
+172 canonical rows). Any failure or count mismatch exits nonzero.
+
+Usage: python3 sharp6_final.py [Mmax=120]
 """
+import csv
+import os
 import sys
-from math import gcd, ceil
 from collections import Counter
+from math import gcd
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def cdiv(n, d):
+    """Exact ceiling division for integers, d > 0."""
+    if d <= 0:
+        raise ValueError("denominator must be positive")
+    return -(-n // d)
+
 
 def cover_check(a, b, M, x, y, z):
     if min(x, y, z) < 0:
@@ -38,142 +64,95 @@ def cover_check(a, b, M, x, y, z):
         mask >>= 1
     return best >= M
 
-def lemma_D(a, b, M):
-    q = M // a
-    xeff = ceil((M - 1 + (a - 1) * b) / a)
-    best = None
-    for z in range(0, xeff // q + 2):
-        x = max(q - 1, xeff - q * z)
-        n = (a - 1) + x + z
-        if best is None or n < best[0]:
-            best = (n, x, z)
-    n, x, z = best
-    return (x, a - 1, z)
 
-def lemma_pair(a, b, M, r):
-    yz = M - r
-    y = (yz + 1) // 2
-    for dy in (0, -1, 1, -2, 2):
-        ms = (r - 1, y + dy, yz - y - dy)
-        if ms[2] >= 0 and cover_check(a, b, M, *ms):
-            return ms
-    return None
-
-def lemma_etaneg(a, b, M):
-    best = None
-    Y0 = round((a - 1) * M / (b + M))
-    for Y in {max(0, Y0 - 1), Y0, min(a - 1, Y0 + 1), (a - 1) // 2, a // 2}:
-        Z = a - 1 - Y
-        if Z < 0:
-            continue
-        reps = {}
-        for j in range(Y + 1):
-            for k in range(Z + 1):
-                v = j * b + k * M
-                rr = v % a
-                if rr not in reps or v < reps[rr]:
-                    reps[rr] = v
-        if len(reps) < a:
-            continue
-        S = max(reps.values())
-        x = ceil((M - 1 + S) / a)
-        n = x + Y + Z
-        if n <= M - 1 and (best is None or n < best[0]):
-            best = (n, (x, Y, Z))
-    return best[1] if best else None
-
-def lemma_Lg(a, g):
-    return ((a - 2) // 2 + 2 * g, 1, (a - 1) // 2 if (a - 2) % 2 else (a - 2) // 2)
-
-def lemma_eta(a, b, M):
-    ebar, mubar = b % a, M % a
-    eta = (mubar * pow(ebar, -1, a)) % a
-    t = min(eta, a - eta)
-    Z = ceil((a - t) / t)
+def box_reps(a, b, M, Y, Z):
+    """Minimal-height representative per residue class mod a in the box j<=Y, k<=Z."""
     reps = {}
-    for j in range(t):
+    for j in range(Y + 1):
         for k in range(Z + 1):
             v = j * b + k * M
-            rr = v % a
-            if rr not in reps or v < reps[rr]:
-                reps[rr] = v
+            r = v % a
+            if r not in reps or v < reps[r]:
+                reps[r] = v
+    return reps
+
+
+# ------------------------------------------------ designated constructions
+def des_D(a, b, M):
+    q = M // a
+    xeff = cdiv(M - 1 + (a - 1) * b, a)
+    z = max(0, cdiv(xeff - (q - 1), q))
+    return (q - 1, a - 1, z)
+
+
+def des_P(a, b, M):
+    r = (b + M) // a
+    return (r - 1, cdiv(M - r, 2), (M - r) // 2)
+
+
+def des_L(a, g):
+    return ((a - 2) // 2 + 2 * g, 1, cdiv(a - 2, 2))
+
+
+def des_E(a, b, M):
+    ebar, mubar = (b - a) % a, M % a
+    eta = (mubar * pow(ebar, -1, a)) % a
+    t = min(eta, a - eta)
+    Z = cdiv(a - t, t)
+    reps = box_reps(a, b, M, t - 1, Z)
     if len(reps) < a:
         return None
     S = max(reps.values())
-    x = ceil((M - 1 + S) / a)
-    return (x, t - 1, Z)
+    return (cdiv(M - 1 + S, a), t - 1, Z)
 
-def lemma_Tline(a, b, M):
-    """g-phase staircase, x=c+g variant (proved) + g=1 two-frame variants."""
-    e, h = b - a, M - b
+
+def des_T(a, e, h):
+    """The applicable variant of Construction T: variant A (g=1) or base form (g>=2)."""
     mu = e + h
     g = gcd(e, mu)
     e1, m1 = e // g, mu // g
     C1 = (e1 - 1) * (m1 - 1)
     y = m1 - 1
-    cands = []
     if g == 1:
-        # variant A (x=c+1): W >= max(a,mu)-1+2C
-        zA = max(e1 - 1, ceil((max(a, mu) - 1 + 2 * C1 - y * e1) / m1))
-        cands.append((y + zA + 1, y, zA))
-        # variant B (x=c): W >= a+C+max(C,1)-1 and W >= mu+2C-1
-        need = max(a + C1 + max(C1, 1) - 1, mu + 2 * C1 - 1)
-        zB = max(e1 - 1, ceil((need - y * e1) / m1))
-        cands.append((y + zB, y, zB))
+        z = max(e1 - 1, cdiv(max(a, mu) - 1 + 2 * C1 - y * e1, m1))
+        x = y + z + 1
     else:
-        # solid-run variant: V'-C' >= a-1 (phase-c double frame) with run
-        # [(c+g-1)a+gC', (c+g)a+gV'] hmm -> use conservative:
-        # g(V'-C') >= ga+mu-1  (union of single frames per phase)
-        z1 = max(e1 - 1, ceil((a + ceil((mu - 1) / g) + 2 * C1 - y * e1) / m1))
-        cands.append((y + z1 + g, y, z1))
-    best = None
-    for ms in cands:
-        n = sum(ms)
-        if n <= M - 1 and cover_check(a, b, M, *ms):
-            if best is None or n < best[0] + best[1] + best[2]:
-                best = ms
-    return best
+        z = max(e1 - 1, cdiv(a + cdiv(mu - 1, g) + 2 * C1 - y * e1, m1))
+        x = y + z + g
+    return (x, y, z)
 
-def cert_box(a, b, M):
-    """table certificate: minimal mod-a box, Y+Z<=a-1 (lift-compatible)."""
-    best = None
-    cap = min(2 * a + 4, M)
-    for Y in range(0, cap):
-        for Z in range(0, cap - Y):
-            if Y + Z > a - 1:
-                continue
-            reps = {}
-            for j in range(Y + 1):
-                for k in range(Z + 1):
-                    v = j * b + k * M
-                    r = v % a
-                    if r not in reps or v < reps[r]:
-                        reps[r] = v
-            if len(reps) == a:
-                S = max(reps.values())
-                x = ceil((M - 1 + S) / a)
-                n = x + Y + Z
-                if n <= M - 1 and (best is None or n < best[0]):
-                    best = (n, (x, Y, Z))
-                break
-    return best[1] if best else None
 
-def cert_any(a, b, M):
-    """last resort: any witness with budget <= M-1 (small search)."""
-    tgt = M - 1
-    for x in range(tgt + 1):
-        for y in range(tgt + 1 - x):
-            z = tgt - x - y
-            if cover_check(a, b, M, x, y, z):
-                return (x, y, z)
-    return None
+# ------------------------------------------------ canonical certificate data
+def load_table_A():
+    rows = {}
+    with open(os.path.join(HERE, "..", "data", "table-A.csv")) as f:
+        for r in csv.DictReader(f):
+            rows[(int(r["a"]), int(r["b"]), int(r["M"]))] = (
+                int(r["x"]), int(r["Y"]), int(r["Z"]))
+    return rows
+
+
+def load_table_B():
+    rows = {}
+    with open(os.path.join(HERE, "..", "data", "table-B.csv")) as f:
+        for r in csv.DictReader(f):
+            rows[(int(r["a"]), int(r["ebar"]), int(r["h"]))] = (
+                int(r["base_a"]), int(r["base_b"]), int(r["base_M"]),
+                int(r["x"]), int(r["Y"]), int(r["Z"]))
+    return rows
+
 
 def main():
     Mmax = int(sys.argv[1]) if len(sys.argv) > 1 else 120
+    TA, TB = load_table_A(), load_table_B()
     tot = 0
     tags = Counter()
-    table = []
+    hitA = set()
     failures = []
+
+    def fail(a, b, M, tag, ms, why):
+        failures.append((a, b, M, tag, ms, why))
+
     for a in range(3, Mmax):
         for b in range(a + 1, Mmax):
             if gcd(a, b) != 1:
@@ -184,61 +163,71 @@ def main():
                     continue
                 tot += 1
                 mu = e + h
-                ms, tag = None, None
                 if M % a == 0:
-                    ms, tag = lemma_D(a, b, M), 'D'
+                    tag, ms = 'D', des_D(a, b, M)
                 elif (b + M) % a == 0:
-                    r = (b + M) // a
-                    P_SMALL = {(3, 7, 8): (4, 2, 1), (4, 9, 11): (4, 3, 3),
-                               (5, 12, 13): (4, 4, 4)}
-                    if (a, b, M) in P_SMALL:
-                        ms, tag = P_SMALL[(a, b, M)], 'P-small'
-                    elif M < 2 * a:
-                        ms, tag = lemma_pair(a, b, M, 3), "G'"
-                    elif r == 4:
-                        ms, tag = lemma_pair(a, b, M, r), 'Gt'
-                    else:
-                        ms, tag = lemma_etaneg(a, b, M), 'ETAneg'
-                        if ms is None:
-                            ms, tag = lemma_pair(a, b, M, r), 'Gt*'
+                    tag, ms = 'P', des_P(a, b, M)
                 elif e == h:
-                    ms, tag = lemma_Lg(a, e), 'Lg'
+                    tag, ms = 'L', des_L(a, e)
                 elif a >= 12 and mu >= 12:
-                    ms, tag = lemma_eta(a, b, M), 'ETA'
-                elif mu <= 11:
-                    ms, tag = lemma_Tline(a, b, M), 'Tline'
+                    tag, ms = 'E', des_E(a, b, M)
                     if ms is None:
-                        tag = 'TABLE-line'
-                else:
-                    tag = 'TABLE-base'
-                if ms is not None:
-                    n = sum(ms)
-                    if n <= M - 1 and cover_check(a, b, M, *ms):
-                        tags[tag] += 1
+                        fail(a, b, M, tag, None, "eta-box residue coverage failed")
                         continue
-                    else:
-                        failures.append((a, b, M, tag, ms))
-                        continue
-                # table route
-                cb = cert_box(a, b, M)
-                if cb:
-                    table.append((a, b, M, tag, 'box', cb))
-                    tags[tag + '/box'] += 1
+                elif mu <= 11:
+                    tag, ms = 'T', des_T(a, e, h)
+                    if sum(ms) > M - 1:
+                        # designated budget fails: must be a canonical Table-A row
+                        if (a, b, M) not in TA:
+                            fail(a, b, M, 'T', ms, "budget fails and not in Table A")
+                            continue
+                        tag, ms = 'T-table', TA[(a, b, M)]
+                        x, Y, Z = ms
+                        if Y + Z > a - 1 or len(box_reps(a, b, M, Y, Z)) < a:
+                            fail(a, b, M, tag, ms, "Table-A box invalid")
+                            continue
+                        hitA.add((a, b, M))
                 else:
-                    w = cert_any(a, b, M)
-                    if w:
-                        table.append((a, b, M, tag, 'wit', w))
-                        tags[tag + '/wit'] += 1
-                    else:
-                        failures.append((a, b, M, tag, None))
+                    tag = 'B'
+                    key = (a, e % a, h)
+                    if key not in TB:
+                        fail(a, b, M, tag, None, f"class {key} missing from Table B")
+                        continue
+                    ba, bb, bM, _, Y, Z = TB[key]
+                    if M < bM or (b - bb) % a != 0 or (M - bM) != (b - bb):
+                        fail(a, b, M, tag, None, f"not on lift ladder of base {(ba, bb, bM)}")
+                        continue
+                    reps = box_reps(a, b, M, Y, Z)
+                    if len(reps) < a:
+                        fail(a, b, M, tag, None, "lifted box loses residue coverage")
+                        continue
+                    ms = (cdiv(M - 1 + max(reps.values()), a), Y, Z)
+                x, y, z = ms
+                if x + y + z > M - 1:
+                    fail(a, b, M, tag, ms, f"budget {x+y+z} > M-1 = {M-1}")
+                elif not cover_check(a, b, M, x, y, z):
+                    fail(a, b, M, tag, ms, "does not cover M consecutive integers")
+                else:
+                    tags[tag] += 1
+
     print(f"hard core M<={Mmax}: {tot} triples")
-    print("branch usage:", dict(tags))
-    print(f"\nDESIGNATED-BRANCH FAILURES (must be 0): {len(failures)}")
+    print("branch counts:", dict(sorted(tags.items())))
+    print(f"Table-A rows used: {len(hitA)} (canonical table has {len(TA)})")
+    print(f"DESIGNATED-BRANCH FAILURES (must be 0): {len(failures)}")
     for f in failures[:30]:
         print("   ", f)
-    print(f"\nTABLE entries: {len(table)}")
-    for t in table:
-        print("   ", t)
+
+    bad = bool(failures)
+    if Mmax == 120:
+        if tot != 83251:
+            print(f"COUNT MISMATCH: {tot} hard-core triples, expected 83,251")
+            bad = True
+        if hitA != set(TA):
+            print(f"TABLE MISMATCH: used {len(hitA)} Table-A rows, expected all "
+                  f"{len(TA)} canonical rows (every row has M <= 40 <= 120)")
+            bad = True
+    sys.exit(1 if bad else 0)
+
 
 if __name__ == "__main__":
     main()

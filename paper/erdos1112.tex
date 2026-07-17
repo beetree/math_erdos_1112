@@ -500,7 +500,7 @@ $s_1 \le t/hi + 1 \le t/(d_2 - \tfrac12) + 1$ and $k \le d_2 - 1$,
 \end{aligned}
 \]
 the last step because $t \ge 32 d_2^2$ gives
-$t/\big(32(d_2 - \tfrac12)\big) = d_2^2/(d_2 - \tfrac12) \ge d_2 + \tfrac12 > d_2 - \tfrac{17}{32}$.
+$t/\big(32(d_2 - \tfrac12)\big) \ge d_2^2/(d_2 - \tfrac12) \ge d_2 + \tfrac12 > d_2 - \tfrac{17}{32}$.
 Thus $t - k s_1 \ge \tfrac{15}{32} s_1$, and with \eqref{eq:s1-bounds},
 \[
   R - L \;\ge\; \frac{15}{32} \cdot \frac{1}{s_1 + 1}
@@ -1134,8 +1134,9 @@ Define the threshold
 \begin{equation}\label{eq:S0}
   S_0 \;:=\; 1 + \Big\lceil L\,(k-1)\Big(\frac k2 + 1\Big)\Big\rceil
 \end{equation}
-(the ceiling makes it an integer: $L$ is an integer, but the factor $\tfrac k2$ is a half-integer
-when $k$ is odd), and assume $s \ge S_0$. Set the forced last index
+(the quantity inside the ceiling is already an integer --- $(k-1)(\tfrac k2 + 1) = (k-1)(k+2)/2$,
+and one of $k-1$, $k+2$ is always even --- so the ceiling is redundant and kept only for visual
+uniformity), and assume $s \ge S_0$. Set the forced last index
 $i_k := s - \sum_{t=1}^{k-1} i_t$. Then by \eqref{eq:free-indices} and \eqref{eq:S0},
 \[
   i_k \;\ge\; s - L\frac{k(k-1)}{2} \;\ge\; S_0 - L\frac{k(k-1)}{2} \;=\; 1 + (k-1)L
@@ -2267,9 +2268,12 @@ $\beta$, the \emph{proved upper bound} on the applicable variant's budget, and n
 budget; no separate reconciliation of exact budgets is therefore required. Evaluating $\beta(3000)$
 on each of the finitely many lines and minimizing gives
 \[
-  \min_{\text{lines}} \big( \tau(3000) - \beta(3000) \big) \;=\; 995 \;>\; 0 ,
+  \min_{\text{lines}} \big( \tau(3000) - \beta(3000) \big) \;=\; 993 \;>\; 0 ,
 \]
-as reported by the verification harness of Appendix~\ref{app:verification}. Since $\tau - \beta$ is
+attained on the line $(e,h) = (2,1)$, as computed exactly (in rational arithmetic) and asserted by
+the verification harness of Appendix~\ref{app:verification}. (Restricting to lines on which
+$a = 3000$ is itself a valid hard-core member, the minimum is $2983/3$, at $(e,h) = (1,2)$; the
+argument needs only positivity.) Since $\tau - \beta$ is
 nondecreasing, it stays positive for every $a > 3000$. Hence there are no budget failures with
 $a > 3000$. (The cutoff $3000$ is convenience, not necessity: any threshold at which every line's
 margin is positive would serve. It sits comfortably past the last actual failure at $a = 29$, and is
@@ -2324,10 +2328,13 @@ Finally, the descent terminates at the base ($\lambda = 0$ or the first branch-B
 Lemma~\ref{lem:lift} lifts its certificate back up, one step of $a$ at a time.
 \end{proof}
 
-Concretely, the enumeration for $a \le 11$ has $178$ distinct classes, of which exactly six --- the
-diagonal $\bar e = h$ classes $(9,25,32)$, $(10,27,34)$, $(11,28,34)$, $(11,29,36)$, $(11,30,38)$,
-$(11,31,40)$ --- must be based at a $\lambda \ge 1$ member, because their $\lambda = 0$ member has
-$e = h$ and so belongs to Case L.
+Concretely, the enumeration for $a \le 11$ has $178$ distinct classes. Many of them ($133$) have
+their first Case-B member at $\lambda \ge 1$ for the unremarkable reason that the threshold
+$\mu \ge 12$ forces $e \ge 12 - h$ --- Example~\ref{ex:caseB}'s class is one, its base having
+$\lambda = 2$. Exactly six classes --- the diagonal $\bar e = h$ classes $(9,25,32)$, $(10,27,34)$,
+$(11,28,34)$, $(11,29,36)$, $(11,30,38)$, $(11,31,40)$ --- are special for a different reason: their
+$\lambda = 0$ member \emph{already} satisfies $\mu \ge 12$ but has $e = h$ and is diverted to
+Case~L, so they are rebased at their first subsequent Case-B member.
 
 \subsection{Proof of Lemma~\ref{lem:sharp}}\label{sec:sharp-proof}
 
@@ -2793,19 +2800,27 @@ the slope-tail argument (Proposition~\ref{lem:t-tail}); and the minimal-alphabet
 $M \le 130$ (Lemmas~\ref{lem:minimal-struct} and \ref{lem:L4}).
 
 \emph{End-to-end redundant verification} (not logically required, but performed): every one of the
-$83{,}251$ hard-core triples with $M \le 120$ was covered by its designated branch with an exactly
-verified multiset --- zero failures --- by two separate implementations. The first,
-\texttt{sharp6\_final.py}, is the constructive harness. The second,
-\texttt{sharp\_referee\_check.py}, is a re-implementation that shares no code with the first and
-reconstructs each designated witness from the lemma statements alone, with no auxiliary searches; it
-reports identical branch counts, and additionally re-verifies Lemmas~\ref{lem:twogen}--\ref{lem:lift}
-and \ref{lem:L1}--\ref{lem:L3} by brute force on thousands of instances, re-validates both tables
-including base-minimality and class-completeness, walks the $\lambda$-lift chains over $29{,}402$
-members arithmetically to $M \le 1500$ and $4{,}574$ exactly to $M \le 250$, checks the pair families
-for all $a \le 120$, and checks the $\eta$-box algebra to $a \le 400$ at the worst member
-$M = a + 12$ (which, being monotone in $M$, confirms Lemma~\ref{lem:etabox} for all $M$). All with
-zero failures. A further $800$ random hard-core triples with $M \in (120, 200]$ were spot-checked
-against the designated branches, again with zero failures.
+$83{,}251$ hard-core triples with $M \le 120$ was covered by the multiset that the current route
+D/P/L/E/T/B designates --- Case T by the applicable variant of Construction~T, never the short
+merge --- with every witness verified exactly in integer arithmetic, zero failures, by two separate
+implementations. The first, \texttt{sharp6\_final.py}, is the constructive harness; it consumes the
+canonical certificate tables where the route calls for them (the $172$ Table-A rows it uses are
+exactly the canonical set). The second, \texttt{sharp\_referee\_check.py}, is a re-implementation
+that shares no code with the first and reconstructs each designated witness from the lemma statements
+alone, with no auxiliary searches; the two report identical branch counts
+($2392$ D, $2605$ P, $1420$ L, $71{,}421$ E, $3254 + 172$ T, $1987$ B). The second additionally
+re-verifies Lemmas~\ref{lem:twogen}--\ref{lem:lift} and \ref{lem:L1}--\ref{lem:L3} by brute force
+on thousands of instances, re-validates both tables including base-minimality and class-completeness,
+re-runs the $a \le 3000$ Case-T scan (its failure set must equal Table~A exactly, and the tail
+margin of Proposition~\ref{lem:t-tail} is recomputed in exact rational arithmetic), walks the
+$\lambda$-lift chains over $29{,}402$ members arithmetically to $M \le 1500$ and $4{,}574$ exactly
+to $M \le 250$, verifies the Case-P reach inequalities \eqref{eq:caseP-reach} for all $a \le 150$,
+and checks the $\eta$-box algebra to $a \le 400$ at the worst member $M = a + 12$ (which, being
+monotone in $M$, confirms Lemma~\ref{lem:etabox} for all $M$). All with zero failures. A further
+$400$ random hard-core triples with $M \in (120, 220]$ were spot-checked against the designated
+branches, again with zero failures. Both programs fail closed: any invalid witness, missing class, or
+count differing from the totals above exits with a nonzero status, and continuous integration runs
+both to $M = 120$ on every push.
 
 \emph{Scope of the independence.} We should not overstate what the second harness buys. It is best
 described as an \emph{independent implementation of the same certificate specification}: it shares

@@ -1,20 +1,36 @@
 #!/usr/bin/env python3
-"""HOSTILE-REFEREE independent checker for (SHARP)  [Erdos #1112, sharp1112.md].
+"""HOSTILE-REFEREE independent checker for the bounded subset-sum covering lemma
+(Erdos #1112 paper). Written from scratch; deliberately does NOT import or mirror
+sharp6_final.py.
 
-Written from scratch; deliberately does NOT import or mirror sharp6_final.py.
-For every hard-core triple M <= 120 it takes the construction DESIGNATED BY THE
-PROOF TEXT (exact stated witnesses -- no searches, no perturbations), builds the
-multiset, computes exact subset sums, and checks:
+For every hard-core triple M <= Mmax it takes the construction DESIGNATED BY THE
+PAPER'S CURRENT ROUTE (the ordered case tree D/P/L/E/T/B of Section 4 -- exact
+stated witnesses, no searches, no perturbations; Case T uses the applicable
+variant of Construction T, variant A for g = 1 and the base form for g >= 2,
+never the retired short merge), builds the multiset, computes exact subset sums
+with integer arithmetic only, and checks:
     budget <= M-1   and   subset sums contain >= M consecutive integers.
-Plus: brute-force checks of Lemmas I/II/III/IV, L1/L2/L3, L4 + minimal-alphabet
-enumeration (two independent methods), Table A/B certificate verification,
-T-line scan to a=3000 with a rigorous linear tail bound, lambda-lift chains,
-eta-box algebra scan, and random spot checks 120 < M <= 220.
+Plus: brute-force checks of the machinery lemmas, L1/L2/L3, L4 + minimal-alphabet
+enumeration (two independent methods), Table A/B certificate verification
+(expecting the canonical 172 + 178 rows), the T-line scan to a = 3000 whose
+failure set must equal Table A exactly (with the exact rational tail margin,
+min 993 at a = 3000), the Case-P reach inequalities (E1)/(E2)/(F1)/(F2),
+lambda-lift chains, the eta-box algebra scan, and random spot checks.
+
+Exit status: 0 only if there are no FAILs and no WARNs.
 
 Usage: python sharp_referee_check.py [Mmax=120]
 """
 import sys, os, re, random
-from math import gcd, ceil
+from fractions import Fraction
+from math import gcd
+
+
+def cdiv(n, d):
+    """Exact ceiling division for integers, d > 0."""
+    if d <= 0:
+        raise ValueError("denominator must be positive")
+    return -(-n // d)
 from itertools import combinations, combinations_with_replacement
 from functools import reduce
 from collections import Counter
@@ -70,11 +86,11 @@ def gcdl(xs):
 # ------------------------------------------------- designated constructions
 def des_D(a, b, M):
     """Case D, a|M. y=a-1 copies of b; optimal (x,z) with x>=q-1, x+qz>=x_eff.
-    NOTE: x_eff = ceil((M-1+(a-1)b)/a) = q + b - floor((b+1)/a), which is the
+    NOTE: x_eff = cdiv(M-1+(a-1)b, a) = q + b - floor((b+1)/a), which is the
     write-up's closed form (Lemma 3.11, with the FLOOR; an earlier draft's
-    ceil((b+1)/a) was off by one when a∤(b+1) and has been corrected)."""
+    cdiv(b+1, a) was off by one when a∤(b+1) and has been corrected)."""
     q = M // a
-    xeff = ceil((M - 1 + (a - 1) * b) / a)
+    xeff = cdiv(M - 1 + (a - 1) * b, a)
     best = None
     for z in range(0, xeff // q + 2):
         x = max(q - 1, xeff - q * z)
@@ -83,21 +99,11 @@ def des_D(a, b, M):
     x, z = best
     return (x, a - 1, z)
 
-def des_P1(a, b, M):          # Lemma G'  (r=3):   exact stated witness
-    return (2, (M - 2) // 2, (M - 3) // 2)       # (2, ceil((M-3)/2), floor((M-3)/2))
+def des_P(a, b, M):           # Lemma caseP: the uniform pair-frame, all r >= 3
+    r = (b + M) // a
+    return (r - 1, cdiv(M - r, 2), (M - r) // 2)
 
-def des_Gt(a, b, M):          # Lemma G   (r=4):   exact stated witness
-    return (3, (M - 3) // 2, (M - 4) // 2)       # (3, ceil((M-4)/2), floor((M-4)/2))
-
-def des_ETAneg(a, b, M):      # Lemma N: balanced box, Y=ceil((a-1)/2), Z=floor((a-1)/2)
-    Y, Z = (a - 1 + 1) // 2, (a - 1) // 2
-    reps = box_reps(a, b, M, Y, Z)
-    if len(reps) < a:
-        return None
-    S = max(reps.values())
-    return (ceil((M - 1 + S) / a), Y, Z)
-
-def des_L(a, g):              # Lemma L: (floor((a-2)/2)+2g, 1, ceil((a-2)/2))
+def des_L(a, g):              # Lemma L: (floor((a-2)/2)+2g, 1, cdiv(a-2, 2))
     return ((a - 2) // 2 + 2 * g, 1, (a - 1) // 2)
 
 def eta_of(a, b, M):
@@ -110,31 +116,27 @@ def des_ETA(a, b, M):         # Lemma E: eta-box
     assert eta not in (0, 1, a - 1), (a, b, M, eta)
     t = min(eta, a - eta)
     assert 2 <= t <= a // 2
-    Z = ceil((a - t) / t)
+    Z = cdiv(a - t, t)
     reps = box_reps(a, b, M, t - 1, Z)
     if len(reps) < a:
         return None
     S = max(reps.values())
-    return (ceil((M - 1 + S) / a), t - 1, Z)
+    return (cdiv(M - 1 + S, a), t - 1, Z)
 
-def T_candidates(a, e, h):
-    """Section 7 staircase-line variants; returns list of (x,y,z)."""
+def T_construction(a, e, h):
+    """Construction T, the APPLICABLE variant only: variant A (two-frame merge)
+    when g = 1, the base form when g >= 2. The retired short merge is not used,
+    matching the paper's merge-robust route and the Lean development."""
     mu = e + h
     g = gcd(e, mu)
     e1, m1 = e // g, mu // g
     C1 = (e1 - 1) * (m1 - 1)
     y = m1 - 1
-    out = []
     if g == 1:
-        zA = max(e1 - 1, ceil((max(a, mu) - 1 + 2 * C1 - y * e1) / m1))
-        out.append((y + zA + 1, y, zA))                       # III.b, x=c+1
-        need = max(a + C1 + max(C1, 1) - 1, mu + 2 * C1 - 1)
-        zB = max(e1 - 1, ceil((need - y * e1) / m1))
-        out.append((y + zB, y, zB))                           # III.c, x=c
-    else:
-        z1 = max(e1 - 1, ceil((a + ceil((mu - 1) / g) + 2 * C1 - y * e1) / m1))
-        out.append((y + z1 + g, y, z1))                       # III.d, x=c+g
-    return out
+        z = max(e1 - 1, cdiv(max(a, mu) - 1 + 2 * C1 - y * e1, m1))
+        return (y + z + 1, y, z)                              # variant A, x = c+1
+    z = max(e1 - 1, cdiv(a + cdiv(mu - 1, g) + 2 * C1 - y * e1, m1))
+    return (y + z + g, y, z)                                  # base form, x = c+g
 
 # ------------------------------------------------------------- table parsing
 def load_tables():
@@ -174,43 +176,35 @@ def designated(a, b, M, TA, TB):
     if M % a == 0:
         return "D", des_D(a, b, M), ""
     if (b + M) % a == 0:
-        r = (b + M) // a
-        if M < 2 * a:
-            return "G'", des_P1(a, b, M), ""
-        if r == 4:
-            return "Gt", des_Gt(a, b, M), ""
-        if M >= 2 * a + 4:
-            ms = des_ETAneg(a, b, M)
-            return "ETAneg", ms, "" if ms else "residue-coverage failed"
-        return "P-small", None, f"r={r}, M={M}<2a+4: proof only says 'verified range'"
+        return "P", des_P(a, b, M), ""
     if e == h:
         return "L", des_L(a, e), ""
     if a >= 12 and mu >= 12:
         ms = des_ETA(a, b, M)
-        return "ETA", ms, "" if ms else "residue-coverage failed"
+        return "E", ms, "" if ms else "residue-coverage failed"
     if mu <= 11:
-        for ms in T_candidates(a, e, h):
-            if sum(ms) <= M - 1:
-                return "Tline", ms, ""
+        ms = T_construction(a, e, h)
+        if sum(ms) <= M - 1:
+            return "T", ms, ""
         if (a, b, M) in TA:
             x, Y, Z = TA[(a, b, M)]
-            return "TableA", (x, Y, Z), ""
-        return "Tline", None, "budget fails and no Table A entry"
+            return "T-table", (x, Y, Z), ""
+        return "T", None, "budget fails and no Table A entry"
     # a <= 11, mu >= 12
     ebar = e % a
     key = (a, ebar, h)
     if key not in TB:
-        return "TableB", None, f"class {key} missing from Table B"
+        return "B", None, f"class {key} missing from Table B"
     ba, bb, bM, bx, Y, Z = TB[key]
     if M < bM:
-        return "TableB", None, f"member M={M} below class base M={bM} (lift only goes up)"
+        return "B", None, f"member M={M} below class base M={bM} (lift only goes up)"
     if (b - bb) % a != 0 or (M - bM) != (b - bb):
-        return "TableB", None, f"member not on class lift ladder from base {(ba,bb,bM)}"
+        return "B", None, f"member not on class lift ladder from base {(ba,bb,bM)}"
     reps = box_reps(a, b, M, Y, Z)
     if len(reps) < a:
-        return "TableB", None, "lifted box loses residue coverage (impossible if base ok)"
+        return "B", None, "lifted box loses residue coverage (impossible if base ok)"
     S = max(reps.values())
-    return "TableB", (ceil((M - 1 + S) / a), Y, Z), ""
+    return "B", (cdiv(M - 1 + S, a), Y, Z), ""
 
 # ==========================================================================
 def part_machinery():
@@ -245,7 +239,7 @@ def part_machinery():
         if len(reps) < nu:
             continue
         n += 1
-        S = max(reps.values()); x = ceil((L - 1 + S) / nu)
+        S = max(reps.values()); x = cdiv(L - 1 + S, nu)
         sm = sums_mask([g1] * Y + [g2] * Z + [nu] * x)
         if not all((sm >> v) & 1 for v in range(S, nu * x + 1)):
             bad += 1
@@ -323,7 +317,7 @@ def part_machinery():
                 if len(reps) < a:
                     continue
                 S = max(reps.values())
-                x = ceil((M - 1 + S) / a)
+                x = cdiv(M - 1 + S, a)
                 if x + Y + Z <= M - 1:
                     best = (Y, Z)
                     break
@@ -340,7 +334,7 @@ def part_machinery():
                 report("FAIL", f"lift loses coverage ({a},{b},{M}) lam={lam}")
                 break
             S = max(reps.values())
-            x = ceil((MM - 1 + S) / a)
+            x = cdiv(MM - 1 + S, a)
             n += 1
             if x + Y + Z > MM - 1 or not covers(a, bb, MM, x, Y, Z):
                 bad += 1
@@ -408,7 +402,6 @@ def part_tree(Mmax, TA, TB):
     print(f"== PART 2: MAIN — decision tree, all hard-core triples M <= {Mmax} ==")
     tot = 0
     tags = Counter()
-    psmall = []
     for a in range(3, Mmax):
         for b in range(a + 1, Mmax):
             if gcd(a, b) != 1:
@@ -418,24 +411,6 @@ def part_tree(Mmax, TA, TB):
                     continue
                 tot += 1
                 tag, ms, note = designated(a, b, M, TA, TB)
-                if tag == "P-small":
-                    psmall.append((a, b, M))
-                    # finite explicit hole: verify SOME witness exists
-                    ok = False
-                    for tot_n in range(1, M):
-                        for x in range(tot_n + 1):
-                            for y in range(tot_n + 1 - x):
-                                if covers(a, b, M, x, y, tot_n - x - y):
-                                    ok = True
-                                    break
-                            if ok:
-                                break
-                        if ok:
-                            break
-                    tags["P-small"] += 1
-                    if not ok:
-                        report("FAIL", f"P-small triple ({a},{b},{M}) has NO witness <= M-1")
-                    continue
                 if ms is None:
                     report("FAIL", f"({a},{b},{M}) branch {tag}: no designated construction ({note})")
                     continue
@@ -447,11 +422,10 @@ def part_tree(Mmax, TA, TB):
                     report("FAIL", f"({a},{b},{M}) branch {tag}: multiset {ms} does NOT cover {M} consecutive")
                     continue
                 tags[tag] += 1
-    print(f"  hard-core triples: {tot} (write-up claims 83,251 at Mmax=120)")
-    print(f"  branch counts: {dict(tags)}")
-    print(f"  P-small triples (write-up: 'a<=6 verified range', not listed): {psmall}")
+    print(f"  hard-core triples: {tot} (paper claims 83,251 at Mmax=120)")
+    print(f"  branch counts: {dict(sorted(tags.items()))}")
     if Mmax == 120 and tot != 83251:
-        report("WARN", f"hard-core count {tot} != claimed 83,251")
+        report("FAIL", f"hard-core count {tot} != claimed 83,251")
     return tags
 
 def part_tables(TA, TB):
@@ -469,16 +443,12 @@ def part_tables(TA, TB):
            a * x < M - 1 + max(reps.values()) or not covers(a, b, M, x, Y, Z):
             bad += 1
             report("FAIL", f"Table A certificate ({a},{b},{M}) box ({x},{Y},{Z}) invalid")
-        # entry must genuinely be an exception (else table is padding)
-        if any(sum(c) <= M - 1 for c in T_candidates(a, e, h)):
-            report("WARN", f"Table A entry ({a},{b},{M}) is NOT actually a T-line failure")
-    print(f"  Table A: {len(TA)} entries checked, invalid: {bad} "
-          f"(this harness's variant-B route expects 158; the paper's merge-robust route has 172 "
-          f"-- either way every loaded row is validated)")
-    if len(TA) != 158:
-        report("WARN", f"Table A has {len(TA)} entries; this harness's variant-B route expects 158, "
-                       f"the paper's merge-robust route 172 -- all {len(TA)} loaded rows still "
-                       f"validated (invalid: {bad}). See scripts/README.md, route note.")
+        # entry must genuinely be an exception of the current route (else padding)
+        if sum(T_construction(a, e, h)) <= M - 1:
+            report("FAIL", f"Table A entry ({a},{b},{M}) is NOT a failure of Construction T")
+    print(f"  Table A: {len(TA)} entries checked, invalid: {bad}")
+    if len(TA) != 172:
+        report("FAIL", f"Table A has {len(TA)} entries, canonical route expects 172")
     bad = 0
     for (a, ebar, h), (ba, bb, bM, x, Y, Z) in TB.items():
         e = bb - ba
@@ -527,9 +497,9 @@ def part_tables(TA, TB):
     print(f"  Table B completeness: {len(missing)} missing classes")
 
 def part_Tscan(TA):
-    print("== PART 4: T-line scan (mu<=11) to a=3000 + rigorous linear tail ==")
+    print("== PART 4: T-line scan (mu<=11, applicable variant) to a=3000 + exact tail ==")
     failures = set()
-    worst_margin = {}
+    margins = {}
     for e in range(1, 11):
         for h in range(1, 11):
             mu = e + h
@@ -537,42 +507,36 @@ def part_Tscan(TA):
                 continue
             g = gcd(e, mu)
             e1, m1 = e // g, mu // g
+            C1 = (e1 - 1) * (m1 - 1)
             for a in range(max(3, h + 2), 3001):
                 if gcd(a, e) != 1 or mu % a == 0 or (2 * e + h) % a == 0:
                     continue
                 M = a + mu
-                if not any(sum(c) <= M - 1 for c in T_candidates(a, e, h)):
+                if sum(T_construction(a, e, h)) > M - 1:
                     failures.add((a, a + e, M))
-            # rigorous tail: real-valued upper bound on the cheapest variant budget,
-            # slope 2/m1 <= 2/3 < 1 = slope of M-1  =>  once satisfied with margin
-            # it stays satisfied. Evaluate at a0=3000.
+            # exact rational tail margin at a0 = 3000, using the paper's beta(a):
+            # beta(a) = 2[(m1-1) + (a + mu + 2C' - (m1-1)e')/m1 + 1] + g, tau = a+mu-1
             a0 = 3000
-            y = m1 - 1
-            C1 = (e1 - 1) * (m1 - 1)
-            if g == 1:
-                need = max(a0 + C1 + max(C1, 1) - 1, mu + 2 * C1 - 1)
-                z_ub = max(e1 - 1, (need - y * e1) / m1 + 1)
-                bud_ub = 2 * (y + z_ub)
-            else:
-                z_ub = max(e1 - 1, (a0 + ceil((mu - 1) / g) + 2 * C1 - y * e1) / m1 + 1)
-                bud_ub = 2 * (y + z_ub) + g
-            margin = (a0 + mu - 1) - bud_ub
-            worst_margin[(e, h)] = margin
-            if margin < (a0 * (1 - 2 / m1)) * 0 or margin <= 0:
-                report("FAIL", f"T-line ({e},{h}): tail bound not established at a=3000 (margin {margin:.1f})")
+            beta = 2 * (Fraction(m1 - 1) + Fraction(a0 + mu + 2 * C1 - (m1 - 1) * e1, m1) + 1) + g
+            margins[(e, h)] = Fraction(a0 + mu - 1) - beta
+            if margins[(e, h)] <= 0:
+                report("FAIL", f"T-line ({e},{h}): tail margin not positive at a=3000")
     mx = max(a for a, _, _ in failures) if failures else 0
-    print(f"  scan failures: {len(failures)}, max a = {mx} (claimed: 158, max 29)")
-    if len(failures) != 158 or mx != 29:
-        report("WARN" if failures == set(TA) else "FAIL",
-               f"T-scan found {len(failures)} exceptions (max a={mx}), claimed 158/29")
-    onlyA = set(TA) - failures
-    onlyS = failures - set(TA)
-    if onlyS:
-        report("FAIL", f"T-line exceptions NOT in Table A: {sorted(onlyS)}")
-    if onlyA:
-        report("WARN", f"Table A entries that are not scan failures: {sorted(onlyA)}")
-    print(f"  min tail margin at a=3000 over lines: {min(worst_margin.values()):.1f} "
-          f"(slope argument: budget slope <= 2/3 < 1, so margin grows for a > 3000)")
+    print(f"  scan failures: {len(failures)}, max a = {mx} (canonical: 172, max 29)")
+    if len(failures) != 172 or mx != 29:
+        report("FAIL", f"T-scan found {len(failures)} exceptions (max a={mx}), canonical 172/29")
+    if failures != set(TA):
+        onlyS = sorted(failures - set(TA))
+        onlyA = sorted(set(TA) - failures)
+        report("FAIL", f"T-scan failure set != Table A (scan-only: {onlyS}; table-only: {onlyA})")
+    mmin = min(margins.values())
+    argmin = min(margins, key=margins.get)
+    print(f"  min tail margin at a=3000 over lines: {mmin} (exact), at line {argmin}; "
+          "budget slope <= 2/3 < 1, so every margin grows for a > 3000")
+    # min over ALL lines evaluated at a=3000 (the paper's quantifier); over lines
+    # with a=3000 itself a valid member the min is 2983/3, attained at (1,2)
+    if mmin != 993:
+        report("FAIL", f"tail margin minimum {mmin} != expected 993")
 
 def part_lift(TB):
     print("== PART 5: lambda-lift chains for all Table B classes ==")
@@ -591,7 +555,7 @@ def part_lift(TB):
                 report("FAIL", f"class {(a,ebar,h)} member ({a},{b},{M}): box loses coverage")
                 break
             S = max(reps.values())
-            x = ceil((M - 1 + S) / a)
+            x = cdiv(M - 1 + S, a)
             n_arith += 1
             if x + Y + Z > M - 1:
                 bad += 1
@@ -608,73 +572,47 @@ def part_lift(TB):
     print("  (unbounded-lambda safety: budget step <= Y+Z+1 <= a = target step; proved Lemma IV)")
 
 def part_families():
-    print("== PART 6: pair families G'(r=3), G_t(r=4) uniform witnesses, all a <= 120 ==")
+    print("== PART 6: Case P uniform pair-frame -- witnesses and reach inequalities ==")
+    # exact witness verification on every P hard-core triple with a <= 50, M <= 250
+    # (all P-triples with M <= Mmax are already checked exactly in PART 2)
     n = bad = 0
-    for a in range(3, 121):
-        for s in range(1, (a - 1) // 2 + 1):
-            if gcd(a, s) != 1:
-                continue
-            b, M = a + s, 2 * a - s
-            if not (a < b < M) or M - b > a - 2 or M - b < 1:
-                continue
-            x, y, z = des_P1(a, b, M)
-            n += 1
-            if x + y + z > M - 1 or not covers(a, b, M, x, y, z):
-                bad += 1
-                report("FAIL", f"G' family ({a},{b},{M}): stated witness fails")
-    print(f"  G' members a<=120: {n}, failures {bad}")
+    for a in range(3, 51):
+        for r in range(3, 250 // a + 2):
+            for M in range(a + 2, min(r * a - a, 251)):
+                b = r * a - M
+                if not (a < b < M) or gcd(a, b) != 1 or not (1 <= M - b <= a - 2):
+                    continue
+                x, y, z = des_P(a, b, M)
+                n += 1
+                if x + y + z != M - 1 or not covers(a, b, M, x, y, z):
+                    bad += 1
+                    report("FAIL", f"uniform pair-frame fails at ({a},{b},{M})")
+    print(f"  uniform witnesses verified exactly (a<=50, M<=250): {n}, failures {bad}")
+    # the four reach inequalities (E1),(E2),(F1),(F2), arithmetic, a <= 150
     n = bad = 0
-    for a in range(4, 121):
-        for t in range(1, (a - 2) // 2 + 1):
-            if gcd(a, t) != 1:
-                continue
-            b, M = 2 * a - t, 2 * a + t
-            if gcd(a, b) != 1 or M - b != 2 * t or 2 * t > a - 2:
-                continue
-            x, y, z = des_Gt(a, b, M)
-            n += 1
-            if x + y + z > M - 1 or not covers(a, b, M, x, y, z):
-                bad += 1
-                report("FAIL", f"G_t family ({a},{b},{M}): stated witness fails")
-    print(f"  G_t members a<=120: {n}, failures {bad}")
-    # crude reach algebra, arithmetic, a<=400 (write-up claims closure for a>=15)
-    bad = 0
-    for a in range(15, 401):
-        W = (a - 1 + 1) // 2
-        for s in range(1, (a - 1) // 2 + 1):
-            if gcd(a, s) != 1:
-                continue
-            M = 2 * a - s
-            y, z = (M - 2) // 2, (M - 3) // 2
-            if min(y, z) < W:
-                bad += 1
-            length = 3 * a * min(y, z) - 2 * W * M - 2 * a + 1
-            if length < M:
-                bad += 1
-                report("FAIL", f"G' reach algebra fails at (a={a},s={s})")
-    print(f"  G' reach-algebra scan a in [15,400]: {bad} failures")
-    bad = 0
-    for a in range(15, 401):
-        W = (a - 1 + 1) // 2
-        for t in range(1, (a - 2) // 2 + 1):
-            if gcd(a, t) != 1:
-                continue
-            M = 2 * a + t
-            y, z = (M - 3) // 2, (M - 4) // 2
-            if min(y, z) < W:
-                bad += 1
-            length = 4 * a * min(y, z) - 2 * W * M - 3 * a + 1
-            if length < M:
-                bad += 1
-                report("FAIL", f"G_t reach algebra fails at (a={a},t={t})")
-    print(f"  G_t reach-algebra scan a in [15,400]: {bad} failures")
+    for a in range(3, 151):
+        for r in range(3, 2 * a):
+            for M in range(a + 2, r * a - a):
+                b = r * a - M
+                if not (a < b < M) or gcd(a, b) != 1 or not (1 <= M - b <= a - 2):
+                    continue
+                x, y, z = r - 1, cdiv(M - r, 2), (M - r) // 2
+                pp, q = a // 2, (a - 1) // 2
+                n += 1
+                if not ((a - 1) * b + M - 1 <= a * (r * z + x)          # (E1)
+                        and q * (b + M) + M - 1 <= a * (r * z + x)      # (E2)
+                        and pp * (b + M) + M - 1 <= a * (r * y + x)     # (F1)
+                        and a * M - 1 <= a * (r * y + x)):              # (F2)
+                    bad += 1
+                    report("FAIL", f"reach inequality fails at ({a},{b},{M})")
+    print(f"  reach inequalities (E1)/(E2)/(F1)/(F2) verified (a<=150): {n}, failures {bad}")
 
 def part_eta_algebra():
     print("== PART 7: eta-box algebra (sigma bound + budget threshold), a <= 400 ==")
     bad = 0
     for a in range(12, 401):
         for t in range(2, a // 2 + 1):
-            sig = t + ceil((a - t) / t)
+            sig = t + cdiv(a - t, t)
             if 2 * sig > a + 4:
                 bad += 1
                 report("FAIL", f"sigma bound fails a={a} t={t}: sigma={sig} > (a+4)/2")
@@ -683,7 +621,7 @@ def part_eta_algebra():
             if sig * (M + a) > a * M + t:
                 bad += 1
                 report("FAIL", f"eta budget threshold fails a={a} t={t} (M=a+12)")
-            if t * (ceil((a - t) / t) + 1) < a:
+            if t * (cdiv(a - t, t) + 1) < a:
                 bad += 1
                 report("FAIL", f"eta-box residue coverage count fails a={a} t={t}")
     print(f"  sigma/budget/coverage scans: {bad} failures "
@@ -790,7 +728,7 @@ def part_L4():
             continue
         # Graham fill in H with a' = min(H) up to ell
         ap = min(H)
-        ell = ceil((M - 1 + (delta - 1) * a) / delta) + 1
+        ell = cdiv(M - 1 + (delta - 1) * a, delta) + 1
         ms = list(wit)
         run = max_run(sums_mask(ms))
         while run < ell:
@@ -822,9 +760,6 @@ def part_spot(TA, TB):
         if b <= a or gcd(a, b) != 1 or M - b > a - 2 or M - b < 1:
             continue
         tag, ms, note = designated(a, b, M, TA, TB)
-        if tag == "P-small":
-            report("FAIL", f"spot ({a},{b},{M}): P-small beyond verified range!")
-            continue
         if ms is None:
             bad += 1
             report("FAIL", f"spot ({a},{b},{M}) branch {tag}: no construction ({note})")
@@ -839,7 +774,11 @@ def part_spot(TA, TB):
 def main():
     Mmax = int(sys.argv[1]) if len(sys.argv) > 1 else 120
     TA, TB = load_tables()
-    print(f"loaded tables: A={len(TA)} entries, B(+supp)={len(TB)} classes\n")
+    print(f"loaded tables: A={len(TA)} entries, B={len(TB)} classes\n")
+    if len(TA) != 172:
+        report("FAIL", f"canonical Table A must have 172 rows, loaded {len(TA)}")
+    if len(TB) != 178:
+        report("FAIL", f"canonical Table B must have 178 classes, loaded {len(TB)}")
     part_machinery()
     part_L123()
     part_tree(Mmax, TA, TB)
@@ -857,6 +796,7 @@ def main():
     print(f"WARNINGS (write-up/bookkeeping): {len(WARN)}")
     for w in WARN:
         print("  WARN:", w)
+    sys.exit(1 if FAIL else (2 if WARN else 0))
 
 if __name__ == "__main__":
     main()
