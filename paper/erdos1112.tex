@@ -238,39 +238,34 @@ $G = \{2,3\}$ (so $\gcd = 1$, $M = 3$) no multiset of size $\le M-1 = 2$ has $3$
 integers among its subset sums.
 \end{proposition}
 
-\begin{proof}
-The multiset $\{3,3,4,5\}$, of size $4$, has subset sums
-$\{0,3,4,5,6,7,8,9,10,11,12,15\} \supseteq [3,12]$, a run of $10 \ge 5$ consecutive integers, so
-$m \le 4$. For the lower bound one checks the finitely many multisets drawn from $\{3,4,5\}$ of size
-at most $3$. There are $19$ nonempty such multisets ($3$ of size $1$, $6$ of size $2$, $10$ of size
-$3$), and none has $5$ consecutive integers among its subset sums; the empty multiset, with subset
-sums $\{0\}$, is trivially excluded.
-In fact the longest subset-sum run achievable at size at most $3$ is only $3$, attained by
-$\{3,4,5\}$ itself, whose subset sums are $\{0,3,4,5,7,8,9,12\}$ (longest run $[3,5]$). Hence
-$m(\{3,4,5\}) = 4 = M-1$. For the cardinality claim, the five multisets drawn from $\{2,3\}$ of size
-$\le 2$ have subset-sum sets $\{0,2\}$, $\{0,3\}$, $\{0,2,4\}$, $\{0,2,3,5\}$, $\{0,3,6\}$, none with
-a run of $3$.
-\end{proof}
+The proof is a small finite check, deferred to \S\ref{sec:sharp-proof} to keep the introduction
+moving.
 
 \subsection{Relation to the literature}\label{sec:novelty}
 Although we use Lemma~\ref{lem:sharp} only as a tool, it may be of independent interest, so we place
-it briefly. The subset-sum results that produce long intervals or progressions --- S\'ark\"ozy
-\cite{Sarkozy89,Sarkozy94}, Lev \cite{Lev03}, Szemer\'edi--Vu \cite{SzemerediVu06}, Conlon--Fox--Pham
-\cite{CFP21}, Alon--Freiman \cite{AlonFreiman88}, and constructively Chen--Mao--Zhang \cite{CMZ25}
---- work with a \emph{dense} set ($|A| \gtrsim \sqrt{n}$) and yield an arithmetic progression whose
-common difference need not be $1$. The closest
-antecedent, Lev's consecutive-subset-sum theorem \cite[Thm.~1]{Lev98}, does give a genuine interval
-of consecutive integers among the subset sums of a set, but again only a \emph{dense} one ($|A|
-\gtrsim \tfrac23 M$), vacuous when $|G| = 3$. Lemma~\ref{lem:sharp} is the \emph{density-free,
-multiset} analogue: it trades density for repetition, covering an interval of length exactly $M$ at
-uniform cost $|S| \le M-1$ from an arbitrary $\gcd$-$1$ set down to $|G| = 3$. The higher-sumset
-structure theorems (Nathanson \cite{Nathanson72}, Granville--Walker \cite{GW21}, Lev \cite{Lev21})
-are density-free but describe the $m$-fold sumset $mG$ with $m$ large --- a total-degree ``simplex''
-of coefficients, of which the subset sums of a bounded multiset are a per-generator ``box'' inside,
-so their conclusion is a weaker statement about a larger set. The completeness, Frobenius and
-postage-stamp traditions \cite{Gr64,ErGr80,Alfonsin,GS20} concern infinite sequences, or use
-unboundedly many summands, or optimise the generating set; none bounds a multiset drawn from an
-arbitrary given set.
+it briefly against three traditions.
+
+\emph{Dense-set subset-sum theorems.} The results that produce long intervals or progressions among
+subset sums --- S\'ark\"ozy \cite{Sarkozy89,Sarkozy94}, Lev \cite{Lev03}, Szemer\'edi--Vu
+\cite{SzemerediVu06}, Conlon--Fox--Pham \cite{CFP21}, Alon--Freiman \cite{AlonFreiman88}, and
+constructively Chen--Mao--Zhang \cite{CMZ25} --- work with a \emph{dense} set ($|A| \gtrsim
+\sqrt{n}$) and yield an arithmetic progression whose common difference need not be~$1$.
+
+The closest antecedent is Lev's consecutive-subset-sum theorem \cite[Thm.~1]{Lev98}, which does give
+a genuine interval of consecutive integers among the subset sums of a set --- but again only a
+\emph{dense} one ($|A| \gtrsim \tfrac23 M$), vacuous when $|G| = 3$. Lemma~\ref{lem:sharp} is the
+\emph{density-free, multiset} analogue: it trades density for repetition, covering an interval of
+length exactly $M$ at uniform cost $|S| \le M-1$ from an arbitrary $\gcd$-$1$ set down to $|G| = 3$.
+
+\emph{Higher-sumset structure.} The structure theorems for $m$-fold sumsets (Nathanson
+\cite{Nathanson72}, Granville--Walker \cite{GW21}, Lev \cite{Lev21}) are density-free but describe
+$mG$ with $m$ large --- a total-degree ``simplex'' of coefficients, of which the subset sums of a
+bounded multiset are a per-generator ``box'' inside --- so their conclusion is a weaker statement
+about a larger set.
+
+\emph{Completeness and Frobenius.} The completeness, Frobenius and postage-stamp traditions
+\cite{Gr64,ErGr80,Alfonsin,GS20} concern infinite sequences, or use unboundedly many summands, or
+optimise the generating set; none bounds a multiset drawn from an arbitrary given set.
 
 We are not aware of a result that implies Lemma~\ref{lem:sharp}, even with a worse constant, and
 after a documented search\footnote{Conducted July 2026 over MathSciNet, zbMATH, arXiv and Google
@@ -439,7 +434,9 @@ gap between consecutive unsafe intervals --- wide enough to hold a usable slope.
   \draw[->, green!55!black] (sp) -- (4.4,0.56);
 \end{tikzpicture}
 \caption{The unsafe intervals $[t/s,(t{+}k)/s]$ that a lacunary $B$ forces at denominators $s_1$ and
-$s_1+1$, and the free gap $J$ between them into which the construction places its slope.}
+$s_1+1$, and the free gap $J$ between them into which the construction places its slope. Ticks mark
+the endpoints $t/s_1$ and $(t{+}k)/s_1$ of the last denominator-$s_1$ interval and the start
+$t'/(s_1{+}1)$ of the first denominator-$(s_1{+}1)$ interval, where $t' = t + k$.}
 \label{fig:freegap}
 \end{figure}
 
@@ -533,7 +530,10 @@ $|I_j| \ge 4 d_2^2/t$ reduces to
 \[
   t_{j_0+j+1} \;\ge\; 192\, d_2\, t_{j_0+j},
 \]
-which is exactly what the ratio $r = 192 d_2$ supplies. This produces a closed
+which is exactly what the ratio $r = 192 d_2$ supplies. This is the constant's entire ledger:
+$192 = 4 \times 48$, the hypothesis constant of Lemma~\ref{lem:freegap} (an interval of width
+$4d_2^2/t$ is wide enough) against its output width ($d_2/(48t)$ survives), so each application
+leaves exactly enough room for the next. This produces a closed
 $I_{j+1} \subseteq I_j$, safe also for $t_{j_0+j+1}$, with $|I_{j+1}| \ge d_2/(48\,t_{j_0+j+1})$.
 
 The $I_j$ are nested nonempty closed bounded subintervals of $I_0$, so by the nested interval
@@ -555,8 +555,11 @@ deliberately carries the problem's hypothesis $k \ge 3$ throughout (see \S\ref{s
 
 Throughout this section $k \ge 3$ and $d_2 \le k$.
 
-\subsection*{Glossary of terms coined in \S\S\ref{sec:nonex}--\ref{sec:sharp}}
-Several constructions below are given short names. They are collected here with their formal content.
+\subsection*{Glossary of terms coined in this section}
+Several constructions below are given short names; they are collected here with their formal
+content. (The terms of \S\ref{sec:sharp} --- \emph{frame}, \emph{budget}, \emph{staircase},
+\emph{$\lambda$-lift}, \emph{hard core} --- are defined where they arise, in
+\S\S\ref{sec:machinery} and \ref{sec:hardcore}.)
 
 \begin{center}\small
 \begin{tabular}{@{}ll@{}}
@@ -569,11 +572,6 @@ Term & Formal content \\
 \emph{antidiagonal width} $W_2(\sigma)$ & $\max\{q_i+q_j : i+j=\sigma\} - \min\{q_i+q_j : i+j=\sigma\}$ \\
 \emph{fine slot} & a summand index free to take one of two values, $n_t-1$ or $n_t$ \\
 \emph{coarse dial} & the last summand $p_n$, whose steps are $\le M$ \\
-\emph{hard core} & triples $\{a,b,M\}$, $\gcd(a,b)=1$, $\delta = a+b-M \ge 2$ (\S\ref{sec:hardcore}) \\
-\emph{frame} & a box $(Y,Z)$ mod $a$ covering $\ZZ_a$, lifted by copies of $a$ (Lemma~\ref{lem:frame}) \\
-\emph{budget} & the size $x+y+z$ of a multiset, to be compared with $M-1$ \\
-\emph{staircase} & the level-by-level decomposition of subset sums (Lemma~\ref{lem:staircase}) \\
-\emph{$\lambda$-lift} & transport of a base certificate up its class, $b \mapsto b+a$, $M \mapsto M+a$ (Lemma~\ref{lem:lift}) \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -772,10 +770,8 @@ antidiagonals contribute widths additively, and:
         exactly $k$ indices.
   \item \emph{$k$ even, $d_2 \le k-1$:} $(k/2 - 1)$ pairs at $\sigma_0$ plus one free pair at
         $\tau := s - (k/2 - 1)\sigma_0$ give width $\ge (k-2) + W_2(\tau) \ge k-2 \ge d_2 - 1$.
-  \item \emph{$k$ even, $d_2 = k$ (boundary):} $A$ is tail-covering by
-        Proposition~\ref{prop:boundary-route} (which is independent of the hypothesis of part~(a)).
 \end{itemize}
-In every branch ending with a width bound, Lemma~\ref{lem:sweep} then gives tail-covering.
+In both branches Lemma~\ref{lem:sweep} then gives tail-covering.
 \item[\textup{(b)}] Otherwise $W_2(\sigma) \le 1$ for all $\sigma$. Then for any equal-length windows
 $(i,i']$ and $(j',j]$ one has $i + j = i' + j'$, whence
 $|(q_{i'} - q_i) - (q_j - q_{j'})| = |q_{i'} + q_{j'} - q_i - q_j| \le 1$: the word $h$ is
@@ -785,7 +781,8 @@ irrational slope, and the latter is Lemma~\ref{lem:sturmian}.
 \end{enumerate}
 \end{lemma}
 
-The boundary case is the delicate one, so we isolate its routing.
+The remaining two-letter configuration --- $k$ even at the boundary $d_2 = k$ --- is the delicate
+one, and we route it at top level (independently of any width hypothesis):
 
 \begin{proposition}[Boundary routing; $k$ even, $d_2 = k$]\label{prop:boundary-route}
 Let $k$ be even and $d_2 = k$. Then $A$ is tail-covering. At least one of three possibilities holds
@@ -917,9 +914,9 @@ whose summand indices $i_t$ are all $\ge 1$.)
 Everything above rests on the near-additivity \eqref{eq:near-add} and the discrepancy bound
 \eqref{eq:disc-bound}, not on any density or equidistribution statement. Similarly, the uniform
 syndeticity of Lemma~\ref{lem:rotation-hit} below is obtained from a single Dirichlet
-approximation (a bounded circle walk), not from the three-distance theorem. This is the route
-carried out in the formalization (\texttt{disc\_osc\_le\_one}, \texttt{mechanical\_tail},
-\texttt{walk\_enters}).
+approximation (a bounded circle walk), not from the three-distance theorem or any equidistribution
+input --- at the cost of a worse but explicit constant. This is the route carried out in the
+formalization (\texttt{disc\_osc\_le\_one}, \texttt{mechanical\_tail}, \texttt{walk\_enters}).
 
 \begin{lemma}[Boundary width; $k$ even, $k \ge 4$]\label{lem:boundary-width}
 Let $h$ use both letters infinitely often, let $h$ be not eventually periodic, and suppose every
@@ -988,8 +985,7 @@ so these arcs cover the whole circle. If no $x_j$ lay in $J$, some single step w
 across all of $J$; but each step has length $\theta < \varepsilon/2 < \varepsilon = |J|$, which is
 impossible. Hence some $x_j \in J$. The constant $L$ depends only on $\alpha$ and $\varepsilon$ ---
 not on where $J$ sits, nor on $\beta$ --- the argument using only the step length $\theta$ and its
-direction. This is the route the formalization takes (\texttt{walk\_enters}), avoiding the
-three-distance theorem and any equidistribution input at the cost of a worse but explicit constant.
+direction.
 \end{proof}
 
 \begin{lemma}[Sturmian case]\label{lem:sturmian}
@@ -1009,7 +1005,32 @@ The uniform hitting lemma for the irrational rotation by $\alpha$ (Lemma~\ref{le
 us fill an interior sub-window: every integer of $[\eta, k-\eta]$-depth below $X_s$ is realized as
 some $\sum_t q_{i_t}$ (Step~2). Finally a congruence ladder is walked across that sub-window to
 represent an arbitrary large $x$, with explicit thresholds making the chosen indices and coefficient
-nonnegative (Step~3).
+nonnegative (Step~3, Figure~\ref{fig:ladder}).
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[>=Stealth]
+  \draw[->] (0,-1.4) -- (7.9,-1.4) node[right] {$s$};
+  \draw[->] (0,-1.4) -- (0,3.4) node[above] {$\theta(s)$};
+  \fill[blue!10] (0,0.8) rectangle (7.3,2.6);
+  \draw[blue!55!black] (0,0.8) -- (7.3,0.8) node[right,font=\small] {$\eta$};
+  \draw[blue!55!black] (0,2.6) -- (7.3,2.6) node[right,font=\small] {$k-\eta$};
+  \foreach \j/\y in {0/-1.0, 1/-0.3, 2/0.4, 3/1.1, 4/1.8, 5/2.5, 6/3.2}{
+    \fill (0.6+\j*1.0, \y) circle (1.9pt);
+  }
+  \draw[red!70!black, thick] (3.6,1.1) circle (3.8pt);
+  \draw[dashed] (3.6,-1.4) node[below] {$s^\ast$} -- (3.6,1.1);
+  \draw[<->,thin] (1.72,-0.3) -- (1.72,0.4);
+  \node[anchor=west,font=\small] at (1.82,0.05) {$\psi$};
+  \node[anchor=west,font=\footnotesize,align=left] at (4.55,-0.6)
+    {steps $\psi < k - 2\eta$:\\ the band cannot be skipped};
+\end{tikzpicture}
+\caption{Schematic of Step 3: along the congruence-compatible progression, the depth $\theta(s)$
+climbs in equal steps $\psi = e\alpha + \delta$; since $\psi$ is strictly smaller than the
+sub-window's height $k - 2\eta$, some $s^\ast$ lands inside the band, and Step 2 realizes the
+corresponding target.}
+\label{fig:ladder}
+\end{figure}
 
 \smallskip
 \emph{Step 0: the window carrying $W_s$.} From $q_n = n\alpha + \beta - \{n\alpha + \beta\}$,
@@ -1126,47 +1147,47 @@ $w(s) \ge 0$, which we confirm at the crossing index below. Define
 As $s$ advances by one congruence-compatible step ($s \mapsto s+e$), $X_s$ increases by $e\alpha$ while $w(s)$
 decreases by $\delta$, so
 \begin{equation}\label{eq:ladder-step}
-  \theta(s + e) - \theta(s) \;=\; e\alpha + \delta \;=:\; \lambda \;>\; 0 .
+  \theta(s + e) - \theta(s) \;=\; e\alpha + \delta \;=:\; \psi \;>\; 0 .
 \end{equation}
 Thus $\theta$ is, along the congruence-compatible progression, a strictly increasing arithmetic sequence of
-common difference exactly $\lambda$.
+common difference exactly $\psi$.
 
 The sub-window \eqref{eq:subwindow} is the real interval $\theta \in [\eta, k-\eta]$, of length
 $k - 2\eta$. Using $\delta + e = \delta' \le k$ and \eqref{eq:eta-choice},
 \[
-  \lambda \;=\; \delta + e\alpha \;=\; (\delta + e) - e(1 - \alpha) \;=\; \delta' - e(1-\alpha)
+  \psi \;=\; \delta + e\alpha \;=\; (\delta + e) - e(1 - \alpha) \;=\; \delta' - e(1-\alpha)
          \;\le\; k - (1 - \alpha),
 \]
 since $e \ge 1$ and $1 - \alpha > 0$. As $2\eta \le \tfrac12(1-\alpha) < 1 - \alpha$, we conclude
 \begin{equation}\label{eq:step-vs-window}
-  \lambda \;\le\; k - (1-\alpha) \;<\; k - 2\eta ,
+  \psi \;\le\; k - (1-\alpha) \;<\; k - 2\eta ,
 \end{equation}
 i.e. the ladder step is \emph{strictly} shorter than the sub-window.
 
-A strictly increasing arithmetic sequence of common difference $\lambda$ cannot skip over a real
-interval of length $> \lambda$: if $\theta(s) < \eta$ and $\theta(s+e) > k - \eta$ for two consecutive
-congruence-compatible terms, then $\lambda > (k - \eta) - \eta = k - 2\eta$, contradicting
+A strictly increasing arithmetic sequence of common difference $\psi$ cannot skip over a real
+interval of length $> \psi$: if $\theta(s) < \eta$ and $\theta(s+e) > k - \eta$ for two consecutive
+congruence-compatible terms, then $\psi > (k - \eta) - \eta = k - 2\eta$, contradicting
 \eqref{eq:step-vs-window}. As $s$ runs through the congruence-compatible progression, $\theta(s)$ increases
 without bound and is very negative for the smallest congruence-compatible $s$ (where $w(s) \approx x/e$
 dominates), so it crosses $[\eta, k-\eta]$; by the no-skip property some congruence-compatible $s^*$ has
 $\theta(s^*) \in [\eta, k-\eta]$.
 
 It remains to say what ``$x$ large'' means, and we make the two thresholds explicit. Solving
-$\theta(s) = \theta$ for $s$ gives $s\lambda = x + e\theta - ek\beta$, so any $s^*$ with
+$\theta(s) = \theta$ for $s$ gives $s\psi = x + e\theta - ek\beta$, so any $s^*$ with
 $\theta(s^*) \in [\eta, k-\eta] \subseteq [0,k]$ satisfies
 \begin{equation}\label{eq:sstar-range}
-  \frac{x - ek|\beta|}{\lambda} \;\le\; s^* \;\le\; \frac{x + ek(1 + |\beta|)}{\lambda}.
+  \frac{x - ek|\beta|}{\psi} \;\le\; s^* \;\le\; \frac{x + ek(1 + |\beta|)}{\psi}.
 \end{equation}
 Two conditions are needed.
 \begin{itemize}
 \item \emph{$s^* \ge S_0$, so that Step 2 applies.} By the left inequality of \eqref{eq:sstar-range}
-and $\lambda \le k$, it suffices that
+and $\psi \le k$, it suffices that
 \[
   x \;\ge\; k\,S_0 + e\,k\,|\beta| .
 \]
 \item \emph{$w(s^*) \ge 0$, so that the representation $x = \delta s^* + e\,w(s^*)$ uses a
 nonnegative $w$.} This says $\delta s^* \le x$. By the right inequality of \eqref{eq:sstar-range}
-this holds as soon as $\delta\big(x + ek(1+|\beta|)\big) \le \lambda x = (\delta + e\alpha)x$, i.e.
+this holds as soon as $\delta\big(x + ek(1+|\beta|)\big) \le \psi x = (\delta + e\alpha)x$, i.e.
 as soon as
 \[
   x \;\ge\; \frac{\delta\,k\,(1 + |\beta|)}{\alpha} ,
@@ -1193,8 +1214,9 @@ $d_1 + 1 \le k$, in the strong form.
 \end{theorem}
 
 \begin{proof}
-Lemmas~\ref{lem:one-letter}, \ref{lem:rescale}, \ref{lem:periodic}, \ref{lem:width} (with
-Lemma~\ref{lem:boundary-width} at the even boundary) and \ref{lem:sturmian} exhaust the cases.
+Lemmas~\ref{lem:one-letter}, \ref{lem:rescale}, \ref{lem:periodic} and \ref{lem:width},
+Proposition~\ref{prop:boundary-route} at the even boundary $d_2 = k$, and
+Lemma~\ref{lem:sturmian} exhaust the cases.
 \end{proof}
 
 \subsection{Three or more letters: widths are not the obstacle}
@@ -1323,16 +1345,16 @@ is what the tightest of them spends.
 
 We restate the target.
 
-\begin{lemma}[= Lemma~\ref{lem:sharp}]\label{lem:sharp-body}
-For every finite $G \subset \ZZ_{\ge 1}$ with $|G| \ge 3$, $\gcd(G) = 1$ and $\max(G) = M$, there is
-a multiset $S$ of elements of $G$ with $|S| \le M-1$ whose subset sums contain $M$ consecutive
-integers.
-\end{lemma}
+\medskip
+\noindent\textbf{Lemma~\ref{lem:sharp} (restated).} \emph{For every finite $G \subset \ZZ_{\ge 1}$
+with $|G| \ge 3$, $\gcd(G) = 1$ and $\max(G) = M$, there is a multiset $S$ of elements of $G$ with
+$|S| \le M-1$ whose subset sums contain $M$ consecutive integers.}
+\medskip
 
 If $a := \min G = 1$, take $M-1$ copies of $1$. So assume $a \ge 2$; the hard core below will force
 $a \ge 3$.
 
-\subsection{Machinery}
+\subsection{Machinery}\label{sec:machinery}
 The constructions below all work by the same picture (Figure~\ref{fig:frame}). Using a residue box
 of copies of $b$ and $M$ we cover one interval --- a \emph{frame} --- at each ``level'' (number of
 summands used); adding one more copy of $a$ shifts the whole frame right by $a$. Consecutive frames
@@ -1424,11 +1446,19 @@ $(Y,Z)$ is
 \]
 with $S$ the maximum, over residue classes, of the minimal representative height in the box.
 
+\paragraph{Standing notation.} For a triple $G = \{a, b, M\}$ with $a < b < M$ and
+$\gcd(a,b) = 1$, set
+\[
+  e := b - a, \quad h := M - b, \quad \mu := M - a = e + h, \quad g := \gcd(e, \mu), \quad
+  e' := e/g, \quad \mu' := \mu/g, \quad C' := (e'-1)(\mu'-1),
+\]
+so that $e', \mu'$ are coprime with $\mu' \ge 2$ (as $h \ge 1$). Note that $\gcd(a,b) = 1$ forces
+$\gcd(a, g) = 1$: a common prime of $g$ and $a$ would divide $e$ and $a$, hence $b$. This notation
+persists through the rest of the section, and is collected together with the hard-core symbols in
+the table of \S\ref{sec:hardcore}.
+
 \begin{lemma}[Staircase windows and merges]\label{lem:staircase}
-Let $G = \{a, b, M\}$ with $\gcd(a,b) = 1$, and set $e := b - a$, $\mu := M - a$,
-$g := \gcd(e, \mu)$, $e' := e/g$, $\mu' := \mu/g$ (coprime, with $\mu' \ge 2$ since
-$h := M - b \ge 1$), and $C' := (e'-1)(\mu'-1)$. Note that $\gcd(a,b) = 1$ forces $\gcd(a, g) = 1$:
-a common prime of $g$ and $a$ would divide $e$ and $a$, hence $b$. Fix a multiset $(x,y,z)$ of copies
+Let $G = \{a, b, M\}$ be as above. Fix a multiset $(x,y,z)$ of copies
 of $a$, $b$, $M$ with $y \ge \mu' - 1$ and $z \ge e' - 1$, and put $c := y + z$ and
 $V' := y e' + z \mu' - C'$. For $0 \le t \le x + y + z$ the subset sums using exactly $t$ elements
 form $ta + \mathcal{O}_t$, where
@@ -1514,7 +1544,7 @@ Thus the budget grows by at most $Y + Z + 1 \le a$, while the target $M - 1$ gro
 \subsection{Reduction to the hard core}
 
 \begin{lemma}[Graham reduction]\label{lem:graham}
-Lemma~\ref{lem:sharp-body} for all alphabets follows from Lemma~\ref{lem:sharp-body} for
+Lemma~\ref{lem:sharp} for all alphabets follows from Lemma~\ref{lem:sharp} for
 \emph{irreducible} ones: those with $|G| = 3$, or with $|G| \ge 4$ and $G$ minimal (no proper subset
 of size $\ge 3$ has gcd $1$).
 \end{lemma}
@@ -1675,16 +1705,18 @@ $a \le d a' - 1$, so the case $a' = 1$ is subsumed.
 \end{proof}
 
 \subsection{The hard core}\label{sec:hardcore}
-By Lemmas~\ref{lem:graham}--\ref{lem:L4}, Lemma~\ref{lem:sharp-body} reduces to triples
+By Lemmas~\ref{lem:graham}--\ref{lem:L4}, Lemma~\ref{lem:sharp} reduces to triples
 $G = \{a, b, M\}$ with $\gcd(a,b) = 1$ and --- applying Lemmas~\ref{lem:L1} and \ref{lem:L2} to the
-pair $(a,b)$ --- with $\delta := a + b - M \ge 2$. We fix the following notation for the rest of the
-section:
+pair $(a,b)$ --- with $a + b - M \ge 2$. In the standing notation of \S\ref{sec:machinery}, the
+\emph{hard core} is thus the set of triples with
 \[
   e := b - a \ge 1, \quad h := M - b \in [1, a-2], \quad \mu := e + h = M - a, \quad
-  \delta = a - h, \quad \gcd(a,e) = 1, \quad a \ge 3,
+  \gcd(a,e) = 1, \quad a \ge 3,
 \]
-$g := \gcd(e,h) = \gcd(e,\mu)$ (coprime to each of $a$, $b$, $M$), $\bar e := e \bmod a \in [1,a-1]$,
-$\bar\mu := M \bmod a$, and --- when $\bar\mu \ne 0$ --- $\eta := \bar\mu\,\bar e^{-1} \bmod a$.
+with $g = \gcd(e,h) = \gcd(e,\mu)$ coprime to each of $a$, $b$, $M$. Additionally set
+$\bar e := e \bmod a \in [1,a-1]$, $\bar\mu := M \bmod a$, and --- when $\bar\mu \ne 0$ ---
+$\eta := \bar\mu\,\bar e^{-1} \bmod a$. As a mnemonic: \emph{bars} are mod-$a$ reductions,
+\emph{primes} are divisions by $g$.
 
 These symbols recur densely for the rest of the section, so we collect them.
 
@@ -1697,7 +1729,7 @@ $a < b < M$ & the hard-core triple, $\gcd(a,b)=1$ & $g$ & $\gcd(e,h) = \gcd(e,\m
 $e$ & $b - a \ge 1$                                & $e', \mu'$ & $e/g$, $\mu/g$ (coprime) \\
 $h$ & $M - b \in [1, a-2]$                         & $C'$ & $(e'-1)(\mu'-1)$ \\
 $\mu$ & $e + h = M - a$                            & $V'$ & $y e' + z \mu' - C'$ \\
-$\delta$ & $a + b - M = a - h \ge 2$              & $(x,y,z)$ & copies of $a$, $b$, $M$ \\
+$t$ & $\min(\eta,\ a-\eta)$ (Case E)              & $(x,y,z)$ & copies of $a$, $b$, $M$ \\
 $\bar e$ & $e \bmod a \in [1, a-1]$              & $c$ & $y + z$ \\
 $\bar\mu$ & $M \bmod a$                          & $\mathcal{B}$ & budget $= x + y + z$ \\
 $\eta$ & $\bar\mu\,\bar e^{-1} \bmod a$        & $\lambda$ & $\lfloor e/a \rfloor$ (the lift index) \\
@@ -2021,6 +2053,8 @@ $2a+1 \ge a+2 = M$, at budget $2c = a+1 = M-1$.
 \end{proof}
 
 \subsection{Case E: the universal \texorpdfstring{$\eta$}{eta}-box}\label{sec:caseE}
+Recall $\bar e = e \bmod a$, $\bar\mu = M \bmod a$ and $\eta = \bar\mu\,\bar e^{-1} \bmod a$ (bars:
+mod-$a$ reductions); this case works entirely modulo $a$.
 
 \begin{lemma}\label{lem:etabox}
 Suppose $a \nmid M$ and $a \nmid b+M$ (so $\eta \notin \{0,1,a-1\}$), and suppose $a \ge 12$ and
@@ -2055,27 +2089,39 @@ at an endpoint, by convexity: $\sigma \le \max\big(\tfrac{a+3}{2},\ \tfrac{a}{2}
 so $M = a + \mu \ge a + 12$ suffices.
 \end{proof}
 
+\begin{example}[a Case-E instance]\label{ex:caseE}
+Take $(a,b,M) = (13, 22, 27)$: here $e = 9$, $h = 5$, $\mu = 14 \ge 12$, $\bar e = 9$,
+$\bar\mu = 27 \bmod 13 = 1$, and $\eta = \bar\mu\,\bar e^{-1} = 9^{-1} = 3$ in $\ZZ_{13}$ (as
+$9 \cdot 3 = 27 \equiv 1$). Then $t = \min(\eta, a - \eta) = 3$, $Z = \lceil 10/3 \rceil = 4$, and
+the box is $(Y,Z) = (2,4)$: the offsets $\bar e (j + 3k)$ with $j \le 2$, $k \le 4$ have $j + 3k$
+running over $[0,14] \supseteq [0,12]$, a complete residue system modulo $13$. The corner bound is
+$S_0 = 2b + 4M = 152$, so the budget is at most
+$\lceil (26 + 152)/13 \rceil + 6 = 14 + 6 = 20 \le 26 = M-1$.
+\end{example}
+
 \subsection{Case T: \texorpdfstring{$\mu \le 11$}{mu <= 11}}\label{sec:caseT}
 Fix $(e,h)$ with $\mu = e + h \le 11$, $e \ne h$ (else Case L), $a \nmid M$ and $a \nmid b+M$. Since
 $e \le 10$ and $h \le 10$, this case consists of finitely many \emph{lines}, each parameterized by
-$a$ alone. As $e \ne h$ and $e' < \mu'$, here $\mu' = \mu/g \ge 3$.
+$a$ alone. Recall $e' = e/g$ and $\mu' = \mu/g$ (primes: division by $g = \gcd(e,\mu)$); as
+$e \ne h$ and $e' < \mu'$, here $\mu' \ge 3$.
+
+\paragraph{Construction T.} Take $y = \mu' - 1$ (writing $C := C'$ and $V := V'$ when $g = 1$,
+where $e' = e$ and $\mu' = \mu$, so $C = (e-1)(\mu-1)$), and:
+\begin{itemize}
+\item \emph{variant A} ($g = 1$):\quad
+      $z = \max\big(e-1,\ \lceil (\max(a,\mu) - 1 + 2C - ye)/\mu \rceil\big)$ and $x = c+1$;
+\item \emph{variant $g \ge 2$}:\quad
+      $z = \max\big(e'-1,\ \lceil (a + \lceil (\mu-1)/g \rceil + 2C' - ye')/\mu' \rceil\big)$ and
+      $x = c+g$,
+\end{itemize}
+with $c = y + z$ throughout, exactly one variant applying to each line.
 
 \begin{lemma}\label{lem:T}
-With $y = \mu' - 1$ (writing $C := C'$ and $V := V'$ in the $g = 1$ variants, where $e' = e$,
-$\mu' = \mu$, so $C' = (e-1)(\mu-1)$) and
-\begin{itemize}
-\item $g = 1$, \emph{variant A}: $z = \max\big(e-1,\ \lceil (\max(a,\mu) - 1 + 2C - ye)/\mu \rceil\big)$
-      and $x = c+1$ (Lemma~\ref{lem:staircase}(b): merge $V - C \ge a-1$, run length
-      $a + V - C + 1 \ge M$);
-\item $g \ge 2$: $z = \max\big(e'-1,\ \lceil (a + \lceil (\mu-1)/g \rceil + 2C' - ye')/\mu' \rceil\big)$
-      and $x = c+g$ (Lemma~\ref{lem:staircase}(d), base form --- one frame per class, no merge
-      hypothesis needed: solid run length $g(V' - C') - (g-1)a + 1 \ge M$);
-\end{itemize}
-the construction covers $M$ consecutive integers whenever the stated $z$-conditions hold, at budget
-$2c + v$ with $v \in \{1, g\}$. Both variants are \emph{merge-robust}: variant~A uses the two-frame
-merge of Lemma~\ref{lem:staircase}(b), whose merge condition its choice of $z$ enforces, and the
-$g \ge 2$ variant uses the base form of Lemma~\ref{lem:staircase}(d), which needs no merge
-hypothesis. In particular Case~T does not use the short merge, Lemma~\ref{lem:staircase}(c).
+On every Case-T line, Construction T covers $M$ consecutive integers, at budget $2c + v$ with
+$v \in \{1, g\}$. Both variants are \emph{merge-robust} --- they never invoke the short merge,
+Lemma~\ref{lem:staircase}(c): variant~A uses the two-frame merge of Lemma~\ref{lem:staircase}(b),
+whose merge condition its choice of $z$ enforces, and the $g \ge 2$ variant uses the base form of
+Lemma~\ref{lem:staircase}(d), which needs no merge hypothesis.
 \end{lemma}
 
 \begin{proof}
@@ -2170,14 +2216,17 @@ linear function
   \beta(a) \;:=\; 2\Big[(\mu' - 1) + \frac{a + \mu + 2C' - (\mu'-1)e'}{\mu'} + 1\Big] + g ,
 \]
 of slope $2/\mu' \le 2/3$ in $a$ (using $\lceil u \rceil \le u+1$ and $\mu' \ge 3$), while the target
-$\tau(a) = a + \mu - 1$ has slope $1$. (The $z$-formulas of Lemma~\ref{lem:T} are maxima; $\beta$
-bounds their ceiling branch, and that branch is the \emph{active} one throughout $a \ge 3000$: on
-every line its argument is at least $2899/11 > 260$ --- the numerator is at least
-$3000 - 1 - ye \ge 2899$, since $y \le \mu' - 1 \le 10$ and $e' \le e \le 10$ give $ye \le 100$, and
-the denominator is $\mu' \le 11$ --- whereas the competing branch, $e-1$ respectively $e'-1$, is at
-most $9$. Being increasing in $a$ against a constant, the ceiling branch stays active for all
-$a \ge 3000$, so there the cheapest budget equals its ceiling value and $\beta$ bounds it above.)
-The margin $\tau - \beta$ is therefore nondecreasing in $a$, at rate at least $1/3$.
+$\tau(a) = a + \mu - 1$ has slope $1$.
+
+\emph{Why $\beta$ bounds the cheapest budget.} The $z$-formulas of Construction~T are maxima, and
+$\beta$ bounds their ceiling branch; that branch is the \emph{active} one throughout $a \ge 3000$.
+Indeed, on every line the ceiling's argument is at least $2899/11 > 260$ --- the numerator is at
+least $3000 - 1 - ye \ge 2899$, since $y \le \mu' - 1 \le 10$ and $e' \le e \le 10$ give
+$ye \le 100$, and the denominator is $\mu' \le 11$ --- whereas the competing branch, $e-1$
+respectively $e'-1$, is at most $9$. Being increasing in $a$ against a constant, the ceiling branch
+stays active for all $a \ge 3000$, so there the cheapest budget equals its ceiling value and $\beta$
+bounds it above. The margin $\tau - \beta$ is therefore nondecreasing in $a$, at rate at least
+$1/3$.
 
 It remains to check that the margin is positive at $a = 3000$. We compare the target against
 $\beta$, the \emph{proved upper bound} on the cheapest variant budget, and not against the exact
@@ -2237,7 +2286,7 @@ $(11,29,36)$, $(11,30,38)$, $(11,31,40)$ --- must be based at a $\lambda \ge 1$ 
 $\lambda = 0$ member has $e = h$ and so belongs to Case L.
 \end{remark}
 
-\subsection{Proof of Lemma~\ref{lem:sharp-body}}\label{sec:sharp-proof}
+\subsection{Proof of Lemma~\ref{lem:sharp}}\label{sec:sharp-proof}
 
 \begin{proof}
 We argue by strong induction on $M$: in proving the statement for a given $M$ we may assume it for
@@ -2263,6 +2312,22 @@ $a \le 11$ (Case B). Each branch delivers a multiset of size $\le M-1$ whose sub
 consecutive integers.
 \end{proof}
 
+We can now also discharge the sharpness claims stated in the introduction.
+
+\begin{proof}[Proof of Proposition~\ref{prop:sharpness}]
+The multiset $\{3,3,4,5\}$, of size $4$, has subset sums
+$\{0,3,4,5,6,7,8,9,10,11,12,15\} \supseteq [3,12]$, a run of $10 \ge 5$ consecutive integers, so
+$m \le 4$. For the lower bound one checks the finitely many multisets drawn from $\{3,4,5\}$ of size
+at most $3$. There are $19$ nonempty such multisets ($3$ of size $1$, $6$ of size $2$, $10$ of size
+$3$), and none has $5$ consecutive integers among its subset sums; the empty multiset, with subset
+sums $\{0\}$, is trivially excluded.
+In fact the longest subset-sum run achievable at size at most $3$ is only $3$, attained by
+$\{3,4,5\}$ itself, whose subset sums are $\{0,3,4,5,7,8,9,12\}$ (longest run $[3,5]$). Hence
+$m(\{3,4,5\}) = 4 = M-1$. For the cardinality claim, the five multisets drawn from $\{2,3\}$ of size
+$\le 2$ have subset-sum sets $\{0,2\}$, $\{0,3\}$, $\{0,2,4\}$, $\{0,2,3,5\}$, $\{0,3,6\}$, none with
+a run of $3$.
+\end{proof}
+
 %======================================================================
 \section{Assembly: proof of Theorem~\ref{thm:main}}\label{sec:assembly}
 
@@ -2281,10 +2346,9 @@ Case & Handled by \\
 \midrule
 $|\Ginf/g| = 1$ & Lemma~\ref{lem:one-letter} (AP tail) \\
 $|\Ginf/g| = 2$, gap word eventually periodic & Lemma~\ref{lem:periodic} \\
+$|\Ginf/g| = 2$, $k$ even, $d_2 = k$ (boundary) & Proposition~\ref{prop:boundary-route} \\
 $|\Ginf/g| = 2$, some $W_2(\sigma_0) \ge 2$, $k$ odd or $d_2 \le k-1$
   & Lemmas~\ref{lem:width}(a) and \ref{lem:sweep} \\
-$|\Ginf/g| = 2$, some $W_2(\sigma_0) \ge 2$, $k$ even, $d_2 = k$
-  & Lemma~\ref{lem:width}(a) boundary routing \\
 $|\Ginf/g| = 2$, all $W_2 \le 1$ (balanced)
   & Lemma~\ref{lem:width}(b): Prop.~\ref{prop:balanced}, then \\
   & \quad Lemma~\ref{lem:periodic} or \ref{lem:sturmian} \\
@@ -2557,15 +2621,12 @@ the informal problem says --- is set out decision by decision in \S\ref{sec:lean
 \textbf{Author contributions.} Sole author. The division of labour between the author and the
 automated systems used is set out in \S\ref{sec:provenance}.
 
-\textbf{Use of generative AI.} The core mathematical constructions and proofs were produced by
-Claude (Anthropic; models Fable~5 and Opus~4.8) acting as a reasoning agent, under the author's
-direction. GPT-5.5 (OpenAI) and Gemini~3.1 (Google DeepMind) were consulted for advice and
-adversarial review. The author set the problem and the intermediate targets, audited the output at
-every stage, and is responsible for the content, including any error that remains. The automated
-systems are not authors: they cannot take responsibility for the work, and they meet no authorship
-criterion. Every mathematical claim used in the proof of Theorem~\ref{thm:main} has been checked by at least one
-of the three routes described in \S\ref{sec:map} --- the prose argument, the finite certificates, and
-the Lean development --- and the dichotomy is machine-checked in Lean~4 within the scope of
+\textbf{Use of generative AI.} Automated systems played a substantial role in producing this work;
+the full account --- models, tasks, division of labour, and verification --- is
+\S\ref{sec:provenance}. The author directed the work, audited the output, and takes full
+responsibility for the content; the systems are tools, not authors. Every mathematical claim used in
+the proof of Theorem~\ref{thm:main} has been checked by at least one of the three routes of
+\S\ref{sec:map}, and the dichotomy is machine-checked in Lean~4 within the scope of
 \S\ref{sec:formal-scope}.
 
 \emph{A note on repository metadata.} The version-control history of the accompanying repository
@@ -2585,9 +2646,8 @@ harnesses. All checks below refer to that commit.
 
 \emph{The machine-checked proof.} A clean checkout builds with the pinned toolchain
 (\texttt{leanprover/lean4:v4.27.0}; dependency revisions fixed in \texttt{lake-manifest.json}):
-\texttt{lake exe cache get} then \texttt{lake build} compiles every file and prints the axiom audit
-of \S\ref{sec:trustbase}, reporting exactly \texttt{[propext, Classical.choice, Quot.sound]} for the
-headline theorems --- including \texttt{erdos\_1112\_int}, the literal integer form.
+\texttt{lake exe cache get} then \texttt{lake build} compiles every file and reproduces the axiom
+audit of \S\ref{sec:trustbase}, including for \texttt{erdos\_1112\_int}, the literal integer form.
 
 \emph{The finite layer.} The complete certificate tables are typeset in the supplementary document
 \texttt{erdos1112-supplement.pdf} and exported as \texttt{data/table-A.csv} and
@@ -2651,15 +2711,11 @@ Three kinds of computation participate, and no others.
 \emph{Finite certificate tables} (Appendix~\ref{app:tables}): $172 + 178$ explicit instances of the
 proved frame lemma (Lemma~\ref{lem:frame}). Each is checked by exact subset-sum computation with
 arbitrary-precision bitmasks, and Lemma~\ref{lem:lift} extends each Table-B certificate to the
-infinitely many larger members of its class. Case~P contributes \emph{no} certificates: it is closed
-in prose (Lemma~\ref{lem:caseP} and Remark~\ref{rem:caseP-clean}). Earlier versions of this work
-carried three ad-hoc Case-P witnesses; these are now ordinary instances of the uniform construction
-and no longer appear as data.
+infinitely many larger members of its class. Case~P contributes \emph{no} certificates (Remark~\ref{rem:caseP-clean}).
 
 \emph{Finite scans closing crude constants of proved lemmas}: the Case-T line scan to $a = 3000$ with
 the slope-tail argument (Proposition~\ref{lem:t-tail}); and the minimal-alphabet enumeration to
-$M \le 130$ (Lemmas~\ref{lem:minimal-struct} and \ref{lem:L4}). Case P requires no scan
-(Remark~\ref{rem:caseP-clean}).
+$M \le 130$ (Lemmas~\ref{lem:minimal-struct} and \ref{lem:L4}).
 
 \emph{End-to-end redundant verification} (not logically required, but performed): every one of the
 $83{,}251$ hard-core triples with $M \le 120$ was covered by its designated branch with an exactly
