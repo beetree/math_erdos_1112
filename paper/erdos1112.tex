@@ -337,6 +337,7 @@ $d_2 \le k$ (non-existence, \S\ref{sec:nonex})
   & \quad on the tail alphabet $\Ginf$: \\
   & \quad\quad $|\Ginf| = 1$: arithmetic progression (Lemma~\ref{lem:one-letter}) \\
   & \quad\quad $|\Ginf| = 2$: eventually periodic (Lemma~\ref{lem:periodic}), or \\
+  & \quad\quad\quad\quad $k$ even, $d_2 = k$ $\to$ boundary routing (Prop.~\ref{prop:boundary-route}), or \\
   & \quad\quad\quad\quad width $\ge 2$ $\to$ sweep (Lemmas~\ref{lem:width}, \ref{lem:sweep}), or \\
   & \quad\quad\quad\quad balanced $\to$ Prop.~\ref{prop:balanced} $\to$ Sturmian (Lemma~\ref{lem:sturmian}) \\
   & \quad\quad $|\Ginf| \ge 3$: slot lemma (Lemma~\ref{lem:slot}), which consumes \\
@@ -418,36 +419,41 @@ gap between consecutive unsafe intervals --- wide enough to hold a usable slope.
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}[>=Stealth, line width=0.4pt]
-  \draw[->] (-0.2,0) -- (7.7,0);
-  \node[anchor=west, font=\footnotesize] at (7.55,0.28) {scale};
-  \foreach \a/\b in {0.4/1.15, 1.85/2.6, 3.05/3.8}{
-    \fill[black!12] (\a,0) rectangle (\b,0.5);
-    \draw[black!35] (\a,0) rectangle (\b,0.5);
-  }
-  \foreach \a/\b in {5.0/5.8, 6.3/7.05}{
-    \fill[black!22] (\a,0) rectangle (\b,0.5);
-    \fill[pattern=north east lines, pattern color=black!45] (\a,0) rectangle (\b,0.5);
-    \draw[black!45] (\a,0) rectangle (\b,0.5);
-  }
-  \draw[green!45!black, dashed, very thick] (3.8,0) rectangle (5.0,0.5);
-  \node[font=\normalsize] at (4.4,0.25) {$J$};
-  \draw (3.8,0) -- (3.8,-0.08);
-  \node[anchor=north, font=\scriptsize] at (3.8,-0.1) {$\tfrac{t+k}{s_1}$};
-  \draw (3.05,0) -- (3.05,-0.08);
-  \node[anchor=north, font=\scriptsize] at (3.05,-0.1) {$\tfrac{t}{s_1}$};
-  \draw (5.0,0) -- (5.0,-0.08);
-  \node[anchor=north, font=\scriptsize] at (5.0,-0.1) {$\tfrac{t'}{s_1+1}$};
-  \node[font=\scriptsize, black!60] at (2.2,-0.85) {denominator $s_1$};
-  \node[font=\scriptsize, black!60] at (6.0,-0.85) {denominator $s_1{+}1$};
-  \node[font=\footnotesize, align=center] (sp) at (4.4,1.35) {slope placed here};
-  \draw[->, green!55!black] (sp) -- (4.4,0.56);
+  \draw[->] (-0.2,0) -- (8.0,0);
+  \node[anchor=west, font=\footnotesize] at (7.85,0.3) {$\gamma$};
+  % s = s1+2 (faint, further left, narrower)
+  \fill[black!8] (0.5,0) rectangle (1.7,0.5);
+  \draw[black!30] (0.5,0) rectangle (1.7,0.5);
+  \node[font=\scriptsize, black!55] at (1.1,-0.35) {$s = s_1{+}2$};
+  % s = s1+1 (left of J)
+  \fill[black!22] (2.1,0) rectangle (3.85,0.5);
+  \fill[pattern=north east lines, pattern color=black!45] (2.1,0) rectangle (3.85,0.5);
+  \draw[black!45] (2.1,0) rectangle (3.85,0.5);
+  \node[font=\scriptsize, black!60] at (2.975,-0.35) {$s = s_1{+}1$};
+  % the free gap J
+  \draw[green!45!black, dashed, very thick] (3.85,0) rectangle (4.75,0.5);
+  \node[font=\normalsize] at (4.3,0.25) {$J$};
+  % s = s1 (right of J, widest)
+  \fill[black!12] (4.75,0) rectangle (7.0,0.5);
+  \draw[black!35] (4.75,0) rectangle (7.0,0.5);
+  \node[font=\scriptsize, black!60] at (5.875,-0.35) {$s = s_1$};
+  % ticks
+  \draw (3.85,0) -- (3.85,-0.08);
+  \node[anchor=north, font=\scriptsize] at (3.75,-0.55) {$L = \tfrac{t+k}{s_1+1}$};
+  \draw (4.75,0) -- (4.75,-0.08);
+  \node[anchor=north, font=\scriptsize] at (5.05,-0.55) {$R = \tfrac{t}{s_1}$};
+  \draw (7.0,0) -- (7.0,-0.08);
+  \node[anchor=north, font=\scriptsize] at (7.0,-0.55) {$\tfrac{t+k}{s_1}$};
+  % slope pointer
+  \node[font=\footnotesize, align=center] (sp) at (4.3,1.35) {slope placed here};
+  \draw[->, green!45!black] (sp) -- (4.3,0.56);
 \end{tikzpicture}
-\caption{(Lemma~\ref{lem:freegap}.) The unsafe intervals $[t/s,(t{+}k)/s]$ that a lacunary $B$
-forces at denominators $s_1$ and $s_1+1$ --- here $t$ is a shifted target $b - kc$, $s$ ranges over
-positive integers --- and the free gap $J$ between them, into which the construction places its
-slope. Ticks mark
-the endpoints $t/s_1$ and $(t{+}k)/s_1$ of the last denominator-$s_1$ interval and the start
-$t'/(s_1{+}1)$ of the first denominator-$(s_1{+}1)$ interval, where $t' = t + k$.}
+\caption{(Lemma~\ref{lem:freegap}.) For a fixed shifted target $t = b - kc$, the unsafe intervals
+$[t/s,\ (t{+}k)/s]$ on the slope axis: higher denominators $s$ give intervals further left. The free
+gap is $J = (L, R)$, where $L = (t{+}k)/(s_1{+}1)$ is the upper endpoint of the $s_1{+}1$ interval
+and $R = t/s_1$ the lower endpoint of the $s_1$ interval; every interval with $s > s_1$ lies left of
+$J$ and every one with $s \le s_1$ lies right of it, and the construction places its slope in the
+closed middle third of $J$.}
 \label{fig:freegap}
 \end{figure}
 
