@@ -1,7 +1,7 @@
 /-
-Part III, Case E (Lemma 3.16): the universal η-box for `a ≥ 12`, `μ ≥ 12`
+Case E (the eta-box lemma): the universal η-box for `a ≥ 12`, `μ ≥ 12`
 (with `a ∤ M`, `a ∤ b+M`). This branch carries the bulk of the hard core
-(71,421 of the 83,251 triples with M ≤ 120). Paper: proof/03-sharp.md §III.6.
+(71,421 of the 83,251 triples with M ≤ 120). Paper: the bounded subset-sum covering section.
 
 Route (mirrors the paper): with `η := M·b⁻¹ mod a` (`b` is a unit mod `a`
 by `gcd(a,b) = 1`), the side hypotheses pin `η ∈ [2, a−2]`:

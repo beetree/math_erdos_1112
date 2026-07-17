@@ -1,0 +1,38 @@
+\documentclass[11pt]{amsart}
+\usepackage{amsmath,amssymb}
+\usepackage{longtable}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\repo}{\href{https://github.com/beetree/math_erdos_1112}{\texttt{github.com/beetree/math\_erdos\_1112}}}
+
+\title{Supplementary material: the certificate tables for\\
+       ``A dichotomy for Erd\H{o}s problem 1112''}
+\author{Johan Land}
+\date{July 5, 2026}
+
+\begin{document}
+\maketitle
+
+This supplement to the paper \emph{A dichotomy for Erd\H{o}s problem 1112: existence of
+$r_k(d_1,d_2)$ for $k \ge 3$} lists in full the finite certificate tables referenced in its
+appendix on the certificate tables. Each entry is a hard-core triple $(a,b,M)$ together with a
+box certificate $(x,Y,Z)$, asserting that the multiset of $x$ copies of $a$, $Y$ of $b$ and $Z$ of
+$M$ has budget $x + Y + Z \le M-1$ and subset sums containing $M$ consecutive integers; see the main
+paper for the definitions, the two-generator/frame mechanism, and the reconciliation of printed rows
+against the rows decided by the Lean kernel.
+
+These tables are generated mechanically from the canonical data (\texttt{data/certificate-data.md})
+by \texttt{gen-tables.py}, which re-verifies every row --- budget $\le M-1$ and coverage of $M$
+consecutive integers, by exact arbitrary-precision bitmask --- at generation time, aborting on any
+failure. The same rows are transcribed into the Lean~4 development and decided by the kernel, and are
+exported in machine-readable form as \texttt{data/table-A.csv} and \texttt{data/table-B.csv} with
+SHA-256 digests in \texttt{data/SHA256SUMS}. Source, proof, and data: \repo.
+
+\renewcommand{\thetable}{A}
+\input{table-a}
+
+\renewcommand{\thetable}{B}
+\input{table-b}
+
+\end{document}

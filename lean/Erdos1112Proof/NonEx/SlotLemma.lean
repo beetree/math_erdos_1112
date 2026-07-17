@@ -1,9 +1,9 @@
 /-
-Part II, Lemma 2.12 (Slot Lemma): alphabets with ≥ 3 letters reduce to the
+The slot lemma: alphabets with ≥ 3 letters reduce to the
 finite subset-sum lemma (SHARP): if `k − 1 ≥ m(G∞)` then `kA` is
 tail-covering — fine slots realize an M-run of subset sums, the k-th summand
 is the coarse dial. Consumes Theorem 3 (SHARP) from the Sharp/ layer.
-Paper: proof/02-nonexistence.md §II.5.
+Paper: the non-existence section.
 
 The `sharp`-independent sub-lemmas live in `SlotLemmaParts.lean`; this file
 holds only the final assembly, the sole part that imports `Sharp.Main`.
@@ -55,7 +55,7 @@ theorem slot_core_gcd_one {k d₁ d₂ : ℕ} {a : ℕ → ℕ}
         Finset.card_insert_of_notMem (by
             simp only [Finset.mem_singleton]; omega), Finset.card_singleton]
     exact h3c ▸ Finset.card_le_card hsub
-  -- the §II.5 ↔ Part III seam: SharpAt hands `|S| ≤ M − 1`, and `M ≤ d₂ ≤ k`
+  -- the slot-lemma ↔ subset-sum seam: SharpAt hands `|S| ≤ M − 1`, and `M ≤ d₂ ≤ k`
   -- gives `|S| ≤ k − 1`, with the binding corner `k = d₂ = M`.
   obtain ⟨S, hSmem, hScard, hSrun⟩ := sharp M G hpos hcard3 hgcd1 hleM hMG
   have hMd2 : M ≤ d₂ := (Finset.mem_Icc.mp (Finset.mem_filter.mp (hGdef ▸ hMG)).1).2
@@ -112,7 +112,7 @@ theorem slot_core_gcd_one {k d₁ d₂ : ℕ} {a : ℕ → ℕ}
     rwa [hval] at hcomb
   exact slot_dial hM0 hgrow hstep hmem
 
-/-- **Lemma 2.12 + (SHARP)**: a tail alphabet with at least 3 letters is
+/-- **the corresponding paper lemma + (SHARP)**: a tail alphabet with at least 3 letters is
 tail-covering for every `k ≥ d₂`. Rescales to gcd 1 (`exists_rescale`), runs
 the slot core, and lifts back (`tailCoveringN_of_rescaled`). -/
 theorem tailCovering_of_three_letters {k d₁ d₂ : ℕ} {a : ℕ → ℕ}

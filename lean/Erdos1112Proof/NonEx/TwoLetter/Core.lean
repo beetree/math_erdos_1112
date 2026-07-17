@@ -1,7 +1,6 @@
 /-
-Part II, §II.3 setup and the two-letter combinatorial core:
-Lemma 2.6 (interval property), 2.7 (sweep), 2.8 (width dichotomy),
-2.9 (boundary width / palindrome–border–period).
+The two-letter combinatorial core: the interval property, the sweep, the
+width dichotomy, and the boundary width (palindrome–border–period).
 
 Setting: tail gaps `g_n = δ + e·h_n`, `h_n ∈ {0,1}`, `gcd(δ, δ+e) = 1`,
 `q_n = h_1 + ⋯ + h_n`, `W_s = {∑ q_{i_t} : ∑ i_t = s}` (k summands,
@@ -9,8 +8,8 @@ repetitions allowed), `W₂(σ) = max−min of q_i + q_j on i+j = σ`.
 
 Interface note: `Wset` does not constrain `1 ≤ f j`. Index `0`
 (contributing `qCount h 0 = 0`) matches the paper's tail convention
-`a_{1+i}, i ≥ 0` (§II.3: `x ∈ kA − k·a₁` uses `i_t ≥ 0`), is required for
-the antidiagonal pair placements of Lemmas 2.8/2.9 (`WidthTwoAt` pairs may
+`a_{1+i}, i ≥ 0` (`x ∈ kA − k·a₁` uses `i_t ≥ 0`), is required for
+the antidiagonal pair placements of the width lemmas (`WidthTwoAt` pairs may
 use index 0), and is harmless in the sweep.
 -/
 import Erdos1112Proof.NonEx.GapWord
@@ -197,7 +196,7 @@ lemma wmin_add_le (h : ℕ → Bool) {k : ℕ} (hk : 0 < k) (s e : ℕ) :
       have h2 := wmin_succ_le h hk (s + e)
       omega
 
-/-! ### Lemma 2.6 -/
+/-! ### the corresponding paper lemma -/
 
 /-- Connectivity walk: two configurations on the same antidiagonal are
 joined by single-index moves changing the value by at most 1; any value
@@ -300,7 +299,7 @@ private lemma connect_aux (h : ℕ → Bool) (k s : ℕ) :
     have hgV : (∑ j, qCount h (g j)) ≤ u := by omega
     exact ih (D - 2) hDlt g f' hgs hfs' hgD u hgV hu'
 
-/-- **Lemma 2.6 (interval property)**: `W_s` is a full integer interval. -/
+/-- **the corresponding paper lemma (interval property)**: `W_s` is a full integer interval. -/
 theorem Wset_interval (h : ℕ → Bool) (k s : ℕ) (_hk : 0 < k)
     {w w' u : ℕ} (hw : w ∈ Wset h k s) (hw' : w' ∈ Wset h k s)
     (hu : w ≤ u) (hu' : u ≤ w') : u ∈ Wset h k s := by
@@ -340,7 +339,7 @@ lemma mem_kFold_of_Wset {k d₁ d₂ : ℕ} {a : ℕ → ℕ} (hgaps : HasGapsIn
     smul_eq_mul]
 
 set_option maxHeartbeats 2400000 in
-/-- **Lemma 2.7 (sweep)**: if the windows have width `≥ d₂ − 1` for all
+/-- **the corresponding paper lemma (sweep)**: if the windows have width `≥ d₂ − 1` for all
 large `s`, the two-letter tail's `kA` contains all large integers.
 (Interface in terms of the ambient sequence.) -/
 theorem sweep {k d₁ d₂ : ℕ} {a : ℕ → ℕ} (hk : 3 ≤ k)
@@ -459,7 +458,7 @@ theorem sweep {k d₁ d₂ : ℕ} {a : ℕ → ℕ} (hk : 3 ≤ k)
   exact mem_kFold_of_Wset hgaps h δ e hgap hwj_mem
 
 /-- A **palindromic prefix** `h[1..τ]`: `h (i+1) = h (τ - i)` for every interior
-position `i < τ`. This is exactly the `W₂(τ) = 0` shape (Lemma 2.9). -/
+position `i < τ`. This is exactly the `W₂(τ) = 0` shape (the corresponding paper lemma). -/
 def IsPalindromePrefix (h : ℕ → Bool) (τ : ℕ) : Prop :=
   ∀ i, i < τ → h (i + 1) = h (τ - i)
 
@@ -504,7 +503,7 @@ theorem eventuallyPeriodic_of_period_windows {h : ℕ → Bool} {Δ : ℕ} (hΔ 
   have hstep := hτp (n + Δ) (by omega) (by omega)
   rwa [show n + Δ - Δ = n from by omega] at hstep
 
-/-- **Lemma 2.9 (even boundary `d₂ = k`)**: when the repetition trick falls one
+/-- **the corresponding paper lemma (even boundary `d₂ = k`)**: when the repetition trick falls one
 short (`2⌊(k-1)/2⌋ = k-2 < d₂-1`), the width bound still holds for large `s`.
 Proof by contradiction: if it fails at unboundedly many `s`, the two config
 families (config (1) `(k/2-1)` extremal pairs + free pair at `τ`, config (2)
@@ -592,7 +591,7 @@ theorem width_even_boundary {k d₂ : ℕ} (h : ℕ → Bool) (hk : 3 ≤ k)
       hbaseLo hbaseHi hspread2 (by omega)
   exact period_of_two_palindromes hΔ (by omega) hpalτ hpalτΔ
 
-/-- **Lemma 2.8(a) + 2.9**: width production. If some antidiagonal has
+/-- **the corresponding paper lemma(a) + 2.9**: width production. If some antidiagonal has
 `W₂(σ₀) ≥ 2` then (odd `k`, or even `k` with `d₂ ≤ k−1`, or even `k` at the
 boundary `d₂ = k` given every tail unbalanced and non-periodicity — Lemma
 2.9's palindrome/border/period argument) the sweep hypothesis holds. -/

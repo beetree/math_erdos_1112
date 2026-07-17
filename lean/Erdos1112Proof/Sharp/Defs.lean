@@ -1,6 +1,6 @@
 /-
-Part III: statement forms for the (SHARP) theorem and the hard core.
-Paper: proof/03-sharp.md §Part III preamble and §III.2.
+Statement forms for the bounded subset-sum covering lemma and the hard core.
+Paper: the bounded subset-sum covering section.
 -/
 import Erdos1112Proof.SubsetSums
 
@@ -24,7 +24,7 @@ def SharpAt (M : ℕ) : Prop :=
     ∃ S : Multiset ℕ, (∀ x ∈ S, x ∈ G) ∧ S.card ≤ M - 1 ∧
       HasRun (subsetSums S) M
 
-/-- The hard core (paper §III.2, "The hard core"): `G = {a, b, M}` with
+/-- The hard core (paper the subset-sum section, "The hard core"): `G = {a, b, M}` with
 `gcd(a,b) = 1` and `δ := a + b − M ≥ 2`. Everything else about the shape
 (`3 ≤ a`, `h := M − b ∈ [1, a−2]`, `gcd(a,e) = 1` for `e := b − a`, …)
 is derived. -/

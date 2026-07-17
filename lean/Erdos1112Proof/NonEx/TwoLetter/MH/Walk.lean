@@ -1,5 +1,5 @@
 /-
-Morse–Hedlund, stage 4: quantitative syndeticity input for Lemma 2.10 Step 1
+Morse–Hedlund, stage 4: quantitative syndeticity input for the uniform-hitting lemma
 — Dirichlet step + circle walk.
 
 Design (replaces compactness/ε-net bookkeeping by a walk): Dirichlet

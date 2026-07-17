@@ -8,10 +8,24 @@ From [erdosproblems.com/1112](https://www.erdosproblems.com/1112) (verbatim):
 > $d_1 \le a_{i+1} - a_i \le d_2$ for all $i \ge 1$ and $(kA) \cap B = \emptyset$, where $kA$ is the
 > $k$-fold sumset?
 
-Below is a complete resolution, in two forms:
+Below is a complete resolution in two forms — one machine-checked, one human-readable:
 
 - a **[Lean proof](#lean-proof)** — the machine-checked formalization, with a one-command way to verify it yourself;
-- a **[paper proof](#paper-proof)** — the human-readable argument, with each step linked to the Lean file that checks it.
+- a **[paper](#paper-proof)** — the human-readable proof, as a PDF ([`paper/erdos1112.pdf`](paper/erdos1112.pdf), source [`paper/erdos1112.tex`](paper/erdos1112.tex)), with every result mapped to the Lean file that checks it.
+
+## ⚠ Which document is authoritative?
+
+**[`paper/erdos1112.pdf`](paper/erdos1112.pdf)** (source: [`paper/erdos1112.tex`](paper/erdos1112.tex))
+is the **authoritative** version of the mathematics, and is the artifact intended for submission.
+
+The human-readable proof is the paper; there is no separate Markdown write-up any more. Everything
+that supports the paper lives under [`paper/`](paper): the source and PDF, the build tooling
+(`gen-tables.py`, `Makefile`), the canonical certificate data
+([`paper/data/certificate-data.md`](paper/data/certificate-data.md)) and its machine-readable
+exports ([`paper/data/`](paper/data)), the two Python verification harnesses
+([`paper/scripts/`](paper/scripts)), and the documented prior-art search
+([`paper/novelty-search.md`](paper/novelty-search.md)). The formal proof is under
+[`lean/`](lean).
 
 ---
 
@@ -20,8 +34,9 @@ Below is a complete resolution, in two forms:
 ## The Lean formulation
 
 The problem is transcribed into Lean in the frozen statement file
-[`lean/Erdos1112.lean`](lean/Erdos1112.lean) — see [Statement faithfulness](proof/statement-faithfulness.md)
-for why this encoding is faithful (summarized below). The core definitions:
+[`lean/Erdos1112.lean`](lean/Erdos1112.lean) — see §6 of the paper
+([`paper/erdos1112.pdf`](paper/erdos1112.pdf)) for why this encoding is faithful (summarized below).
+The core definitions:
 
 ```lean
 /-- `B` is lacunary with ratio `r`: `b₀ ≥ 1`, strictly increasing, `b_{i+1} ≥ r·b_i`. -/
@@ -95,7 +110,7 @@ of modeling choices carry the weight; if you spot-check only a few, check these:
 This certifies the *statement*. That the theorems are actually proved — `sorry`-free, standard axioms
 only — is the separate `lake build` check below.
 The full decision-by-decision argument, the informal ↔ Lean ↔ file correspondence table, and the
-non-vacuity witnesses are in [**Statement faithfulness**](proof/statement-faithfulness.md).
+non-vacuity witnesses are in **§6 of the paper** ([`paper/erdos1112.pdf`](paper/erdos1112.pdf)).
 
 ## Download and verify
 
@@ -118,7 +133,7 @@ $
 ```
 
 The trust base — which axioms the proof rests on, and why nothing else is admitted — is covered in
-[Appendix D](proof/appendix-D-lean.md) (§D.2, Trust base).
+§6 of the paper ([`paper/erdos1112.pdf`](paper/erdos1112.pdf)), Trust base.
 
 Prefer not to build it yourself? A public run of this `lake build` — completing with no `sorry`s — is
 inspectable in one click as a
@@ -128,22 +143,22 @@ inspectable in one click as a
 
 # Paper proof
 
-The proof establishes the dichotomy — $r_k(d_1, d_2)$ exists iff $d_2 \ge k+1$ — in four stages: an
-existence construction, a non-existence reduction, the finite lemma the reduction lands on, and the
-assembly. Read them in order, or jump to any one — and from each, jump to the corresponding Lean
-files. To read the whole paper in one document, see
-[`proof/erdos1112-paper.md`](proof/erdos1112-paper.md) (all parts and appendices, compiled).
+The human-readable proof is the paper, **[`paper/erdos1112.pdf`](paper/erdos1112.pdf)** (source
+[`paper/erdos1112.tex`](paper/erdos1112.tex)). It establishes the dichotomy — $r_k(d_1, d_2)$ exists
+iff $d_2 \ge k+1$ — in four stages: an existence construction, a non-existence reduction, the finite
+subset-sum theorem the reduction lands on, and the assembly. The overview below maps each stage to
+its section of the paper and to the Lean files that check it.
 
 ### 1 · Existence — a construction when $d_2 \ge k+1$
 A Beatty/nested-interval construction places $A$ so its $k$-fold sumset threads the gaps a lacunary
 $B$ must leave, giving the explicit bound $r_k \le 192\,d_2$.
-→ **Read:** [Part I](proof/01-existence.md) · **Lean:** [`lean/Erdos1112Proof/Existence/`](lean/Erdos1112Proof/Existence)
+→ **Paper:** §2 · **Lean:** [`lean/Erdos1112Proof/Existence/`](lean/Erdos1112Proof/Existence)
 
 ### 2 · Non-existence — reduction to a finite lemma when $d_2 \le k$
 A word-combinatorial analysis (balanced words, Morse–Hedlund, Sturmian ladders) plus an amortized
 "slot" argument reduces the strong non-existence statement to a single finite additive-combinatorics
 lemma, (SHARP).
-→ **Read:** [Part II](proof/02-nonexistence.md) · **Lean:** [`lean/Erdos1112Proof/NonEx/`](lean/Erdos1112Proof/NonEx)
+→ **Paper:** §3 · **Lean:** [`lean/Erdos1112Proof/NonEx/`](lean/Erdos1112Proof/NonEx)
 
 ### 3 · The (SHARP) lemma — the additive-combinatorics core
 **(SHARP):** every finite set $G$ of at least three positive integers with $\gcd(G) = 1$ and
@@ -151,29 +166,28 @@ $\max(G) = M$ admits a multiset of at most $M - 1$ of its elements whose subset 
 consecutive integers. Proved in full via a six-branch decision tree (D / P / L / E / T / B). Its
 *finite certificate layer* is cross-checked by two separate Python harnesses (sharing no code) and
 by the Lean kernel.
-→ **Read:** [Part III](proof/03-sharp.md) · **Lean:** [`lean/Erdos1112Proof/Sharp/`](lean/Erdos1112Proof/Sharp) · **Reproduce (Python):** [Appendix C](proof/appendix-C-scripts.md)
+→ **Paper:** §4 · **Lean:** [`lean/Erdos1112Proof/Sharp/`](lean/Erdos1112Proof/Sharp) · **Reproduce (Python):** [`paper/scripts/`](paper/scripts)
 
 ### 4 · Assembly
 The three Lean-facing theorems — `erdos_1112`, `erdos_1112_existence_bound`, and
 `erdos_1112_strong_nonexistence` — stated directly in terms of the frozen definitions and assembled
 from the two halves.
-→ **Read:** [Part IV](proof/04-assembly.md) · **Lean:** [`lean/Erdos1112Proof/Final.lean`](lean/Erdos1112Proof/Final.lean)
+→ **Paper:** §5 · **Lean:** [`lean/Erdos1112Proof/Final.lean`](lean/Erdos1112Proof/Final.lean)
 
 ## Proof map
 
-| Part | Prose | Formal (Lean) |
+| Part | Paper | Formal (Lean) |
 |---|---|---|
-| Statement faithfulness | [statement-faithfulness](proof/statement-faithfulness.md) | [`lean/Erdos1112.lean`](lean/Erdos1112.lean) (statement) |
-| Overview & notation | [00-overview](proof/00-overview.md) | [`lean/Erdos1112.lean`](lean/Erdos1112.lean) (statement) |
-| I — Existence | [01-existence](proof/01-existence.md) | [`Existence/`](lean/Erdos1112Proof/Existence) |
-| II — Non-existence | [02-nonexistence](proof/02-nonexistence.md) | [`NonEx/`](lean/Erdos1112Proof/NonEx) |
-| III — (SHARP) | [03-sharp](proof/03-sharp.md) | [`Sharp/`](lean/Erdos1112Proof/Sharp) |
-| IV — Assembly | [04-assembly](proof/04-assembly.md) | [`Final.lean`](lean/Erdos1112Proof/Final.lean) |
-| Verification | [Appendix A](proof/appendix-A-verification.md) · [Appendix C](proof/appendix-C-scripts.md) · [Appendix D](proof/appendix-D-lean.md) | [`AxiomsCheck.lean`](lean/Erdos1112Proof/AxiomsCheck.lean) |
-| Certificate tables | [Appendix B](proof/appendix-B-tables.md) | — |
+| Overview & statement faithfulness | §1, §6 | [`lean/Erdos1112.lean`](lean/Erdos1112.lean) (statement) |
+| I — Existence | §2 | [`Existence/`](lean/Erdos1112Proof/Existence) |
+| II — Non-existence | §3 | [`NonEx/`](lean/Erdos1112Proof/NonEx) |
+| III — bounded subset-sum theorem | §4 | [`Sharp/`](lean/Erdos1112Proof/Sharp) |
+| IV — Assembly | §5 | [`Final.lean`](lean/Erdos1112Proof/Final.lean) |
+| Verification / trust base | §6, Appendix A · [Python harnesses](paper/scripts) | [`AxiomsCheck.lean`](lean/Erdos1112Proof/AxiomsCheck.lean) |
+| Certificate tables | Appendix B · [canonical data](paper/data/certificate-data.md) | — |
 
 The full lemma-by-lemma correspondence (paper result → Lean declaration → file) is in
-[Appendix D §D.4](proof/appendix-D-lean.md).
+Appendix C of the paper.
 
 ---
 

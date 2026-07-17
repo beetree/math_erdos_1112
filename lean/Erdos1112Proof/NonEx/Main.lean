@@ -1,6 +1,6 @@
 /-
-Part II master assembly (paper Part IV table): every `(d₁,d₂)`-sequence with
-`d₂ ≤ k` is tail-covering; with the certificate (Lemma 2.1) this yields the
+Non-existence master assembly (the paper's case table): every `(d₁,d₂)`-sequence with
+`d₂ ≤ k` is tail-covering; with the certificate (the corresponding paper lemma) this yields the
 strong non-existence theorem, statement-identical to the frozen target
 `Erdos1112.erdos_1112_strong_nonexistence`.
 -/
@@ -34,10 +34,9 @@ private lemma widthTwo_shift (w : ℕ → Bool) (T σ : ℕ)
   omega
 
 open scoped Classical in
-/-- **Two-letter branch** (Part IV, §II.3–II.4 assembly): a tail alphabet of
-exactly two letters is tail-covering. It reduces via `sweep` /
-`width_of_unbalanced` (2.7/2.8/2.9) to the eventually-periodic case (2.5) or,
-through Morse–Hedlund, the Sturmian ladder (2.10). The other tail-alphabet
+/-- **Two-letter branch**: a tail alphabet of exactly two letters is
+tail-covering. It reduces via `sweep` / `width_of_unbalanced` to the
+eventually-periodic case or, through Morse–Hedlund, the Sturmian ladder. The other tail-alphabet
 sizes are handled elsewhere (1-letter: single-letter; ≥ 3: Slot Lemma). -/
 theorem tailCoveringN_of_two_letters {k d₁ d₂ : ℕ} {a : ℕ → ℕ}
     (hk : 3 ≤ k) (hd₁ : 1 ≤ d₁) (hgaps : HasGapsIn d₁ d₂ a) (hd : d₂ ≤ k)
@@ -175,7 +174,7 @@ theorem tailCoveringN_of_two_letters {k d₁ d₂ : ℕ} {a : ℕ → ℕ}
   suffices hcov' : TailCoveringN k a' by
     exact tailCoveringN_of_rescaled T g c hg0 a' haffine hcov'
   by_cases hper : EventuallyPeriodicW h'
-  · -- eventually periodic word ⇒ eventually periodic gaps (Lemma 2.5)
+  · -- eventually periodic word ⇒ eventually periodic gaps (the corresponding paper lemma)
     apply tailCoveringN_of_eventually_periodic (by omega) hδ0 hgaps'
     obtain ⟨p, hp0, Tp, hTp⟩ := hper
     refine ⟨p, hp0, Tp, fun n hn => ?_⟩
@@ -253,7 +252,7 @@ theorem tailCoveringN_of_two_letters {k d₁ d₂ : ℕ} {a : ℕ → ℕ}
         exact tailCoveringN_of_rescaled T₂ 1 0 one_pos a'' halift hcovsturm
 
 open scoped Classical in
-/-- **Master lemma of Part II** (Part IV case table): for `k ≥ 3` and
+/-- **Non-existence master lemma** (the paper's case table): for `k ≥ 3` and
 `d₂ ≤ k`, every admissible `A` is tail-covering. Case on the size of the tail
 alphabet `G∞ = {tail letters} ⊆ [d₁, d₂]`: 1 letter (single-letter case),
 2 letters (`tailCoveringN_of_two_letters`), ≥ 3 letters (Slot Lemma). -/

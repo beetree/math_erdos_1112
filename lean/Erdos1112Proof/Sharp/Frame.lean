@@ -1,13 +1,13 @@
 /-
-Part III, Lemma 3.2: the frame lemma — residue representatives mod ν plus
-padding copies of ν cover a long run. Paper: proof/03-sharp.md §III.1.
+the frame lemma: the frame lemma — residue representatives mod ν plus
+padding copies of ν cover a long run. Paper: the bounded subset-sum covering section.
 -/
 import Erdos1112Proof.Sharp.TwoGen
 
 namespace Erdos1112
 namespace Proof
 
-/-- **Lemma 3.2 (frame lemma).** If every residue `ρ mod ν` has a
+/-- **the frame lemma (frame lemma).** If every residue `ρ mod ν` has a
 representative `j·g₁ + k·g₂` inside the box `j ≤ Y, k ≤ Z` of height `≤ S`,
 and `L − 1 + S ≤ ν·x`, then the multiset `{Y×g₁, Z×g₂, x×ν}` realizes every
 integer of `[S, ν·x] ⊇ [S, S+L−1]` as a subset sum. -/

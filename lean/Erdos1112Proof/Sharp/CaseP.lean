@@ -1,8 +1,8 @@
 /-
-Part III, Case P (Lemmas 3.12/3.13/3.14 + three explicit certificates):
+Case P (Lemmas 3.12/3.13/3.14 + three explicit certificates):
 `a ∣ b + M` — the η = −1 line. Sub-regimes: r = 3 (M < 2a), r = 4
 (M = 2a + t), M ≥ 2a + 4, plus the three exceptional triples
-(3,7,8), (4,9,11), (5,12,13). Paper: proof/03-sharp.md §III.4.
+(3,7,8), (4,9,11), (5,12,13). Paper: the bounded subset-sum covering section.
 
 Unified route: a *pair-frame* construction covers every
 `η = −1` triple at once. Writing `b + M = r·a` (`r ≥ 3`), the multiset
@@ -20,7 +20,7 @@ import Erdos1112Proof.Sharp.Staircase
 namespace Erdos1112
 namespace Proof
 
-/-- Lemma 3.14 (ETAneg; `a ∣ b + M`, `M ≥ 2a + 4`).
+/-- the ETAneg lemma (ETAneg; `a ∣ b + M`, `M ≥ 2a + 4`).
 
 `FrameCert` route: with `Y = ⌈(a−1)/2⌉ = a/2`, `Z = ⌊(a−1)/2⌋ = (a−1)/2`
 (so `Y + Z = a − 1`) and `x = M − a`, every residue `ρ` mod `a` has a box
@@ -327,7 +327,7 @@ lemma caseP_pair {a b M r : ℕ}
         rw [hstep]; exact hnA.symm
 
 set_option maxHeartbeats 1600000 in
-/-- Lemma 3.12 (G′; `b + M = 3a`, i.e. `M < 2a`) — pair construction, `r = 3`. -/
+/-- the r = 3 pair lemma (G′; `b + M = 3a`, i.e. `M < 2a`) — pair construction, `r = 3`. -/
 theorem caseP_r3 {a b M : ℕ} (hc : HardCore a b M) (hP : b + M = 3 * a) :
     SharpTriple a b M := by
   have ha3 := hc.three_le
@@ -402,7 +402,7 @@ theorem caseP_r3 {a b M : ℕ} (hc : HardCore a b M) (hP : b + M = 3 * a) :
         mul_nonneg (show (0:ℤ) ≤ (a:ℤ) by positivity) (show (0:ℤ) ≤ (a:ℤ) - 8 by linarith)]
 
 set_option maxHeartbeats 1600000 in
-/-- Lemma 3.13 (G; `b + M = 4a`) — pair construction, `r = 4`. -/
+/-- the r = 4 pair lemma (G; `b + M = 4a`) — pair construction, `r = 4`. -/
 theorem caseP_r4 {a b M : ℕ} (hc : HardCore a b M) (hP : b + M = 4 * a) :
     SharpTriple a b M := by
   have ha3 := hc.three_le
@@ -476,9 +476,9 @@ theorem caseP_r4 {a b M : ℕ} (hc : HardCore a b M) (hP : b + M = 4 * a) :
         mul_nonneg (show (0:ℤ) ≤ (a:ℤ) by positivity) hMb,
         mul_nonneg (show (0:ℤ) ≤ (a:ℤ) by positivity) (show (0:ℤ) ≤ (a:ℤ) - 8 by linarith)]
 
-/-- **Case P assembled** (Exhaustion of Case P, §III.4): every `η = −1` triple
-`b + M = r·a` is covered — `r = 3` (Lemma 3.12), `r = 4` (Lemma 3.13),
-`M ≥ 2a + 4` (Lemma 3.14), and the `r ≥ 5, M < 2a + 4` corner (the three
+/-- **Case P assembled** (Exhaustion of Case P, the subset-sum section): every `η = −1` triple
+`b + M = r·a` is covered — `r = 3` (the r = 3 pair lemma), `r = 4` (the r = 4 pair lemma),
+`M ≥ 2a + 4` (the ETAneg lemma), and the `r ≥ 5, M < 2a + 4` corner (the three
 explicit triples `(3,7,8), (4,9,11), (5,12,13)`) directly by the pair
 construction. -/
 theorem caseP {a b M : ℕ} (hc : HardCore a b M) (hP : a ∣ (b + M)) :

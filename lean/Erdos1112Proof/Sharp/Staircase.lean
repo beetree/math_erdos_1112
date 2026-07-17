@@ -1,5 +1,5 @@
 /-
-Part III, Lemma 3.3: staircase windows and merges over `G = {a, b, M}`,
+the staircase lemma: staircase windows and merges over `G = {a, b, M}`,
 including the extended form (d) with the frame-merge condition
 `V′ − C′ ≥ a − 1`. The counterexample showing the condition is NOT
 removable — `(a,b,M) = (5,7,9)`, multiset `{5,5,5,7}` missing `11` inside
@@ -175,7 +175,7 @@ theorem staircase_land (S : StairSetup a b M g e' μ')
   rw [hn_eq]
   exact staircase_level S hC' hV' hy hz hct htx hu_lo hu_hi
 
-/-- **3.3(d), base form.** With `x ≥ c + g − 1` (one frame per residue class
+/-- **the staircase extended/base form (d), base form.** With `x ≥ c + g − 1` (one frame per residue class
 available in `[c, c+g)`), the sums cover the solid interval
 `[(c+g−1)·a + g·C′, c·a + g·V′]` — no merge hypothesis. -/
 theorem staircase_phase_base (S : StairSetup a b M g e' μ')
@@ -195,7 +195,7 @@ theorem staircase_phase_base (S : StairSetup a b M g e' μ')
     (by omega) (by omega)
 
 set_option maxHeartbeats 800000 in
-/-- **3.3(d), extended form.** With `x ≥ c + g` and the frame-merge
+/-- **the staircase extended/base form (d), extended form.** With `x ≥ c + g` and the frame-merge
 condition `V′ − C′ ≥ a − 1` (here `a + C' ≤ V' + 1`), the frames of each
 residue class merge and the sums cover the solid interval
 `[(c+g−1)·a + g·C′, (x−g+1)·a + g·V′]`. The merge condition is NOT removable:
@@ -301,7 +301,7 @@ theorem staircase_phase_extended (S : StairSetup a b M g e' μ')
     have h3 : g * (u₀ - j * a) ≤ g * V' := Nat.mul_le_mul_left g hj_land_hi
     omega
 
-/-- **3.3(c) (short two-frame merge, `g = 1`, `x = y + z`).** Level `y+z+1`
+/-- **the staircase short merge (c) (short two-frame merge, `g = 1`, `x = y + z`).** Level `y+z+1`
 exceeds the `a`-budget by one, so it loses exactly the zero offset; with
 `V′ ≥ a + max(C′,1) − 1` the two levels still merge and the sums cover
 `[(y+z)·a + C′, (y+z+1)·a + V′]`. Needed only for Case L's `a` odd, `g = 1`
@@ -371,7 +371,7 @@ theorem staircase_merge_c (S : StairSetup a b M g e' μ')
     -- u = n - (y+z+1)*a ≥ V'+1-a ≥ max C' 1
     omega
 
-/-- **The merge condition of 3.3(d) is not removable** (counterexample,
+/-- **The merge condition of the staircase extended/base form (d) is not removable** (counterexample,
 machine-checked): for `(a,b,M) = (5,7,9)` with
 `(x,y,z) = (3,1,0)` — the multiset `{5,5,5,7}`, which satisfies every
 hypothesis of the extended form EXCEPT `V′−C′ ≥ a−1` — the would-be interval

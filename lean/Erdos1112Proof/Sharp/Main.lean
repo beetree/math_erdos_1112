@@ -1,7 +1,7 @@
 /-
-Part III, Theorem 3 (SHARP), assembled: strong induction on the maximum M,
+Theorem 3 (SHARP), assembled: strong induction on the maximum M,
 reduction to the hard core, and the six-case decision-tree routing
-(D / P / L / E / T / B — exhaustive by arithmetic). Paper: proof/03-sharp.md §III.9.
+(D / P / L / E / T / B — exhaustive by arithmetic). Paper: the bounded subset-sum covering section.
 -/
 import Erdos1112Proof.Sharp.Graham
 import Erdos1112Proof.Sharp.CaseD

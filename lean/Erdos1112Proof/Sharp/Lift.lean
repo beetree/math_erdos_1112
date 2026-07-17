@@ -1,5 +1,5 @@
 /-
-Part III, Lemma 3.4: mod-`a` frame certificates and the λ-lift.
+the lambda-lift lemma: mod-`a` frame certificates and the λ-lift.
 
 `FrameCert a b M x Y Z` is THE certificate notion of the development: it is
 stated per-residue (`M − 1 + height ≤ a·x` for some box representative of
@@ -52,7 +52,7 @@ theorem FrameCert.sharpTriple {a b M x Y Z : ℕ} (h : FrameCert a b M x Y Z) :
     · omega
     · omega
 
-/-- **Lemma 3.4 (λ-lift), one step.** A frame certificate transports from
+/-- **the lambda-lift lemma (λ-lift), one step.** A frame certificate transports from
 `(a, b, M)` to `(a, b+a, M+a)`, with padding grown by exactly the decided
 stability margin `Y + Z + 1 ≤ a`. -/
 theorem FrameCert.lift {a b M x Y Z : ℕ} (h : FrameCert a b M x Y Z) :
@@ -70,7 +70,7 @@ theorem FrameCert.lift {a b M x Y Z : ℕ} (h : FrameCert a b M x Y Z) :
     have h4 : (Y + Z + 1) * a = (Y + Z) * a + a := by ring
     omega
 
-/-- **Lemma 3.4, iterated**: the whole λ-chain above a certified base. -/
+/-- **the lambda-lift lemma, iterated**: the whole λ-chain above a certified base. -/
 theorem FrameCert.lift_iter {a b M x Y Z : ℕ} (h : FrameCert a b M x Y Z) :
     ∀ lam : ℕ, FrameCert a (b + lam * a) (M + lam * a)
       (x + lam * (Y + Z + 1)) Y Z := by

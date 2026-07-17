@@ -1,22 +1,25 @@
 /-
-Part III, Case T core (Lemmas 3.17/3.18): the per-`a` decidable T-line check
-`TlineGo`, its soundness, and the generic linear tail (`a > 3000`).
+Case T of the bounded subset-sum covering lemma: the per-`a` decidable
+T-line check `TlineGo`, its soundness, and the generic linear tail
+(`a > 3000`).
 
-Design (deviation from the paper): the paper's Lemma 3.17
-uses three variants (A: two-frame extended, `x = c+1`; B: short merge 3.3(c),
-`x = c`; base 3.3(d), `x = c+g`). Variant B rests on `staircase_merge_c`
-(proved in Staircase.lean); `TlineBudget` checks only variant A (`g = 1`) and
-the base form (`g ≥ 2`), and the **14** triples where only variant B's budget
+Design note: an earlier draft's Case-T lemma used three staircase variants
+(A: two-frame merge, `x = c+1`; B: the short merge, staircase part (c),
+`x = c`; and the base form, part (d), `x = c+g`). Variant B rests on
+`staircase_merge_c` (proved in Staircase.lean); `TlineBudget` checks only
+variant A (`g = 1`) and the base form (`g ≥ 2`) — the paper's two
+merge-robust variants — and the **14** triples where only variant B's budget
 fits (all with `a ≤ 29`) are instead certified by explicit kernel-checked
-frame certificates (`tSuppT` below, same `frameCertOK` checker as Appendix B).
-The scan invariant `TlineGo e h a = true` for all lines and `a ≤ 3000` was
-verified against this exact ℕ-truncated formula set:
-budget failures = 158 (= Table A) + 14 (= `tSuppT`), none unexplained.
+frame certificates (`tSuppT` below, same `frameCertOK` checker as the
+Appendix-B tables). The scan invariant `TlineGo e h a = true` for all lines
+and `a ≤ 3000` was verified against this exact ℕ-truncated formula set:
+budget failures = 158 (= `certTableA`) + 14 (= `tSuppT`) — together the
+paper's 172-row Table A — none unexplained.
 
 For `a > 3000` the base form alone fits on every line (`T_tail`): with
 `μ' ≥ 3` (from `e ≠ h`), `z ≤ (a + 201)/3`, so the budget `2(y+z) + g + 1`
-has slope `2/3 < 1` against `M = a + μ` — the paper's Lemma 3.18(ii)
-with crude constants.
+has slope `2/3 < 1` against `M = a + μ` — part (ii) of the paper's T-tail
+proposition, with crude constants.
 -/
 import Erdos1112Proof.Sharp.Staircase
 import Erdos1112Proof.Sharp.TablesData
@@ -43,10 +46,10 @@ lemma cdiv_mul_le {m : ℕ} (_hm : 0 < m) (n : ℕ) : cdiv n m * m ≤ n + m - 1
 
 /-! ### The supplementary certificate table (variant-B replacements) -/
 
-/-- The 14 T-line triples whose minimal paper budget is achieved only by
-variant B (Lemma 3.3(c)); certified here directly by mod-`a` frame boxes so
-that Case T does not depend on `staircase_merge_c`. Format `(a,b,M,x,Y,Z)`,
-same checker as Tables A/B. -/
+/-- The 14 T-line triples whose minimal draft budget was achieved only by
+the short merge (part (c) of the paper's staircase lemma); certified here
+directly by mod-`a` frame boxes so that Case T does not depend on
+`staircase_merge_c`. Format `(a,b,M,x,Y,Z)`, same checker as Tables A/B. -/
 def tSuppT : List (ℕ × ℕ × ℕ × ℕ × ℕ × ℕ) := [
   (10, 13, 15, 9, 4, 1),
   (11, 14, 15, 7, 3, 4),
@@ -82,7 +85,7 @@ def TlineSide (e h a : ℕ) : Bool :=
   decide (h + 2 ≤ a) && decide (Nat.gcd a e = 1) &&
   decide ((e + h) % a ≠ 0) && decide ((2 * e + h) % a ≠ 0)
 
-/-- Budget check for the two formalized Lemma-3.17 variants, with the line
+/-- Budget check for the two formalized Case-T variants, with the line
 constants passed explicitly: variant A (`g = 1`, `x = c+1`, extended form)
 and the base form (`g ≥ 2`, `x = c+g`). `μ` is the second argument. -/
 def TlineBudgetCore (a μ g e' μ' C y : ℕ) : Bool :=
@@ -151,7 +154,7 @@ lemma T_base {a b M g e' μ' C' y z x : ℕ} (S : StairSetup a b M g e' μ')
       omega
 
 /-- Variant-A soundness (`g = 1`, `x = c + 1`, extended form
-3.3(d)): merge and run-length inequalities in additive `W`-form
+the staircase extended/base form (d)): merge and run-length inequalities in additive `W`-form
 (`W := e′·y + μ′·z = V′ + C′`), budget `2c + 2 ≤ M`. -/
 lemma T_variantA {a b M e' μ' C' y z : ℕ} (S : StairSetup a b M 1 e' μ')
     (hC' : C' = (e' - 1) * (μ' - 1))
@@ -282,7 +285,7 @@ lemma TlineGo_sound {e h a : ℕ} (he : 1 ≤ e) (hh : 1 ≤ h)
       rw [hr1, hr2, hr3] at hs
       exact hs
 
-/-! ### The linear tail `a > 3000` (Lemma 3.18(ii)) -/
+/-! ### The linear tail `a > 3000` (T-tail, part (ii)) -/
 
 /-- Tail at line level: for `a ≥ 3001` the base form alone fits on every
 line. Crude constants (`e', y, g ≤ 10`, `μ' ≤ 11`, `C ≤ 90`) give
@@ -357,7 +360,7 @@ lemma T_tail_line {a e h : ℕ} (he : 1 ≤ e) (hh : 1 ≤ h) (hμ : e + h ≤ 1
   · -- budget: `2(y+z) + g + 1 ≤ a + e + h`, from `3z ≤ a + 201`, `a ≥ 3001`
     omega
 
-/-- **Lemma 3.18(ii), packaged**: the Case-T tail `a ≥ 3001`. -/
+/-- **T-tail (ii), packaged**: the Case-T tail `a ≥ 3001`. -/
 lemma T_tail {a b M : ℕ} (hc : HardCore a b M) (hL : b - a ≠ M - b)
     (hμ : M - a ≤ 11) (ha : 3001 ≤ a) : SharpTriple a b M := by
   have hcop := hc.coprime_a_e

@@ -1,5 +1,5 @@
 /-
-Part III, reduction layer: the L1/L2/L3 dispatch lemmas (paper 3.6–3.8) and
+reduction layer: the L1/L2/L3 dispatch lemmas (paper 3.6–3.8) and
 the reduction principle packaging Graham's reduction with the minimal-
 alphabet analysis (3.5, 3.9, 3.10).
 
@@ -14,7 +14,7 @@ import Erdos1112Proof.Sharp.Staircase
 namespace Erdos1112
 namespace Proof
 
-/-- **Lemma 3.6 (L1)**: a coprime pair `α, γ` with `α + γ + 1 ≤ M` realizes
+/-- **L1 (small coprime pair)**: a coprime pair `α, γ` with `α + γ + 1 ≤ M` realizes
 an `M`-run within budget `M − 1` using only `α`s and `γ`s. -/
 theorem sharp_of_small_coprime_pair {α γ M : ℕ} (hα : 0 < α) (hγ : 0 < γ)
     (hco : Nat.Coprime α γ) (hle : α + γ + 1 ≤ M) :
@@ -51,7 +51,7 @@ theorem sharp_of_small_coprime_pair {α γ M : ℕ} (hα : 0 < α) (hγ : 0 < γ
           _ = (α - 1) * x + x := by ring
       omega
 
-/-- **Lemma 3.7 (L2)**: a coprime pair at the boundary `α + β ∈ {M, M+1}`
+/-- **L2 (pair at the boundary)**: a coprime pair at the boundary `α + β ∈ {M, M+1}`
 (the paper's `t = 0` / `t = 1` split). -/
 theorem sharp_of_boundary_pair {α β M : ℕ} (hα : 0 < α) (hαβ : α < β)
     (hco : Nat.Coprime α β) (hb : α + β = M ∨ α + β = M + 1) :
@@ -104,7 +104,7 @@ lemma L3_y_bound {d α β M : ℕ} (hd : 2 ≤ d) (h1 : 1 ≤ α) (hαβ : α < 
   have h3 : β - 1 ≤ (d - 1) * (β - 1) := Nat.le_mul_of_pos_left _ (by omega)
   omega
 
-/-- **Lemma 3.8 (L3)**: `G = {a, b, M}` with `d := gcd(a,b) ≥ 2` (so
+/-- **L3 (non-coprime pair)**: `G = {a, b, M}` with `d := gcd(a,b) ≥ 2` (so
 `gcd(d, M) = 1` since `gcd(G) = 1`). Stated via `a = d·α`, `b = d·β` with
 `α < β` coprime — `α = 1` (i.e. `a ∣ b`) explicitly allowed. -/
 theorem sharp_of_noncoprime_pair {d α β M : ℕ} (hd : 2 ≤ d) (hα : 0 < α)

@@ -1,9 +1,9 @@
 /-
-Part II, Slot Lemma (2.12) — the `sharp`-independent sub-lemmas.
+The slot lemma's `sharp`-independent sub-lemmas.
 
 Split out of `SlotLemma.lean` so these five parts build without importing
 `Sharp.Main` (only the final assembly `tailCovering_of_three_letters` needs
-`sharp`). Paper: proof/02-nonexistence.md §II.5.
+`sharp`). Paper: the non-existence section.
 -/
 import Erdos1112Proof.NonEx.GapWord
 import Erdos1112Proof.NonEx.Kit

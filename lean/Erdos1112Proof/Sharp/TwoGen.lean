@@ -1,6 +1,6 @@
 /-
-Part III, Lemma 3.1: the boxed two-generator interval. Chicken McNugget with
-multiplicity bounds. Paper: proof/03-sharp.md §III.1.
+the two-generator lemma: the boxed two-generator interval. Chicken McNugget with
+multiplicity bounds. Paper: the bounded subset-sum covering section.
 
 Route: for `α ≥ 2` the base case `y = α − 1` uses Mathlib's
 `frobeniusNumber_pair` (classical Chicken McNugget: `n ∉ closure {α,β}` forces
@@ -15,7 +15,7 @@ namespace Erdos1112
 namespace Proof
 
 set_option maxHeartbeats 1600000 in
-/-- **Lemma 3.1 (two-generator interval).** For coprime `α < β`, `x ≥ β − 1`,
+/-- **the two-generator lemma (two-generator interval).** For coprime `α < β`, `x ≥ β − 1`,
 `y ≥ α − 1`: every `n` in `[C, αx + βy − C]` with `C = (α−1)(β−1)` is
 `iα + jβ` with `i ≤ x`, `j ≤ y`. -/
 theorem twoGen_interval {α β x y : ℕ} (hαβ : α < β) (hα : 0 < α)
@@ -130,7 +130,7 @@ theorem twoGen_interval {α β x y : ℕ} (hαβ : α < β) (hα : 0 < α)
           rw [h5, heq]
           ring
 
-/-- Multiset form of Lemma 3.1: the corresponding run of subset sums of
+/-- Multiset form of the two-generator lemma: the corresponding run of subset sums of
 `{x × α, y × β}`. -/
 theorem twoGen_hasRun {α β x y : ℕ} (hαβ : α < β) (hα : 0 < α)
     (hco : Nat.Coprime α β) (hx : β - 1 ≤ x) (hy : α - 1 ≤ y) :

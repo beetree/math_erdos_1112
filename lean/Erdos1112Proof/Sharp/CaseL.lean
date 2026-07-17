@@ -1,7 +1,7 @@
 /-
-Part III, Case L (Lemma 3.15): scaled consecutive triples
+Case L (the Case-L lemma): scaled consecutive triples
 `G = {a, a+g, a+2g}` (i.e. `e = h`). Three sub-cases by parity of `a` and
-`g = 1` vs `g ≥ 2`, via Staircase 3.3(c)/(d). Paper: proof/03-sharp.md §III.5.
+`g = 1` vs `g ≥ 2`, via the staircase short merge (c) / base form (d). Paper: the bounded subset-sum covering section.
 
 Notation: `g := b − a = M − b`, so `b = a + g`, `M = a + 2g`,
 `(e′, μ′) = (1, 2)`, `C′ = 0`, `V′ = 2z + 1`. Multiset `(x, 1, z)` with

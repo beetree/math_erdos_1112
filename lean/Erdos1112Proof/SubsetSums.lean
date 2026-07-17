@@ -2,7 +2,7 @@
 Multiset subset sums, the consecutive-run predicate, and Graham's growth lemma.
 
 `Finset.subsetSum` in Mathlib is for finsets (distinct elements); the paper's
-Part III works with multisets ("x copies of a, Y copies of b, Z copies of M"),
+the subset-sum development works with multisets ("x copies of a, Y copies of b, Z copies of M"),
 so we define the multiset version and mirror the API.
 -/
 import Mathlib

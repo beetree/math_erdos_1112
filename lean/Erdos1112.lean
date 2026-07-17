@@ -6,13 +6,15 @@ Erdős Problem 1112 — formal statement.
 The problem, verbatim from the site:
 
   "Let $1 \le d_1 < d_2$ and $k \ge 3$. Does there exist an integer $r$ such
-  that if $B = \{b_1 < b_2 < \cdots\}$ is a lacunary sequence with
-  $b_{i+1} \ge r b_i$ then there exists $A = \{a_1 < a_2 < \cdots\}$ with
-  $d_1 \le a_{i+1} - a_i \le d_2$ for all $i$ and $(kA) \cap B = \emptyset$?"
+  that if $B = \{b_1 < \cdots\}$ is a lacunary sequence of positive integers
+  with $b_{i+1} \ge r b_i$ then there exists a sequence of positive integers
+  $A = \{a_1 < \cdots\}$ such that $d_1 \le a_{i+1} - a_i \le d_2$ for all
+  $i \ge 1$ and $(kA) \cap B = \emptyset$, where $kA$ is the $k$-fold
+  sumset?"
 
-Here $kA = \{x_1 + \cdots + x_k : x_1, \ldots, x_k \in A\}$ is the $k$-fold
-sumset (repetitions allowed), and $A$, $B$ are infinite sets of positive
-integers, encoded below as strictly increasing sequences `ℕ → ℕ` (0-indexed).
+Here $kA = \{x_1 + \cdots + x_k : x_1, \ldots, x_k \in A\}$ allows repeated
+summands, and $A$, $B$ are infinite sets of positive integers, encoded below
+as strictly increasing sequences `ℕ → ℕ` (0-indexed).
 
 Encoding notes (reviewed):
 * `IsLacunaryWith` requires `StrictMono b` explicitly, so the class of
@@ -28,7 +30,7 @@ Encoding notes (reviewed):
 
 Status: the dichotomy `erdos_1112`, proved in `Erdos1112Proof/Final.lean`
 against the definitions in this file, resolves the problem with a complete,
-`sorry`-free formal proof. The paper proof is in `../proof/`.
+`sorry`-free formal proof. The paper is in `../paper/`.
 -/
 import Mathlib
 

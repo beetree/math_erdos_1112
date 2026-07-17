@@ -1,5 +1,5 @@
 /-
-Morse–Hedlund, stage 5: paper Lemma 2.10 Steps 0+2
+Morse–Hedlund, stage 5: paper the corresponding paper lemma Steps 0+2
 (the sub-window claim), with Step 1 (uniform syndeticity) taken as a
 hypothesis to avoid an import cycle with `Sturmian.lean` (dependency
 inversion; `Sturmian.lean` instantiates `hsyn` with `uniform_syndeticity`).

@@ -1,5 +1,5 @@
 /-
-Part III, Case B support (§III.8): completeness of the Table-B class table.
+Case B support: completeness of the Table-B class table.
 
 A Case-B target `(a, b, M)` (hard core, `a ∤ M`, `a ∤ b+M`, `e ≠ h`,
 `a ≤ 11`, `μ = M−a ≥ 12`) determines the data `(a, h, b)` with `h := M − b`;
@@ -11,7 +11,7 @@ that some row of `certTableB` is a λ-chain base for it: same `a`, same `h`
 `b₀ ≤ b`). Window arithmetic: every table row has `b₀ ≤ 31`, and the window
 `[43, 53]` spans a full residue system mod `a` for every `a ≤ 11`, so for
 `b ≥ 54` the guard descends along `b ↦ b − a` (`rowFor`); the λ-lift
-(Lemma 3.4, `FrameCert.lift_iter`) then transports the base certificate to
+(the lambda-lift lemma, `FrameCert.lift_iter`) then transports the base certificate to
 the target (`sharpTriple_of_base`). Kernel `decide` only.
 -/
 import Erdos1112Proof.Sharp.TablesData
