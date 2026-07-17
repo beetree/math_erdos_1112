@@ -2,7 +2,6 @@ name: verify
 
 on:
   push:
-    branches: [paper-review, main]
   workflow_dispatch:
 
 jobs:
@@ -16,12 +15,15 @@ jobs:
       - name: Regenerate and re-verify the certificate tables (hard-asserted counts)
         working-directory: paper
         run: python3 gen-tables.py
-      - name: Constructive harness, exhaustive to M <= 60
+      - name: Constructive harness, exhaustive to M <= 120 (fail-closed)
         working-directory: paper/scripts
-        run: python3 sharp6_final.py 60
+        run: python3 sharp6_final.py 120
       - name: Referee-harness input from canonical data
         working-directory: paper/scripts
         run: python3 make_tables_file.py
+      - name: Independent referee harness, M <= 120 (fail-closed)
+        working-directory: paper/scripts
+        run: python3 sharp_referee_check.py 120
       - name: Appendix C correspondence check (paper declarations exist in Lean)
         working-directory: paper/scripts
         run: python3 check_correspondence.py
