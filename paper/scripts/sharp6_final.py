@@ -127,8 +127,12 @@ def load_table_A():
     rows = {}
     with open(os.path.join(HERE, "..", "data", "table-A.csv")) as f:
         for r in csv.DictReader(f):
-            rows[(int(r["a"]), int(r["b"]), int(r["M"]))] = (
-                int(r["x"]), int(r["Y"]), int(r["Z"]))
+            key = (int(r["a"]), int(r["b"]), int(r["M"]))
+            if key in rows:
+                raise SystemExit(f"duplicate Table-A row {key}")
+            rows[key] = (int(r["x"]), int(r["Y"]), int(r["Z"]))
+    if len(rows) != 172:
+        raise SystemExit(f"canonical Table A must have 172 rows, loaded {len(rows)}")
     return rows
 
 
@@ -136,9 +140,13 @@ def load_table_B():
     rows = {}
     with open(os.path.join(HERE, "..", "data", "table-B.csv")) as f:
         for r in csv.DictReader(f):
-            rows[(int(r["a"]), int(r["ebar"]), int(r["h"]))] = (
-                int(r["base_a"]), int(r["base_b"]), int(r["base_M"]),
-                int(r["x"]), int(r["Y"]), int(r["Z"]))
+            key = (int(r["a"]), int(r["ebar"]), int(r["h"]))
+            if key in rows:
+                raise SystemExit(f"duplicate Table-B class {key}")
+            rows[key] = (int(r["base_a"]), int(r["base_b"]), int(r["base_M"]),
+                         int(r["x"]), int(r["Y"]), int(r["Z"]))
+    if len(rows) != 178:
+        raise SystemExit(f"canonical Table B must have 178 classes, loaded {len(rows)}")
     return rows
 
 
@@ -148,6 +156,7 @@ def main():
     tot = 0
     tags = Counter()
     hitA = set()
+    hitB = set()
     failures = []
 
     def fail(a, b, M, tag, ms, why):
@@ -193,6 +202,7 @@ def main():
                     if key not in TB:
                         fail(a, b, M, tag, None, f"class {key} missing from Table B")
                         continue
+                    hitB.add(key)
                     ba, bb, bM, _, Y, Z = TB[key]
                     if M < bM or (b - bb) % a != 0 or (M - bM) != (b - bb):
                         fail(a, b, M, tag, None, f"not on lift ladder of base {(ba, bb, bM)}")
@@ -222,9 +232,18 @@ def main():
         if tot != 83251:
             print(f"COUNT MISMATCH: {tot} hard-core triples, expected 83,251")
             bad = True
+        expected = Counter({'D': 2392, 'P': 2605, 'L': 1420, 'E': 71421,
+                            'T': 3254, 'T-table': 172, 'B': 1987})
+        if tags != expected:
+            print(f"COUNT MISMATCH: branch counts {dict(tags)} != advertised {dict(expected)}")
+            bad = True
         if hitA != set(TA):
             print(f"TABLE MISMATCH: used {len(hitA)} Table-A rows, expected all "
                   f"{len(TA)} canonical rows (every row has M <= 40 <= 120)")
+            bad = True
+        if hitB != set(TB):
+            print(f"TABLE MISMATCH: used {len(hitB)} Table-B classes, expected all "
+                  f"{len(TB)} canonical classes")
             bad = True
     sys.exit(1 if bad else 0)
 

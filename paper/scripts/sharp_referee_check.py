@@ -85,19 +85,13 @@ def gcdl(xs):
 
 # ------------------------------------------------- designated constructions
 def des_D(a, b, M):
-    """Case D, a|M. y=a-1 copies of b; optimal (x,z) with x>=q-1, x+qz>=x_eff.
-    NOTE: x_eff = cdiv(M-1+(a-1)b, a) = q + b - floor((b+1)/a), which is the
-    write-up's closed form (Lemma 3.11, with the FLOOR; an earlier draft's
-    cdiv(b+1, a) was off by one when a∤(b+1) and has been corrected)."""
+    """Case D, a|M: the paper's DESIGNATED witness -- a-1 copies of b, q-1 copies
+    of a, and z = cdiv(x_eff - (q-1), q) copies of M, x_eff = cdiv(M-1+(a-1)b, a).
+    No optimization: exactly the multiset of the Case-D lemma."""
     q = M // a
     xeff = cdiv(M - 1 + (a - 1) * b, a)
-    best = None
-    for z in range(0, xeff // q + 2):
-        x = max(q - 1, xeff - q * z)
-        if best is None or x + z < best[0] + best[1]:
-            best = (x, z)
-    x, z = best
-    return (x, a - 1, z)
+    z = max(0, cdiv(xeff - (q - 1), q))
+    return (q - 1, a - 1, z)
 
 def des_P(a, b, M):           # Lemma caseP: the uniform pair-frame, all r >= 3
     r = (b + M) // a
@@ -155,6 +149,8 @@ def load_tables():
                 m = re.match(r"\((\d+),(\d+),(\d+)\) e=\d+ h=\d+: box \((\d+), (\d+), (\d+)\)", line)
                 if m:
                     a, b, M, x, Y, Z = map(int, m.groups())
+                    if (a, b, M) in A:
+                        report("FAIL", f"table A duplicate row ({a},{b},{M})")
                     A[(a, b, M)] = (x, Y, Z)
             elif sec in ("B", "BS"):
                 m = re.match(r"class \(a=(\d+), ebar=(\d+)(?:=h)?(?:, h=(\d+))?\): base \((\d+),(\d+),(\d+)\), box \((\d+), (\d+), (\d+)\)", line)
@@ -163,8 +159,8 @@ def load_tables():
                     if h is None:
                         h = ebar
                     key = (a, ebar, h)
-                    if key in B and B[key][:3] != (ba, bb, bM):
-                        report("WARN", f"table B duplicate class {key} with different base")
+                    if key in B:
+                        report("FAIL", f"table B duplicate class key {key}")
                     B[key] = (ba, bb, bM, x, Y, Z)
     return A, B
 
@@ -424,8 +420,13 @@ def part_tree(Mmax, TA, TB):
                 tags[tag] += 1
     print(f"  hard-core triples: {tot} (paper claims 83,251 at Mmax=120)")
     print(f"  branch counts: {dict(sorted(tags.items()))}")
-    if Mmax == 120 and tot != 83251:
-        report("FAIL", f"hard-core count {tot} != claimed 83,251")
+    if Mmax == 120:
+        if tot != 83251:
+            report("FAIL", f"hard-core count {tot} != claimed 83,251")
+        expected = Counter({"D": 2392, "P": 2605, "L": 1420, "E": 71421,
+                            "T": 3254, "T-table": 172, "B": 1987})
+        if tags != expected:
+            report("FAIL", f"branch counts {dict(tags)} != advertised {dict(expected)}")
     return tags
 
 def part_tables(TA, TB):
@@ -453,7 +454,7 @@ def part_tables(TA, TB):
     for (a, ebar, h), (ba, bb, bM, x, Y, Z) in TB.items():
         e = bb - ba
         ok_ctx = ba == a and gcd(a, bb) == 1 and bM - bb == h and e % a == ebar and \
-                 (bM - ba) >= 12 and bM % a != 0 and (bb + bM) % a != 0
+                 (bM - ba) >= 12 and bM % a != 0 and (bb + bM) % a != 0 and e != h
         if not ok_ctx:
             bad += 1
             report("FAIL", f"Table B base {(a,ebar,h)} -> ({ba},{bb},{bM}) context wrong")
@@ -490,8 +491,8 @@ def part_tables(TA, TB):
                     missing.append((a, ebar, h, found))
                 else:
                     ba, bb, bM = TB[(a, ebar, h)][:3]
-                    if (bM, bb) > (found[2], found[1]):
-                        report("FAIL", f"Table B base {(a,ebar,h)}=({ba},{bb},{bM}) is not the smallest branch-B member {found}")
+                    if (ba, bb, bM) != found:
+                        report("FAIL", f"Table B base {(a,ebar,h)}=({ba},{bb},{bM}) != first branch-B member {found}")
     for m in missing:
         report("FAIL", f"Table B missing class {m[:3]} (first member {m[3]})")
     print(f"  Table B completeness: {len(missing)} missing classes")
@@ -573,21 +574,21 @@ def part_lift(TB):
 
 def part_families():
     print("== PART 6: Case P uniform pair-frame -- witnesses and reach inequalities ==")
-    # exact witness verification on every P hard-core triple with a <= 50, M <= 250
-    # (all P-triples with M <= Mmax are already checked exactly in PART 2)
+    # exact witness verification on EVERY P hard-core triple with a <= 50, M <= 250,
+    # enumerated directly over (b, M) so no r-range can truncate the sweep
+    # (all P-triples with M <= Mmax are also checked exactly in PART 2)
     n = bad = 0
     for a in range(3, 51):
-        for r in range(3, 250 // a + 2):
-            for M in range(a + 2, min(r * a - a, 251)):
-                b = r * a - M
-                if not (a < b < M) or gcd(a, b) != 1 or not (1 <= M - b <= a - 2):
+        for M in range(a + 3, 251):
+            for b in range(a + 1, M):
+                if (b + M) % a != 0 or gcd(a, b) != 1 or not (1 <= M - b <= a - 2):
                     continue
                 x, y, z = des_P(a, b, M)
                 n += 1
                 if x + y + z != M - 1 or not covers(a, b, M, x, y, z):
                     bad += 1
                     report("FAIL", f"uniform pair-frame fails at ({a},{b},{M})")
-    print(f"  uniform witnesses verified exactly (a<=50, M<=250): {n}, failures {bad}")
+    print(f"  uniform witnesses, ALL P-triples with a<=50, M<=250: {n}, failures {bad}")
     # the four reach inequalities (E1),(E2),(F1),(F2), arithmetic, a <= 150
     n = bad = 0
     for a in range(3, 151):
@@ -605,7 +606,8 @@ def part_families():
                         and a * M - 1 <= a * (r * y + x)):              # (F2)
                     bad += 1
                     report("FAIL", f"reach inequality fails at ({a},{b},{M})")
-    print(f"  reach inequalities (E1)/(E2)/(F1)/(F2) verified (a<=150): {n}, failures {bad}")
+    print(f"  reach inequalities (E1)/(E2)/(F1)/(F2), all {n} instances with "
+          f"a<=150 and 3<=r<2a: failures {bad}")
 
 def part_eta_algebra():
     print("== PART 7: eta-box algebra (sigma bound + budget threshold), a <= 400 ==")
