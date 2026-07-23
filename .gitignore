@@ -8,6 +8,14 @@
 
 # LaTeX build artifacts (the PDF and generated tables are reproducible via `make`)
 paper/*.aux
+paper/friendly/*.aux
+paper/friendly/*.log
+paper/friendly/*.out
+paper/friendly/*.toc
+paper/friendly/*.fls
+paper/friendly/*.fdb_latexmk
+paper/friendly/*.synctex.gz
+# paper/friendly/erdos1112-friendly.pdf is committed, like the parent paper's PDF.
 paper/*.log
 paper/*.out
 paper/*.fls
