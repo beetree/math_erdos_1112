@@ -62,11 +62,14 @@
 \renewcommand{\thepart}{\Roman{part}}
 
 % --- "Big idea" boxes: one-paragraph summaries a reader can hold on to ------
-\newenvironment{bigidea}
+% Synthesis notes. Each carries a label naming its epistemic status --- heuristic,
+% mechanism, proof summary, key step --- so a reader can tell at a glance whether a
+% note states something proved, something forthcoming, or an interpretation.
+\newenvironment{bigidea}[1][The mechanism]
   {\par\medskip\noindent\hspace*{0.02\linewidth}%
    \begin{minipage}{0.96\linewidth}
    {\color{blue!55!black}\hrule height 0.8pt}\vspace{6pt}
-   \noindent\textbf{Big idea.}\ }
+   \noindent\textbf{#1.}\ }
   {\par\vspace{6pt}{\color{blue!55!black}\hrule height 0.8pt}%
    \end{minipage}\par\medskip}
 
@@ -117,12 +120,9 @@ interest. The proof is computer-assisted, with a finite certificate layer, and t
 full dichotomy is formally verified in Lean~4 in the problem's literal integer
 phrasing.
 
-This paper is also an experiment in form. It is written to be \emph{read} rather
-than merely checked: everything the proof needs is built from the ground up, the
-governing intuition is stated before each construction and separated from the
-estimates that pay for it, and the argument is illustrated throughout. Nothing is
-assumed beyond comfort with elementary algebra and some experience reading proofs.
-\S\ref{sec:onform} explains the choice and what it costs.
+The proof is presented at length and from first principles: the background it needs
+is developed in the text, and the mechanism of each construction is separated from
+the estimates that bound its constants. \S\ref{sec:onform} explains that choice.
 \end{abstract}
 
 \maketitle
@@ -144,31 +144,27 @@ This paper settles a question posed by Paul Erd\H{o}s and Ronald Graham in 1980
 dichotomy stated as Theorem~\ref{thm:main-friendly} in \S\ref{sec:answer}: the
 ratio $r_k(d_1,d_2)$ exists precisely when $d_2 \ge k+1$.
 
-It is written unconventionally, and deliberately so. The conventions of research
-mathematics reward compression: a proof is presented in the smallest number of
-symbols that a specialist can expand, the intuition that generated it is discarded
-once it has done its work, and the reader is trusted to reconstruct what was left
-out. That is an efficient way to communicate with fifty people and an effective
-way to exclude everyone else. It also, in our experience, hides errors --- the
-compressed step is exactly where the reader stops checking.
+The proof is presented at greater length than is customary, and the reasons are
+practical. It combines several elementary but nonstandard reductions, draws on
+three separate bodies of background --- remainder arithmetic, combinatorics on
+words, and a little real analysis --- and rests at one point on a finite
+certificate layer. Few readers are fluent in all three areas at once, and a proof
+that is checkable only by someone who is has a very small pool of possible
+checkers.
 
-So this paper tries the opposite. Every prerequisite is built in, from remainder
-arithmetic to the completeness of the real line. The governing idea of each
-construction is stated in plain language and then \emph{separated} from the
-estimates that make it work, so that the reader can see which lines carry the
-mathematics and which merely pay for constants. The argument is illustrated
-throughout. Where a routine expansion would bury the idea it serves, the expansion
-goes to an appendix rather than into the reader's way. The result is roughly three
-times the length of a conventional write-up of the same theorems.
+We have therefore made three choices. The background the argument needs is
+developed in the text rather than cited, so that the paper can be verified without
+a reference shelf. The mechanism of each construction is stated separately from the
+estimates that bound its constants, so that a reader can see which lines carry the
+mathematical content and which perform bookkeeping. And routine expansions are
+placed in an appendix rather than in the reader's way. The result is roughly three
+times the length of a compressed presentation of the same theorems.
 
-We think that is a good trade, and we would like to see the experiment repeated by
-others; but the reader should know what it costs. It costs length. It costs the
-particular pleasure of a dense argument admired by people who can already read it.
-And it forgoes the presumption --- comfortable but rarely examined --- that
-difficulty of exposition is evidence of depth of content. What it does not cost is
-rigour: nothing here is asserted without proof, the finite layer is
+The cost is length; we think the trade is worth making for a proof of this shape,
+and \S\ref{sec:computer} records what has been done to make the result checkable
+by other means as well. Nothing here is asserted without proof: the finite layer is
 machine-checked three independent ways, and the entire dichotomy is verified in
-Lean~4 (\S\ref{sec:computer}).
+Lean~4.
 
 Some ground rules, so you know what you are reading.
 
@@ -639,10 +635,9 @@ Let $k \ge 3$ and $1 \le d_1 < d_2$ be integers.
 \item \textup{(Existence.)} If $d_2 \ge k+1$, you have a winning strategy:
       announcing $r = 192\, d_2$ works --- every lacunary $B$ with that ratio can
       be dodged by some $(d_1,d_2)$-sequence $A$ with $(kA) \cap B = \emptyset$.
-      (Any larger announcement works too, for a reason worth pausing on: raising
-      $r$ only \emph{shrinks} the set of sequences the Adversary may legally play,
-      so a strategy that beats them all at $r = 192 d_2$ beats the survivors at
-      any $r \ge 192 d_2$. This is Exercise~\ref{chk:monotone-r}.)
+      The same holds for every $r \ge 192\,d_2$: a sequence lacunary with ratio
+      $r$ is a fortiori lacunary with ratio $192\,d_2$, so raising $r$ only
+      shrinks the admissible class of $B$.
 \item \textup{(Non-existence, in a strong form.)} If $d_2 \le k$, no announcement
       wins. Worse: even if the fixed ratio $r$ is replaced by any prescribed sequence
       $r_1, r_2, r_3, \dots$ of lower bounds --- the Adversary now being required to
@@ -852,7 +847,7 @@ Every $k$-fold sum therefore lands in a \emph{window} of width $k$ hanging just 
 one of the values $kc + s\gamma$. As $s$ runs through the integers, these anchor
 values march along the number line in equal strides of $\gamma$:
 
-\begin{bigidea}
+\begin{bigidea}[Guiding heuristic]
 The $k$-fold sums of a steady walk of speed $\gamma$ are confined to windows of width
 $k$, one hanging below each multiple of $\gamma$ (shifted by $kc$). The windows stride
 along the line at pace $\gamma$. Everything --- both halves of the dichotomy ---
@@ -1483,7 +1478,7 @@ does miss $25$, yet the criterion declines to vouch for it. We simply will not c
 the free-gap lemma of \S\ref{sec:freegap} finds slopes that pass even the stricter
 test.
 
-\begin{bigidea}
+\begin{bigidea}[Reduction to slope avoidance]
 For a Beatty walk, ``the sum of $k$ members never equals $b$'' has become a statement
 about the dial position alone: no multiple $s\gamma$ may land in the closed window
 $[t, t+k]$, where $t = b - kc$. The game of dodging an infinite sequence $B$ is now a
@@ -2220,7 +2215,7 @@ document does not answer --- the constant $192$ is what our estimates can pay
 for, and \S\ref{sec:nested}'s closing remark already disclaimed any belief that
 it is optimal.)
 
-\begin{bigidea}
+\begin{bigidea}[Proof of Theorem~\ref{thm:existence-friendly}: summary]
 The existence proof in one breath: aim a Beatty walk's slope dial at the top of the
 permitted window; each element of $B$ forbids a sparse family of dial positions, but
 the free-gap lemma always finds a safe sub-stretch losing only a factor $192\,d_2$ of
@@ -2236,7 +2231,7 @@ our bookkeeping (the middle third, the choice $\tfrac{15}{32}$, the crude bound
 \eqref{eq:s1-upper}); we make no claim that it is anywhere near
 optimal.
 
-\begin{bigidea}
+\begin{bigidea}[Why the surviving slope must be irrational]
 \emph{Daylight is necessary but nowhere near sufficient --- the true resource is
 the continuum.} An arithmetic progression with step $d_2 \ge k+1$ has splendid
 daylight, yet it loses: its gap word is periodic, \S\ref{sec:periodic} will show
@@ -2637,7 +2632,7 @@ $b_i \ge i \to \infty$, some such position has $b_i \ge X_0$ as well. That $b_i$
 belongs to both $B$ and $kA$.
 \end{proof}
 
-\begin{bigidea}
+\begin{bigidea}[Certificate mechanism]
 Sparseness cannot save the walker, because congruence classes are everywhere: however
 fast $B$ is forced to grow, it can always take its next step \emph{inside} any
 prescribed class. The certificate $B$ cycles through all classes of all moduli
@@ -2963,9 +2958,10 @@ $i_t = m_t \ell$ (i.e.\ $j = 0$) for all $t$ gives
 \[
   p_{m_1 \ell} + \cdots + p_{m_k \ell} \;=\; (m_1 + \cdots + m_k)\, P ,
 \]
-and $m_1 + \cdots + m_k$ ranges over every integer $\ge 0$
-(Exercise~\ref{chk:s-range} showed this ranging argument for $\ge k$; here the
-$i_t$ may be $0$, so even every integer $\ge 0$). By Lemma~\ref{lem:kA-prefix}, $kA \supseteq
+and $m_1 + \cdots + m_k$ ranges over every integer $\ge 0$: each $m_t$ is an
+arbitrary nonnegative integer, so the sum realizes $0$ (all $m_t = 0$) and every
+larger value $N$ (take $m_1 = N$ and the rest $0$). By
+Lemma~\ref{lem:kA-prefix}, $kA \supseteq
 k a_1 + P\,\{0, 1, 2, \dots\}$: a full tail of the class of $k a_1$ modulo $P$.
 \end{proof}
 
@@ -3538,11 +3534,18 @@ The width dichotomy left us with the balanced words, and this section proves the
 structure theorem that tames them: \emph{a balanced binary word is either eventually
 periodic, or --- after discarding at most one initial stretch --- is ``mechanical'':
 its counting function is $q_n = \lfloor n\alpha + \beta \rfloor$ for a fixed
-irrational slope $\alpha$.} This is (one direction of) a celebrated 1940 theorem of
-Morse and Hedlund. The proof below is elementary and self-contained: its only
-imported ingredient is the completeness of the reals (through $\sup$), and the
-section closes with the one approximation tool (Dirichlet, by pigeonhole) that the
-endgame will need.
+irrational slope $\alpha$.} This is one direction of a celebrated theorem of Morse
+and Hedlund \cite{MH40}; a modern textbook account, with the full equivalence
+between balanced, Sturmian and mechanical words, is \cite[Ch.~2]{Lothaire}.
+
+A reader content to cite that theorem may take Theorem~\ref{thm:mh-friendly} on
+authority and pass directly to \S\ref{sec:sturmian-endgame}. We prove it instead
+for three reasons: we need only the one direction stated above, so the full
+classification is more than the argument requires; the route below is elementary,
+importing nothing beyond the completeness of the reals (through $\sup$) and a
+single pigeonhole; and it is the route the Lean development carries, so proving it
+here keeps the formalization and the text in step. The section closes with the one
+approximation tool (Dirichlet, by pigeonhole) that the endgame will need.
 
 Throughout, $h$ is a balanced binary word with counting function $q$ ($q_0 = 0$).
 
@@ -4183,7 +4186,7 @@ only integer strictly between $-1$ and $1$ is $0$. Therefore $\Theta - \theta =
 0$, i.e.\ $\Theta = \theta$ --- and consequently $\sum_t q_{i_t} = X_s - \theta =
 w$, exactly as required. The Claim is proved.
 
-\begin{bigidea}
+\begin{bigidea}[Key step: the integrality snap]
 \emph{The snap} (Figure~\ref{fig:snap}) is the step worth slowing down for,
 so do not let it pass in four lines: soft estimates confined $\Theta$ to an open
 interval of length $2$, and hard integrality confined $\Theta - \theta$ to the
@@ -4301,7 +4304,7 @@ Step 2 realizes $w(s^*) \in W_{s^*}$ with legal indices, and
 \]
 \end{proof}
 
-\begin{bigidea}
+\begin{bigidea}[Sturmian mechanism]
 For a Sturmian walk the window picture stops being an estimate and becomes an
 equation: the depth of a value below the window's top \emph{equals} the sum of $k$
 rotation points on the circle. The hitting lemma lets us place $k-1$ of those
@@ -4348,6 +4351,10 @@ lemma that squeezes width out of \emph{unbalancedness itself}, with a beautiful
 detour through palindromes.
 
 First, a two-line classic:
+
+The next fact is classical in combinatorics on words (see
+\cite[Ch.~1]{Lothaire}); we give its one-line proof to keep the section
+self-contained.
 
 \begin{lemma}[Border--period duality]\label{lem:border-period}
 Let $u$ be a finite word of length $\tau$ with a \emph{border} of length $\ell$:
@@ -5095,7 +5102,7 @@ bookkeeping until then.) The case analysis is, at bottom, a hunt for
 certifying boxes; the exceptional tables of cases T and B are nothing but lists of
 such boxes, checkable by the two-line computation in this proof.
 
-\begin{bigidea}
+\begin{bigidea}[Mechanism of Part~IV]
 All of Part~IV is one mechanism run six ways: \emph{cover the residues modulo
 $a$} with a few copies of the big generators, then \emph{slide and stack} with
 copies of $a$ until the progressions knit into a solid run
@@ -5670,7 +5677,7 @@ running examples of \S\S\ref{sec:caseDL}--\ref{sec:caseB-friendly}.}
 \label{fig:routing}
 \end{figure}
 
-\begin{bigidea}
+\begin{bigidea}[Why the hard core is hard]
 Why is the hard core hard? Because $b$ and $M$ crowd within $a - 2$ of each
 other at the top: the two big generators are nearly interchangeable, their
 small difference $h$ and offset $e$ do all the arithmetic work, and whether the
@@ -6351,12 +6358,13 @@ once the target line is ahead it stays ahead forever. The computer's entire
 role is confined to the left of the dashed line.}
 \end{center}
 
-\begin{bigidea}
-The logical shape of Case T is the pattern of every computer-assisted step in
-this work: the \emph{infinite} part is a slope comparison a student can check
-(budget grows at rate $\le 2/3$, target at rate $1$), and the \emph{finite} part
-is large but mindless. The machine never supplies an idea --- only stamina.
-\S\ref{sec:computer} describes the checking apparatus in full.
+\begin{bigidea}[Role of the finite computation]
+Case T has the logical shape of every computer-assisted step in this work. The
+\emph{infinite} part is the slope comparison above --- a budget growing at rate
+$\le 2/3$ against a target growing at rate $1$ --- and is checkable by hand.
+Computation enters only to exhaust the finite exceptional range $a \le 3000$ and
+to verify the $172$ certificates it produces. \S\ref{sec:computer} describes
+that apparatus in full.
 \end{bigidea}
 
 \begin{checkpoint}[\textsc{core}]
