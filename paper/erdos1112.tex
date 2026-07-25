@@ -1693,9 +1693,10 @@ reading for the idea, you now have it, and may rejoin at \S\ref{sec:nested}.
 
 \subsection{The audit: size and placement}\label{sec:freegap-audit}
 
-\emph{(This subsection is where every constant in the lemma comes from --- and
-where the $192$ of the main theorem is ultimately made. It proves nothing new
-about the mechanism.)}
+\emph{(First pass: skippable.) This subsection is where every constant in the
+lemma comes from --- and where the $192$ of the main theorem is ultimately made.
+It proves nothing new about the mechanism: Lemma~\ref{lem:freegap-geometric}
+already has that.}
 
 Throughout, remember the standing facts: $2 \le k \le d_2 - 1$ (from
 $d_2 \ge k+1$), $d_2 \ge 3$, $t \ge 32 d_2^2$, and $d_2 - \tfrac12 \le lo \le hi \le
@@ -4833,7 +4834,8 @@ j\beta)/\alpha$:
 \]
 so $i \le x + \tfrac{\alpha - 1}{\alpha} < x + 1$, i.e.\ $i \le x$.
 
-\emph{Induction $y \to y + 1$ (for $y \ge \alpha - 1$).} Only the new stretch $n
+\emph{Induction $y \to y + 1$ (for $y \ge \alpha - 1$).}
+\emph{(First pass: skippable.)} Only the new stretch $n
 \in (\,\alpha x + \beta y - C,\ \alpha x + \beta(y+1) - C\,]$ needs attention.
 Subtract one $\beta$: certainly $n - \beta \le \alpha x + \beta y - C$; and $n -
 \beta > \alpha x + \beta y - C - \beta \ge C$, because
@@ -5362,7 +5364,7 @@ arithmetic progression $d \cdot [\,C,\ \alpha x + \beta y - C\,]$, of step $d$ a
   L \;:=\; \alpha x + \beta y - 2C + 1 \ \text{ terms}.
 \]
 
-\emph{The grid is long enough: $L \ge M + 1$.} $L$ grows with $M$ (through $y$),
+\emph{The grid is long enough: $L \ge M + 1$.} \emph{(First pass: skippable.)} $L$ grows with $M$ (through $y$),
 so the worst case is the smallest legal $M = d\beta + 1$, where the claim
 rearranges (item~(A3) of Appendix~\ref{app:algebra}, with $u := \beta(d-1)$) to
 \[
@@ -5591,7 +5593,7 @@ by the choice of $z$. Now run the frame argument
 place of literal ones): every $n \in [S,\ S + M - 1]$ is (residue representative)
 $+\ a u$ for some $u \le \lceil (M - 1 + S)/a \rceil = x_{\mathrm{eff}}$.
 
-\emph{Budget.} Since $b \le M - 1$,
+\emph{Budget.} \emph{(First pass: skippable.)} Since $b \le M - 1$,
 \[
   \frac{M - 1 + (a-1)b}{a} \;\le\; \frac{M - 1 + (a-1)(M-1)}{a} \;=\; M - 1 ,
 \]
@@ -5943,7 +5945,7 @@ tk)$, and $j - tk$ covers the interval $[-tZ,\ t-1]$, again of length $\ge a$.
 Either way $j + tk$ (or $j - tk$) sweeps a full residue system, and multiplying
 by the \emph{unit} $\bar e$ permutes residues: all of $\ZZ_a$ is covered.
 
-\emph{Budget.} Every representative height is at most $S_0 := (t-1)\,b + Z\,M$,
+\emph{Budget.} \emph{(First pass: skippable.)} Every representative height is at most $S_0 := (t-1)\,b + Z\,M$,
 and the box size is $K := t - 1 + Z = \sigma - 1$. It suffices to show
 \[
   M - 1 + S_0 \;\le\; a\,(M - 1 - K) ,
@@ -6091,7 +6093,9 @@ Lemma~\ref{lem:staircase-friendly}(b) covers $[\,ca + C,\ (c+1)a + V\,]$, of
 length $a + (V - C) + 1 \ge a + \max(a,\mu) \ge a + \mu = M$. Budget $x + y + z =
 2c + 1$.
 
-\emph{Variant $g \ge 2$.} The ceiling branch gives $V' - C' \ge a + \lceil (\mu -
+\emph{Variant $g \ge 2$.} \emph{(First pass: skippable --- the same argument as
+variant~A, with the base form of the staircase in place of the two-frame merge.)}
+The ceiling branch gives $V' - C' \ge a + \lceil (\mu -
 1)/g \rceil \ge a + (\mu-1)/g$. With $x = c + g$, the \emph{base form} of
 Lemma~\ref{lem:staircase-friendly}(d) --- no merge hypothesis needed --- covers a
 solid interval of length
