@@ -81,9 +81,10 @@
 
 \begin{document}
 
-\title[Erd\H{o}s problem 1112, from first principles]
-      {Erd\H{o}s problem 1112, from first principles:\\
-       $r_k(d_1,d_2)$ exists if and only if $d_2 \ge k+1$}
+\title[Sumsets of bounded-gap sequences and lacunary sets]
+      {$k$-fold sumsets of bounded-gap sequences and lacunary sets:\\
+       a dichotomy at $d_2 = k+1$\\
+       (Erd\H{o}s problem 1112)}
 
 \author{Johan Land}
 \address{Independent researcher}
@@ -122,6 +123,10 @@ phrasing.
 The proof is presented at length and from first principles: the background it needs
 is developed in the text, and the mechanism of each construction is separated from
 the estimates that bound its constants. \S\ref{sec:onform} explains that choice.
+Appendix~\ref{app:referee} is a guide to the critical path for a reader whose
+purpose is to check the theorem rather than to learn the proof: it identifies the
+load-bearing results, the five places we think the argument is most likely to
+break, and what an audit costs in hours.
 \end{abstract}
 
 \maketitle
@@ -174,10 +179,10 @@ Some ground rules, so you know what you are reading.
       and divisibility (\S\ref{sec:remainders}), infinite words and a little analysis
       (\S\ref{sec:words}), and balanced words (\S\ref{sec:sturmian-course}). What is
       \emph{not} redeveloped from zero is the general craft of reading proofs ---
-      contradiction, induction, ``it suffices to show'' --- so \S\ref{sec:howtoread}
+      contradiction, induction, ``it suffices to show'' --- so Appendix~\ref{app:howtoread}
       is a short guide to the conventions this paper uses. If you hit an undefined
       \emph{mathematical term}, that is our mistake; if you hit an unfamiliar
-      \emph{proof move}, \S\ref{sec:howtoread} should name it.
+      \emph{proof move}, Appendix~\ref{app:howtoread} should name it.
 \item \emph{Every proof is complete, and one table travels separately.} When a step is
       genuinely hard, we slow down and build the tools --- we do not say ``it can be
       shown''. Where a routine algebraic expansion would drown the idea it serves,
@@ -207,67 +212,14 @@ One notational convention up front: $\NN = \{1, 2, 3, \dots\}$ denotes the posit
 integers (natural numbers), and when we say \emph{number} without qualification we mean
 a positive integer.
 
-\subsection{How to read this proof}\label{sec:howtoread}
+\subsection{A note on prerequisites}\label{sec:howtoread-pointer}
 
-Mathematics has a craft as well as a content, and this paper assumes a little of
-the craft while building all of the content. Here is the whole of what is assumed,
-in two pages. Skim it now; come back when a phrase in a proof feels like a move you
-were not taught.
-
-\emph{Direct proof, contradiction, contrapositive.} To prove ``if $P$ then $Q$'',
-you may assume $P$ and derive $Q$ (direct); or assume $P$ together with ``not $Q$''
-and derive something absurd (contradiction); or prove ``if not $Q$ then not $P$'',
-which says exactly the same thing (contrapositive). All three appear here, and we
-name which one we are using whenever it might not be obvious.
-
-\emph{``It suffices to show.''} A proof often replaces its goal with a stronger or
-more convenient one: \emph{it suffices to show $R$}, meaning ``$R$ implies what we
-want, so let us prove $R$ instead''. This is not a weakening --- proving more than
-you need is always allowed. \S\ref{sec:windows} does this deliberately and says so.
-
-\emph{``Fix an arbitrary $x$.''} To prove something about \emph{every} $x$, we take
-one, refuse to assume anything special about it, and argue. Because nothing special
-was assumed, the argument covers all of them. The mirror move, ``there exists'', is
-discharged by \emph{exhibiting} one --- which is why so many proofs here consist of
-writing down a construction and then checking it works.
-
-\emph{Induction, ordinary and strong.} To prove a statement $S(n)$ for every $n$:
-prove $S(1)$, then prove that $S(n)$ implies $S(n+1)$. \emph{Strong} induction
-allows the stronger assumption that $S(1), \dots, S(n)$ \emph{all} hold when proving
-$S(n+1)$ --- used once, in \S\ref{sec:sharp-assembly}, where a statement about a
-number $M$ is proved using the same statement for all smaller values.
-
-\emph{The well-ordering principle.} Every nonempty set of positive integers has a
-smallest element. Obvious-sounding, genuinely load-bearing: it is what licenses
-phrases like ``let $n^*$ be the \emph{first} index such that\dots'', which appear in
-\S\ref{sec:slot} and \S\ref{sec:remainders}.
-
-\emph{Chains of inequalities.} A display like
-\[
-  A \;\le\; B \;=\; C \;\le\; D
-\]
-asserts each link separately and concludes $A \le D$. Read it one link at a time,
-and ask of each: which hypothesis makes \emph{this} step true? Where a link is not
-immediate we say why, either inline or in Appendix~\ref{app:algebra}.
-
-\emph{Mechanism versus bookkeeping.} This is the distinction most worth internalizing
-before Part~II. Nearly every proof here has two ingredients: a \emph{mechanism} ---
-the construction or idea that makes the thing work --- and \emph{bookkeeping} --- the
-inequalities confirming that the particular constants chosen are large enough. The
-mechanism is what you should remember; the bookkeeping is what you should be able to
-check but need not carry in your head. We flag the seam explicitly, and passages of
-pure verification are marked \emph{(first pass: skippable)}.
-
-\emph{Passing to a tail.} Several arguments discard a finite initial segment of an
-infinite sequence and work only with what remains --- ``pass to the tail''. This is
-harmless when the property in question concerns only large numbers, and we always say
-why it is harmless when we do it.
-
-\emph{What is \emph{not} assumed.} No calculus, no set theory beyond ``$\in$'' and
-``$\subseteq$'', no combinatorics, no number theory beyond what
-\S\ref{sec:remainders} builds, no analysis beyond what \S\ref{sec:words} builds. If
-you have met proof by induction and can manipulate an inequality without panic, you
-have enough.
+This paper builds all of its content from the ground up, but it does assume a
+little of the \emph{craft} of reading proofs --- what ``it suffices to show means,
+how a chain of inequalities is to be read, when passing to a tail is legitimate.
+Appendix~\ref{app:howtoread} sets out the whole of what is assumed, in two pages,
+and nothing else is. A reader for whom that is second nature should skip it; a
+reader who finds a move in a proof unfamiliar should look there first.
 
 \subsection{Sequences and gaps}
 
@@ -705,13 +657,81 @@ traditions \cite{Gr64,ErGr80,Alfonsin,GS20} concern infinite sequences, or use
 unboundedly many summands, or optimise the generating set; none bounds a multiset
 drawn from an arbitrary given set.
 
+Table~\ref{tab:novelty} states, for each nearest result, exactly which hypothesis
+separates it from Theorem~\ref{thm:sharp-friendly}. A reader who wants to overturn
+the novelty claim should attack a row of this table.
+
+\begin{table}[t]
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}p{0.245\textwidth}p{0.30\textwidth}p{0.365\textwidth}@{}}
+\hline
+\textbf{Result} & \textbf{What it gives} & \textbf{Why it does not imply
+Theorem~\ref{thm:sharp-friendly}} \\
+\hline
+Lev \cite[Thm.~1]{Lev98} \newline \emph{(closest antecedent)}
+& for $A \subseteq [1,l]$ with $l \le \tfrac32 |A| - 2$, the subset sums of $A$
+  contain an interval
+& same conclusion type (a genuine interval, from genuine $0/1$ subset sums), but a
+  \emph{dense-set} theorem: $|A| \gtrsim \tfrac23 M$, vacuous at $|G| = 3$, and no
+  multiset. Ours is its density-free multiset analogue \\
+Lev \cite[Thm.~1]{Lev97}
+& an interval of length exactly $\max(A) + 1$
+& inside the $h$-fold sumset $(2k-1)A$ --- unbounded multiplicities, many summands
+  --- and under a density hypothesis; not $0/1$ sums of a bounded multiset \\
+Lev \cite{Lev99}, S\'ark\"ozy \cite{Sarkozy89,Sarkozy94}
+& an AP inside the subset sums $S(A)$
+& the common difference cannot be forced to $1$, so not consecutive integers; needs
+  $|A| \sim \sqrt{m \log m}$; vacuous at $|G| = 3$ \\
+Szemer\'edi--Vu \cite{SzemerediVu06}
+& subset sums of $A \subseteq [n]$ contain a length-$n$ AP
+& density threshold $|A| \ge c\sqrt n$; an AP, not necessarily consecutive; no
+  uniform bound $|S| \le M-1$ \\
+Conlon--Fox--Pham \cite{CFP21}
+& a long interval of consecutive integers in subset sums
+& asymptotic and density-based; yields no uniform small $|S| \le M-1$ \\
+Nathanson \cite{Nathanson72}, Granville--Walker \cite{GW21}, Lev \cite{Lev21}
+& the interval structure of $mA$ for large $m$
+& the $h$-fold sumset is a total-degree \emph{simplex} in coefficient space; the
+  subset sums of a bounded multiset are a \emph{box} contained in it, so this is a
+  weaker statement about a larger set \\
+Alon--Freiman \cite{AlonFreiman88}, Lev \cite{Lev03}, Chen--Mao--Zhang \cite{CMZ25}
+& AP or interval in the subset sums of a \emph{dense} set
+& density $|A| \gtrsim \sqrt n$; vacuous at $|G| = 3$ \\
+Alon \cite{Alon87}
+& the extremal size of a set \emph{avoiding} a target subset sum
+& the inverse problem; orthogonal \\
+Folkman--Birch--Graham \cite{Gr64}, Erd\H{o}s--Graham \cite{ErGr80}
+& subset sums of an \emph{infinite} sequence contain every large integer
+& infinite sequence, unbounded summands; the filling step is a shared
+  \emph{technique}, not an implication \\
+Frobenius, Ram\'irez Alfons\'in \cite{Alfonsin}
+& everything past the Frobenius number, as unbounded combinations
+& Frobenius number $\gg M$; unbounded multiplicity; no length-$M$ window from a
+  bounded multiset \\
+Postage-stamp bases \cite{GS20}
+& an initial run $[1,N]$ from $\le h$ summands
+& there the generating set is \emph{chosen} to maximise $N$; we fix an
+  \emph{arbitrary} $G$ and demand a run of length exactly $M$ \\
+\hline
+\end{tabular}
+\caption{The nearest results, and the hypothesis that separates each from
+Theorem~\ref{thm:sharp-friendly}. The literature splits into a
+\emph{higher-sumset} regime (many summands, unbounded multiplicities) and a
+\emph{density-threshold} regime (large $|A|$, APs of difference possibly $> 1$).
+Theorem~\ref{thm:sharp-friendly} sits between them: boundedly many summands, drawn
+with repetition from a fixed and possibly tiny set, covering consecutive integers,
+uniformly in $G$ down to $|G| = 3$.}
+\label{tab:novelty}
+\end{table}
+
 We are not aware of a result implying Theorem~\ref{thm:sharp-friendly}, even with a
 worse constant, and after a documented search\footnote{Conducted July 2026 over
 MathSciNet, zbMATH, arXiv and Google Scholar citation chains around the works cited
-here; the record, with a full comparison table, is in the repository as
-\texttt{paper/novelty-search.md}.} it appears to be new. As with any negative claim
-in a mature area this warrants a specialist's confirmation; the sharpest place to
-look is the neighbourhood of \cite{Lev98}.
+here; the search record is in the repository as \texttt{paper/novelty-search.md}.}
+it appears to be new. As with any negative claim in a mature area this warrants a
+specialist's confirmation; the sharpest place to look is the neighbourhood of
+\cite{Lev97,Lev98}.
 
 \subsection{Map of the paper}\label{sec:map-friendly}
 
@@ -2251,7 +2271,7 @@ positive and negative) and let $d$ be the \emph{smallest positive} one. Two
 things justify that phrase: at least one such integer is positive (take $x = a$,
 $y = b$, giving $a^2 + b^2 > 0$), and \emph{every nonempty set of positive
 integers has a least element} --- the well-ordering principle of
-\S\ref{sec:howtoread}, which is what makes ``the smallest'' meaningful. We claim
+Appendix~\ref{app:howtoread}, which is what makes ``the smallest'' meaningful. We claim
 $d = \gcd(a,b)$.
 
 First, $d \mid a$: divide with remainder, $a = q d + r$ with $0 \le r < d$; then
@@ -2673,9 +2693,31 @@ which is nonempty, and fix an index $T$ beyond which \emph{only} letters of $\Gi
 occur (possible: each of the finitely many non-recurring letters has a last
 occurrence; take $T$ past all of them).
 
+It pays to name the object the rest of this part actually studies.
+
+\begin{definition}[$G$-walk]\label{def:gwalk}
+Let $G$ be a finite set of positive integers. A \emph{$G$-walk} is a strictly
+increasing sequence of positive integers all of whose consecutive gaps lie in $G$.
+\end{definition}
+
+Every $(d_1,d_2)$-sequence is a $G$-walk with $G = \{d_1, d_1 + 1, \dots, d_2\}$,
+and, after passing to the tail, a $\Ginf$-walk.
+
+Naming this is not bookkeeping for its own sake. The point is that \emph{$d_1$ now
+retires}: from here to the end of Part~III, no argument refers to it again. What
+those sections use about a walk is its alphabet --- how many letters, their gcd, and
+the largest of them --- and nothing else. That matters immediately, because the
+rescaling of Lemma~\ref{lem:rescale-friendly} divides every gap by $g > 1$ and so
+destroys the lower bound $d_1$. The rescaled object is emphatically \emph{not} a
+$(d_1,d_2)$-sequence, and a theorem stated for $(d_1,d_2)$-sequences could not
+legitimately be applied to it. It is a $G$-walk whose letters are still $\le d_2$,
+and that is every hypothesis the machinery ever consumes. We therefore state the
+results of \S\S\ref{sec:widths}--\ref{sec:sturmian-endgame} for walks with a bound
+on their gaps, never for $(d_1,d_2)$-sequences.
+
 \begin{lemma}[Tail reduction]\label{lem:tail-friendly}
 Let $A' := \{a_{T+1} < a_{T+2} < \cdots\}$ be the tail of $A$ beyond $T$ --- itself a
-$(d_1,d_2)$-sequence, whose gap word uses only letters of $\Ginf$. If $A'$ is
+$\Ginf$-walk, and in particular a walk with all gaps $\le d_2$. If $A'$ is
 tail-covering, so is $A$.
 \end{lemma}
 
@@ -2711,10 +2753,9 @@ $g := \gcd(\Ginf) > 1$. Define the \emph{rescaled walk} $A'$ by
 \[
   a'_n \;:=\; \frac{a_n - a_1}{g} + 1 \qquad (n \ge 1) ,
 \]
-a sequence of positive integers with gaps $g'_n = g_n / g$, alphabet $\Ginf/g :=
-\{\delta / g : \delta \in \Ginf\}$, $\gcd(\Ginf/g) = 1$, and maximum letter $\le
-d_2 / g$. If $A'$ is tail-covering modulo $m'$, then $A$ is tail-covering modulo
-$g\,m'$.
+a $(\Ginf/g)$-walk, where $\Ginf/g := \{\delta / g : \delta \in \Ginf\}$, with
+$\gcd(\Ginf/g) = 1$ and maximum letter $\le d_2 / g \le d_2$. If $A'$ is
+tail-covering modulo $m'$, then $A$ is tail-covering modulo $g\,m'$.
 \end{lemma}
 
 \begin{proof}
@@ -3033,8 +3074,9 @@ integer. We will use this constantly: it is the discrete shadow of the
 
 We now take up the main case. \textbf{Standing setup for
 \S\S\ref{sec:widths}--\ref{sec:sturmian-endgame}:} after tail-passing and rescaling
-(\S\ref{sec:alphabet}), the walk $A$ has tail alphabet $\Ginf = \{\delta <
-\delta'\}$ with
+(\S\ref{sec:alphabet}), $A$ is a walk with all gaps $\le d_2$ --- a $\Ginf$-walk in
+the sense of Definition~\ref{def:gwalk}, \emph{not} in general a
+$(d_1,d_2)$-sequence --- with tail alphabet $\Ginf = \{\delta < \delta'\}$ and
 \[
   \gcd(\delta, \delta') = 1, \qquad
   e := \delta' - \delta \ge 1, \qquad
@@ -4362,8 +4404,10 @@ $\mathrm{width}(s) \ge k - 1 = d_2 - 1$ for large $s$, and the sweep
 \subsection{The two-letter theorem}
 
 \begin{theorem}[Two letters]\label{thm:twoletter-friendly}
-Let $k \ge 3$ and $d_2 \le k$. Every $(d_1,d_2)$-sequence whose tail alphabet has
-at most two letters is tail-covering.
+Let $k \ge 3$ and $d_2 \le k$. Every walk with all gaps $\le d_2$ whose tail
+alphabet has at most two letters is tail-covering. (In particular every
+$(d_1,d_2)$-sequence, for every $d_1$; and, crucially, every walk obtained from one
+by the rescaling of Lemma~\ref{lem:rescale-friendly}.)
 \end{theorem}
 
 \begin{proof}
@@ -4606,8 +4650,8 @@ exercise and Part~IV; note also the extra hypothesis, which genuinely can fail
 \subsection{The non-existence half, assembled (modulo SHARP)}
 
 \begin{proposition}[Goal of Part III]\label{prop:goal}
-Assume SHARP. Then every $(d_1,d_2)$-sequence with $d_2 \le k$ and $k \ge 3$ is
-tail-covering.
+Assume SHARP. Let $k \ge 3$ and $d_2 \le k$. Then every walk with all gaps $\le
+d_2$ is tail-covering --- in particular every $(d_1,d_2)$-sequence.
 \end{proposition}
 
 \begin{proof}
@@ -6550,6 +6594,82 @@ answer to Erd\H{o}s problem 1112 is: \emph{yes precisely when $d_2 \ge k+1$}.
 
 Every promise of the honest ledger (\S\ref{sec:honest-list}) has now been
 redeemed: gap (1) in Part~II, gaps (2) and (3) in Part~III, gap (4) in Part~IV.
+
+\subsection{What we did not settle}\label{sec:open}
+
+The dichotomy is settled; the quantitative question behind it is wide open, and so
+is the question of whether the proof needs to look like this. Four problems, in
+descending order of how much we would like to know the answer.
+
+\textbf{1. Is $r_k(d_1,d_2)$ bounded?} Theorem~\ref{thm:existence-friendly} gives
+$r_k(d_1,d_2) \le 192\,d_2$ whenever $d_2 \ge k+1$ --- a bound that grows with
+$d_2$. Every value anyone has computed exactly is $2$: Chen \cite{Ch00} shows
+$r_2(a,b) \le 2$ off the diagonal $b = 2a$, and $r_2(2,3) = 2$
+\cite{ErGr80,BHJ97}. We are not aware of a single instance where the answer exceeds
+$2$.
+
+\begin{quote}
+\emph{Question.} Is there an absolute constant $C$ with $r_k(d_1,d_2) \le C$ for
+every $k \ge 3$ and every $d_2 \ge k+1$? Is $C = 2$?
+\end{quote}
+
+Our $192\,d_2$ is not close to optimal and we make no claim that it is. It is what
+the nested-interval construction of Part~II pays for being uniform: the constant
+absorbs a safety margin at every scale, and the $d_2$ absorbs the width of the
+window the walker must be denied. Either could plausibly be pushed hard. The
+sharpest concrete instance is Chen's diagonal, where
+Corollary~\ref{cor:chen-diagonal} improves the situation from ``no bound known'' to
+$2 \le r_2(a,2a) \le 384\,a$ --- a factor of $192\,a$ of pure ignorance.
+
+\textbf{2. Lower bounds.} The gap in Problem~1 is embarrassing from both ends, and
+the lower end is the neglected one. For $k \ge 3$ we know of no lower bound on
+$r_k(d_1,d_2)$ beyond the elementary.
+
+\begin{quote}
+\emph{Question.} Is $r_3(1,4) = 2$? More generally, is there any $(k, d_1, d_2)$
+with $d_2 \ge k+1$ for which $r_k(d_1,d_2) > 2$ can be proved?
+\end{quote}
+
+A single such example would be more informative than any improvement to $192$: it
+would show the phenomenon is not simply ``ratio $2$ always suffices above the
+threshold''.
+
+\textbf{3. Must the finite layer exist?} The proof of
+Theorem~\ref{thm:sharp-friendly} is uniform on four of its six branches; Cases~T
+and~B (\S\ref{sec:caseT-friendly}, \S\ref{sec:caseB-friendly}) are where the
+uniform constructions run out and $350$ printed certificates take over. Nothing we
+know says that is necessary.
+
+\begin{quote}
+\emph{Question.} Is there a proof of Theorem~\ref{thm:sharp-friendly} with no
+finite case list at all?
+\end{quote}
+
+We would be glad to see the tables go. They are the part of this work that a reader
+cannot check by thinking, and \S\ref{sec:obligations} exists only because they are
+there. Our own attempts to unify Cases~T and~B foundered on the same obstruction
+each time --- the $\eta$-box argument needs $\mu \ge 12$ and $a \ge 12$
+simultaneously, and both small-parameter corners genuinely behave differently ---
+but that is evidence about our ingenuity, not about the problem.
+
+\textbf{4. How large is $m(G)$, really?} The bound $m(G) \le M-1$ of
+Theorem~\ref{thm:sharp-friendly} cannot be improved to $M-2$ in general:
+$m(\{3,4,5\}) = 4$ (Proposition~\ref{prop:sharpness-friendly}). But that witness
+has $M = 5$, and the extremal examples we know are all small.
+
+\begin{quote}
+\emph{Question.} Characterise the $G$ with $m(G) = M-1$. Are there any with $M$
+large --- or is $m(G) \le M-2$ for all $M \ge M_0$, and what is the true order of
+$\max_{\max G = M} m(G)$?
+\end{quote}
+
+This one is asked out of curiosity rather than need: the slot lemma consumes
+exactly $m(G) \le M-1 \le k-1$, so a sharper bound would not shorten the proof of
+the dichotomy. It might well shorten the proof of
+Theorem~\ref{thm:sharp-friendly}.
+
+\medskip
+
 The remaining section is not part of the proof; it is about how the proof is
 \emph{checked}.
 
@@ -6590,10 +6710,18 @@ kernel independently decides, and exported as CSV with recorded digests for
 readers who would rather compute than read. Nothing load-bearing is held
 elsewhere.
 
-\subsection{Three independent checks}
+\subsection{Three checks, and what their independence is worth}\label{sec:threat}
 
-The repository verifies the finite layer three separate ways, sharing no
-code:
+The repository checks the finite layer three separate ways, sharing no code. Before
+listing them, it is worth being exact about what that buys, because ``three
+independent checks'' is a phrase that promises more than any of this delivers. The
+three implementations are independent \emph{of each other}; they are not independent
+\emph{of the specification}. All three were written against the same case analysis
+--- the one in \S\S\ref{sec:caseDL}--\ref{sec:caseB-friendly} --- so they are three
+readings of one text, not three verifications of one theorem. What they can catch is
+a slip in transcription or arithmetic. What no number of them can catch is an error
+in the case analysis itself, because that error would be faithfully reproduced by
+each. Only the proofs address that, and only a reader does.
 
 \begin{enumerate}
 \item \emph{Two Python harnesses.} One reconstructs every designated witness
@@ -6618,6 +6746,48 @@ code:
       is formalized in Lean~4 and machine-checked; the certificate tables are
       transcribed into the formal development and re-decided by Lean's kernel.
 \end{enumerate}
+
+\subsection{The four finite obligations, named}\label{sec:obligations}
+
+``The computer checked it'' is too coarse to audit. Exactly four finite statements
+are needed from outside the prose, two for Case~T and two for Case~B, and they are
+worth separating because they are not all closed the same way --- and one of them is
+closed by hand.
+
+\begin{enumerate}
+\item[\textbf{T1}] \emph{Completeness of the T scan.} Every hard-core triple in
+      Case~T either satisfies the uniform bound of \S\ref{sec:caseT-friendly} or
+      appears among the $172$ printed lines. \emph{How it is closed:} by hand for
+      the tail --- the calculation at \S\ref{sec:caseT-friendly} bounds $K \le 40$
+      over all $50$ Case-T lines and so settles every $a \ge 3000$ with margin
+      $\ge 960$, uniformly and with no search --- and by exhaustive scan below that
+      threshold. This is the one obligation whose completeness genuinely rests on
+      the scan, and a referee spending scepticism should spend it here.
+\item[\textbf{T2}] \emph{Validity of the T witnesses.} Each of the $172$ printed
+      lines satisfies its budget and covers $M$ consecutive integers.
+      \emph{How it is closed:} exact integer arithmetic on a finite table, by four
+      separate implementations (the two harnesses, the table re-verifier, Lean's
+      kernel) --- with the caveat of \S\ref{sec:threat} about what their agreement
+      is worth. Here, though, the caveat bites least: validity of a printed row is
+      a self-contained arithmetic claim, not a reading of the case analysis.
+\item[\textbf{B1}] \emph{Completeness of the B enumeration.} The $178$ printed
+      classes are exactly the residue classes for which Case~B must supply a base.
+      \emph{How it is closed:} \emph{by hand}, in
+      Lemma~\ref{lem:caseB-count} --- the two exclusions $h \equiv -\bar e$ and
+      $h \equiv -2\bar e \pmod a$ are always distinct, giving per-$a$ counts
+      $0,1,6,5,20,17,32,25,72$ for $a = 3,\dots,11$, which sum to $178$. No scan is
+      involved in this one; the computation only confirms it.
+\item[\textbf{B2}] \emph{Validity of the B witnesses, and the lift.} Each printed
+      base is valid, and the $\lambda$-lift carries it to every larger $a$ in its
+      class. \emph{How it is closed:} finite arithmetic for the bases (as in
+      \textbf{T2}), and a proof --- Lemma~\ref{lem:lift-friendly} --- for the
+      propagation, which is where the ``forever'' comes from and is not a finite
+      claim at all.
+\end{enumerate}
+
+So of the four, one is a theorem with a finite check attached (\textbf{B2}), one is
+now a hand proof (\textbf{B1}), one is finite table arithmetic (\textbf{T2}), and
+exactly one leans on an exhaustive enumeration (\textbf{T1}).
 
 \subsection{What a Lean formalization is}
 
@@ -6831,6 +7001,42 @@ certificate rows and the $a \le 3000$ scan, is therefore discharged by the trust
 kernel rather than by compiled code. The audit is itself the gap check: a
 \texttt{sorry} anywhere would surface in that list.
 
+\subsection{Independent replication}\label{sec:replication}
+
+The proof was posted as a claimed solution on \texttt{erdosproblems.com} on 6 July
+2026. Two readers have since checked it independently of the author; both reports
+are public, in the thread for Problem~1112.
+
+Thomas Bloom, who maintains the problem collection, verified on 13 July 2026 that
+the declaration \texttt{erdos\_1112} in \texttt{Erdos1112Proof/Final.lean} is a
+correct formalisation of the problem as the collection states it, and that the
+development compiles with no \texttt{sorry}. He was explicit that he had not
+attempted to follow the mathematics, and that the work of human digestion remains
+to be done.
+
+That distinction deserves dwelling on, because it lands precisely on the blind spot
+named in \S\ref{sec:threat}. The three implementations of the finite layer are
+independent of each other but not of the specification; what none of them can test
+is whether the formal statement means what the problem means. Bloom's check is a
+reading of exactly that translation, by someone who did not write it --- a second
+opinion on \S\ref{sec:faithful}, which is the one part of this verification that no
+machine can underwrite. It says nothing whatever about whether the proof is right.
+
+On 17 July 2026 Colin Snyder reported a full independent rebuild: cloning the
+repository, compiling the Lean development from scratch on his own machine, and
+confirming that the kernel accepts the final theorems on the three standard axioms
+with no \texttt{sorry} and no \texttt{native\_decide}; running both Python
+harnesses (all $83{,}251$ hard-core triples passing, and the independent re-check
+validating all $172$ Case-T certificate rows); checking the certificate tables
+against their published SHA-256 digests; confirming that the declarations of
+Appendix~\ref{app:lean} are present in the Lean sources; and hand-checking
+$m(\{3,4,5\}) = 4$.
+
+Neither report is a referee's report, and neither claims to be. As of this writing
+no one has stated publicly that they have read and understood the argument of
+Parts~II--IV. That is the thing this paper is asking for, and it is the reason the
+paper is written the way it is.
+
 \subsection{What machine-checking still does not settle}
 
 Two honest caveats. ``Depends only on three axioms'' is a statement about the
@@ -6874,6 +7080,12 @@ mathematics, and it is why a paper like this one can exist at all.
 \section{Declarations}\label{sec:declarations}
 
 \textbf{Funding.} None.
+
+\textbf{Acknowledgements.} The author thanks Thomas Bloom for maintaining the
+problem collection and for checking the formal statement against it, and Colin
+Snyder for an independent rebuild and re-verification of the whole package. Their
+reports are described in \S\ref{sec:replication}; neither implies any endorsement
+of the mathematics, which remains the author's responsibility.
 
 \textbf{Competing interests.} The author declares no competing interests.
 
@@ -6961,6 +7173,259 @@ of \S\ref{sec:computer}.
 \appendix
 
 %======================================================================
+\section{How to read this proof}\label{app:howtoread}\label{sec:howtoread}
+
+Mathematics has a craft as well as a content, and this paper assumes a little of
+the craft while building all of the content. Here is the whole of what is assumed,
+in two pages. Skim it now; come back when a phrase in a proof feels like a move you
+were not taught.
+
+\emph{Direct proof, contradiction, contrapositive.} To prove ``if $P$ then $Q$'',
+you may assume $P$ and derive $Q$ (direct); or assume $P$ together with ``not $Q$''
+and derive something absurd (contradiction); or prove ``if not $Q$ then not $P$'',
+which says exactly the same thing (contrapositive). All three appear here, and we
+name which one we are using whenever it might not be obvious.
+
+\emph{``It suffices to show.''} A proof often replaces its goal with a stronger or
+more convenient one: \emph{it suffices to show $R$}, meaning ``$R$ implies what we
+want, so let us prove $R$ instead''. This is not a weakening --- proving more than
+you need is always allowed. \S\ref{sec:windows} does this deliberately and says so.
+
+\emph{``Fix an arbitrary $x$.''} To prove something about \emph{every} $x$, we take
+one, refuse to assume anything special about it, and argue. Because nothing special
+was assumed, the argument covers all of them. The mirror move, ``there exists'', is
+discharged by \emph{exhibiting} one --- which is why so many proofs here consist of
+writing down a construction and then checking it works.
+
+\emph{Induction, ordinary and strong.} To prove a statement $S(n)$ for every $n$:
+prove $S(1)$, then prove that $S(n)$ implies $S(n+1)$. \emph{Strong} induction
+allows the stronger assumption that $S(1), \dots, S(n)$ \emph{all} hold when proving
+$S(n+1)$ --- used once, in \S\ref{sec:sharp-assembly}, where a statement about a
+number $M$ is proved using the same statement for all smaller values.
+
+\emph{The well-ordering principle.} Every nonempty set of positive integers has a
+smallest element. Obvious-sounding, genuinely load-bearing: it is what licenses
+phrases like ``let $n^*$ be the \emph{first} index such that\dots'', which appear in
+\S\ref{sec:slot} and \S\ref{sec:remainders}.
+
+\emph{Chains of inequalities.} A display like
+\[
+  A \;\le\; B \;=\; C \;\le\; D
+\]
+asserts each link separately and concludes $A \le D$. Read it one link at a time,
+and ask of each: which hypothesis makes \emph{this} step true? Where a link is not
+immediate we say why, either inline or in Appendix~\ref{app:algebra}.
+
+\emph{Mechanism versus bookkeeping.} This is the distinction most worth internalizing
+before Part~II. Nearly every proof here has two ingredients: a \emph{mechanism} ---
+the construction or idea that makes the thing work --- and \emph{bookkeeping} --- the
+inequalities confirming that the particular constants chosen are large enough. The
+mechanism is what you should remember; the bookkeeping is what you should be able to
+check but need not carry in your head. We flag the seam explicitly, and passages of
+pure verification are marked \emph{(first pass: skippable)}.
+
+\emph{Passing to a tail.} Several arguments discard a finite initial segment of an
+infinite sequence and work only with what remains --- ``pass to the tail''. This is
+harmless when the property in question concerns only large numbers, and we always say
+why it is harmless when we do it.
+
+\emph{What is \emph{not} assumed.} No calculus, no set theory beyond ``$\in$'' and
+``$\subseteq$'', no combinatorics, no number theory beyond what
+\S\ref{sec:remainders} builds, no analysis beyond what \S\ref{sec:words} builds. If
+you have met proof by induction and can manipulate an inequality without panic, you
+have enough.
+
+%======================================================================
+
+\section{A referee's guide: what to check, and in what order}\label{app:referee}
+
+A hundred pages is a lot to be handed, and not all of it carries weight. This
+appendix is written for a reader whose job is to decide whether
+Theorem~\ref{thm:main-friendly} is true, and who would like to spend their
+scepticism where it buys the most. It says which results are load-bearing, what
+each one rests on, where the proof would most plausibly break, and roughly how long
+an honest audit takes.
+
+Nothing here is needed to \emph{read} the paper; \S\ref{sec:map-friendly} is the
+guide for that.
+
+\subsection{The audit target}
+
+Theorem~\ref{thm:main-friendly} has two halves, and they share almost nothing --- no
+lemma of Part~II is used in Parts~III--IV, and vice versa. A referee may audit them
+independently, and may stop after either.
+
+\emph{Existence} ($d_2 \ge k+1 \Rightarrow r_k \le 192\,d_2$) is Part~II: a single
+explicit construction and the estimates that pay for it. It uses no modular
+arithmetic, no combinatorics on words, and nothing from Parts~III--IV. It is
+self-contained and, of the two halves, much the shorter check.
+
+\emph{Non-existence} ($d_2 \le k \Rightarrow$ no $r_k$) is Parts~III--IV. It is the
+long half, and it is where the finite computation lives.
+
+\subsection{The load-bearing results}
+
+Table~\ref{tab:audit} lists everything on the critical path. Results not in this
+table --- worked examples, remarks, the three interludes --- support the exposition
+but carry no weight: if one of them were wrong, the theorem would survive.
+
+\begin{table}[htbp]
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}p{0.30\textwidth}p{0.42\textwidth}p{0.19\textwidth}@{}}
+\hline
+\textbf{Result} & \textbf{What it carries} & \textbf{How checkable} \\
+\hline
+\multicolumn{3}{@{}l}{\emph{Existence half (Part~II)}} \\
+Prop.~\ref{prop:criterion} (avoidance criterion)
+ & converts ``$kA \cap B = \emptyset$'' into a condition on one real slope
+ & prose, Lean \\
+Prop.~\ref{prop:no-safety-below-k}
+ & shows why the construction cannot work at $d_2 \le k$ --- the threshold is not an
+   artefact & prose, Lean \\
+Lem.~\ref{lem:freegap-friendly} (free gap)
+ & \textbf{the steep climb.} Guarantees an interval of safe slopes survives each
+   step & prose, Lean \\
+Lem.~\ref{lem:freegap-geometric}
+ & the geometric-ratio form actually consumed & prose, Lean \\
+Thm.~\ref{thm:existence-friendly}
+ & nested intervals assemble the above into $r = 192\,d_2$ & prose, Lean \\
+\hline
+\multicolumn{3}{@{}l}{\emph{Non-existence: reduction (Part~III)}} \\
+Lem.~\ref{lem:cert-friendly} (the certificate)
+ & \textbf{the diagonalisation.} One $B$ defeats \emph{every} tail-covering walk
+ & prose, Lean \\
+Lem.~\ref{lem:tail-friendly}, \ref{lem:rescale-friendly}
+ & the two reductions. Note the type discipline of
+   Definition~\ref{def:gwalk}: rescaling takes a walk \emph{out of} the class
+   of $(d_1,d_2)$-sequences & prose, Lean \\
+Prop.~\ref{prop:goal}
+ & every walk with gaps $\le d_2 \le k$ is tail-covering & prose, Lean \\
+\hline
+\multicolumn{3}{@{}l}{\emph{Non-existence: the two-letter campaign}} \\
+Lem.~\ref{lem:width-friendly} (width dichotomy)
+ & either a reachable band is wide, or the word is balanced & prose, Lean \\
+Lem.~\ref{lem:sweep-friendly} (sweep)
+ & a wide band covers a residue class & prose, Lean \\
+Thm.~\ref{thm:mh-friendly} (balanced classification)
+ & balanced $\Rightarrow$ eventually periodic or Sturmian (Morse--Hedlund; reproved
+   here) & prose, Lean \\
+Lem.~\ref{lem:sturmian-friendly} (Sturmian endgame)
+ & the irrational-slope case & prose, Lean \\
+Prop.~\ref{prop:boundary-friendly}
+ & \textbf{the tight corner:} $k$ even, $d_2 = k$, where the sweep is one short
+ & prose, Lean \\
+Thm.~\ref{thm:twoletter-friendly}
+ & assembles the campaign & prose, Lean \\
+\hline
+\multicolumn{3}{@{}l}{\emph{Non-existence: three or more letters (Parts~III--IV)}} \\
+Lem.~\ref{lem:slot-friendly} (slot lemma)
+ & prices the remaining case at exactly $m(G) \le k-1$ & prose, Lean \\
+Thm.~\ref{thm:sharp-friendly} (SHARP)
+ & \textbf{the new tool.} $m(G) \le \max(G) - 1$ & prose, Lean \\
+Lem.~\ref{lem:graham-red}, \ref{lem:L1-friendly}--\ref{lem:L4-friendly}
+ & reduction to the hard core & prose, Lean \\
+Lem.~\ref{lem:caseD-friendly}, \ref{lem:caseL-friendly},
+ \ref{lem:caseP-friendly}, \ref{lem:caseE-friendly}
+ & four uniform branches, closed-form witnesses & prose, Lean \\
+Lem.~\ref{lem:caseT-friendly}, Prop.~\ref{prop:ttail-friendly}
+ & Case~T: uniform tail by hand, $172$ rows by table
+ & \textbf{partly computational} (\textbf{T1}, \textbf{T2}) \\
+Lem.~\ref{lem:caseB-count}, \ref{lem:lift-friendly}
+ & Case~B: $178$ classes counted by hand, lifted by proof
+ & prose $+$ table (\textbf{B1}, \textbf{B2}) \\
+\hline
+\end{tabular}
+\caption{The critical path. ``Lean'' means the result corresponds to a declaration
+in the formal development, listed in Appendix~\ref{app:lean}. The bold entries are
+where we suggest scepticism is best spent; the obligation labels
+\textbf{T1}--\textbf{B2} are those of \S\ref{sec:obligations}.}
+\label{tab:audit}
+\end{table}
+
+\subsection{Where we would attack it}
+
+If this proof is wrong, our own estimate of the likeliest places, in order:
+
+\begin{enumerate}
+\item \emph{The boundary case, Proposition~\ref{prop:boundary-friendly}.} When $k$ is
+      even and $d_2 = k$, the sweep guarantees width $k-2$ and needs $k-1$. Every
+      other configuration has slack; this one has none, and it is closed by a
+      separate argument (border--period duality,
+      Lemma~\ref{lem:border-period}) rather than by the main machinery. A single
+      off-by-one here would be fatal and would not be caught by any machine check
+      that shares the paper's case analysis.
+\item \emph{Completeness of the Case-T scan} (\textbf{T1} of
+      \S\ref{sec:obligations}). The uniform bound closes $a \ge 3000$ by hand; below
+      that, completeness rests on an exhaustive enumeration. The hand calculation is
+      short and we recommend checking it directly --- it is the paragraph
+      establishing $K \le 40$ over the $50$ Case-T lines.
+\item \emph{The type discipline around rescaling.} Lemma~\ref{lem:rescale-friendly}
+      divides all gaps by $g$, destroying the lower bound $d_1$.
+      Definition~\ref{def:gwalk} exists to keep this honest, and every statement in
+      \S\S\ref{sec:widths}--\ref{sec:sturmian-endgame} is phrased so that the
+      rescaled object satisfies it. A referee should confirm that no statement
+      applied after rescaling secretly assumes $d_1$.
+\item \emph{The induction in Theorem~\ref{thm:sharp-friendly}.} It is a strong
+      induction on $\max(G)$ with two recursive appeals
+      (Lemmas~\ref{lem:L4-friendly}, \ref{lem:graham-red}). Both are argued to go to
+      strictly smaller maxima. If either did not, the whole of Part~IV would be
+      circular.
+\item \emph{Exhaustiveness of the six-branch routing.} The branches must partition
+      the hard core. The argument is given at the end of
+      \S\ref{sec:sharp-assembly}, including the one genuine overlap, $(3,4,5)$.
+\end{enumerate}
+
+\subsection{Honest time estimates}
+
+For a professional reader checking every line, our estimate of a complete audit is
+\textbf{forty to fifty hours}, distributed roughly as follows.
+
+\begin{center}\small
+\begin{tabular}{@{}lr@{}}
+\hline
+Statements, architecture, and this appendix & 2--3 h \\
+Part~II, complete (the whole existence half) & 6--8 h \\
+Part~III: certificate, reductions, easy cases & 3--4 h \\
+Part~III: the two-letter campaign, \S\S\ref{sec:widths}--\ref{sec:sturmian-endgame}
+ & 10--12 h \\
+Part~IV: machinery and reduction to the hard core & 7--8 h \\
+Part~IV: the six branches & 9--10 h \\
+Finite layer: rerun the harnesses, spot-check rows & 1--2 h \\
+\hline
+\end{tabular}
+\end{center}
+
+Three shorter routes are defensible:
+
+\emph{The existence half only} (6--8 hours). Self-contained, and a complete referee
+report on a genuine result --- Corollary~\ref{cor:chen-diagonal} alone closes a gap
+left open by \cite{Ch00}.
+
+\emph{Architecture plus the five attack points above} (8--10 hours). Enough to form
+a confident view on whether the proof is sound in design, without verifying every
+estimate.
+
+\emph{The new tool only} (12--15 hours). Theorem~\ref{thm:sharp-friendly} and
+Part~IV stand alone, independent of the Erd\H{o}s problem entirely; \S\ref{sec:prior}
+argues they may be of separate interest.
+
+\subsection{What the machine does and does not settle for you}
+
+The Lean development removes one class of doubt completely: no step of the critical
+path is missing, hand-waved, or circular, and no finite check is wrong. It does not
+tell you that the formal statement is the problem --- \S\ref{sec:faithful} argues
+that in prose, and \S\ref{sec:replication} records that one reader has now checked
+it independently. A referee who trusts the Lean build can therefore skip verifying
+that the estimates close, and concentrate entirely on
+\S\ref{sec:faithful} plus the modelling questions: is the game of
+\S\ref{sec:game} the right formalisation, is ``tail-covering'' the right
+intermediate notion, does Definition~\ref{def:gwalk} cover the objects the proof
+actually manipulates. That is a much shorter job --- perhaps six hours --- and it is
+the one thing no amount of machine-checking can do.
+
+%======================================================================
+
 \section{Every expansion, in full}\label{app:algebra}
 
 The main text keeps ideas in the foreground and refers routine expansions here.
@@ -7240,6 +7705,11 @@ Axiom audit & three \texttt{\#print axioms} commands & \texttt{AxiomsCheck.lean}
 %======================================================================
 \begin{thebibliography}{TaYa21}
 
+\bibitem[Al87]{Alon87}
+N.~Alon,
+\emph{Subset sums},
+J.\ Number Theory \textbf{27} (1987), no.~2, 196--205.
+
 \bibitem[AF88]{AlonFreiman88}
 N.~Alon and G.~Freiman,
 \emph{On sums of subsets of a set of integers},
@@ -7299,10 +7769,20 @@ L.~de Moura and S.~Ullrich,
 in: Automated Deduction --- CADE~28, Lecture Notes in Computer Science
 \textbf{12699}, Springer, 2021, 625--635.
 
+\bibitem[Lev97]{Lev97}
+V.~F.~Lev,
+\emph{Optimal representations by sumsets and subset sums},
+J.\ Number Theory \textbf{62} (1997), no.~1, 127--143.
+
 \bibitem[Lev98]{Lev98}
 V.~F.~Lev,
 \emph{On consecutive subset sums},
 Discrete Math.\ \textbf{187} (1998), no.~1--3, 151--160.
+
+\bibitem[Lev99]{Lev99}
+V.~F.~Lev,
+\emph{The structure of multisets with a small number of subset sums},
+Ast\'erisque \textbf{258} (1999), 179--186.
 
 \bibitem[Lev03]{Lev03}
 V.~F.~Lev,
