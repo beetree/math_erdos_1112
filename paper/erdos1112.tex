@@ -6930,13 +6930,23 @@ claim of scholarly authorship, which is as stated above.
 
 \section{Data availability and reproduction}\label{sec:data}
 
-Everything needed to check this paper is contained in one commit of the repository
-\repo. That commit carries this \LaTeX{} source, the Lean~4 development
-\cite{Lean4,Mathlib}, the machine-readable certificate exports
+Everything needed to check this paper is permanently archived at
+\[
+  \texttt{doi:10.5281/zenodo.21568276}
+\]
+--- release \texttt{v1.0.0}, deposited with CERN's Zenodo repository under the
+Apache-2.0 licence. That snapshot carries this \LaTeX{} source, the Lean~4
+development \cite{Lean4,Mathlib}, the machine-readable certificate exports
 (\texttt{data/table-A.csv}, \texttt{data/table-B.csv}, \texttt{data/SHA256SUMS}),
 the table generator and re-verifier \texttt{gen-tables.py}, the two independent
 Python harnesses, and the documented prior-art search
 (\texttt{paper/novelty-search.md}).
+
+The identifier above resolves to that exact snapshot and will not change; the
+concept identifier \texttt{doi:10.5281/zenodo.21568275} resolves instead to the
+most recent version, should later ones exist. Development continues in the open
+at \repo, but no claim in this paper depends on that repository remaining
+available.
 
 \emph{The machine-checked proof.} A clean checkout builds with the pinned toolchain:
 \begin{quote}\small

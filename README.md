@@ -1,5 +1,7 @@
 # Erdős Problem #1112
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21568276.svg)](https://doi.org/10.5281/zenodo.21568276)
+
 From [erdosproblems.com/1112](https://www.erdosproblems.com/1112) (verbatim):
 
 > Let $1 \le d_1 < d_2$ and $k \ge 3$. Does there exist an integer $r$ such that if

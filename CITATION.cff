@@ -28,15 +28,12 @@ license: Apache-2.0
 date-released: "2026-07-25"
 repository-code: "https://github.com/beetree/math_erdos_1112"
 
-# TODO(release): after the Zenodo archive is minted, uncomment and fill in.
-#   The *concept* DOI always resolves to the newest version; the *version* DOI
-#   pins the exact snapshot the paper's data-availability section cites.
-# doi: "10.5281/zenodo.CONCEPT"
-# identifiers:
-#   - type: doi
-#     value: "10.5281/zenodo.VERSION"
-#     description: "Archived snapshot cited in the paper's data-availability section"
-#
+doi: "10.5281/zenodo.21568275"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21568276"
+    description: "Archived snapshot v1.0.0, cited in the paper's data-availability section"
+
 # TODO(arXiv): after posting, add the preprint as the preferred citation.
 # preferred-citation:
 #   type: article
