@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Mechanically check the name-and-location layer of the paper's Lean correspondence
-table (Appendix C): every Lean declaration named there must exist in the Lean tree.
+table (Appendix E): every Lean declaration named there must exist in the Lean tree.
 
 The statement-level match (that each declaration SAYS what the prose result says)
 is a human judgment, as the paper states; this script pins the layer a machine can
@@ -48,7 +48,7 @@ for name in sorted(names):
         missing.append(name)
         print(f"  MISSING: {name}")
 
-print(f"correspondence check: {len(names)} declaration names from Appendix C, "
+print(f"correspondence check: {len(names)} declaration names from the correspondence appendix, "
       f"{len(names) - len(missing)} found in {len(sources)} Lean files, "
       f"{len(missing)} missing")
 sys.exit(1 if missing else 0)

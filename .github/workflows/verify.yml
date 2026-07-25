@@ -24,7 +24,7 @@ jobs:
       - name: Independent referee harness, M <= 120 (fail-closed)
         working-directory: paper/scripts
         run: python3 sharp_referee_check.py 120
-      - name: Appendix C correspondence check (paper declarations exist in Lean)
+      - name: Correspondence check (paper declarations exist in Lean)
         working-directory: paper/scripts
         run: python3 check_correspondence.py
 

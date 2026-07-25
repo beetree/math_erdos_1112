@@ -1,0 +1,33 @@
+{
+  "title": "Erdős Problem #1112: a complete, machine-checked resolution (paper, Lean 4 development, and certificate data)",
+  "upload_type": "software",
+  "description": "<p>The complete research artifact accompanying the resolution of Erdős Problem #1112: for every <em>k</em> &ge; 3 and 1 &le; <em>d</em><sub>1</sub> &lt; <em>d</em><sub>2</sub>, the ratio <em>r<sub>k</sub></em>(<em>d</em><sub>1</sub>,<em>d</em><sub>2</sub>) exists if and only if <em>d</em><sub>2</sub> &ge; <em>k</em>+1, with the explicit bound <em>r<sub>k</sub></em> &le; 192<em>d</em><sub>2</sub> on the existence side and strong non-existence below the threshold.</p><p>This archive contains:</p><ul><li><strong>The paper</strong> (<code>paper/friendly/</code>), written from first principles: every prerequisite is built in, the idea of each construction is separated from the estimates that pay for it, and the finite certificate layer is printed in full. A compressed presentation of the same results, in the conventional idiom, is included as <code>paper/erdos1112.pdf</code>.</li><li><strong>The Lean 4 formalization</strong> (<code>lean/</code>): the full dichotomy, <code>sorry</code>-free, depending only on the three standard foundational axioms (<code>propext</code>, <code>Classical.choice</code>, <code>Quot.sound</code>), with no <code>native_decide</code> — so every finite check is discharged by the trusted kernel.</li><li><strong>The certificate data</strong> (<code>paper/data/</code>) and two independent Python verification harnesses (<code>paper/scripts/</code>), sharing no code.</li><li><strong>The documented prior-art search</strong> (<code>paper/novelty-search.md</code>) for the bounded subset-sum covering lemma.</li></ul><p>This DOI resolves to the archived snapshot cited in the paper's data-availability section.</p>",
+  "creators": [
+    {
+      "name": "Land, Johan",
+      "affiliation": "Independent researcher"
+    }
+  ],
+  "license": "Apache-2.0",
+  "access_right": "open",
+  "keywords": [
+    "Erdős problems",
+    "additive combinatorics",
+    "lacunary sequences",
+    "sumsets",
+    "Sturmian words",
+    "subset sums",
+    "formal verification",
+    "Lean 4",
+    "interactive theorem proving",
+    "mathematical exposition"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://www.erdosproblems.com/1112",
+      "relation": "isSupplementTo",
+      "scheme": "url",
+      "resource_type": "other"
+    }
+  ]
+}

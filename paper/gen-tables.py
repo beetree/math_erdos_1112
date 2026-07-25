@@ -11,12 +11,14 @@ canonical markdown source and emit LaTeX, and we re-verify every emitted row her
 
 Any row failing either check aborts the build.
 """
+import argparse
 import re
 import sys
 from pathlib import Path
 
-OUT = Path(__file__).resolve().parent
-SRC = OUT / "data" / "certificate-data.md"
+HERE = Path(__file__).resolve().parent
+SRC = HERE / "data" / "certificate-data.md"
+OUT = HERE  # overridden by --out; see main()
 
 ROW_A = re.compile(r"\((\d+),(\d+),(\d+)\)\s*(?:→|->)\s*\((\d+),(\d+),(\d+)\)")
 ROW_B = re.compile(
@@ -53,6 +55,17 @@ def check(a, b, M, x, Y, Z):
 
 
 def main():
+    global OUT
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--out", default=None, metavar="DIR",
+                    help="directory to write table-a.tex / table-b.tex into "
+                         "(default: alongside this script)")
+    args = ap.parse_args()
+    if args.out:
+        OUT = Path(args.out).resolve()
+        if not OUT.is_dir():
+            sys.exit(f"ABORT: --out directory does not exist: {OUT}")
+
     text = SRC.read_text(encoding="utf-8")
     blocks = code_blocks(text)
     if len(blocks) < 2:
@@ -151,7 +164,7 @@ def emit_csv(rows_a, rows_b):
     LaTeX tables, and the rows the Lean kernel decides all derive from one source.
     """
     import csv, hashlib
-    data = OUT / "data"
+    data = HERE / "data"   # canonical exports always live beside the data source
     data.mkdir(exist_ok=True)
 
     with (data / "table-A.csv").open("w", newline="") as f:

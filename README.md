@@ -18,8 +18,15 @@ Below is a complete resolution in two forms — one machine-checked, one human-r
 **[`paper/erdos1112.pdf`](paper/erdos1112.pdf)** (source: [`paper/erdos1112.tex`](paper/erdos1112.tex))
 is the **authoritative** version of the mathematics, and is the artifact intended for submission.
 
-The human-readable proof is the paper; there is no separate Markdown write-up any more. Everything
-that supports the paper lives under [`paper/`](paper): the source and PDF, the build tooling
+It is written from first principles and at length: every prerequisite is built in, the idea of each
+construction is separated from the estimates that pay for it, the argument is illustrated
+throughout, and the finite certificate layer is printed in full. §1.1 of the paper states the case
+for that form and what it costs. It carries the full apparatus — prior work and the novelty
+argument, the formal statement with its faithfulness analysis and trust base, provenance,
+declarations, data availability, the certificate tables, the Lean correspondence table, and a
+bibliography.
+
+Everything supporting it lives under [`paper/`](paper): the sources and PDFs, the build tooling
 (`gen-tables.py`, `Makefile`), the canonical certificate data
 ([`paper/data/certificate-data.md`](paper/data/certificate-data.md)) and its machine-readable
 exports ([`paper/data/`](paper/data)), the two Python verification harnesses
@@ -34,7 +41,7 @@ exports ([`paper/data/`](paper/data)), the two Python verification harnesses
 ## The Lean formulation
 
 The problem is transcribed into Lean in the frozen statement file
-[`lean/Erdos1112.lean`](lean/Erdos1112.lean) — see §6 of the paper
+[`lean/Erdos1112.lean`](lean/Erdos1112.lean) — see §26 of the paper
 ([`paper/erdos1112.pdf`](paper/erdos1112.pdf)) for why this encoding is faithful (summarized below).
 The core definitions:
 
@@ -110,7 +117,7 @@ of modeling choices carry the weight; if you spot-check only a few, check these:
 This certifies the *statement*. That the theorems are actually proved — `sorry`-free, standard axioms
 only — is the separate `lake build` check below.
 The full decision-by-decision argument, the informal ↔ Lean ↔ file correspondence table, and the
-non-vacuity witnesses are in **§6 of the paper** ([`paper/erdos1112.pdf`](paper/erdos1112.pdf)).
+non-vacuity witnesses are in **§26 of the paper** ([`paper/erdos1112.pdf`](paper/erdos1112.pdf)).
 
 ## Download and verify
 
@@ -133,7 +140,7 @@ $
 ```
 
 The trust base — which axioms the proof rests on, and why nothing else is admitted — is covered in
-§6 of the paper ([`paper/erdos1112.pdf`](paper/erdos1112.pdf)), Trust base.
+§26 of the paper ([`paper/erdos1112.pdf`](paper/erdos1112.pdf)), Trust base.
 
 Prefer not to build it yourself? A public run of this `lake build` — completing with no `sorry`s — is
 inspectable in one click as a
@@ -178,16 +185,16 @@ from the two halves.
 
 | Part | Paper | Formal (Lean) |
 |---|---|---|
-| Overview & statement faithfulness | §1, §6 | [`lean/Erdos1112.lean`](lean/Erdos1112.lean) (statement) |
+| Overview & statement faithfulness | §1, §26 | [`lean/Erdos1112.lean`](lean/Erdos1112.lean) (statement) |
 | I — Existence | §2 | [`Existence/`](lean/Erdos1112Proof/Existence) |
 | II — Non-existence | §3 | [`NonEx/`](lean/Erdos1112Proof/NonEx) |
 | III — bounded subset-sum theorem | §4 | [`Sharp/`](lean/Erdos1112Proof/Sharp) |
 | IV — Assembly | §5 | [`Final.lean`](lean/Erdos1112Proof/Final.lean) |
-| Verification / trust base | §6, Appendix A · [Python harnesses](paper/scripts) | [`AxiomsCheck.lean`](lean/Erdos1112Proof/AxiomsCheck.lean) |
-| Certificate tables | Appendix B · [canonical data](paper/data/certificate-data.md) | — |
+| Verification / trust base | §26 · [Python harnesses](paper/scripts) | [`AxiomsCheck.lean`](lean/Erdos1112Proof/AxiomsCheck.lean) |
+| Certificate tables | Appendix D · [canonical data](paper/data/certificate-data.md) | — |
 
 The full lemma-by-lemma correspondence (paper result → Lean declaration → file) is in
-Appendix C of the paper.
+Appendix E of the paper.
 
 ---
 

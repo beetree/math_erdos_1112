@@ -8,6 +8,14 @@
 
 # LaTeX build artifacts (the PDF and generated tables are reproducible via `make`)
 paper/*.aux
+paper/friendly/*.aux
+paper/friendly/*.log
+paper/friendly/*.out
+paper/friendly/*.toc
+paper/friendly/*.fls
+paper/friendly/*.fdb_latexmk
+paper/friendly/*.synctex.gz
+# paper/friendly/erdos1112-friendly.pdf is committed, like the parent paper's PDF.
 paper/*.log
 paper/*.out
 paper/*.fls
@@ -15,10 +23,15 @@ paper/*.fdb_latexmk
 paper/*.synctex.gz
 paper/*.toc
 paper/build.log
+# generated + re-verified by gen-tables.py on every build (see paper/Makefile)
 paper/table-a.tex
 paper/table-b.tex
+paper/*-arxiv.tar.gz
 # paper/erdos1112.pdf is committed: it is the submission artifact.
 # It is fully reproducible with `make` (which regenerates and re-verifies the tables).
+
+# stray LaTeX scratch output
+texput.log
 
 # Editor / OS
 .DS_Store

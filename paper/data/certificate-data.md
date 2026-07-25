@@ -7,7 +7,7 @@
 > a change here propagates to the paper.
 
 
-## Appendix B. The certificate tables
+## Appendix D. The certificate tables
 
 **What a certificate asserts.** Each entry is a triple $(a, b, M)$ — a hard-core exceptional case
 — with a *box certificate* $(x, Y, Z)$. It asserts that the multiset $S$ consisting of $x$ copies
@@ -152,4 +152,4 @@ diagonal $\bar e = h$ classes of §III.8.
 
 
 ---
-**Verification scripts:** [`verification-scripts.md`](verification-scripts.md) · **Paper:** [`../paper/erdos1112.pdf`](../paper/erdos1112.pdf) (Appendix B)
+**Verification scripts:** [`verification-scripts.md`](verification-scripts.md) · **Paper:** [`../paper/erdos1112.pdf`](../paper/erdos1112.pdf) (Appendix D)

@@ -1,31 +1,45 @@
-# Build the journal paper.
+# Build the paper.
 #
-# The certificate tables (Appendix B) are GENERATED from data/certificate-data.md
+# The certificate tables (Appendix D) are GENERATED from data/certificate-data.md
 # by gen-tables.py, which re-verifies every row (budget <= M-1, and coverage of M
 # consecutive integers by exact bitmask subset-sum) before emitting LaTeX. A failing
 # row aborts the build, so the printed tables cannot silently diverge from the data
 # the Lean kernel checks.
 
-.PHONY: all clean tables
+.PHONY: all tables arxiv clean
 
-# The full certificate tables are typeset in the supplement (erdos1112-supplement.pdf,
-# built from supplement.tex); the article prints only definitions, worked examples and
-# counts. Both PDFs depend on the generated tables so gen-tables.py re-verifies every
-# row on every build.
+PAPER   := erdos1112
+TABLES  := table-a.tex table-b.tex
+ARXIV   := $(PAPER)-arxiv.tar.gz
 
-all: erdos1112.pdf erdos1112-supplement.pdf
+all: $(PAPER).pdf
 
-tables: table-a.tex table-b.tex
+tables: $(TABLES)
 
-table-a.tex table-b.tex: gen-tables.py data/certificate-data.md
+$(TABLES): gen-tables.py data/certificate-data.md
 	python3 gen-tables.py
 
-erdos1112.pdf: erdos1112.tex table-a.tex table-b.tex
-	latexmk -pdf -interaction=nonstopmode erdos1112.tex
+# Uses latexmk when available, else plain pdflatex three times (longtable and the
+# table of contents both need the extra passes to settle).
+$(PAPER).pdf: $(PAPER).tex $(TABLES)
+	@if command -v latexmk >/dev/null 2>&1; then \
+	  latexmk -pdf -interaction=nonstopmode $(PAPER).tex; \
+	else \
+	  pdflatex -interaction=nonstopmode $(PAPER).tex && \
+	  pdflatex -interaction=nonstopmode $(PAPER).tex && \
+	  pdflatex -interaction=nonstopmode $(PAPER).tex; \
+	fi
 
-erdos1112-supplement.pdf: erdos1112-supplement.tex table-a.tex table-b.tex
-	latexmk -pdf -interaction=nonstopmode erdos1112-supplement.tex
+# Everything arXiv needs, and nothing else: the source plus the two generated,
+# re-verified table files. No bibliography pass (the bibliography is inline) and
+# no graphics files (every figure is TikZ).
+arxiv: $(PAPER).pdf
+	@rm -f $(ARXIV)
+	tar -czf $(ARXIV) $(PAPER).tex $(TABLES)
+	@echo "wrote $(ARXIV):"
+	@tar -tzf $(ARXIV) | sed 's/^/  /'
 
 clean:
-	latexmk -C
-	rm -f table-a.tex table-b.tex build.log
+	@if command -v latexmk >/dev/null 2>&1; then latexmk -C; else \
+	  rm -f $(PAPER).aux $(PAPER).log $(PAPER).out $(PAPER).toc $(PAPER).pdf; fi
+	rm -f $(TABLES) $(ARXIV)

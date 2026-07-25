@@ -6,17 +6,45 @@ abstract: >-
   r_k(d1,d2) exists if and only if d2 >= k+1, with the explicit bound r_k(d1,d2) <= 192*d2
   on the existence side and strong non-existence otherwise. The entire dichotomy is formally
   verified in Lean 4, sorry-free, depending only on the three standard foundational axioms.
+  The write-up is deliberately unconventional: built from first principles, separating the
+  idea of each construction from the estimates that pay for it, with the finite certificate
+  layer printed in full.
+type: software
 authors:
   - family-names: Land
     given-names: Johan
+    affiliation: "Independent researcher"
 keywords:
   - Erdős problems
   - additive combinatorics
   - lacunary sequences
   - sumsets
   - Sturmian words
+  - subset sums
   - Lean 4
   - formal verification
+  - mathematical exposition
 license: Apache-2.0
-date-released: "2026-07-05"
+date-released: "2026-07-25"
 repository-code: "https://github.com/beetree/math_erdos_1112"
+
+# TODO(release): after the Zenodo archive is minted, uncomment and fill in.
+#   The *concept* DOI always resolves to the newest version; the *version* DOI
+#   pins the exact snapshot the paper's data-availability section cites.
+# doi: "10.5281/zenodo.CONCEPT"
+# identifiers:
+#   - type: doi
+#     value: "10.5281/zenodo.VERSION"
+#     description: "Archived snapshot cited in the paper's data-availability section"
+#
+# TODO(arXiv): after posting, add the preprint as the preferred citation.
+# preferred-citation:
+#   type: article
+#   title: "Erdős problem 1112, from first principles: r_k(d1,d2) exists if and only if d2 >= k+1"
+#   authors:
+#     - family-names: Land
+#       given-names: Johan
+#   year: 2026
+#   identifiers:
+#     - type: other
+#       value: "arXiv:XXXX.XXXXX"
