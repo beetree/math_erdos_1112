@@ -21,7 +21,7 @@ carries the definitions and is never edited by the proof) and proved in the
 single frozen definitions — so the audited statement is literally what is proved, with no separate
 copy to drift — and delegates the proofs to `namespace Erdos1112.Proof`. See §6 of the
 paper ([`../paper/erdos1112.pdf`](../paper/erdos1112.pdf)) for why the frozen statement encodes the
-informal problem, the trust base, and the full paper→Lean correspondence map (Appendix E).
+informal problem, the trust base, and the full paper→Lean correspondence map (Appendix F).
 
 ## The proof development
 
@@ -86,5 +86,5 @@ Each part of the [prose proof](../README.md) maps to a directory here:
 | §4 — bounded subset-sum theorem | [`Erdos1112Proof/Sharp/`](Erdos1112Proof/Sharp) — the D/P/L/E/T/B case files, `hardcore_cases`, `sharp` |
 | §5 — Assembly | [`Erdos1112Proof/Final.lean`](Erdos1112Proof/Final.lean) — the three theorems |
 
-The full lemma-by-lemma correspondence table is Appendix E of the
+The full lemma-by-lemma correspondence table is Appendix F of the
 paper ([`../paper/erdos1112.pdf`](../paper/erdos1112.pdf)).

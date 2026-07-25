@@ -3,7 +3,7 @@
 Two independent Python 3 programs (standard library only, no dependencies) that corroborate the
 **finite layer** of the proof — they cover every hard-core triple with `max(G) ≤ 120` by the multiset
 that the paper's route D/P/L/E/T/B designates (Case T by the applicable variant of Construction T),
-verify each witness exactly in integer arithmetic, and validate the certificate tables of Appendix B.
+verify each witness exactly in integer arithmetic, and validate the certificate tables of Appendix E.
 They check the finite content only; the asymptotic lemmas are proved in the paper and formalized in
 Lean. Both programs **fail closed**: any invalid witness, missing class, or count differing from the
 expected totals (83,251 triples; 172 Table-A rows; 178 Table-B classes; zero failures) exits nonzero.
@@ -56,6 +56,6 @@ $ echo $?
 - All ceiling divisions are exact integer arithmetic (`cdiv`); no floating point is used anywhere.
 - Continuous integration (`.github/workflows/verify.yml`) runs both programs to `M = 120` on every
   push, alongside the Lean build and axiom audit.
-- `check_correspondence.py` verifies that every Lean declaration named in the paper's Appendix C
+- `check_correspondence.py` verifies that every Lean declaration named in the paper's Appendix F
   exists in the Lean tree.
 - `probes2/` is generated and git-ignored.
