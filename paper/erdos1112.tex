@@ -53,7 +53,6 @@
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}[theorem]{Example}
-\newtheorem{checkpoint}[theorem]{Exercise}   % exercises for the reader
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 
@@ -189,16 +188,6 @@ Some ground rules, so you know what you are reading.
       in Appendix~\ref{app:tables}. Each is checkable by hand in a few minutes; the
       method, and the three independent systems that have verified all of them, are
       in \S\S\ref{sec:caseT-friendly}--\ref{sec:computer}.
-\item \emph{Exercises are part of the deal, and they are labelled.} Scattered
-      through the text are \emph{Exercises}: small exercises, chosen so that if you
-      can do them, you have understood the last few pages. Every one has a hint or
-      answer in Appendix~\ref{app:hints}, and no later proof secretly depends on your
-      solutions. Each carries its difficulty on its face:
-      \textsc{routine} (a few minutes --- if it does not come, reread),
-      \textsc{core} (the idea of the section, worth real time),
-      \textsc{challenge} (genuinely hard; skipping costs nothing), and
-      \textsc{exploration} (open-ended, with no single clean answer).
-      Stalling on a \textsc{challenge} is not evidence you misunderstood the section.
 \item \emph{Some passages are skippable.} A few stretches of pure verification are
       marked \emph{(first pass: skippable)} --- skip them, keep your momentum, and
       return when you want the details. The parts can also be read somewhat
@@ -343,15 +332,6 @@ starting point and you choose each step, subject only to the window.
 \end{tikzpicture}
 \end{center}
 
-\begin{checkpoint}[\textsc{core}]
-(a) Give an explicit \emph{rule} generating an infinite $(2,4)$-sequence whose gap
-pattern never settles into a repeating cycle, and list the first six resulting
-terms. (Six terms alone cannot certify non-periodicity --- the rule is the
-answer.)
-(b) Show that if $A$ is a $(d_1,d_2)$-sequence then
-$a_1 + (n-1)\,d_1 \le a_n \le a_1 + (n-1)\,d_2$ for every $n$. (Add up the gaps.)
-\end{checkpoint}
-
 \subsection{Sumsets}
 
 Our second ingredient is addition: we will be interested not in $A$ itself but in the
@@ -414,14 +394,6 @@ difference $3$, starting at $15$. This tidiness is special to arithmetic progres
 --- and, as we will see much later, it is precisely what makes them \emph{bad} at
 dodging.
 \end{example}
-
-\begin{checkpoint}[\textsc{routine}]\label{chk:sumset}
-(a) For $A = \{1, 3, 7, 9, 13, \dots\}$ of Example~\ref{ex:24seq}, list every element
-of $3A$ up to $25$.
-(b) Show that for any sequence $A$, the smallest element of $kA$ is $k a_1$.
-(c) Show that if $A$ is a $(d_1,d_2)$-sequence, then between consecutive ``diagonal''
-elements $k a_n$ and $k a_{n+1}$ of $kA$ the distance is at most $k d_2$.
-\end{checkpoint}
 
 \subsection{Lacunary sequences}
 
@@ -486,19 +458,6 @@ separation, not a spacing law. What the picture does show is that no
 which is why it will turn out to be no help below the threshold.}
 \label{fig:lacunary}
 \end{figure}
-
-\begin{checkpoint}[\textsc{routine}]\label{chk:lac-growth}
-Let $B$ be lacunary with ratio $r \ge 2$. Show that $b_i \ge b_1 \, r^{\,i-1}$ for all
-$i$, and conclude that $B$ has at most $1 + \log_2 N$ terms below any $N \ge b_1$.
-\end{checkpoint}
-
-\begin{checkpoint}[\textsc{routine}]\label{chk:monotone-r}
-Show that if $r' \ge r$, then every sequence that is lacunary with ratio $r'$ is
-also lacunary with ratio $r$. Deduce that if announcing $r$ wins, so does
-announcing any $r' \ge r$ --- which is the parenthetical in
-Theorem~\ref{thm:main-friendly}(1). (One line, but it is the line that turns
-Theorem~\ref{thm:existence-friendly}'s single ratio into a half-line of them.)
-\end{checkpoint}
 
 \subsection{The question, as a game}\label{sec:game}
 
@@ -609,19 +568,17 @@ So any winning $r$ must be at least $2$, and the real question starts there: the
 problem page asks about ``an integer $r$'', and we now see this means, in effect,
 an integer $r \ge 2$.
 
-\begin{checkpoint}[\textsc{core}]\label{chk:lazy-ap}
-Suppose you announce $r = 2$ and, feeling lazy, you resolve to always play an
-arithmetic progression: $A = \{c, c+d, c+2d, \dots\}$ for some starting point $c$ and
-fixed gap $d \in [d_1, d_2]$ of your choosing.
-(a) Show that for each \emph{single} such progression, the Adversary --- if they knew
-which one you would play --- could build a legal $B$ meeting $kA$. (Hint:
-Example~\ref{ex:sumset-ap} computes $kA$ exactly for one progression; imitate it,
-and let the Adversary pick elements of $kA$ far apart.)
-(b) The Adversary must in fact commit to $B$ \emph{before} seeing your progression
---- can one $B$ defeat every progression at once? This is genuinely harder, and it
-is the seed of Part~III's ``certificate trick''; for now, just convince yourself
-that (a) alone does not settle it.
-\end{checkpoint}
+\begin{remark}[Steady play loses, one walk at a time]\label{chk:lazy-ap}
+It is worth seeing at once why a fixed arithmetic progression is not a strategy.
+Suppose the walker always plays $A = \{c, c+d, c+2d, \dots\}$ for some $c$ and
+some fixed $d \in [d_1,d_2]$. By Example~\ref{ex:sumset-ap}, $kA = \{kc + sd :
+s \ge k\}$, so an Adversary who knew $d$ and $c$ could take $b_1 = kc + kd$ and
+each subsequent $b_{i+1}$ far up the same progression --- legal at any ratio,
+since an arithmetic progression contains arbitrarily large elements. What is
+\emph{not} settled by this is whether one $B$, fixed in advance, can defeat every
+progression at once: different progressions own different congruence classes.
+That is the harder question, and \S\ref{sec:cert} answers it.
+\end{remark}
 
 \subsection{The answer}\label{sec:answer}
 
@@ -764,10 +721,9 @@ order --- a project for a season, not a sitting; the three interludes
 (\S\ref{sec:remainders}, \S\ref{sec:words}, \S\ref{sec:sturmian-course}) are
 built to be read exactly when they arrive, the marked
 \emph{(first pass: skippable)} passages can be deferred without loss of thread,
-and Part~IV is the steepest sustained stretch. Exercises are the footholds:
-every one has a hint or answer in Appendix~\ref{app:hints}, routine expansions
-live in Appendix~\ref{app:algebra}, and Appendix~\ref{app:symbols} is the map
-of the notation.
+and Part~IV is the steepest sustained stretch. Routine expansions live in
+Appendix~\ref{app:algebra}, and Appendix~\ref{app:symbols} is the map of the
+notation.
 
 \emph{Two parameter sets, carried throughout.} Rather than meet a fresh example
 in every section, it helps to keep two concrete cases in your pocket and ask what
@@ -784,8 +740,7 @@ $804, 808, 812, \ldots$). The losing case is where the two-letter analysis bites
 $d_2 = 3 = k$ is the corner, so every admissible walk's gap word uses letters
 from $\{1,2,3\}$, the sweep needs width $\ge 2$, and the Sturmian endgame handles
 what is left --- and if the walk's tail alphabet has three letters, the slot
-lemma consumes SHARP at exactly $m(G) \le M - 1$. Exercise~\ref{chk:grand-tour}
-walks that second case from end to end; try holding both in mind as you read, and
+lemma consumes SHARP at exactly $m(G) \le M - 1$. Holding both in mind as you read,
 the sixty pages between the picture in \S\ref{sec:picture} and its vindication in
 \S\ref{sec:assembly-friendly} will have an anchor.
 
@@ -854,15 +809,6 @@ along the line at pace $\gamma$. Everything --- both halves of the dichotomy ---
 follows from comparing the stride $\gamma$ to the window width $k$.
 \end{bigidea}
 
-\begin{checkpoint}[\textsc{routine}]\label{chk:floors}
-Prove the inequality just used: for any real numbers $x_1, \dots, x_k$,
-\[
-  x_1 + \cdots + x_k - k \;<\; \lfloor x_1 \rfloor + \cdots + \lfloor x_k \rfloor
-  \;\le\; x_1 + \cdots + x_k .
-\]
-(Start from $x - 1 < \lfloor x \rfloor \le x$ for a single $x$, and add.)
-\end{checkpoint}
-
 \subsection{Above the threshold: daylight}\label{sec:daylight}
 
 Suppose the stride exceeds the window width: $\gamma > k$. Then consecutive windows do
@@ -906,13 +852,14 @@ $\gamma = 3.5$: the windows are $(3.5s - 3,\ 3.5s]$ and the daylight stretches h
 width $0.5$. The integer $25$ sits in daylight --- so no three members of that walk
 sum to $25$, a fact you can (and should) also confirm by hand.
 
-\begin{checkpoint}[\textsc{core}]\label{chk:daylight35}
-(a) Using the first ten terms listed in Example~\ref{ex:beatty35}, verify by direct
-search that no three members of $A$ (repetitions allowed) sum to $18$ or to $25$.
-(b) Explain why the window containment makes the search finite: any sum of three terms
-involving a term $> 25$ is itself $> 25$.
-(c) Find the next two unreachable integers after $25$.
-\end{checkpoint}
+\begin{example}[Daylight, checked by hand]\label{chk:daylight35}
+For the walk of Example~\ref{ex:beatty35} ($\gamma = 3.5$, $c = 0$, $k = 3$), the
+integers $18$ and $25$ are not $3$-fold sums. The search is finite: any sum of
+three terms involving a term exceeding $25$ is itself larger than $25$, so only
+$3, 7, 10, 14, 17, 21, 24$ can participate, and enumerating those triples produces
+neither value. The next unreachable integers are $32$ and $39$: daylight recurs,
+once per stride.
+\end{example}
 
 Now the strategic point. What strides can an admissible walk have? Steps are
 integers in $[d_1, d_2]$, so achievable average speeds fill the interval $[d_1,
@@ -1025,13 +972,6 @@ steady walk with a $B$ \emph{tailored to it}, and you move last. Beating every
 walk with one $B$, committed in advance, is a genuinely harder task --- gap (2)
 of the ledger below.)
 \end{example}
-
-\begin{checkpoint}[\textsc{routine}]\label{chk:s-range}
-In Example~\ref{ex:steady-hopeless}, why does $s$ range over all integers $\ge k$ and
-no others? (Show: each $i_t \ge 1$ gives $s \ge k$; conversely, realize any $s \ge k$
-by choosing $i_1 = s - k + 1$ and $i_2 = \cdots = i_k = 1$.) Note this uses
-repetitions --- Definition~\ref{def:sumset} earning its keep.
-\end{checkpoint}
 
 So a walk that wants to survive below the threshold must \emph{wobble}: vary its
 steps, forever, in a way that never settles into an arithmetic progression. The entire
@@ -1197,22 +1137,10 @@ any integer $m' \le y$ has $m' \le \lfloor y \rfloor$, since otherwise
 $m' \ge \lfloor y \rfloor + 1 > y$. Hence $\lfloor x \rfloor \le \lfloor y \rfloor$.
 
 (4) Add the $k$ instances of (1): summing $x_t - 1 < \lfloor x_t \rfloor \le x_t$ over
-$t = 1, \dots, k$ gives the claim. (This is Exercise~\ref{chk:floors}, now on the
-official record.)
+$t = 1, \dots, k$ gives the claim.
 
 (5) The integer $m := \lfloor u \rfloor + 1$ satisfies $u < m \le u + 1 \le v$.
 \end{proof}
-
-\begin{checkpoint}[\textsc{core}]\label{chk:floor-sum}
-(a) Compute $\lfloor 5.999 \rfloor$, $\lfloor -3 \rfloor$, $\lfloor -3.01 \rfloor$.
-(b) Show by example that $\lfloor x + y \rfloor$ is \emph{not} always
-$\lfloor x \rfloor + \lfloor y \rfloor$ --- and prove that it always equals
-$\lfloor x \rfloor + \lfloor y \rfloor$ or $\lfloor x \rfloor + \lfloor y \rfloor + 1$.
-(This is the fact Lemma~\ref{lem:two-gaps} runs on; the proof there does it for
-you, so try it first.)
-(c) Where does the proof of Lemma~\ref{lem:floor-toolbox}(2) break if $n$ is not an
-integer?
-\end{checkpoint}
 
 \subsection{Beatty walks, officially}
 
@@ -1284,8 +1212,7 @@ $\{\lfloor \gamma \rfloor,\ \lfloor \gamma \rfloor + 1\}$:
 The offset $c$ cancels from every gap, so consider
 $g := \lfloor (i+1)\gamma \rfloor - \lfloor i\gamma \rfloor$. Write $x := i\gamma$
 and $y := \gamma$, so that $g = \lfloor x + y \rfloor - \lfloor x \rfloor$; the
-claim is then exactly Exercise~\ref{chk:floor-sum}, which we now record as part
-of the toolbox:
+claim is the following standard fact, which we record for reference:
 \[
   \lfloor x + y \rfloor - \lfloor x \rfloor \;\in\;
   \{\, \lfloor y \rfloor,\ \lfloor y \rfloor + 1 \,\}
@@ -1344,18 +1271,6 @@ $(d_1,d_2)$-sequences we are using: only steps $d_2 - 1$ and $d_2$, the two larg
 The lower bound $d_1$ plays no role beyond $d_1 \le d_2 - 1$, which is automatic. This
 is the promised explanation of why $d_1$ is absent from the threshold: the existence
 strategy never has any reason to take a small step.
-
-\begin{checkpoint}[\textsc{routine}]
-(a) Show that if $\gamma = d$ is an integer, $A_{d,c}$ is the arithmetic progression
-$c + d,\ c + 2d,\ c + 3d, \dots$
-(b) For $\gamma = \tfrac{7}{2}$, which $i$ have gap $g_i = 4$ and which have $3$? Find
-the pattern and prove it. (Hint: $\lfloor (i+1)\gamma\rfloor - \lfloor i\gamma\rfloor$
-depends on whether $i$ is even or odd.)
-(c) Show that for any real $\gamma > 1$, among the first $n$ gaps of $A_{\gamma,c}$,
-the number of gaps equal to $\lfloor\gamma\rfloor + 1$ is
-$\lfloor (n+1)\gamma \rfloor - \lfloor \gamma \rfloor - n\lfloor\gamma\rfloor$.
-(Telescope the sum of the gaps.)
-\end{checkpoint}
 
 \section{Where the \texorpdfstring{$k$}{k}-fold sums live}\label{sec:windows}
 
@@ -1485,24 +1400,22 @@ $[t, t+k]$, where $t = b - kc$. The game of dodging an infinite sequence $B$ is 
 game of placing one real number $\gamma$ clear of infinitely many forbidden zones.
 \end{bigidea}
 
-\begin{checkpoint}[\textsc{core}]\label{chk:conservative}
-Take the walk of Example~\ref{ex:beatty35}: $\gamma = 3.5$, $c = 0$, $k = 3$.
-(a) Show that $\gamma$ is \emph{not} safe for $t = 25$: find the integer $s$ with
-$3.5\,s \in [25, 28]$.
-(b) Yet $25 \notin 3A$ (Exercise~\ref{chk:daylight35}). Explain, using the half-open
-window $(25, 28]$, why the point $3.5 \cdot 8 = 28$ landing exactly on the closed
-window's right endpoint does not put $25$ into $3A$ --- so the criterion's verdict is
-merely conservative, not wrong.
-(c) Stronger: show that \emph{no} integer $t \ge 1$ is certified at $\gamma =
-3.5$. (Consider the smallest multiple $u$ of $3.5$ with $u \ge t$; multiples of
-$3.5$ are integers or half-integers, so show $u \le t + 3$.) So at this
-particular slope the criterion certifies nothing at all --- even though the walk
-misses $18, 25, 32, \dots$ The slopes the free-gap lemma will select are
-precisely engineered to avoid this fate.
-(d) The text certified $\gamma = 3.8$ for $t = 46$. Find \emph{all} certified
-slopes in $(3, 4)$ for that target, by listing the unsafe intervals
-$[\frac{46}{s}, \frac{49}{s}]$ that meet $(3, 4)$.
-\end{checkpoint}
+\begin{remark}[The criterion is sufficient, not necessary]\label{chk:conservative}
+Definition~\ref{def:safe} is deliberately stronger than avoidance, and the gap is
+visible in the running example. At $\gamma = 3.5$ the target $t = 25$ is not
+certified: $s = 8$ gives $3.5 \cdot 8 = 28 \in [25,28]$. Yet $25 \notin 3A$, as
+Example~\ref{chk:daylight35} records --- membership would require $s\gamma \in
+[25,28)$, and the only candidate, $28$, is excluded by the half-open window. The
+closed certification interval contains it; the true window does not.
+
+At this slope the failure is systematic rather than accidental: multiples of
+$3.5$ are integers or half-integers, so for any integer $t$ the least multiple
+$u \ge t$ satisfies $u \le t+3$, and every closed window $[t, t+3]$ is hit. Thus
+$\gamma = 3.5$ certifies nothing at all, while dodging infinitely many targets.
+The slopes selected in \S\ref{sec:freegap} are chosen to avoid this, and
+\S\ref{sec:nested} shows that against the strongest adversary they must be
+irrational.
+\end{remark}
 
 \subsection{The dial, and its unsafe zones}\label{sec:dial}
 
@@ -1585,23 +1498,6 @@ business of Parts III and IV.)
 What remains for the existence half is quantitative: given the target $t$, \emph{how
 wide} are the safe gaps near the top of the dial, and how little of the dial does each
 new target destroy? That is the free-gap lemma, to which we now turn.
-
-\begin{checkpoint}[\textsc{core}]
-Let $k = 3$ and $t = 20$. (a) List the unsafe intervals
-$[\frac{20}{s}, \frac{23}{s}]$ that meet the dial stretch $(3, 4)$, and conclude that
-the safe slopes there form exactly the two gaps
-$\big(\tfrac{23}{7}, \tfrac{20}{6}\big)$ and $\big(\tfrac{23}{6}, 4\big)$.
-(b) Pick a slope in one of them and write down the first eight terms of a
-$(1,4)$-walk none of whose $3$-fold sums equals $20 + 3c$ for your chosen offset $c$.
-\end{checkpoint}
-
-\begin{checkpoint}[\textsc{routine}]\label{chk:overlap}
-Show that the unsafe intervals for indices $s$ and $s+1$ overlap or touch --- that
-is, $\frac{t+k}{s+1} \ge \frac{t}{s}$ --- if and only if $s \ge t/k$. (This is the
-precise sense in which the unsafe intervals ``merge into a solid block'' at the left
-of Figure~\ref{fig:dial}: from $s = \lceil t/k \rceil$ onward, consecutive intervals
-chain together without gaps.)
-\end{checkpoint}
 
 \section{The free-gap lemma}\label{sec:freegap}
 
@@ -1921,19 +1817,14 @@ subinterval --- the next round of the construction will want to apply the lemma 
 \S\ref{sec:nested} consumes. The open gap $J$ safely contains its closed middle
 third, and a third is the cheapest way to buy closedness with an explicit constant.
 
-\begin{checkpoint}[\textsc{routine}]\label{chk:freegap-concrete}
-The bracketed instance lines did most of the numerical work; three things remain.
-(a) Check the instance satisfies the hypotheses ($t \ge 32d_2^2$ and $|I| \ge
-4d_2^2/t$). (b) How many unsafe intervals meet $I = [3.5, 4]$ when $t = 10000$?
-(Estimate --- then appreciate that the proof never needed to know.) (c) Re-run the
-whole instance yourself for $t = 10^6$.
-\end{checkpoint}
-
-\begin{checkpoint}[\textsc{core}]
-Where does the proof use $t \ge 32 d_2^2$? Find all three places, and test the lemma's
-limits: for $d_2 = 4$, $k = 3$, find a small $t$ for which the interval $J$ defined
-above pokes out of $[d_2 - \tfrac12, d_2]$ or has the wrong width.
-\end{checkpoint}
+\begin{remark}[Where the hypotheses are spent]
+The hypothesis $t \ge 32 d_2^{\,2}$ is used three times, each a different demand.
+It gives $s_1 \ge 32 d_2$ in \eqref{eq:s1-lower}; it makes
+$t/\big(32(d_2 - \tfrac12)\big) \ge d_2 + \tfrac12$ in the width chain, which is
+what lets check~(ii) close; and it bounds $2d_2^{\,2}/t$ against half the width of
+$I$ in check~(iii), which keeps $J$ inside $I$. The third use fails first: for
+$d_2 = 4$, $k = 3$ and $t$ of order $20$, the named gap can protrude below $lo$.
+\end{remark}
 
 \section{Nested intervals, and the ratio \texorpdfstring{$192\,d_2$}{192 d2}}\label{sec:nested}
 
@@ -2259,20 +2150,13 @@ part (1) of Theorem~\ref{thm:main-friendly} is proved. What remains: part (2),
 non-existence below the threshold, in its strong form. Next: convert ``defeat
 every walk'' into a property checked one walk at a time.
 
-\begin{checkpoint}[\textsc{challenge}]
-Trace the construction for $k = 3$, $d_2 = 4$, against the concrete lacunary sequence
-$b_i = 800^{\,i}$ (ratio $800 > 192 \cdot 4$... check!). Find $j_0$ and $c$, compute
-$t_{j_0+1}$, and carry out Round 1 numerically with the recipe of
-\S\ref{sec:freegap}: exhibit an explicit closed interval of slopes, every one of
-which yields a $(1,4)$-walk whose $3$-fold sums miss $b_{j_0+1}$.
-\end{checkpoint}
-
-\begin{checkpoint}[\textsc{core}]
-The proof used lacunarity \emph{only} through \eqref{eq:target-ratio}, one ratio per
-consecutive pair. Convince yourself the argument survives if the Adversary's $B$
-merely satisfies $b_{i+1} \ge 192\,d_2\,b_i$ \emph{eventually} (for all $i \ge$ some
-$i_0$) --- and locate the single place in \S\ref{sec:small-b} that needs adjusting.
-\end{checkpoint}
+\begin{remark}[Only the tail of $B$ matters]
+Lacunarity entered solely through \eqref{eq:target-ratio}, one ratio per
+consecutive pair, and only for indices beyond $j_0$. The argument therefore
+survives unchanged if $B$ satisfies $b_{i+1} \ge 192\,d_2\,b_i$ merely
+\emph{eventually}: choose $j_0$ past the index where the ratio bound begins, which
+is the only step in \S\ref{sec:small-b} that needs adjusting.
+\end{remark}
 
 %======================================================================
 \part{Non-existence: the reduction}
@@ -2489,21 +2373,6 @@ one class'' move is used at a crucial point in \S\ref{sec:widths} and
 \S\ref{sec:sturmian-endgame}, and throughout Part~IV.
 \end{example}
 
-\begin{checkpoint}[\textsc{routine}]\label{chk:remainders-1}
-(a) Compute $\gcd(2026, 715)$ by repeatedly replacing the larger number by its
-remainder upon division by the smaller (this is \emph{Euclid's algorithm} ---
-explain why each step preserves the gcd). (b) Find B\'ezout integers $x, y$ for
-$a = 21$, $b = 8$. (c) Find the inverse of $8$ modulo $21$, and solve
-$8 s \equiv 5 \pmod{21}$.
-\end{checkpoint}
-
-\begin{checkpoint}[\textsc{routine}]\label{chk:remainders-2}
-(a) List the numbers $0, 5, 10, 15, 20, 25, 30$ modulo $7$ and watch the covering
-lemma happen. (b) Show the covering lemma \emph{fails} without coprimality: list
-$0, 6, 12, 18$ modulo $8$. (c) Prove: if $\gcd(\alpha, m) = 1$, then for any $c$
-the congruence $\alpha s \equiv c \pmod m$ has exactly one solution class.
-\end{checkpoint}
-
 %======================================================================
 
 \section{The certificate trick: one \texorpdfstring{$B$}{B} against every \texorpdfstring{$A$}{A}}\label{sec:cert}
@@ -2563,12 +2432,17 @@ contains all of $5a_1 + 8\ZZ$, for instance --- but with modulus $8 > d_2$, and 
 far from containing all large integers.
 \end{example}
 
-\begin{checkpoint}[\textsc{core}]
-Verify the claims of Example~\ref{ex:35gaps}: (a) the prefix sums are exactly the
-numbers $8m$ and $8m+3$ ($m \ge 0$); (b) $5A$ contains every sufficiently large
-multiple of $8$, shifted by $5a_1$ (how large is ``sufficiently''?); (c) $5A$ misses
-the class $5a_1 + 2 \pmod 8$ completely.
-\end{checkpoint}
+\begin{example}[The gap word $3,5,3,5,\dots$, in detail]
+Take the walk of Example~\ref{ex:35gaps}. Its prefix sums are exactly the numbers
+$8m$ and $8m+3$: a prefix is $m$ complete $(3,5)$-blocks, each summing to $8$,
+possibly preceded by a single $3$. Choosing all five summand indices from the $8m$
+family gives $5a_1 + 8(m_1 + \cdots + m_5)$, so $5A$ contains every integer
+$5a_1 + 8N$, $N \ge 0$ --- a full class tail modulo $8$. It also misses two classes
+outright: a $5$-fold sum is $5a_1 + 8m + 3j$ with $j \le 5$, and $3j \bmod 8$ runs
+over $\{0,3,6,1,4,7\}$, never $2$ or $5$. The modulus here exceeds $d_2$ and the
+sumset is far from cofinite; both are why
+Definition~\ref{def:tail-covering} permits an arbitrary modulus.
+\end{example}
 
 \subsection{One sequence to meet them all}
 
@@ -2690,12 +2564,6 @@ tail-covering walk --- gap (2) of the ledger is closed. What remains: proving
 that below the threshold \emph{every} admissible walk is tail-covering (gap
 (3)). Next: coordinates adapted to a single walk, and the case split that
 organizes the rest of the part.
-
-\begin{checkpoint}[\textsc{routine}]
-Take $R(i) = 10^i$. Compute $b_2, b_3, b_4$ of the certificate (with the block list
-of Lemma~\ref{lem:enum}: $(m_2,\rho_2) = (1,0)$, $(m_3,\rho_3) = (2,0)$,
-$(m_4,\rho_4) = (2,1)$). Check the ratios.
-\end{checkpoint}
 
 %======================================================================
 
@@ -2970,11 +2838,13 @@ marks, which is an arithmetic progression with gap $P$. The other residues $j \n
 would give further classes (as in Example~\ref{ex:35gaps}, which is the case $\ell =
 2$, $P = 8$ of this proof), but one class is all tail-covering asks.
 
-\begin{checkpoint}[\textsc{core}]
-The walk with repeating gap block $(2, 3, 2)$ (period $\ell = 3$, $P = 7$) and
-$k = 3$: which classes modulo $7$ does $3A - 3a_1$ contain in full, beyond the class
-of $0$? Compute the possible values of $p_{i_1} + p_{i_2} + p_{i_3} \bmod 7$.
-\end{checkpoint}
+\begin{example}[A periodic walk can cover every class]
+For the repeating gap block $(2,3,2)$ --- period $\ell = 3$, period-sum $P = 7$ ---
+the prefix sums modulo $7$ are $\{0,2,5\}$, and sums of three of them realize every
+residue modulo $7$. So at $k = 3$ this walk's sumset eventually contains all large
+integers, not merely one class. Lemma~\ref{lem:periodic-friendly} claims only one
+class because one is all that is needed.
+\end{example}
 
 \section{Interlude: a mini-course on words, and a little analysis}\label{sec:words}
 
@@ -3069,12 +2939,6 @@ paradigm of the hardest case. (Proving these two claims about it is not needed f
 our proof; the classification below works from balancedness alone, whatever word
 exhibits it.)
 \end{example}
-
-\begin{checkpoint}[\textsc{routine}]
-Verify (b) and (c) of Example~\ref{ex:balanced-words}. Then show that in a balanced
-word, if some window of length $\Delta$ contains $u$ ones, every window of length
-$\Delta$ contains $u-1$, $u$, or $u+1$ ones.
-\end{checkpoint}
 
 \subsection{Suprema, and limits}
 
@@ -3515,18 +3379,21 @@ balanced, and the next section classifies it --- eventually periodic (done, by
 one remaining configuration, $k$ even with $d_2 = k$ and the word unbalanced, is
 also settled in \S\ref{sec:sturmian-endgame}. The ledger stays honest.
 
-\begin{checkpoint}[\textsc{core}]
-For the periodic word $h = 0011\,0011\cdots$ (which Example~\ref{ex:balanced-words}
-showed is unbalanced), find a $\sigma_0$ with $W_2(\sigma_0) \ge 2$, and exhibit,
-for $k = 3$, $s = 12$, two configurations whose values differ by at least $2$.
-\end{checkpoint}
+\begin{example}[An unbalanced word has two-index width]
+For $h = 0011\,0011\cdots$ the counting function runs $q = 0,0,1,2,2,2,3,4,\dots$,
+and at $\sigma_0 = 4$ we have $q_0 + q_4 = 2$ while $q_2 + q_2 = 0$, so $W_2(4) =
+2$. At $k = 3$, $s = 12$ the separation is visible in whole configurations:
+$(4,4,4)$ has value $6$, $(2,2,8)$ has value $4$. This is exactly the input
+Lemma~\ref{lem:width-friendly}(a) converts into a band wide enough for the sweep.
+\end{example}
 
-\begin{checkpoint}[\textsc{core}]
-$W_2$ uses exactly two indices while $\mathrm{width}$ uses $k$; compare them. Prove
-that $\mathrm{width}(s) \ge W_2(\sigma)$ whenever $s \ge \sigma$ and $k \ge 2$ (pad
-the two-index configurations with zeros --- $q_0 = 0$ costs nothing), and find a
-word and an $s$ with $\mathrm{width}(s) > W_2(s)$.
-\end{checkpoint}
+\begin{remark}[Two-index width bounds the full width]
+Since $q_0 = 0$, any two-index configuration can be padded with $k-2$ zero indices
+without changing its value; hence $\mathrm{width}(s) \ge W_2(\sigma)$ whenever
+$s \ge \sigma$ and $k \ge 2$. The inequality is often strict --- for
+$h = 0011\,0011\cdots$ at $k = 3$, $s = 12$, three free indices separate values
+further than two can.
+\end{remark}
 
 \section{Balanced words: the Morse--Hedlund classification}\label{sec:sturmian-course}
 
@@ -3933,19 +3800,14 @@ target changes, and we need a single window length $L$ serving every position. A
 subtler equidistribution theorem would say more; this crude walking bound, powered
 by one pigeonhole, says exactly enough.
 
-\begin{checkpoint}[\textsc{core}]
-(a) For the periodic balanced word $001001\cdots$, compute $\alpha$ and check
-$|D_n| \le 1$ and the conclusion of Step 4 directly.
-(b) For $\alpha = \sqrt2 - 1$ and $Q = 5$, find the $n_0 \le 5$ and $\theta$
-that Dirichlet's pigeonhole produces, and the resulting $L$ for $\varepsilon =
-\tfrac15$.
-\end{checkpoint}
-
-\begin{checkpoint}[\textsc{core}]
-Where exactly did Step 5 use irrationality? (Two places. Find both, and check the
-argument really does collapse for rational $\alpha$ --- as it must, since periodic
-words are not mechanical-with-irrational-slope.)
-\end{checkpoint}
+\begin{remark}[Where Step 5 uses irrationality]
+Twice, and both uses are essential. It gives at most one exceptional index: two
+indices with $n_i\alpha + \beta \in \ZZ$ would force $(n_1 - n_2)\alpha \in \ZZ$.
+And it places $\alpha$ in the open interval $(0,1)$ rather than at an endpoint. For
+rational $\alpha$ the exceptional indices recur periodically and no single tail
+repair is possible --- as it must be, since Step 4 has already shown such words are
+eventually periodic, and a periodic word is not mechanical with irrational slope.
+\end{remark}
 
 \section{The Sturmian endgame}\label{sec:sturmian-endgame}
 
@@ -4496,20 +4358,15 @@ two letters is tail-covering. What remains: alphabets of three or more letters
 --- and there the band machinery fails outright, so a new weapon is needed.
 Next: the slot lemma, and the exact finite statement it costs.
 
-\begin{checkpoint}[\textsc{core}]\label{chk:fib-verify}
-In Example~\ref{ex:fib-traced}, verify the claimed triple: generate the Fibonacci
-word ($0 \mapsto 01$, $1 \mapsto 0$, starting from $0$), compute $q_{10}, q_{26},
-q_{36}$, and check the two equations. Then find a different valid triple for the
-same $x = 100$.
-\end{checkpoint}
-
-\begin{checkpoint}[\textsc{challenge}]
-Why can the Sturmian lemma not simply reuse the sweep? Locate the precise failure:
-show that for a Sturmian word, $\mathrm{width}(s) \le$ some bound that falls short
-of $d_2 - 1$ in the critical case $\delta' = d_2$. (Hint: Step 0 traps $W_s$ in a
-real window of length $k$; how many integers can it contain, and what does
-balancedness do to the endpoints?)
-\end{checkpoint}
+\begin{remark}[Why the sweep cannot be reused here]
+Step 0 confines $W_s$ to a real window of length $k$, so $\mathrm{width}(s) \le
+k-1$ always. At the critical corner $\delta' = d_2 = k$ the sweep needs width
+$\ge d_2 - 1 = k-1$, which would require both extreme integers of that window to be
+attained --- and that needs the $k$ fractional parts $\{i_t\alpha + \beta\}$ to
+pile up near $0$ and near $1$ simultaneously, which balancedness forbids for all
+large $s$. The band is genuinely too narrow, and this is why
+\S\ref{sec:sturmian-endgame} replaces a width argument with exact control.
+\end{remark}
 
 \section{Three or more letters: the slot lemma}\label{sec:slot}
 
@@ -4744,20 +4601,15 @@ $m(G) \le M - 1$ for every finite $G$ with $|G| \ge 3$ and $\gcd(G) = 1$. What
 remains: exactly that one finite statement --- no sequences, no walks, no
 lacunarity. Next: Part~IV, which is about nothing but multisets of integers.
 
-\begin{checkpoint}[\textsc{core}]
-(a) Show $m(\{1, 2, 3\}) \le 2$ and $m(\{2, 3, 4\}) \le 3$, with explicit
-multisets. (b) Trace the slot lemma concretely: $k = 4$, $d_2 = 4$, $\Ginf =
-\{2, 3, 4\}$ (so $M = 4$), gap word cycling $2, 3, 4, 2, 3, 4, \dots$ --- pick the multiset from (a), choose slot positions inside the first two
-periods, and find the dial index and slot pattern realizing $x = 57$ (with $a_1$
-of your choosing).
-\end{checkpoint}
-
-\begin{checkpoint}[\textsc{core}]
-The parked summands were placed at one fixed index. Would the proof survive
-parking them at index $0$ (contributing $p_0 = 0$)? And why does the argument
-insist the block have length $M$ rather than $M - 1$ --- exhibit a concrete
-failure: a dial whose steps are all $M$ leaping over a block of length $M-1$.
-\end{checkpoint}
+\begin{remark}[Two details of the slot construction]
+Parking the surplus summands at index $0$ would be legitimate --- indices $\ge 0$
+are permitted by Lemma~\ref{lem:kA-prefix} --- and changes only the constant
+$\mathrm{base}$. The requirement that the block have length $M$ rather than $M-1$,
+by contrast, is not cosmetic: the dial advances in steps of size up to $M$, and a
+block of $M-1$ consecutive offsets can be stepped over. Concretely, a dial moving
+in multiples of $3$ passes $6 \mapsto 3$, skipping the two-element block
+$\{4,5\}$ entirely.
+\end{remark}
 
 %======================================================================
 \part{The subset-sum lemma}
@@ -4836,15 +4688,14 @@ tuned to be exactly what the slot lemma's corner $k = d_2 = M$ can afford ---
 recall \S\ref{sec:slot}: one dial summand plus at most $M - 1$ slot summands is all
 that $k = M$ pays for.
 
-\begin{checkpoint}[\textsc{exploration}]
-(a) Compute $m(\{1, 2, M\})$ for general $M \ge 3$.
-(b) A multiset of size $s$ has at most $2^s$ subset sums, and $M$ consecutive
-integers are $M$ distinct sums; deduce the elementary lower bound $m(G) \ge \log_2
-M$. Then find a three-element family of sets $G$ (one for each large $M$) whose
-$m(G)$ is genuinely logarithmic-ish in $M$... or convince yourself that with only
-three generators this is impossible, and explain which structural feature of $G$
-controls how far below $M - 1$ the truth sits.
-\end{checkpoint}
+\begin{example}[A case where $m(G)$ is far below the bound]
+For $G = \{1, 2, M\}$ one has $m(G) = \lceil M/2 \rceil$: one copy of $1$ together
+with $j := \lceil (M-2)/2 \rceil$ copies of $2$ has subset sums filling
+$[\,0,\ 2j+1\,]$, a run of $2j + 2 \ge M$ at size $1 + j = \lceil M/2 \rceil$.
+Theorem~\ref{thm:sharp-friendly} is a uniform budget, not a formula: $m(G)$ is
+typically far smaller than $M-1$, and we make no attempt here to determine it in
+general.
+\end{example}
 
 \subsection{The shape of the proof}\label{sec:sharp-shape}
 
@@ -5025,12 +4876,6 @@ size $C$ --- exactly the shape the lemma promises. (Here the coverage happens to
 extend beyond the guarantee; the margins are worst cases.)}
 \label{fig:grid}
 \end{figure}
-
-\begin{checkpoint}[\textsc{routine}]\label{chk:twogen}
-Recompute Figure~\ref{fig:grid}'s dot set yourself and confirm the solid middle
-$[8, 14]$. Then: where exactly is coprimality used in the proof, and what goes
-wrong for $(\alpha, \beta) = (2, 4)$?
-\end{checkpoint}
 
 \subsection{The frame lemma, and budgets}
 
@@ -5336,18 +5181,24 @@ $a$. A certificate whose margin was $\ge 0$ keeps a margin $\ge 0$ --- forever, 
 the whole ladder.
 \end{proof}
 
-\begin{checkpoint}[\textsc{core}]
-Verify Remark~\ref{rem:579}'s subset-sum list by hand. Then find the smallest $x$
-for which $\{5^{(x)}, 7\}$ (i.e.\ $x$ copies of $5$ and one $7$) \emph{does}
-contain a run of $5$ consecutive integers among its subset sums --- or prove none
-exists and explain which ingredient of the frame lemma is missing.
-\end{checkpoint}
+\begin{remark}[The merge condition, tested]
+The subset sums of $\{5,5,5,7\}$ are $\{0,5,7,10,12,15,17,22\}$, and no number of
+copies of $5$ together with a single $7$ can produce five consecutive integers:
+every such sum lies in $\{0,2\} \bmod 5$. What is missing is a box covering
+\emph{all} residues, which is precisely what the frame lemma supplies and what the
+un-hypothesized staircase statement lacked.
+\end{remark}
 
-\begin{checkpoint}[\textsc{core}]
-In the $\lambda$-lift, where exactly is $Y + Z \le a - 1$ used, and what goes
-wrong without it? Construct a numerical instance: a box with $Y + Z = a$ whose
-budget margin degrades as it climbs.
-\end{checkpoint}
+\begin{remark}[Necessity of the box-size condition]
+The hypothesis $Y + Z \le a-1$ caps the budget growth at $Y + Z + 1 \le a$ per
+lift, matching the target's growth of exactly $a$. With $Y + Z = a$ the margin
+leaks one unit per step. Take $a = 5$ and the box $(Y,Z) = (3,2)$ on the class base
+$(5,16,17)$: the representative heights are bounded by $3 \cdot 16 + 2 \cdot 17 =
+82$, giving budget $\lceil (16+82)/5 \rceil + 5 = 25$ against a target of $16$; one
+lift to $(5,21,22)$ gives $3 \cdot 21 + 2 \cdot 22 = 107$ and budget
+$\lceil (21+107)/5 \rceil + 5 = 31$ against $21$. The budget rose by $6 = Y+Z+1$,
+the target by $5 = a$, and the deficit compounds forever.
+\end{remark}
 
 %======================================================================
 
@@ -5689,19 +5540,14 @@ invariant $\eta$ (E), or a finite certificate where every formula runs out (T,
 B).
 \end{bigidea}
 
-\begin{checkpoint}[\textsc{core}]
-First check each of these \emph{is} a hard-core triple, then route it through the
-ordered tree (compute $e, h, \mu, g, \eta$): $(5,12,15)$, $(3,4,5)$, $(5,7,9)$,
-$(13,22,27)$, $(5,8,9)$, $(5,16,17)$. You should hit all six branches, in the
-order D, P, L, E, T, B --- several of these are the coming sections' running
-examples. Then find a triple that is \emph{not} hard-core and say which reduction
-lemma catches it (try $(12, 25, 36)$).
-\end{checkpoint}
-
-\begin{checkpoint}[\textsc{core}]
-Show that the hard core is nonempty for every $a \ge 3$ (find its smallest member
-for each $a$), and that $(3,4,5)$ is the smallest hard-core triple of all.
-\end{checkpoint}
+\begin{example}[The routing, on six triples]
+Each of the following is hard-core, and together they exercise every branch in
+order: $(5,12,15)$ routes to D ($a \mid M$); $(3,4,5)$ to P ($a \mid b+M$);
+$(5,7,9)$ to L ($e = h = 2$); $(13,22,27)$ to E (both sizes at least $12$);
+$(5,8,9)$ to T ($\mu = 4 \le 11$); and $(5,16,17)$ to B ($a = 5 \le 11$,
+$\mu = 12$). By contrast $(12,25,36)$ is not hard-core at all: $a + b = 37 = M+1$,
+so Lemma~\ref{lem:L2-friendly} disposes of it before the case tree is reached.
+\end{example}
 
 %======================================================================
 
@@ -5823,11 +5669,14 @@ Note the pattern, which will repeat: the constructions are not delicate to
 against $M - 1$ with equality at the extremes. The margin throughout Part~IV is
 zero at the corners; that is what ``sharp'' means concretely.
 
-\begin{checkpoint}[\textsc{core}]
-Run Case L on $(5, 7, 9)$ ($g = 2$; odd $a$): write out the multiset, the levels,
-and the covered interval, and reconcile with Remark~\ref{rem:579} --- why does
-the Case-L multiset succeed where $\{5,5,5,7\}$ failed?
-\end{checkpoint}
+\begin{example}[Case L on $(5,7,9)$]
+Here $g = 2$ and $a = 5$ is odd, so the construction takes $(x,y,z) = (5,1,2)$ ---
+the multiset $\{5,5,5,5,5,\,7,\,9,9\}$, of size $8 = M-1$. Levels $c = 3$ through
+$c + g = 5$ each contribute a full frame, and their union is solid. The contrast
+with Remark~\ref{rem:579} is instructive: the failing multiset there,
+$\{5,5,5,7\}$, has too few frames for them to chain, and Case~L's extra copies are
+exactly what repairs it.
+\end{example}
 
 %======================================================================
 
@@ -6038,18 +5887,14 @@ inequalities, one directly-checked triple. (The Lean
 formalization proves this case by a slightly different route --- instantiating
 small $r$ separately --- a difference of route, not of content.)
 
-\begin{checkpoint}[\textsc{core}]
-Play out Case P on $(3, 4, 5)$ by hand: for each $n \in [\mathrm{low},\
-\mathrm{low} + 4]$, find the branch, the residue count $w$, and the selection
-realizing $n$. Where is the mover used?
-\end{checkpoint}
-
-\begin{checkpoint}[\textsc{routine}]
-Derive the display in (E1) from (C$_z$) with $\mathrm{low} = n_b\,b$: check
-$n_b b + n_M b = (a-1)b$ and trace each substitution. (This is the kind of bookkeeping the
-formalization checks so humans don't have to --- but doing it once by hand is how
-you learn what the machine is sparing you.)
-\end{checkpoint}
+\begin{example}[Case P on $(3,4,5)$, by hand]
+Here $r = 3$, $(x,y,z) = (2,1,1)$, $n_b = n_M = 1$ and $\mathrm{low} =
+\max(1 \cdot 4,\ 1 \cdot 5) = 5$, so the targets are $5, \dots, 9$. Two are worth
+tracing. For $n = 8$: $8 \equiv 2 \pmod 3$ gives $w = 2 > n_b$, so Branch~2 spends
+$v = 1$ unpaired copy of $M$, and $8 = 5 + 3$. For $n = 9$ the mover itself
+appears: $9 = 4 + 5$, one copy of $b$ paired with one of $M$, residue-neutral and
+worth $ra = 9$.
+\end{example}
 
 %======================================================================
 
@@ -6178,11 +6023,15 @@ height $S_0 = 2 \cdot 22 + 4 \cdot 27 = 152$; budget $\le \lceil (26 + 152)/13
 box.
 \end{example}
 
-\begin{checkpoint}[\textsc{core}]\label{chk:caseE}
-Why work with $t = \min(\eta, a-\eta)$ rather than $\eta$ itself? Find a triple
-where $\eta$ is close to $a$, and compare the budgets of the two candidate
-boxes. Then verify the claim $f(2) = 2 + (a-1)/2 \le (a+3)/2$ used above.
-\end{checkpoint}
+\begin{remark}[Why $t = \min(\eta,\ a-\eta)$]\label{chk:caseE}
+Working from $\eta$ directly would be legitimate but wasteful. On $(13,24,34)$,
+which routes to Case~E with $\eta = 9$, the box built from $\eta$ is $(8,1)$: top
+height $8 \cdot 24 + 34 = 226$ and budget $\lceil (33+226)/13 \rceil + 9 = 29$. The
+box built from $t = \min(9,4) = 4$ is $(3,3)$: top height $3 \cdot 24 + 3 \cdot 34
+= 174$ and budget $\lceil (33+174)/13 \rceil + 6 = 22$. Both clear $M-1 = 33$ here,
+but only the minimum keeps $\sigma \le a/2 + 2$, which the threshold argument
+requires.
+\end{remark}
 
 %======================================================================
 
@@ -6367,19 +6216,24 @@ to verify the $172$ certificates it produces. \S\ref{sec:computer} describes
 that apparatus in full.
 \end{bigidea}
 
-\begin{checkpoint}[\textsc{core}]
-Verify the $a = 7$ row of Example~\ref{ex:caseT-line}: build Construction T's
-multiset for $(7, 9, 10)$, list its levels, confirm coverage of $10$ consecutive
-integers and budget exactly $9 = M - 1$ (tight, but not failing).
-\end{checkpoint}
+\begin{example}[Construction T at its tightest]
+The $a = 7$ row of Example~\ref{ex:caseT-line} is the extreme case on its line.
+There $y = 2$, $z = 2$, $x = 5$, giving the multiset $\{7^5,\,9^2,\,10^2\}$ of size
+$9 = M - 1$ exactly. Levels $4$ and $5$ each cover a frame, and since $V' - C' =
+6 = a - 1$ they abut precisely; the union is a run of $14 \ge M = 10$ consecutive
+integers. The budget meets the target with nothing to spare, and yet does not
+exceed it --- which is why this line contributes no rows to Table~A.
+\end{example}
 
-\begin{checkpoint}[\textsc{core}]\label{chk:caseT-cert}
-The triple $(5, 8, 9)$ (line $(e,h) = (3,1)$, $g = 1$, $\mu = 4$) is one of the
-$172$ failures. Compute Construction T's budget and watch it exceed $M - 1 = 8$;
-then verify its Table-A replacement certificate $(x, Y, Z) = (5, 2, 1)$: the
-multiset $\{5,5,5,5,5,\ 8,8,\ 9\}$ has budget $8$, its parts $8j + 9k$ hit all
-residues mod $5$, and its sums cover $[17,\ 25]$ --- nine consecutive integers.
-\end{checkpoint}
+\begin{example}[A Case-T failure, and its certificate]\label{chk:caseT-cert}
+The triple $(5,8,9)$ lies on the line $(e,h) = (3,1)$, where Construction~T's
+budget evaluates to $11$ against a target of $M - 1 = 8$: one of the $172$
+failures. Its replacement certificate is $(x,Y,Z) = (5,2,1)$ --- the multiset
+$\{5,5,5,5,5,\,8,8,\,9\}$, of size $8 = M-1$. The parts $8j + 9k$ with $j \le 2$,
+$k \le 1$ take the values $\{0,8,16,9,17\}$, whose residues modulo $5$ are
+$\{0,3,1,4,2\}$: all five. Lifting by the copies of $5$ gives the run $[17,25]$,
+which is $9 = M$ consecutive integers.
+\end{example}
 
 %======================================================================
 
@@ -6500,13 +6354,15 @@ base has $\lambda = 2$ for exactly this reason. The enumeration accounts for
 every class and every member --- completeness of the routing is part of what the
 harnesses check.
 
-\begin{checkpoint}[\textsc{core}]
-Verify the base certificate of the class $[\,5;\ 1,\ 1\,]$ end to end: residues,
-heights, budget, and the covered run of $17$ consecutive integers. Then perform
-one lift by hand --- write the certificate's guarantee for $(5, 21, 22)$ and
-check the budget bound $13 + 4 \le 21 - 1$... and note that the lemma's bound is
-generous: recompute the exact budget at $(5,21,22)$ directly.
-\end{checkpoint}
+\begin{example}[A Case-B base, and one lift]
+The class $[\,5;1,1\,]$ has base $(5,16,17)$ with box $(x,Y,Z) = (10,1,2)$. The
+parts $16j + 17k$ ($j \le 1$, $k \le 2$) are $0, 16, 17, 33, 34, 50$, with residues
+$0,1,2,3,4,0$ modulo $5$ --- a complete system --- and the ten copies of $5$ lift
+this to a run of $17 = M$ consecutive integers, at budget $13 \le 16 = M-1$. One
+lift gives $(5,21,22)$, where the same box has top height $44$ and exact budget
+$13 + 3 = 16$ against a target of $21$: the lemma guarantees only $13 + 4 = 17$, so
+the margin in practice widens faster than the bound promises.
+\end{example}
 
 %======================================================================
 
@@ -6560,12 +6416,14 @@ for $G = \{2,3\}$ ($\gcd 1$, $M = 3$), no multiset of size $\le 2$ covers $3$
 consecutive integers: the hypothesis $|G| \ge 3$ cannot be dropped. \qed
 \end{proposition}
 
-\begin{checkpoint}[\textsc{core}]
-The routing sends $(3,4,5)$ to P, yet L's construction also covers it. Compute
-both multisets and compare. Then find a triple where the D-condition and the
-E-size-conditions both hold, and explain why the ordered routing makes the
-overlap harmless.
-\end{checkpoint}
+\begin{remark}[Overlapping branch conditions are harmless]
+The routing sends $(3,4,5)$ to Case~P, though Case~L also applies. The two
+constructions in fact coincide: Lemma~\ref{lem:caseL-friendly} at $a = 3$, $g = 1$
+gives $(x,y,z) = (2,1,1)$, the multiset $\{3,3,4,5\}$, which is exactly Case~P's
+witness. Overlaps elsewhere are equally benign --- $(13,25,26)$ satisfies both the
+D-condition and Case~E's size conditions --- because the tree is evaluated in order
+and the first matching branch supplies a witness.
+\end{remark}
 
 %======================================================================
 \part{Assembly, and what the computer checked}
@@ -6620,16 +6478,6 @@ Every promise of the honest ledger (\S\ref{sec:honest-list}) has now been
 redeemed: gap (1) in Part~II, gaps (2) and (3) in Part~III, gap (4) in Part~IV.
 The remaining section is not part of the proof; it is about how the proof is
 \emph{checked}.
-
-\begin{checkpoint}[\textsc{challenge} --- grand tour]\label{chk:grand-tour}
-Fix $k = 3$, $(d_1, d_2) = (1, 3)$ --- the losing parameter set of
-\S\ref{sec:map-friendly} --- and the ratio sequence $r_i = 10^i$. Follow
-the entire non-existence machine for the specific walk with gap word
-$1,2,1,1,2,1,2,\dots$ (the Fibonacci word's letters $+1$): which case of the
-table fires, what modulus results, and where in the certificate $B$'s
-construction does the collision get guaranteed? (Nothing new to prove --- the
-point is to watch every part of Parts~III--IV touch one concrete example.)
-\end{checkpoint}
 
 %======================================================================
 
@@ -7066,286 +6914,6 @@ as displayed in the text. Now insert $2M \ge ra + 1$ (valid since $ar + 2a - 4 >
 \end{align*}
 So (E1) holds whenever $ar^2 - 2ar - 2r^2 + 3r - 2 \ge 0$, i.e.\ whenever
 $a\,r\,(r-2) \ge 2r^2 - 3r + 2$ --- the condition $(\ast)$ of the text.
-
-%======================================================================
-\section{Hints and answers for the exercises}\label{app:hints}
-
-One entry per exercise, in reading order, titled by its section and topic.
-Entries come in four kinds: a \emph{hint} leaves you work; an \emph{answer}
-settles the matter; \textsc{challenge} marks something genuinely hard and safely
-skipped; \textsc{discussion} marks an open-ended prompt with no single clean
-answer --- an invitation to experiment, not a debt. If a exercise has parts,
-the entry follows them.
-
-\subsection*{Part I}
-
-\textbf{\S\ref{sec:problem}, walks.} (a) Any aperiodic rule works, e.g.\ steps
-$3,2,3,3,2,3,3,3,2,\dots$ (one $2$ after ever more $3$s); nothing obliges a walk
-to repeat. (b) Sum the $n-1$ gap bounds $d_1 \le g_i \le d_2$.
-
-\textbf{\S\ref{sec:problem}, sumsets.} (a) All members are odd, and sums of
-three odd numbers are odd; the answer is every odd number from $3$ to $25$. (b)
-Each summand is $\ge a_1$. (c) $k a_{n+1} - k a_n = k g_n \le k d_2$.
-
-\textbf{\S\ref{sec:problem}, lacunary growth.} Induction: $b_i \ge r b_{i-1}$.
-Then $b_1 r^{\,i-1} \le b_i \le N$ gives $i \le 1 + \log_r(N/b_1) \le 1 + \log_2
-N$.
-
-\textbf{Exercise~\ref{chk:lazy-ap}.} (a) $kA = \{kc + sd : s \ge k\}$
-(Example~\ref{ex:steady-hopeless}); the Adversary picks $b_1 = kc + kd$, then
-$b_{i+1}$ a far-later element of the same progression. (b) \textsc{challenge}
---- this is Part III's certificate trick; the honest answer at this stage is
-``not obviously, since different progressions own different classes''.
-
-\textbf{Exercise~\ref{chk:floors}.} Add $x_t - 1 < \lfloor x_t \rfloor \le
-x_t$ over $t$.
-
-\textbf{Exercise~\ref{chk:daylight35}.} (a) Only sums of terms $\le 19$
-matter; there are finitely many, and none hits $18$ or $25$. (b) Any sum using a
-term $> 25$ exceeds $25$. (c) $32$ and $39$ (the pattern is $18 + 7j$: daylight
-recurs once per two strides here).
-
-\textbf{Exercise~\ref{chk:s-range}.} $i_t \ge 1$ forces $s \ge k$; conversely
-$i_1 = s - k + 1,\ i_2 = \cdots = i_k = 1$.
-
-\subsection*{Part II}
-
-\textbf{\S\ref{sec:beatty}, floors.} (a) $5$, $-3$, $-4$. (b) $x = y = 0.5$:
-$\lfloor 1 \rfloor = 1 \ne 0$; in general write $x = \lfloor x \rfloor + \{x\}$
-and split on whether $\{x\} + \{y\} < 1$. (c) $m + n$ is no longer an integer,
-so the defining property does not transfer.
-
-\textbf{\S\ref{sec:beatty}, Beatty walks.} (a) $\lfloor id \rfloor = id$. (b)
-Gap $4$ exactly at odd $i$: $\lfloor (i+1)\cdot\tfrac72 \rfloor - \lfloor
-i\cdot\tfrac72 \rfloor$ depends on the parity of $i$. (c) Telescope: the sum of
-the first $n$ gaps is $\lfloor (n+1)\gamma \rfloor - \lfloor \gamma \rfloor$;
-each gap is $\lfloor\gamma\rfloor$ or $\lfloor\gamma\rfloor + 1$, so the number
-of big gaps is the total minus $n\lfloor\gamma\rfloor$.
-
-\textbf{Exercise~\ref{chk:conservative}.} (a) $s = 8$: $3.5 \cdot 8 = 28 \in
-[25, 28]$. (b) $28$ sits on the \emph{closed} right endpoint; the half-open
-window means membership of $25$ in $3A$ would require $s\gamma \in [25,\ 28)$
-for some $s$; the only candidate is $3.5 \cdot 8 = 28$, which the half-open
-interval excludes --- so the dodge succeeds. The \emph{closed} certification
-interval $[25, 28]$ does contain $28$, so the certificate fails: conservative,
-not wrong. (c) The smallest multiple $u$ of $3.5$ with $u \ge t$ satisfies $u < t
-+ 3.5$; multiples of $3.5$ are integers or half-integers, and $(t+3, t+3.5)$
-contains neither, so $u \le t + 3$: every closed window is hit. (d) \textsc{answer.} The unsafe intervals meeting $(3,4)$ are exactly those with
-$s = 12, \dots, 16$:
-\[
-  \Big[\tfrac{46}{12}, \tfrac{49}{12}\Big],\ \
-  \Big[\tfrac{46}{13}, \tfrac{49}{13}\Big],\ \
-  \Big[\tfrac{46}{14}, \tfrac{49}{14}\Big],\ \
-  \Big[\tfrac{46}{15}, \tfrac{49}{15}\Big],\ \
-  \Big[\tfrac{46}{16}, \tfrac{49}{16}\Big] ,
-\]
-i.e.\ approximately $[3.833, 4.083]$, $[3.538, 3.769]$, $[3.286, 3.500]$,
-$[3.067, 3.267]$, $[2.875, 3.063]$. The certified slopes are what is left of
-$(3,4)$ --- \emph{four} open gaps, not one:
-\[
-  \Big(\tfrac{49}{16}, \tfrac{46}{15}\Big),\quad
-  \Big(\tfrac{49}{15}, \tfrac{46}{14}\Big),\quad
-  \Big(\tfrac{49}{14}, \tfrac{46}{13}\Big),\quad
-  \Big(\tfrac{49}{13}, \tfrac{46}{12}\Big) ,
-\]
-approximately $(3.063, 3.067)$, $(3.267, 3.286)$, $(3.500, 3.538)$ and
-$(3.769, 3.833)$. The text's $\gamma = 3.8$ lies in the last and widest of them
---- and note how the gaps widen toward the right, exactly as
-\S\ref{sec:freegap} exploits by aiming $s_1$ at the top of the interval.
-
-\textbf{\S\ref{sec:windows}, $t = 20$.} (a) $s = 6, 7$ give $[10/3, 23/6]$ and
-$[20/7, 23/7]$; all other unsafe intervals miss $(3,4)$. (b) Any $\gamma \in
-(23/6, 4)$, e.g.\ $\gamma = 3.9$: then $b = 20 + 3c \notin 3A_{\gamma,c}$.
-
-\textbf{Exercise~\ref{chk:overlap}.} Cross-multiply: $(t+k)s \ge t(s+1) \iff
-ks \ge t$.
-
-\textbf{Exercise~\ref{chk:freegap-concrete}.} (a) $10000 \ge 512$ and $0.5 \ge
-0.0064$. (b) About $t/\gamma^2 \cdot |I| \approx 300$ of them. (c) $s_1 =
-250000$, $J = (10^6{+}3)/250001 \dots 4$, width $= 1/250001$.
-
-\textbf{\S\ref{sec:freegap}, hypotheses.} $t \ge 32 d_2^2$ enters at
-\eqref{eq:s1-lower}, in the width chain (via $t/(32(d_2 - \tfrac12)) \ge d_2 +
-\tfrac12$), and via the input-width hypothesis in check (iii). For small $t$
-try $t = 20$, $d_2 = 4$: $J$ is wide but pokes below $lo$.
-
-\textbf{\S\ref{sec:nested}, trace.} $j_0 = 1$ ($b_1 = 800 \ge 64$), $c = 801$,
-$t_2 = 800^2 - 3 \cdot 801 = 637{,}597$; then $s_1 = \lceil t_2/(d_2 - \tfrac14)
-\rceil$ etc.\ --- any slope in the resulting middle third qualifies.
-
-\textbf{\S\ref{sec:nested}, eventual lacunarity.} Only the choice of $j_0$
-changes: pick it past $i_0$ as well.
-
-\subsection*{Part III}
-
-\textbf{Exercise~\ref{chk:remainders-1}.} (a) Each step preserves common
-divisors ($d \mid x, y \Rightarrow d \mid x - qy$); $\gcd(2026, 715) = \gcd(715,
-596) = \gcd(596, 119) = \gcd(119, 1) = 1$. (b) $21 \cdot 5 - 8 \cdot 13 = 105 -
-104 = 1$. (c) $8^{-1} \equiv 8 \pmod{21}$ ($64 = 63 + 1$); $s \equiv 8 \cdot 5 =
-40 \equiv 19 \pmod{21}$.
-
-\textbf{Exercise~\ref{chk:remainders-2}.} (a) $0,5,3,1,6,4,2$: all seven. (b)
-$0, 6, 4, 2$ --- only the even classes. (c) Multiply by the inverse; solutions
-$s \equiv \bar\alpha c$.
-
-\textbf{\S\ref{sec:cert}, the $3,5$ example.} (a) Two gaps sum to $8$; a prefix
-of the gap word is $m$ full $(3,5)$-blocks plus possibly a leading $3$. (b) Fix
-all five indices even (contributing $8m_t$); ``sufficiently large'' is $5 a_1 +
-8 \cdot 0$ onward within the class. (c) Sums are $\equiv 3j \pmod 8$ with $j \le
-5$, and $2 \notin \{0,3,6,1,4,7\}$.
-
-\textbf{\S\ref{sec:cert}, certificate values.} $b_2 = 11$, $b_3 = 1102$, $b_4 =
-1{,}102{,}001$; ratios $11 \ge 10$, $1102/11 \ge 100$, etc.
-
-\textbf{\S\ref{sec:periodic}, $(2,3,2)$.} Prefix sums modulo $7$ are $\{0, 2,
-5\}$; sums of three of them hit all seven classes --- so $3A - 3a_1$ eventually
-contains \emph{every} class modulo $7$, i.e.\ all large integers.
-
-\textbf{\S\ref{sec:words}, balance.} (b): windows $00$ and $11$. Final claim:
-compare both windows to the initial window of the same length.
-
-\textbf{\S\ref{sec:widths}, $0011\cdots$.} $q = 0, 0, 1, 2, 2, 2, 3, 4, \dots$;
-$\sigma_0 = 4$: $q_0 + q_4 = 2$, $q_2 + q_2 = 0$, so $W_2(4) = 2$. For $s = 12$:
-configurations $(4,4,4)$ (value $6$) and $(2,2,8)$ (value $4$).
-
-\textbf{\S\ref{sec:widths}, $W_2$ vs width.} Pad with $k - 2$ zero indices
-($q_0 = 0$): a two-index spread survives into $k$ indices. Strict inequality:
-almost any word with $k = 3$, e.g.\ $0011\cdots$ at $s = 12$ has width $\ge 3$.
-
-\textbf{\S\ref{sec:sturmian-course}, examples.} (a) $\alpha = \tfrac13$; $D_n$
-cycles through $0, -\tfrac13, -\tfrac23$ shifted... compute: $q_{3m} = m$, so
-$D_{3m} = 0$; $w_n = 1$ for all $n$, and Step 4's argument ends immediately at
-period $3$. (b) $\{j\alpha\}$ for $j = 0..5$: two land within $\tfrac15$;
-Dirichlet gives $n_0 = 5$, $\theta = |5\sqrt2 - 7| \approx 0.071$, so $L = 5
-\cdot 16 = 80$. \textsc{challenge} to tighten: the true minimal $L$ is far
-smaller.
-
-\textbf{\S\ref{sec:sturmian-course}, irrationality.} Once in ``at most one
-exceptional index'' (two would give $(n_1 - n_2)\alpha \in \ZZ$), once in
-$\alpha \notin \{0, 1\}$. For rational $\alpha$ the exceptional indices recur
-periodically and the tail-pass fails --- consistent with Step 4 taking over.
-
-\textbf{Exercise~\ref{chk:fib-verify}.} $q_{10} = 4$, $q_{26} = 10$, $q_{36} =
-14$: sums $72$ and $28$. Another valid triple: $(10, 23, 39)$, with $4 + 9 + 15
-= 28$.
-
-\textbf{\S\ref{sec:sturmian-endgame}, why not the sweep.} \textsc{challenge}.
-$W_s$ sits inside a real window of length $k$ (Step 0), so $\mathrm{width}(s)
-\le k - 1$ always; for a Sturmian word the two extreme integers of the window
-are attained only when fractional parts pile up near $0$ (resp.\ near $1$)
-\emph{simultaneously}, which balancedness forbids infinitely often --- the band
-is genuinely too narrow at the corner $\delta' = d_2 = k$.
-
-\textbf{\S\ref{sec:slot}, small $m$'s.} (a) $\{1, 2\}$: sums $0,1,2,3$;
-$\{2,3,4\}$: sums $0,2,3,4,5,6,7,9 \supseteq [2,7]$. (b) Use $S = \{2,3,4\}$
-from (a): its sums cover $[2,7]$, amply containing $M = 4$ consecutive values.
-Slots at three positions with gaps $2, 3, 4$ inside the first two periods;
-nothing to park ($k - 1 - m = 0$); dial $\phi$ down by steps $\le 4$ into the
-block.
-
-\textbf{\S\ref{sec:slot}, parking and leaping.} Parking at $p_0 = 0$ is legal
-(indices $\ge 0$ are allowed in Lemma~\ref{lem:kA-prefix}) and changes only
-$\mathrm{base}$. Leap example: block $\{4, 5\}$ ($M = 3$ would need length $3$),
-dial multiples of $3$: $\phi$ passes $6 \to 3$, skipping both.
-
-\subsection*{Part IV}
-
-\textbf{\S\ref{sec:sharp-intro}, small cases.} (a) Answer: $m(\{1,2,M\}) =
-\lceil M/2 \rceil$. Construction: one $1$ and $j := \lceil (M-2)/2 \rceil$ twos
---- their sums fill $[\,0,\ 2j+1\,]$ solidly (twos reach the even numbers, the
-$1$ adjusts parity), a run of $2j + 2 \ge M$, at size $1 + j = \lceil M/2
-\rceil$. The matching lower bound is a small \textsc{challenge}: show a run of
-$M$ consecutive sums needs both parities (hence the $1$, for even $M$) and total
-reach $\ge M - 1$ from the $1$s and $2$s alone --- copies of $M$ cannot glue a
-run longer than the $\{1,2\}$-part supplies. (b) \textsc{discussion}, genuinely
-open-ended: $2^s \ge M$ forces $s \ge \log_2 M$, but with only three generators
-the sums form a rigid three-parameter grid; experiment with $G = \{a, M-1, M\}$
-and watch $\min G$ control how far below $M - 1$ the truth sits. No clean
-closed answer is intended here.
-
-\textbf{Exercise~\ref{chk:twogen}.} Coprimality enters choosing $j$ with
-$j\beta \equiv n$; for $(2,4)$ all grid values are even --- no odd number is
-ever covered, and no interval of length $\ge 2$ either.
-
-\textbf{\S\ref{sec:sharp-machinery}, $(5,7,9)$ and $\{5^{(x)}, 7\}$.} The sums
-of $x$ fives and one seven occupy only residues $\{0, 2\}$ modulo $5$: no five
-consecutive integers, for any $x$. Missing ingredient: a box covering \emph{all}
-residues.
-
-\textbf{\S\ref{sec:sharp-machinery}, the lift's hypothesis.} \textsc{answer.}
-$Y + Z \le a - 1$ caps the budget growth at $Y + Z + 1 \le a$ per lift, matched
-by the target's growth of exactly $a$. A concrete instance of the failure: take
-$a = 5$, and a box with $Y + Z = 5 = a$, say $(Y, Z) = (3, 2)$, on the class base
-$(5, 16, 17)$. The representative heights are now bounded by $S_0 = 3 \cdot 16 +
-2 \cdot 17 = 82$ rather than $34$, so the budget is $\lceil (16 + 82)/5 \rceil +
-5 = 20 + 5 = 25$ against a target $M - 1 = 16$ --- already failing, and the
-lift makes it worse: at $(5, 21, 22)$ the same box gives $S_0 = 3 \cdot 21 + 2
-\cdot 22 = 107$, budget $\lceil (21+107)/5 \rceil + 5 = 26 + 5 = 31$ against
-target $21$. The budget rose by $6 = Y + Z + 1$, the target by $5 = a$: the
-margin lost one unit on the step, and will lose one on every step forever. With
-$Y + Z \le a - 1$ that leak is exactly plugged.
-
-\textbf{\S\ref{sec:sharp-reduction}, routing.} $(5,12,15)$: D. $(3,4,5)$: P.
-$(5,7,9)$: L. $(13,22,27)$: E. $(5,8,9)$: T. $(5,16,17)$: B. And $(12, 25,
-36)$ is not hard-core: $a + b = 37 = M + 1$, so Lemma~\ref{lem:L2-friendly}
-catches it.
-
-\textbf{\S\ref{sec:sharp-reduction}, smallest members.} $(a,\ a+1,\ a+2)$ is
-hard-core for every $a \ge 3$ ($\gcd(a, a+1) = 1$, $h = 1 \le a - 2$); nothing
-smaller than $(3,4,5)$ exists since $a \ge 3$ and $M \ge a + 2$.
-
-\textbf{\S\ref{sec:caseDL}, Case L on $(5,7,9)$.} $(x, y, z) = (5, 1, 2)$:
-budget $8 = M - 1$. Levels $c = 3$ through $c + g = 5$ cover solidly; the
-difference from $\{5,5,5,7\}$ is exactly the extra frames that make the merge
-condition true.
-
-\textbf{\S\ref{sec:caseP-friendly}, $(3,4,5)$.} $\mathrm{low} = \max(1 \cdot 4,\
-1 \cdot 5) = 5$; targets $5, \dots, 9$; e.g.\ $8 = 4 + 4$? No --- follow the
-branches: $8 \equiv 2 \pmod 3$, $w = 2 > n_b = 1$, so $v = 1$: $8 = 5 + 3$. The
-mover appears for target $9 = 4 + 5$.
-
-\textbf{\S\ref{sec:caseP-friendly}, (E1) derivation.} Mechanical; item (A5)
-shows the target form.
-
-\textbf{Exercise~\ref{chk:caseE}.} Answer, on the concrete triple $(13, 24,
-34)$, which routes to E with $\eta = 9$ (check: $\bar e = 11$, $\bar\mu = 8$,
-$11^{-1} \equiv 6$, $\eta = 48 \bmod 13 = 9$). Working from $\eta$ directly
-would take the box $(8, 1)$: top height $8 \cdot 24 + 34 = 226$, budget $\lceil
-(33 + 226)/13 \rceil + 9 = 20 + 9 = 29$. Working from $t = \min(9, 4) = 4$
-takes the box $(3, 3)$: top height $3 \cdot 24 + 3 \cdot 34 = 174$, budget
-$\lceil (33 + 174)/13 \rceil + 6 = 16 + 6 = 22$. Both pass here ($M - 1 = 33$),
-but the $\min$ is systematically cheaper --- and it is what keeps $\sigma \le
-a/2 + 2$, which the general threshold argument needs. Final claim: $2 + (a-1)/2
-= (a+3)/2$: multiply out.
-
-\textbf{\S\ref{sec:caseT-friendly}, $(7,9,10)$.} $y = 2$, $z = 2$, $x = 5$:
-multiset $\{7^5, 9^2, 10^2\}$, nine elements; levels $4$ and $5$ cover $[28 +
-C,\ 35 + V]$ with the merge exact; budget $9 = M - 1$.
-
-\textbf{\S\ref{sec:caseT-friendly}, $(5,8,9)$.} Construction budget $11 > 8$
-(the line $(3,1)$ is unlucky at $a = 5$); the replacement certificate is checked
-by listing $8j + 9k$ residues $\{0,3,1,4,2\}$ and the run $[17, 25]$.
-
-\textbf{\S\ref{sec:caseB-friendly}, the base and one lift.} Residues of $16j +
-17k$: $\{0, 1, 2, 3, 4\}$; heights $\le 50$; budget $13$. At $(5, 21, 22)$ the
-exact budget is $16$ (recompute $S = 44$, $x = 13$) --- better than the lemma's
-guaranteed $13 + 4 = 17$.
-
-\textbf{\S\ref{sec:sharp-assembly}, overlaps.} Answer, and a pleasing one:
-both branches produce the \emph{same} multiset. Case L at $(3,4,5)$ has $a = 3$,
-$g = 1$, so $(x, y, z) = (\lfloor \tfrac12 \rfloor + 2,\ 1,\ \lceil \tfrac12
-\rceil) = (2, 1, 1)$ --- the multiset $\{3, 3, 4, 5\}$, exactly Case P's
-witness. The two mechanisms converge at the smallest triple. D-and-E-sizes
-example: $(13, 25, 26)$ ($a \mid M$, both sizes $\ge 12$); the router reads
-conditions in order, so only D fires --- overlap costs nothing.
-
-\subsection*{Part V}
-
-\textbf{\S\ref{sec:assembly-friendly}, grand tour.} \textsc{challenge}, and the
-best single exercise in the document. Route: two letters $\{1, 2\}$, aperiodic
-balanced (Fibonacci) $\to$ Sturmian $\to$ modulus $m = 1$ from
-Lemma~\ref{lem:sturmian-friendly}; the certificate meets $kA$ at any listed pair
-$(1, 0)$ whose $b_i$ clears the walk's threshold $X_0$.
 
 %======================================================================
 \section{Symbol glossary}\label{app:symbols}
