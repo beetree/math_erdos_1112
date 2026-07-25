@@ -90,7 +90,7 @@
 \email{johan.land@gmail.com}
 \date{July 2026}
 
-\subjclass[2020]{11B13, 11B75, 11P70, 68V20}
+\subjclass[2020]{11B13 (primary), 11B75, 68R15, 68V20}
 \keywords{Erd\H{o}s problems, lacunary sequences, sumsets, Sturmian words,
           subset sums, formal verification, Lean, mathematical exposition}
 
@@ -628,11 +628,17 @@ Graham \cite[p.~18]{ErGr80}; it may be more accurate to call it a problem
 verbatim in \S\ref{sec:game}.
 
 \emph{What was known.} The quantity $r_k(d_1,d_2)$ was introduced by Bollob\'as,
-Hegyv\'ari and Jin \cite{BHJ97}. For two summands the picture was essentially
+Hegyv\'ari and Jin \cite{BHJ97}. For two summands the picture was nearly
 complete: Erd\H{o}s--Graham \cite{ErGr80} and \cite{BHJ97} give $r_2(2,3) = 2$, and
-Chen \cite{Ch00} shows $r_2(a,b) \le 2$ for integers $a < b$ with $b \ne 2a$. For
-three or more summands, \cite{BHJ97} showed that $r_3(2,3)$ does not exist, in a
-strong form. Tang and Yang \cite{TaYa21} proved, for $k \ge 3$, that if the gap
+Chen \cite{Ch00} shows $r_2(a,b) \le 2$ for integers $a < b$ with $b \ne 2a$, and
+separately that $r_2(a,2a) \ge 2$ --- so on the excluded diagonal $b = 2a$ only a
+lower bound was available, and existence was not established. For
+three or more summands, \cite{BHJ97} showed that $r_3(2,3)$ does not exist, and
+did so in the strong form we adopt here: no prescribed sequence of lower bounds on
+the successive ratios of $B$, however fast-growing, rescues the walker. That
+formulation is theirs; what is new below is its range --- every $k \ge 3$ and every
+$d_2 \le k$, rather than the single triple $(3,2,3)$, which
+Theorem~\ref{thm:main-friendly}(2) recovers as a special case. Tang and Yang \cite{TaYa21} proved, for $k \ge 3$, that if the gap
 sequence of $A$ is restricted to a structured class (\emph{block type}) then some
 $B$ meets $kA$ --- in the spirit of our eventually-periodic case
 (\S\ref{sec:periodic}). The general existence question for $k \ge 3$ was listed as
@@ -644,6 +650,21 @@ resisted was precisely the \emph{unstructured} ones --- gap sequences that never
 settle into a period yet remain too regular to be exploited. Those are the Sturmian
 walks of \S\ref{sec:sturmian-endgame}, and they are the reason this proof needs a
 theory of infinite words rather than a counting argument.
+
+One consequence of the existence half is worth recording here, since it fills
+exactly the gap Chen's exclusion left. Theorem~\ref{thm:existence-friendly} is
+proved for all $k \ge 2$, and for $(d_1,d_2) = (a, 2a)$ with $a \ge 2$ we have
+$d_2 = 2a \ge 4 \ge k+1 = 3$; so:
+
+\begin{corollary}[Two summands on the excluded diagonal]\label{cor:chen-diagonal}
+For every integer $a \ge 2$, the ratio $r_2(a, 2a)$ exists, and
+$r_2(a,2a) \le 384\,a$.
+\end{corollary}
+
+\noindent Together with \cite{Ch00} this settles existence for every pair
+$a < b$ with $b \ge 3$, leaving only $(d_1,d_2) = (1,2)$ at $k = 2$ undecided ---
+which is consistent with Remark~\ref{rem:k-ge-3}, where our own machinery is
+recorded as not deciding that case either.
 
 \emph{What is new here.} Three things. First, the dichotomy itself
 (Theorem~\ref{thm:main-friendly}): existence for every $d_2 \ge k+1$, with the
@@ -744,9 +765,12 @@ lemma consumes SHARP at exactly $m(G) \le M - 1$. Holding both in mind as you re
 the sixty pages between the picture in \S\ref{sec:picture} and its vindication in
 \S\ref{sec:assembly-friendly} will have an anchor.
 
-\emph{Every result is machine-checked.} Each numbered result below corresponds,
-through \S\ref{app:lean}, to a declaration in the Lean~4 development that states
-and proves it.
+\emph{The load-bearing results are machine-checked.} Every result used in the
+proof of Theorem~\ref{thm:main-friendly} corresponds, through \S\ref{app:lean},
+to a declaration in the Lean~4 development that states and proves it. Auxiliary
+results --- worked examples, remarks, and the elementary facts assembled in the
+interludes --- are proved here in prose and are not individually formalized;
+\S\ref{app:lean} lists exactly what is covered.
 
 %======================================================================
 
@@ -1905,9 +1929,11 @@ are larger still, since $B$ increases.
 
 \emph{(2) Shifting preserves the ratio.} For $x \ge y > \tau \ge 0$ one has
 \[
-  \frac{x - \tau}{y - \tau} \;\ge\; \frac{x}{y}
-  \qquad\text{(cross-multiply: } xy - \tau x \ge xy - \tau y \iff \tau y \le \tau x\text{)} .
+  \frac{x - \tau}{y - \tau} \;\ge\; \frac{x}{y} .
 \]
+Cross-multiplying by the positive quantities $y$ and $y - \tau$, this is
+$y(x - \tau) \ge x(y - \tau)$, i.e.\ $xy - \tau y \ge xy - \tau x$, i.e.\
+$\tau x \ge \tau y$ --- true since $x \ge y$ and $\tau \ge 0$.
 Apply this with $x = b_{i+1}$, $y = b_i$, $\tau = kc$ (valid: for $i > j_0$,
 $b_i \ge b_{j_0+1} \ge 192 d_2 b_{j_0} > 2 d_2 b_{j_0} \ge kc$, so $y > \tau$):
 \begin{equation}\label{eq:target-ratio}
@@ -2027,8 +2053,8 @@ and let the Adversary answer with the powers of $800$:
   \dots \,\}, \qquad b_i = 800^i .
 \]
 This is legal --- $b_{i+1}/b_i = 800 \ge 768$ --- and it is close to the
-fastest-shrinking play available at this ratio, so the bookkeeping will be
-tight. Now we answer.
+slowest-growing play the ratio permits, hence the densest legal adversary, so the
+bookkeeping will be tight. Now we answer.
 
 \emph{The offset.} We need $b_{j_0} \ge 4d_2^2 = 64$: already $b_1 = 800$
 qualifies, so $j_0 = 1$ and
@@ -2392,7 +2418,7 @@ This section performs the first great simplification: it converts ``defeat every
 $A$'' --- a statement about all walks at once --- into a property to be checked
 \emph{one walk at a time}.
 
-\begin{remark}[Where $k \ge 3$ is spent, and what happens at $k = 2$]
+\begin{remark}[Where $k \ge 3$ is spent, and what happens at $k = 2$]\label{rem:k-ge-3}
 Part~II proudly worked from $k = 2$; Parts~III--IV will not. The hypothesis
 $k \ge 3$ is consumed in two specific places: the width dichotomy's even case
 needs $d_2 \le k - 1$ or a boundary argument requiring $k \ge 4$
@@ -4171,10 +4197,9 @@ Step 2 realizes $w(s^*) \in W_{s^*}$ with legal indices, and
 For a Sturmian walk the window picture stops being an estimate and becomes an
 equation: the depth of a value below the window's top \emph{equals} the sum of $k$
 rotation points on the circle. The hitting lemma lets us place $k-1$ of those
-points at will; integrality snaps the total onto the exact target; and the
-irrationality of the slope makes the ladder's rung $\psi = \delta + e\alpha$
-incommensurable-with-nothing --- just strictly shorter than the acceptance strip,
-so no target escapes.
+points at will; integrality snaps the total onto the exact target; and the ladder's rung
+$\psi = \delta + e\alpha$ is strictly shorter than the acceptance strip, so no
+target escapes.
 \end{bigidea}
 
 \begin{example}[The Fibonacci walk, traced]\label{ex:fib-traced}
@@ -4400,8 +4425,9 @@ with the convention $m(G) := \infty$ if no such multiset exists.
 
 That convention is not idle. If $\gcd(G) = d > 1$ then \emph{every} subset sum is
 a multiple of $d$, so no two consecutive integers --- let alone $M$ of them ---
-can both be sums, and the minimum really is over an empty set. So $m(G)$ is
-finite exactly when $\gcd(G) = 1$ (for $M \ge 2$), which is why the coprimality
+can both be sums, and the minimum really is over an empty set. So $m(G) = \infty$ whenever $\gcd(G) > 1$. The converse --- finiteness when
+$\gcd(G) = 1$ and $|G| \ge 3$ --- is exactly what
+Theorem~\ref{thm:sharp-friendly} will establish, and is why the coprimality
 hypothesis appears in every statement below rather than being an afterthought.
 
 \begin{example}\label{ex:msum}
@@ -6168,16 +6194,29 @@ argument exceeds $(3000 - 1 - 100)/11 > 260$, while the constant branch is at
 most $9$), so the budget equals its ceiling-branch value, which is bounded above
 by a linear function $\beta(a)$ of slope $2/\mu' \le 2/3$; the target $\tau(a) =
 a + \mu - 1$ has slope $1$. Therefore the margin $\tau - \beta$ is nondecreasing
-in $a$ (rate $\ge 1/3$), and it suffices that it is positive at $a = 3000$ on
-every line --- a final finite evaluation in exact rational arithmetic. Which line
-is worst? Reading $\beta$'s formula, its only large term is $2a/\mu'$, so the
-margin $\tau - \beta$ is smallest when $\mu'$ is smallest; among Case-T lines
-$\mu' \ge 3$, with equality on $(e,h) = (2,1)$ and its relatives. So it is enough
-to evaluate there and note that every other line has $\mu' \ge 3$ as well, hence a
-margin at least as large at $a = 3000$ --- no separate cross-line search is
-needed, and nothing beyond this paragraph is asked of the computer. Worth doing
-once by hand: on $(e,h) = (2,1)$ we have $\mu' = 3$, $e' = 2$, $C' = 2$, $g = 1$,
-so
+in $a$ (rate $\ge 1/3$), and it suffices that it is positive for every Case-T line at $a = 3000$. That is a
+finite check, and it can be made uniform rather than line-by-line. Separate
+$\beta$ into its $a$-dependent part and a constant:
+\[
+  \beta(a) \;=\; \frac{2a}{\mu'} \;+\; K, \qquad
+  K \;:=\; 2\Big[ (\mu' - 1) + \frac{\mu + 2C' - (\mu'-1)e'}{\mu'} + 1 \Big] + g .
+\]
+A Case-T line is a pair $(e,h)$ with $e \ne h$, $e, h \ge 1$ and $e + h \le 11$,
+and (as noted above) $\mu' \ge 3$ on every one of them; there are exactly $50$ such
+lines. On each, $g \le \mu \le 11$, $e' \le e \le 10$, $\mu' \le \mu \le 11$ and
+$C' = (e'-1)(\mu'-1) \le 9 \cdot 10 = 90$, so every term of $K$ is bounded
+independently of $a$; evaluating $K$ over all $50$ lines gives $K \le 40$. Hence
+for every line and every $a \ge 3000$,
+\[
+  \tau(a) - \beta(a) \;=\; a + \mu - 1 - \frac{2a}{\mu'} - K
+  \;\ge\; a - \frac{2a}{3} - K \;=\; \frac{a}{3} - K
+  \;\ge\; 1000 - 40 \;>\; 0 ,
+\]
+using $\mu' \ge 3$ and $\mu \ge 1$. No cross-line search is needed, and nothing
+beyond this paragraph is asked of the computer for the tail.
+
+It is worth seeing the tightest line concretely. On $(e,h) = (2,1)$ we have
+$\mu' = 3$, $e' = 2$, $C' = 2$, $g = 1$, so
 \[
   \beta(3000) = 2\Big[ 2 + \frac{3000 + 3 + 4 - 4}{3} + 1 \Big] + 1
   = 2\,[\,3 + 1001\,] + 1 = 2009,
@@ -6270,9 +6309,38 @@ $\lambda$-lift then certifies every larger member, forever.}
 \end{quote}
 
 There are finitely many classes ($a \le 11$, $\bar e < a$, $h \le a - 2$), and
-the enumeration --- machine-checked, \S\ref{sec:computer} --- yields exactly
-$178$ classes whose members reach Case B. Their certified bases are
-\emph{Table~B} of Appendix~\ref{app:tables}.
+exactly $178$ of them have members reaching Case~B. That count is machine-checked,
+but it is also a short hand computation, which we give --- it is the one place in
+Part~IV where an enumeration could otherwise only be taken on trust.
+
+\begin{lemma}[The Case-B classes, counted]\label{lem:caseB-count}
+Exactly $178$ classes $[\,a;\bar e,h\,]$ reach Case~B.
+\end{lemma}
+
+\begin{proof}
+A class is a triple $(a, \bar e, h)$ with $3 \le a \le 11$, $\gcd(\bar e, a) = 1$
+and $1 \le h \le a-2$; it reaches Case~B exactly when $\eta \notin \{0, 1, a-1\}$,
+the excluded values being claimed by earlier branches. Now $\eta = 1$ never occurs
+(\S\ref{sec:hardcore-friendly}), and the other two exclusions are congruences in
+$h$: since $\eta = \bar\mu\,\bar e^{\,-1}$ and $\bar\mu \equiv \bar e + h$,
+\[
+  \eta = 0 \iff h \equiv -\bar e \pmod a, \qquad
+  \eta = a-1 \iff h \equiv -2\bar e \pmod a .
+\]
+The two are distinct: $-\bar e \equiv -2\bar e$ would force $a \mid \bar e$,
+contradicting $\gcd(\bar e, a) = 1$. So for each admissible $\bar e$ at most two of
+the $a-2$ values of $h$ are discarded --- exactly two when both congruences fall in
+$[1, a-2]$, fewer otherwise. Counting survivors for each $a$ gives
+\[
+  0,\quad 1,\quad 6,\quad 5,\quad 20,\quad 17,\quad 32,\quad 25,\quad 72
+  \qquad (a = 3, 4, \dots, 11),
+\]
+which sum to $178$. At $a = 3$ the only admissible $h$ is $1$, and there
+$\eta \in \{0,2\} = \{0, a-1\}$ always, so $a = 3$ contributes nothing.
+\end{proof}
+
+\noindent Their certified bases are \emph{Table~B} of
+Appendix~\ref{app:tables}.
 
 \begin{example}[A class and its lift]\label{ex:caseB-friendly}
 The class $[\,5;\ 1,\ 1\,]$: triples with $a = 5$, $e \equiv 1 \pmod 5$, $h = 1$.
@@ -6374,10 +6442,12 @@ the margin in practice widens faster than the bound promises.
 
 \begin{proof}[Proof of Theorem~\ref{thm:sharp-friendly}]
 By strong induction on $M$: proving the statement for maximum $M$, we may assume
-it for every alphabet with a smaller maximum. (Exactly one place consumes this:
-Lemma~\ref{lem:L4-friendly} passes to the rescaled alphabet $H$ of maximum $M/d <
-M$. No hard-core branch invokes the hypothesis, and no branch re-enters
-Lemma~\ref{lem:L4-friendly} at a larger maximum, so the recursion terminates.)
+it for every alphabet with a smaller maximum. (Two places consume it.
+Lemma~\ref{lem:L4-friendly} passes to the rescaled alphabet $H$ of maximum
+$M/d < M$; and Lemma~\ref{lem:graham-red}, in its case $e^\dagger = M$, invokes the
+statement for $G \setminus \{M\}$, of maximum $M' < M$. Both appeals are to
+strictly smaller maxima. No hard-core branch invokes the hypothesis, and no branch
+re-enters either lemma at a larger maximum, so the recursion terminates.)
 
 If $1 \in G$: done (\S\ref{sec:sharp-intro}). By
 Lemma~\ref{lem:graham-red}, reduce to irreducible $G$; by
@@ -6657,6 +6727,45 @@ def Question (k d₁ d₂ : ℕ) : Prop := ∃ r : ℕ, RatioWorks k d₁ d₂ r
 \end{alltt}
 \end{quote}
 
+\noindent And here are the theorems themselves, likewise verbatim. They are what
+the kernel actually certifies, so they --- not the definitions alone --- are what
+a faithfulness audit must read:
+
+\begin{quote}\small
+\begin{alltt}
+theorem erdos_1112 (k d₁ d₂ : ℕ) (hk : 3 ≤ k) (hd₁ : 1 ≤ d₁) (hd : d₁ < d₂) :
+    Question k d₁ d₂ ↔ k + 1 ≤ d₂
+
+theorem erdos_1112_existence_bound (k d₁ d₂ : ℕ) (hk : 3 ≤ k) (hd₁ : 1 ≤ d₁)
+    (hd : d₁ < d₂) (h : k + 1 ≤ d₂) :
+    RatioWorks k d₁ d₂ (192 * d₂)
+
+theorem erdos_1112_strong_nonexistence (k d₁ d₂ : ℕ) (hk : 3 ≤ k)
+    (hd₁ : 1 ≤ d₁) (hd : d₁ < d₂) (h : d₂ ≤ k) (R : ℕ → ℕ) :
+    ∃ b : ℕ → ℕ, IsVarLacunaryWith R b ∧
+      ∀ a : ℕ → ℕ, HasGapsIn d₁ d₂ a →
+        (kFoldSumset k a ∩ Set.range b).Nonempty
+
+theorem question_iff_questionInt (k d₁ d₂ : ℕ) :
+    Question k d₁ d₂ ↔ QuestionInt k d₁ d₂
+
+theorem erdos_1112_int (k d₁ d₂ : ℕ) (hk : 3 ≤ k) (hd₁ : 1 ≤ d₁) (hd : d₁ < d₂) :
+    QuestionInt k d₁ d₂ ↔ k + 1 ≤ d₂
+\end{alltt}
+\end{quote}
+
+\noindent Four things to check against these, which the definitions alone cannot
+settle. The hypotheses $3 \le k$, $1 \le d_1$ and $d_1 < d_2$ appear explicitly in
+every headline theorem, so none is proved on a degenerate parameter range --- in
+particular $1 \le d_1$ is present, which is what forces $A$ strictly increasing.
+The conclusion of \texttt{erdos\_1112} is a biconditional with $k + 1 \le d_2$, not
+an implication. The bound theorem asserts \texttt{RatioWorks} at the specific value
+$192 \cdot d_2$, so the constant is in the statement rather than hidden in a proof.
+And the strong form quantifies in the order $\forall R\ \exists b\ \forall a$: the
+sequence $b$ is chosen after the ratio bounds $R$ but before the walk $a$, which is
+exactly the strength claimed in Theorem~\ref{thm:main-friendly}(2) --- the weaker
+$\forall R\ \forall a\ \exists b$ would let $b$ depend on the walk.
+
 Six modelling choices carry the weight, and each is a place where a formalization
 could quietly prove the wrong theorem.
 
@@ -6773,7 +6882,12 @@ author and the automated systems used is set out in \S\ref{sec:provenance}.
 
 \textbf{Use of generative AI.} Automated systems played a substantial role in
 producing this work; the full account --- models, tasks, division of labour, and
-verification --- is \S\ref{sec:provenance}. The author directed the work, audited
+verification --- is \S\ref{sec:provenance}. The author personally checked every
+proof and every computational specification in this paper, verified each citation
+used to support an attribution or novelty claim, reviewed every sentence for its
+intended mathematical meaning, and adopted the final text as his own. Where a
+result is established only by machine --- the finite layer of \S\ref{sec:computer}
+--- the paper says so explicitly and states what the machine did. The author directed the work, audited
 the output, and takes full responsibility for the content; the systems are tools,
 not authors. Every mathematical claim used in the proof of
 Theorem~\ref{thm:main-friendly} has been checked by at least one of the routes of
@@ -6793,8 +6907,9 @@ Everything needed to check this paper is permanently archived at
 \[
   \texttt{doi:10.5281/zenodo.21568276}
 \]
---- release \texttt{v1.0.0}, deposited with CERN's Zenodo repository under the
-Apache-2.0 licence. That snapshot carries this \LaTeX{} source, the Lean~4
+--- deposited with CERN's Zenodo repository. Code (the Lean development and the
+Python harnesses) is licensed Apache-2.0; the paper, its figures, and the
+certificate data are licensed CC~BY~4.0. That snapshot carries this \LaTeX{} source, the Lean~4
 development \cite{Lean4,Mathlib}, the machine-readable certificate exports
 (\texttt{data/table-A.csv}, \texttt{data/table-B.csv}, \texttt{data/SHA256SUMS}),
 the table generator and re-verifier \texttt{gen-tables.py}, the two independent
@@ -6807,12 +6922,29 @@ most recent version, should later ones exist. Development continues in the open
 at \repo, but no claim in this paper depends on that repository remaining
 available.
 
+\emph{Pinning.} The archived snapshot records, alongside the source, the exact
+Git commit, the SHA-256 digests of the submitted PDF and of the source archive,
+the digests of \texttt{table-A.csv} and \texttt{table-B.csv}, the toolchain string
+\texttt{leanprover/lean4:v4.27.0}, the Mathlib revision fixed by
+\texttt{lake-manifest.json}, and the identifier of the continuous-integration run
+that last executed every check below. A referee wishing to confirm that this PDF
+corresponds to that snapshot can compare the digest printed in the archive against
+the file in hand.
+
 \emph{The machine-checked proof.} A clean checkout builds with the pinned toolchain:
 \begin{quote}\small
 \begin{verbatim}
+git clone https://github.com/beetree/math_erdos_1112
+cd math_erdos_1112 && git checkout <release tag>
+cd lean
 lake exe cache get                            # fetch the pinned Mathlib
-lake build                                    # compile every file
+lake build                                    # compile every file (~1-2 hours)
 lake env lean Erdos1112Proof/AxiomsCheck.lean # the 3-axiom report, per theorem
+cd ../paper
+python3 scripts/sharp6_final.py 120           # constructive harness, fail-closed
+python3 scripts/sharp_referee_check.py 120    # independent harness, fail-closed
+python3 scripts/check_correspondence.py       # 44/44 declarations resolve
+make                                          # re-verifies all 350 rows, builds
 \end{verbatim}
 \end{quote}
 Continuous integration re-runs the pinned build, the axiom audit, the table
@@ -7186,7 +7318,8 @@ Proc.\ Amer.\ Math.\ Soc.\ \textbf{150} (2022), no.~12, 5165--5177.
 M.~Lothaire,
 \emph{Algebraic Combinatorics on Words},
 Encyclopedia of Mathematics and its Applications \textbf{90},
-Cambridge University Press, 2002.
+Cambridge University Press, 2002, xiv+504 pp.
+(Ch.~1: words, borders and periods; Ch.~2: Sturmian words.)
 
 \bibitem[Mathlib]{Mathlib}
 The mathlib Community,
@@ -7207,7 +7340,8 @@ Amer.\ Math.\ Monthly \textbf{79} (1972), no.~9, 1010--1012.
 \bibitem[RA05]{Alfonsin}
 J.~L.~Ram\'irez Alfons\'in,
 \emph{The Diophantine Frobenius Problem},
-Oxford Lecture Ser.\ Math.\ Appl.\ \textbf{30}, Oxford Univ.\ Press, 2005.
+Oxford Lecture Ser.\ Math.\ Appl.\ \textbf{30}, Oxford Univ.\ Press, 2005,
+xvi+243 pp.
 
 \bibitem[Sa89]{Sarkozy89}
 A.~S\'ark\"ozy,
