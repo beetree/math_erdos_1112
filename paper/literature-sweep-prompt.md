@@ -33,9 +33,10 @@ antecedent must match:
    $|G|$, not on the ambient interval, not asymptotic.
 3. **Consecutive integers**, difference exactly 1 — not an arithmetic progression of
    common difference $d > 1$.
-4. **No density hypothesis**, and valid down to $|G| = 3$. Every result I know in this
-   area needs $|A| \gtrsim \sqrt{n}$ or $|A| \gtrsim \tfrac23 \max(A)$, which is
-   vacuous at three elements.
+4. **No density hypothesis**, and valid down to $|G| = 3$. Most results in this area
+   need $|A| \gtrsim \sqrt{n}$ or $|A| \gtrsim \tfrac23 \max(A)$, vacuous at three
+   elements — though not all: see the settled question below, where a density-free
+   theorem does apply at $|G| = 3$ and is separated from mine on other grounds.
 
 A result that gets 1–3 of these but not all four is *not* a hit, though it is worth
 telling me about if it is closer than what I list below.
@@ -110,7 +111,8 @@ Nathanson (1972), Granville–Walker (2021), Graham (1964), Erdős–Graham (198
 Ramírez Alfonsín (2005). The closest antecedent I found is Lev, *On consecutive subset
 sums*, Discrete Math. 187 (1998), Thm. 1 — same conclusion type (a genuine interval
 from genuine 0/1 subset sums) but a dense-set theorem, $|A| \gtrsim \tfrac23 M$, and no
-multiset. Section 1.9 of the attached paper has the full comparison table with a
+multiset (this one does carry a density hypothesis; its 1997 sibling does not).
+Section 1.9 of the attached paper has the full comparison table with a
 column stating exactly which hypothesis separates each known result from mine; the
 underlying search record is `paper/novelty-search.md`.
 

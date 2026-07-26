@@ -16,7 +16,7 @@ $ make arxiv    # emits exactly the submission tarball
 | `gen-tables.py` | generates **and re-verifies** the certificate tables of Appendix D |
 | `table-a.tex`, `table-b.tex` | generated — do not edit by hand |
 | `Makefile` | `make` / `make arxiv` / `make clean` |
-| `novelty-search.md` | the documented prior-art search behind §1.9 |
+| `novelty-search.md` | the documented prior-art search behind §1.8 |
 | `literature-sweep-prompt.md` | targeted sweep to run past a domain expert (numerical semigroups, algorithmic subset-sum) |
 | `review-prompt-round3.md` | the referee prompt for the current review round |
 | `data/` | canonical certificate data and its machine-readable exports |
@@ -30,7 +30,7 @@ for it, the argument is illustrated throughout, and the finite certificate layer
 printed in full. §1.1 states the case for that choice and what it costs.
 
 It carries the full apparatus — prior work and the novelty argument for the
-subset-sum lemma (§1.9), the formal statement with a decision-by-decision faithfulness
+subset-sum lemma (§1.8), the formal statement with a decision-by-decision faithfulness
 analysis and the Lean trust base (§26), provenance and declarations (§§27–28), data
 availability (§29), the certificate tables (Appendix D), the Lean correspondence table
 (Appendix E), and a bibliography.
