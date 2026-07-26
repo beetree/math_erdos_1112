@@ -16,7 +16,7 @@ of $a$, $Y$ copies of $b$, and $Z$ copies of $M$ has
 - **budget** $x + Y + Z \le M - 1$, and
 - **coverage:** $\text{subset-sums}(S)$ contains $M$ consecutive integers,
 
-i.e. $S$ witnesses $m(G) \le M - 1$ for $G = \{a, b, M\}$. The mechanism is Lemma 3.2: the copies
+i.e. $S$ witnesses $m(G) \le M - 1$ for $G = \{a, b, M\}$. The mechanism is the frame lemma (Lemma 17.2): the copies
 of $b$ (and $M$) realize a mod-$a$ box $(Y, Z)$ with $Y + Z \le a - 1$ covering $\mathbb{Z}_a$, and
 the $x$ copies of $a$ lift that residue cover to a solid run $[S, S + M - 1]$.
 
@@ -27,14 +27,14 @@ lifted by the copies of $5$, contain the run $[17, 25]$ — nine $(= M)$ consecu
 single computation is exactly what the checker performs on each row.
 
 **How the tables are used** (four separate ingredients): the *certificate definition* (above); the
-*certificate lists* (Tables A and B below); the *checker* (exact bitmask subset-sum, Appendix C;
-kernel `decide`, Appendix D — Proposition FV(i)–(ii)); and the *coverage proof* that the listed
-certificates exhaust the exceptional cases (Lemma 3.18 and §III.8 — Proposition FV(iii)–(v)). Table
+*certificate lists* (Tables A and B below); the *checker* (exact bitmask subset-sum in `gen-tables.py` and the two harnesses;
+kernel `decide` in Lean); and the *coverage proof* that the listed
+certificates exhaust the exceptional cases (Proposition 22.3 for Case T, Lemma 23.1 for Case B). Table
 A is the $172$ exceptional lines of Case T; Table B lists one base per class $(a, \bar e, h)$,
-extended to all larger members by Lemma 3.4 (λ-lift), with the supplement re-basing the six
-diagonal $\bar e = h$ classes of §III.8.
+extended to all larger members by Lemma 17.5 (λ-lift), with the supplement re-basing the six
+diagonal $\bar e = h$ classes of Case B (§23).
 
-**Table A (the 172 exceptions of Lemma 3.18 on the merge-robust route, all with $a \le 29$; exhaustive over $a \le 3000$).** Format: $(a,b,M)	o(x,Y,Z)$.
+**Table A (the 172 exceptions of Lemma 22.1 on the merge-robust route, all with $a \le 29$; exhaustive over $a \le 3000$).** Format: $(a,b,M)	o(x,Y,Z)$.
 
 ```
   (4,9,10)→(7,1,1)  (4,13,14)→(10,1,1)  (5,8,9)→(5,2,1)  (5,9,12)→(7,2,1)
@@ -82,7 +82,7 @@ diagonal $\bar e = h$ classes of §III.8.
   (27,37,38)→(14,6,3)  (28,37,39)→(14,4,5)  (29,38,39)→(15,9,10)  (29,39,40)→(14,3,7)
 ```
 
-**Table B (the 178 class bases for Case B, $a \le 11$, $\mu \ge 12$).** Format: $[a;\bar e,h]$ base $(a,b,M)	o(x,Y,Z)$; Lemma 3.4 extends each certificate to every member of its class with larger $e$.
+**Table B (the 178 class bases for Case B, $a \le 11$, $\mu \ge 12$).** Format: $[a;\bar e,h]$ base $(a,b,M)	o(x,Y,Z)$; Lemma 17.5 (λ-lift) extends each certificate to every member of its class with larger $e$.
 
 ```
   [4;1,1] (4,17,18)→(13,1,1)  [5;1,1] (5,16,17)→(10,1,2)  [5;1,2] (5,16,18)→(11,2,1)
