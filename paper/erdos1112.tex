@@ -525,7 +525,7 @@ an integer $r \ge 2$.
 It is worth seeing at once why a fixed arithmetic progression is not a strategy.
 Suppose the walker always plays $A = \{c, c+d, c+2d, \dots\}$ for some $c$ and
 some fixed $d \in [d_1,d_2]$. By Example~\ref{ex:sumset-ap}, $kA = \{kc + sd :
-s \ge k\}$, so an Adversary who knew $d$ and $c$ could take $b_1 = kc + kd$ and
+s \ge 0\}$, so an Adversary who knew $d$ and $c$ could take $b_1 = kc + kd$ and
 each subsequent $b_{i+1}$ far up the same progression --- legal at any ratio,
 since an arithmetic progression contains arbitrarily large elements. What is
 \emph{not} settled by this is whether one $B$, fixed in advance, can defeat every
@@ -706,9 +706,10 @@ Lev \cite[Thm.~1]{Lev97} \newline \emph{(the one to check first)}
   drawn from $A$; $m(G)$ demands a \emph{single} $S$ whose own $0/1$ subset sums
   contain the run, and those sums lie strictly inside that union. The bridge ---
   take $k$ copies of each element, whose subset sums then contain all of $kA$ ---
-  does give a single multiset, of size $k\,|G| \le 3(M-1)$ at $k = 2\kappa$. So
-  \cite{Lev97} does yield a linear bound; it is weaker than the elementary
-  $2M-3$ of Lemma~\ref{lem:basegrid}, and neither reaches $M-1$ \\
+  does give a single multiset, of size $k\,|G| \le 3M$ at $k = 2\kappa + 1$, the
+  threshold at which a run of length $l$ is guaranteed. So \cite{Lev97} does yield a
+  linear bound; it is weaker than the elementary $2M-3$ of
+  Lemma~\ref{lem:basegrid}, and neither reaches $M-1$ \\
 Lev \cite{Lev99}, S\'ark\"ozy \cite{Sarkozy89,Sarkozy94}
 & an AP inside the subset sums $S(A)$
 & the common difference cannot be forced to $1$, so not consecutive integers; needs
@@ -776,10 +777,13 @@ after finding that an earlier draft mishandled \cite{Ch00} in exactly this way
 (\S\ref{sec:prior}).
 
 The row deserving the most scrutiny is \cite[Thm.~1]{Lev97}, for a reason worth
-naming before a referee names it. That theorem needs $k \ge 2\kappa$ summands, and
-at $|G| = 3$ --- taking $A = G \cup \{0\}$, so $n = 4$ and $l = M$ --- this reads
-$k \ge 2\lfloor (M-1)/2 \rfloor$, which is $M-1$ up to parity: numerically the same
-budget as Theorem~\ref{thm:sharp-friendly}. The coincidence is real and is not
+naming before a referee names it. At $|G| = 3$ --- taking $A = G \cup \{0\}$, so
+$n = 4$ and $l = M$ --- its threshold reads $k \ge 2\lfloor (M-1)/2 \rfloor$, which
+is $M-1$ up to parity: numerically the same budget as
+Theorem~\ref{thm:sharp-friendly}. (At $|G| = 3$ the interval it supplies at
+$k = 2\kappa$ already has length $3M-2$ or $2M-3$, both $\ge M$; in general one
+should take $k = 2\kappa+1$, which is the threshold Lev states for a run of length
+$l$, and the bridge above does.) The coincidence is real and is not
 evidence that the theorems coincide. Both quantities are $\approx M$ because
 covering a window of length $M$ from generators of size up to $M$ costs about $M$
 summands either way; what differs is that Lev bounds the summands entering a
@@ -5303,15 +5307,23 @@ every such sum lies in $\{0,2\} \bmod 5$. What is missing is a box covering
 un-hypothesized staircase statement lacked.
 \end{remark}
 
-\begin{remark}[Necessity of the box-size condition]\label{rem:boxsize}
-The hypothesis $Y + Z \le a-1$ caps the budget growth at $Y + Z + 1 \le a$ per
-lift, matching the target's growth of exactly $a$. With $Y + Z = a$ the margin
-leaks one unit per step. Take $a = 5$ and the box $(Y,Z) = (3,2)$ on the class base
-$(5,16,17)$: the representative heights are bounded by $3 \cdot 16 + 2 \cdot 17 =
-82$, giving budget $\lceil (16+82)/5 \rceil + 5 = 25$ against a target of $16$; one
-lift to $(5,21,22)$ gives $3 \cdot 21 + 2 \cdot 22 = 107$ and budget
-$\lceil (21+107)/5 \rceil + 5 = 31$ against $21$. The budget rose by $6 = Y+Z+1$,
-the target by $5 = a$, and the deficit compounds forever.
+\begin{remark}[The box-size condition is sufficient, not necessary]\label{rem:boxsize}
+The hypothesis $Y + Z \le a-1$ caps the growth of each representative's height at
+$(Y+Z)a \le (a-1)a$ per lift, which is what the proof above consumes. We state it
+because it is a condition on the box's \emph{caps}, hence trivially checkable on a
+printed row, and all $178$ Table-B boxes satisfy it.
+
+We do \emph{not} claim it is necessary, and an earlier draft of this paper wrongly
+asserted that it was, on the strength of an example that does not show it. What the
+proof actually needs is the sharper $\max_\rho (j_\rho + k_\rho) \le a-1$, a
+condition on the \emph{chosen representatives} rather than on the caps --- and that
+one can always be arranged. Given any representative using $j + k \ge a$ generators,
+list them in any order and take partial sums modulo $a$: among the first $a+1$ there
+are two equal, so some nonempty consecutive block sums to $0 \bmod a$. Deleting that
+block leaves the residue unchanged, lowers the height, and stays inside the box.
+Iterating gives $j + k \le a-1$ for every $\rho$. So the lift survives boxes with
+$Y + Z \ge a$; we keep the cap form because it is what the certificates record and
+what the formalization states, and we leave the sharpening unused.
 \end{remark}
 
 %======================================================================
@@ -6266,8 +6278,8 @@ Across all Case-T lines, the applicable variant's budget exceeds $M - 1$ for
 precisely $172$ triples, all with $a \le 29$; each of these carries an explicit
 box certificate --- a triple $(x, Y, Z)$ with $Y + Z \le a - 1$ and budget $\le
 M-1$, verified by the two-line computation of
-Lemma~\ref{lem:frame-friendly} --- listed as \emph{Table~A} in Appendix~\ref{app:tables} of this paper
-repository. For $a > 3000$ no failures occur; the range $a \le 3000$ was checked
+Lemma~\ref{lem:frame-friendly} --- listed as \emph{Table~A} in Appendix~\ref{app:tables}. For $a > 3000$ no failures
+occur; the range $a \le 3000$ was checked
 exhaustively by computer.
 \end{proposition}
 
@@ -6728,7 +6740,7 @@ but that is evidence about our ingenuity, not about the problem.
 \textbf{4. Which $G$ are extremal?} Sharpness is not confined to small $M$, and it
 is worth recording why, since Proposition~\ref{prop:sharpness-friendly} on its own
 might leave the impression that $m(\{3,4,5\}) = 4$ is a small-parameter accident.
-It is not: the bound is attained at \emph{every} maximum, by at least two families.
+It is not: the bound is attained at \emph{every} maximum.
 
 \begin{proposition}[An extremal family at every maximum]\label{prop:extremal-families}
 For every $M \ge 3$, \; $m(\{1,\, M-1,\, M\}) = M-1$.
@@ -6749,10 +6761,12 @@ integers would have to be a subset sum, including the one in class $\rho$. Hence
 $i + j + 1 \ge M$, and the multiset has size $i + j + k \ge i + j \ge M-1$.
 \end{proof}
 
-\noindent So sharpness is not a small-$M$ accident: it recurs at every maximum, and
-$M-1$ is the exact worst case rather than a bound that happens to bind once. A
+\noindent So sharpness is not a small-$M$ accident: it recurs at every maximum, by
+this one family, and $M-1$ is the exact worst case rather than a bound that happens
+to bind once. A
 second family appears to behave the same way: for $\{M-2, M-1, M\}$, Case~L at
-$g = 1$ (Lemma~\ref{lem:caseL-friendly}) gives $m \le M-1$ for every $M$, its
+$g = 1$ (Lemma~\ref{lem:caseL-friendly}, whose hypothesis $g \le a-2$ needs
+$M \ge 5$; the cases $M = 3, 4$ are immediate) gives $m \le M-1$, its
 budget $a + 2g - 1 = M-1$ being met with equality, and we have checked
 $m = M-1$ exhaustively for $M \le 20$. We have not proved the lower bound in
 general and do not assert it.
@@ -6763,9 +6777,9 @@ extremals --- so ``are there large extremal sets'' has the dull answer \emph{yes
 always}. The live question is which ones.
 
 \begin{quote}
-\emph{Question.} Characterise the $G$ with $m(G) = M-1$. Are the two families above
-the basic extremizers, in the sense that every extremal $G$ contains one of the
-configurations driving them? Is there a stability statement --- if $m(G)$ is close
+\emph{Question.} Characterise the $G$ with $m(G) = M-1$. Are the two families named
+above the basic extremizers, in the sense that every extremal $G$ contains one of
+the configurations driving them? Is there a stability statement --- if $m(G)$ is close
 to $M-1$, must $G$ be close to an extremal family?
 \end{quote}
 
@@ -6857,10 +6871,11 @@ each. Only the proofs address that, and only a reader does.
 
 \subsection{The five finite obligations, named}\label{sec:obligations}
 
-``The computer checked it'' is too coarse to audit. Exactly five finite statements
-are needed from outside the prose, two for Case~T and three for Case~B, and they are
-worth separating because they are not all closed the same way --- and one of them is
-closed by hand.
+``The computer checked it'' is too coarse to audit. Exactly five obligations sit
+behind the finite layer, two for Case~T and three for Case~B. They are worth
+separating because they are \emph{not} all closed the same way: one is a hand proof
+in this paper, one is a theorem with a finite check attached, and three are finite
+checks --- of which only one is an exhaustive search.
 
 \begin{enumerate}
 \item[\textbf{T1}] \emph{Completeness of the T scan.} Every hard-core triple in
@@ -6887,8 +6902,8 @@ closed by hand.
       involved in this one; the computation only confirms it.
 \item[\textbf{B2}] \emph{Validity of the B witnesses, and the lift.} Each printed
       base is valid --- budget, coverage, and the box-size condition
-      $Y + Z \le a-1$ that Lemma~\ref{lem:lift-friendly} requires and
-      Remark~\ref{rem:boxsize} shows cannot be dropped --- and the $\lambda$-lift
+      $Y + Z \le a-1$ that Lemma~\ref{lem:lift-friendly} assumes (sufficient, not
+      necessary: Remark~\ref{rem:boxsize}) --- and the $\lambda$-lift
       carries it to every larger member of its class. \emph{How it is closed:}
       finite arithmetic for the bases (as in \textbf{T2}), and a proof ---
       Lemma~\ref{lem:lift-friendly} --- for the propagation, which is where the
