@@ -2489,12 +2489,15 @@ there.
 
 \begin{definition}[Tail-covering]\label{def:tail-covering}
 A $(d_1,d_2)$-sequence $A$ is \emph{tail-covering} (for our fixed $k$) if there are
-integers $m \ge 1$, $\rho$, and $X_0$ such that
+integers $m \ge 1$, $0 \le \rho < m$, and $X_0$ such that
 \[
   kA \;\supseteq\; \{\, x \ge X_0 \;:\; x \equiv \rho \pmod m \,\} :
 \]
 the sumset contains \emph{every} sufficiently large number in some fixed congruence
-class.
+class. Requiring $\rho$ reduced costs nothing --- replace any $\rho$ by its remainder
+modulo $m$, which names the same class --- and it is what lets
+Lemma~\ref{lem:cert-friendly} find the pair $(m,\rho)$ in the list of
+Lemma~\ref{lem:enum}, which enumerates only reduced pairs.
 \end{definition}
 
 We met the phenomenon in Example~\ref{ex:steady-hopeless}: for an arithmetic
@@ -7814,6 +7817,23 @@ One row is marked \textsc{alt}: for Case~P this paper gives a single uniform
 argument for the whole line (\S\ref{sec:caseP-friendly}) while the formalization
 instantiates small $r$ separately and routes the rest through an auxiliary lemma.
 The formal statement proved is the one the assembly consumes; it is not weaker.
+Three kinds of correspondence appear in the table, and it is worth distinguishing
+them, because reading every row as a literal restatement would be wrong.
+\emph{(i) Statement for statement}: most rows, including
+Theorem~\ref{thm:sharp-friendly} against \texttt{sharp}, and
+Lemma~\ref{lem:lift-friendly} against \texttt{FrameCert.lift}, whose hypothesis
+$Y + Z + 1 \le a$ is literally the paper's box-size condition.
+\emph{(ii) The paper states more}: the six case lemmas name an explicit multiset or
+box and verify its budget and coverage, whereas the corresponding Lean declaration
+concludes \texttt{SharpTriple a b M}, the existential those constructions witness.
+The prose result implies the formal one; the constructions are how we prove it and
+how a reader checks a row by hand.
+\emph{(iii) One declaration, several prose steps}: \texttt{sharpAt\_of\_hardcore}
+carries the whole reduction --- SHARP below $M$, together with every hard-core
+triple at $M$, yields SHARP at $M$ --- of which Lemma~\ref{lem:graham-red} is the
+first move and Lemmas~\ref{lem:L1-friendly}--\ref{lem:L4-friendly} the rest. Its
+explicit induction hypothesis is the graded form \S\ref{sec:sharp-assembly} uses,
+and is why Lemma~\ref{lem:graham-red} is stated graded rather than absolutely.
 
 \begin{center}\footnotesize
 \begin{tabular}{@{}lll@{}}
