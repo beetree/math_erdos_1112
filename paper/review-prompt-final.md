@@ -8,10 +8,11 @@ improve further.
 
 ## The prompt
 
-This paper has been through four rounds of adversarial review. Each round improved
-it, and each round also introduced new defects — of the ten substantive findings in
-the last round, seven were in material added by the round before. Fresh prose is
-unverified prose, so I am now trying to stop, not to keep polishing.
+This paper has been through five rounds of adversarial review. Each round improved
+it, and each round also introduced new defects in the repairs themselves — last
+round, three of five findings were in text added by the two commits before it, and
+none was on the critical path. Fresh prose is unverified prose. I am trying to
+close, not to keep polishing.
 
 **I am therefore asking you for one thing: tell me if anything in this paper is
 false.** Not what could be added, clarified, expanded, restructured, or better
@@ -35,59 +36,68 @@ $|G| \ge 3$, $\gcd(G) = 1$, $\max(G) = M$ admits a multiset of at most $M-1$ of 
 elements whose subset sums contain $M$ consecutive integers. The dichotomy is
 formalised in Lean 4, `sorry`-free, three standard axioms, no `native_decide`.
 
-### Where the risk actually is: material new to this draft
+### Where the risk actually is: the repairs made last round
 
-These are the things written or changed most recently. They have had the least
-scrutiny, and on past form this is where a defect will be. **Please spend most of
+The previous pass found five defects. **Every one was in recently edited peripheral
+prose, and three were in text added by the two commits before it.** None was on the
+critical path. The repairs below are therefore the newest and least-checked text in
+the paper, and on past form this is where the next defect will be. **Spend most of
 your effort here.**
 
-1. **Lemma 15.4 has a new proof** (greedy residue collection) which drops the old
-   hypothesis that some $c \in G$ is coprime to $\min G$. Check the greedy argument
-   terminates in $\le a-1$ steps, that the subgroup argument is right, and that the
-   final count $|R| + x \le a + M - 1$ holds. This proof was written this week.
-2. **Proposition 25.1 is new**: $m(\{1, M-1, M\}) = M-1$ for all $M \ge 3$. The
-   lower bound argues that all subset sums lie in $sM + [-j, i]$ and that if
-   $i+j+1 < M$ some residue class mod $M$ is missed. Check that.
-3. **Staircase clause 17.3(d) was restated for $g \ge 1$** (it said $g \ge 2$). The
-   previous draft cited it from Case L on an infinite family with $g = 1$, which was
-   a real defect. Check that (d)'s proof is genuinely valid at $g = 1$ and that the
-   degeneration described is right.
-4. **Lemma 18.2 was regraded** to "if SHARP holds for every irreducible alphabet of
-   maximum $\le M$, then for every alphabet of maximum $\le M$", and §24 now states
-   the recursion as lexicographic on $(\max G, |G|)$. Check the grading is sound and
-   that no appeal raises the pair.
-5. **Obligation B3 was added** to §26.3 (minimality of the Case-B bases). Check the
-   decomposition T1/T2/B1/B2/B3 is now genuinely exhaustive — is there a sixth?
-6. **§1.8's monotonicity argument** ($d_2 \le d_2' \Rightarrow r_k(d_1,d_2') \le
-   r_k(d_1,d_2)$, hence $r_2(a,2a) = 2$ with Chen). A previous draft got this wrong
-   in the opposite direction and claimed a false novelty. Check it is right now.
-7. **Example 16.2's parenthetical lower bound** for $m(\{1,2,M\}) = \lceil M/2
-   \rceil$. It is compressed and I am least confident in it.
-8. **The Lev 1997 row of Table 1.** Corrected against the verbatim statement. The
-   separation now claimed is that $kA$ (with $0 \in A$) is a *union* over multisets
-   of size $\le k$, while $m(G)$ needs a *single* multiset. Does that separation
-   actually hold, and does it block deriving my theorem from Lev's even with a
-   worse constant?
+1. **Table 1, the Lev [Lev97] row, was rewritten.** It previously claimed the
+   union-vs-single-multiset separation blocks recovery of $M-1$ "even up to a
+   constant". That was false and has been withdrawn. It now says: the bridge (take
+   $k$ copies of each element, whose subset sums then contain all of $kA$) gives a
+   single multiset of size $k|G| \le 3(M-1)$ at $k = 2\kappa$, so [Lev97] yields a
+   linear bound — weaker than the elementary $2M-3$ of Lemma 15.4 — and neither
+   reaches $M-1$. Check every quantity in that sentence, and check the row is now
+   consistent with §1.8's surrounding text.
+2. **Example 16.2's parenthetical was withdrawn, not repaired.** It now reads
+   "(Equality in fact holds, but we need only the upper bound and do not prove it.)"
+   Two successive attempts to prove that lower bound both introduced defects, so it
+   is now an unproved assertion, deliberately. Is asserting it without proof
+   defensible here, and is the equality actually true?
+3. **§26.3 now names five obligations, not four** (T1, T2, B1, B2, B3), "two for
+   Case T and three for Case B". Check the heading, the opening count, the list, the
+   closing tally, Table 2's caption, and Table 2's Case-B row all agree — the last
+   round they did not.
+4. **Obligation B2's condition was relabelled.** $Y + Z \le a-1$ is now called the
+   box-size condition and cites the remark following Lemma 17.5 (previously it said
+   "frame-merge condition" and cited Remark 17.4, which concerns
+   $V' - C' \ge a - 1$, a different hypothesis in a different lemma). Check the
+   naming and the cross-reference are now right, and that no other place in the
+   paper confuses the two conditions.
+5. **§25.1's second extremal family was weakened.** It now claims only the Case-L
+   upper bound $m(\{M-2,M-1,M\}) \le M-1$ for all $M$, plus equality verified for
+   $M \le 20$, and explicitly declines to assert the general lower bound. Check that
+   nothing nearby still asserts two proved families at every maximum.
+6. **§26's opening ledger** now lists five load-bearing finite items rather than
+   four, including base minimality. Check it matches §26.3.
 
-### What has already been checked — please do not redo these
+### Two findings from last round that were not defects
 
-Reported sound by several prior review passes, some of which reimplemented the
-finite layer independently. Those passes were automated, not expert opinion:
+One reviewer reported that Lemma 15.4 reads "$H+g \notin H$" and that Lemma 21.1 and
+Example 21.2 read "$k < Z$" and "$k < 4$". The text reads $H + g \not\subseteq H$,
+$k \le Z$ and $k \le 4$ respectively, and has throughout. If you find yourself about
+to report either, please quote the line you are looking at.
 
-- Proposition 14.6, the $k$ even, $d_2 = k$ boundary case, and Lemma 14.5's
-  palindrome/border/period chain.
-- The rescaling type discipline (Definition 9.2, $G$-walks): no statement applied
-  after rescaling assumes $d_1$.
-- Exhaustiveness of the six-branch routing over the hard core.
-- All 350 certificate rows (budget and coverage), the 172 Case-T exceptions, the
-  178 Case-B class counts $0,1,6,5,20,17,32,25,72$, and the branch tallies summing
-  to 83,251.
-- $\max K = 435/11 \approx 39.55$ over the 50 Case-T lines. **One reviewer got 41
-  here by reading a ceiling into the definition of $\beta$ that is not there.** If
-  you get 41, that is why.
+### Verified clean last round — do not redo without reason
 
-If you believe any of the above *is* wrong, say so — prior agreement is not proof.
-But do not spend effort re-deriving them without reason.
+All reported sound, several with independent reimplementations of the finite layer:
+Lemma 15.4's greedy proof; Proposition 25.1; clause 17.3(d) at $g = 1$ and Case L's
+three sub-cases; the grading of Lemma 18.2 and §24's lexicographic recursion; the
+exhaustiveness of T1/T2/B1/B2/B3; §1.8's monotonicity argument and $r_2(a,2a) = 2$;
+Proposition 14.6 and the palindrome/border/period chain; the $G$-walk type
+discipline; the six-branch routing; all 350 certificate rows; the 172 Case-T
+exceptions with max $a = 29$; the class counts $0,1,6,5,20,17,32,25,72$; base
+minimality; and the branch tallies summing to 83,251.
+
+$\max K = 435/11 \approx 39.55$ on line $(e,h) = (10,1)$. **One reviewer got 41 by
+reading a ceiling into the definition of $\beta$ that is not there.** If you get 41,
+that is why.
+
+Prior agreement is not proof — if you believe any of the above is wrong, say so. But
+do not spend effort re-deriving it without a reason.
 
 ### Specific claims you can falsify cheaply
 
