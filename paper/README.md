@@ -13,7 +13,7 @@ $ make arxiv    # emits exactly the submission tarball
 |---|---|
 | `erdos1112.tex` | the paper (amsart, self-contained; no `.bib` — bibliography is inline) |
 | `erdos1112.pdf` | the built paper (committed as the submission artifact; reproducible with `make`) |
-| `gen-tables.py` | generates **and re-verifies** the certificate tables of Appendix E |
+| `gen-tables.py` | generates **and re-verifies** the certificate tables of Appendix D |
 | `table-a.tex`, `table-b.tex` | generated — do not edit by hand |
 | `Makefile` | `make` / `make arxiv` / `make clean` |
 | `novelty-search.md` | the documented prior-art search behind §1.9 |
@@ -32,12 +32,12 @@ printed in full. §1.1 states the case for that choice and what it costs.
 It carries the full apparatus — prior work and the novelty argument for the
 subset-sum lemma (§1.9), the formal statement with a decision-by-decision faithfulness
 analysis and the Lean trust base (§26), provenance and declarations (§§27–28), data
-availability (§29), the certificate tables (Appendix E), the Lean correspondence table
-(Appendix F), and a bibliography.
+availability (§29), the certificate tables (Appendix D), the Lean correspondence table
+(Appendix E), and a bibliography.
 
 ## The tables are generated, not transcribed
 
-Appendix E prints all 172 + 178 certificate rows. These are the finite layer of the
+Appendix D prints all 172 + 178 certificate rows. These are the finite layer of the
 proof, and they are also transcribed into Lean (`Sharp/TablesData.lean`) where the
 kernel decides them. Typesetting them by hand would risk a silent divergence between
 what is printed and what the kernel checks.

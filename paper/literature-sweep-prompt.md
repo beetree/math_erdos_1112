@@ -40,6 +40,31 @@ antecedent must match:
 A result that gets 1–3 of these but not all four is *not* a hit, though it is worth
 telling me about if it is closer than what I list below.
 
+### Priority zero: settle one specific factual question
+
+**Before anything else, please read V. F. Lev, *Optimal representations by sumsets
+and subset sums*, J. Number Theory 62 (1997), 127–143, and tell me the exact
+hypotheses and conclusion of its Theorem 1.**
+
+I need this because a reviewer asserted that my comparison table mischaracterises
+it. My table said Lev's Theorem 1 operates "under a density hypothesis." The
+reviewer says it has none — that its only hypotheses are $l \ge n-1$ and
+$\gcd(A) = 1$, that it therefore applies at $|A| = 4$ (my $|G| = 3$ case), and that
+its threshold $k \ge 2\kappa$ with $\kappa = \lfloor (l-1)/(n-2) \rfloor$ lands near
+$M-1$ — the same budget as my theorem. If that is right, the row is false and I
+must rewrite it.
+
+I have since rewritten the row so that it turns on a structural distinction rather
+than on a density hypothesis: Lev's theorem describes the $h$-fold sumset $hA$,
+which (with $0 \in A$) is the *union* over all multisets of size $\le h$ of their
+sums, whereas $m(G)$ demands a *single* multiset whose own 0/1 subset sums contain
+the run. I believe that separation holds regardless of which reading of the
+hypotheses is correct. **Please check that too** — is the union-vs-single-multiset
+distinction accurate, and does it genuinely block any derivation of my statement
+from Lev's, even with a worse constant?
+
+I would rather be told my row is still wrong than have it survive to a referee.
+
 ### Where I most want you to look
 
 Two bodies of work were flagged to me as the likeliest homes, and I have not searched

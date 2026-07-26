@@ -151,6 +151,17 @@ certificate layer. Few readers are fluent in all three areas at once, and a proo
 that is checkable only by someone who is has a very small pool of possible
 checkers.
 
+There is a second reason, and it is the more binding one. Automated systems did
+substantial work in producing this proof; \S\ref{sec:provenance} states exactly
+what. That disclosure carries an obligation, which the \emph{Electronic Journal of
+Combinatorics} states plainly in its policy on the matter: an author who uses such
+assistance must check the result and \emph{provide enough detail in the paper to
+allow another human to check it}. A compressed presentation of this argument would
+not discharge that obligation. It would ask the reader to reconstruct several
+nonstandard reductions from sketches, and reconstruction is precisely the labour we
+are not entitled to delegate. The same journal sets no page limit and asks instead
+for all relevant details. Length here is compliance, not indulgence.
+
 We have therefore made three choices. The background the argument needs is
 developed in the text rather than cited, so that the paper can be verified without
 a reference shelf. The mechanism of each construction is stated separately from the
@@ -159,11 +170,13 @@ mathematical content and which perform bookkeeping. And routine expansions are
 placed in an appendix rather than in the reader's way. The result is roughly three
 times the length of a compressed presentation of the same theorems.
 
-The cost is length; we think the trade is worth making for a proof of this shape,
-and \S\ref{sec:computer} records what has been done to make the result checkable
-by other means as well. Nothing here is asserted without proof: the finite layer is
-machine-checked three independent ways, and the entire dichotomy is verified in
-Lean~4.
+We do not claim the trade is free. A reader who already commands all three
+backgrounds will find stretches of this paper slow, and is invited to use the
+routing of \S\ref{sec:map-friendly} to skip them. What the length buys is that the
+pool of people who \emph{can} check this proof is not restricted to that reader.
+\S\ref{sec:computer} records what has been done to make the result checkable by
+other means as well: the finite layer is checked three ways, and the entire
+dichotomy is verified in Lean~4.
 
 Some ground rules, so you know what you are reading.
 
@@ -174,10 +187,10 @@ Some ground rules, so you know what you are reading.
       and divisibility (\S\ref{sec:remainders}), infinite words and a little analysis
       (\S\ref{sec:words}), and balanced words (\S\ref{sec:sturmian-course}). What is
       \emph{not} redeveloped from zero is the general craft of reading proofs ---
-      contradiction, induction, ``it suffices to show'' --- so Appendix~\ref{app:howtoread}
-      is a short guide to the conventions this paper uses. If you hit an undefined
-      \emph{mathematical term}, that is our mistake; if you hit an unfamiliar
-      \emph{proof move}, Appendix~\ref{app:howtoread} should name it.
+      contradiction, induction, ``it suffices to show'', the well-ordering
+      principle --- which we assume throughout, and name in passing wherever a step
+      might otherwise read as a leap. If you hit an undefined \emph{mathematical
+      term}, that is our mistake.
 \item \emph{Every proof is complete, and one table travels separately.} When a step is
       genuinely hard, we slow down and build the tools --- we do not say ``it can be
       shown''. Where a routine algebraic expansion would drown the idea it serves,
@@ -186,15 +199,17 @@ Some ground rules, so you know what you are reading.
       knowing from the start: the finite layer of Part~IV rests on $350$ certificate
       rows --- six small integers each --- and every one of them is printed here,
       in Appendix~\ref{app:tables}. Each is checkable by hand in a few minutes; the
-      method, and the three independent systems that have verified all of them, are
+      method, and the three separate systems that have checked all of them --- with
+      the caveat of \S\ref{sec:threat} about what their agreement is worth --- are
       in \S\S\ref{sec:caseT-friendly}--\ref{sec:computer}.
 \item \emph{Some passages are skippable.} A few stretches of pure verification are
       marked \emph{(first pass: skippable)} --- skip them, keep your momentum, and
       return when you want the details. The parts can also be read somewhat
       independently (a map, with three suggested routes, is in
       \S\ref{sec:map-friendly}).
-\item \emph{It is long.} A conventional paper compresses; this one decompresses.
-      The length is the price of the experiment.
+\item \emph{It is long.} A conventional paper compresses; this one decompresses,
+      for the reason given above: the argument has to be checkable by someone who is
+      not already an expert in all three of its backgrounds.
 \end{itemize}
 
 \noindent Two conventions of the genre are kept, because they exist for reasons
@@ -206,15 +221,6 @@ excuse for vagueness about credit or verifiability.
 One notational convention up front: $\NN = \{1, 2, 3, \dots\}$ denotes the positive
 integers (natural numbers), and when we say \emph{number} without qualification we mean
 a positive integer.
-
-\subsection{A note on prerequisites}\label{sec:howtoread-pointer}
-
-This paper builds all of its content from the ground up, but it does assume a
-little of the \emph{craft} of reading proofs --- what ``it suffices to show means,
-how a chain of inequalities is to be read, when passing to a tail is legitimate.
-Appendix~\ref{app:howtoread} sets out the whole of what is assumed, in two pages,
-and nothing else is. A reader for whom that is second nature should skip it; a
-reader who finds a move in a proof unfamiliar should look there first.
 
 \subsection{Sequences and gaps}
 
@@ -616,9 +622,9 @@ $r_2(a,2a) \le r_2(a,a+1) \le 2$, and with Chen's lower bound $r_2(a,2a) \ge 2$,
 Our Theorem~\ref{thm:existence-friendly} also yields existence here, but only with
 the bound $192\,d_2 = 384\,a$, which the above supersedes completely. We record
 this because an earlier draft of this paper presented the $384\,a$ bound as filling
-a gap Chen left open; it does not, and we are grateful to the referee who pointed
-out the one-line monotonicity argument. Nothing elsewhere in this paper depends on
-the claim.
+a gap Chen left open. It does not, and the monotonicity argument above is the
+one-line refutation. Nothing elsewhere in this paper depends on the withdrawn
+claim.
 
 \emph{What is new here.} Three things. First, the dichotomy itself
 (Theorem~\ref{thm:main-friendly}): existence for every $d_2 \ge k+1$, with the
@@ -692,9 +698,13 @@ Lev \cite[Thm.~1]{Lev98} \newline \emph{(closest antecedent)}
   \emph{dense-set} theorem: $|A| \gtrsim \tfrac23 M$, vacuous at $|G| = 3$, and no
   multiset. Ours is its density-free multiset analogue \\
 Lev \cite[Thm.~1]{Lev97}
-& an interval of length exactly $\max(A) + 1$
-& inside the $h$-fold sumset $(2k-1)A$ --- unbounded multiplicities, many summands
-  --- and under a density hypothesis; not $0/1$ sums of a bounded multiset \\
+& a long run of consecutive integers inside the $h$-fold sumset $hA$
+& \emph{a statement about $hA$, not about one multiset.} With $0 \in A$, $hA$ is the
+  \emph{union} $\bigcup_{|S| \le h} \{\text{sums of } S\}$ over all multisets of
+  size $\le h$; $m(G)$ demands a \emph{single} $S$ whose own $0/1$ subset sums
+  contain the run. The obvious bridge --- take $h$ copies of each element --- costs
+  $|S| = h\,|G|$ and does not recover $M-1$ even up to a constant. This separation
+  is independent of what density or threshold hypotheses the source carries \\
 Lev \cite{Lev99}, S\'ark\"ozy \cite{Sarkozy89,Sarkozy94}
 & an AP inside the subset sums $S(A)$
 & the common difference cannot be forced to $1$, so not consecutive integers; needs
@@ -708,9 +718,10 @@ Conlon--Fox--Pham \cite{CFP21}
 & asymptotic and density-based; yields no uniform small $|S| \le M-1$ \\
 Nathanson \cite{Nathanson72}, Granville--Walker \cite{GW21}, Lev \cite{Lev21}
 & the interval structure of $mA$ for large $m$
-& the $h$-fold sumset is a total-degree \emph{simplex} in coefficient space; the
-  subset sums of a bounded multiset are a \emph{box} contained in it, so this is a
-  weaker statement about a larger set \\
+& same separation, in coefficient geometry: $mA$ is a total-degree \emph{simplex}
+  $\{\sum c_i = m\}$, the subset sums of one bounded multiset are a \emph{box}
+  $\{0 \le c_i \le n_i\}$ inside it. A theorem about the simplex is a weaker
+  statement about a larger set \\
 Alon--Freiman \cite{AlonFreiman88}, Lev \cite{Lev03}, Chen--Mao--Zhang \cite{CMZ25}
 & AP or interval in the subset sums of a \emph{dense} set
 & density $|A| \gtrsim \sqrt n$; vacuous at $|G| = 3$ \\
@@ -747,11 +758,24 @@ Google Scholar citation chains around the works cited here; the search record is
 the repository as \texttt{paper/novelty-search.md}.} we found no result implying
 the sharp bound $m(G) \le M-1$. We do \emph{not} claim that the $O(M)$ phenomenon
 is new --- Lemma~\ref{lem:basegrid} shows it is elementary --- only that
-the constant is. As with any negative claim in a mature area this warrants a
-specialist's confirmation, and we have not obtained one; the sharpest place to look
-is the neighbourhood of \cite{Lev97,Lev98}, and, in language we do not speak
-fluently, the Ap\'ery-set and factorization-length literature for numerical
-semigroups.
+the constant is.
+
+Two cautions, stated rather than buried. First, this is a negative claim in a mature
+area, it warrants a specialist's confirmation, and we have not obtained one. Second,
+and more specifically: the separations in Table~\ref{tab:novelty} are stated from
+our own reading of the sources, and we have deliberately phrased each one so that it
+turns on the shape of the conclusion --- one multiset versus a union over many,
+a box versus a simplex, a fixed set versus a chosen one --- rather than on a density
+or threshold hypothesis we might have misread. A row that turns on the shape is
+robust; a row that turns on a hypothesis is only as good as our reading. We adopted
+that discipline after discovering that our earlier treatment of \cite{Ch00} in
+\S\ref{sec:prior} was wrong in exactly this way.
+
+The sharpest places for a specialist to look are the neighbourhood of
+\cite{Lev97,Lev98}, and --- in a language we do not speak fluently --- the
+Ap\'ery-set and factorization-length literature for numerical semigroups, where the
+quantity $m(G)$ would appear as a bounded-multiplicity refinement of invariants
+normally studied without any bound on multiplicity.
 
 \subsection{Map of the paper}\label{sec:map-friendly}
 
@@ -771,7 +795,7 @@ lemma: machinery, reduction to the hard core, six branches. \textbf{Part V}
 (\S\ref{sec:assembly-friendly}--\ref{sec:computer}) assembles the theorem and
 explains the computer verification.
 
-\emph{Three reading routes, with honest time estimates.} The \emph{spine}:
+\emph{Three reading routes, with time estimates.} The \emph{spine}:
 \S\ref{sec:problem}, \S\ref{sec:picture}, then the figures, Big idea boxes and
 theorem statements of each part --- an afternoon, and you will know what is true
 and why it is plausible. The \emph{existence route}: Parts I--II are
@@ -1407,7 +1431,7 @@ Let $t \ge 1$ be an integer. A real $\gamma > 0$ is \emph{certified safe for $t$
 \]
 \end{definition}
 
-The word \emph{certified} is doing honest work: the condition is a checkable
+The word \emph{certified} is doing real work: the condition is a checkable
 guarantee, deliberately \emph{stronger} than the mere fact of avoidance --- a
 slope can dodge $b$ without earning the certificate, and we will see that happen.
 First, the guarantee itself:
@@ -2231,6 +2255,14 @@ is the only step in \S\ref{sec:small-b} that needs adjusting.
 
 \section{Interlude: a mini-course on remainders}\label{sec:remainders}
 
+\noindent\emph{A reader fluent in elementary number theory should skim this section
+for notation and move on.} The four classical facts it states ---
+Lemmas~\ref{lem:division}, \ref{lem:bezout}, \ref{lem:euclid-cancel}
+and~\ref{lem:cong-ops} --- are proved in Appendix~\ref{app:algebra} rather than
+here, so that the statements can be read at speed. What is \emph{not} standard, and
+is proved in place, is the covering lemma (Lemma~\ref{lem:covering-friendly}), which
+the certificate construction turns on.
+
 Why does the mathematics change character here? Part~II lived on the real number
 line: when $d_2 \ge k+1$ the windows leave daylight, and a continuum of dial
 positions was the resource we spent. Below the threshold that resource is gone
@@ -2261,13 +2293,6 @@ quotient) and $r$ (the remainder) with
 \]
 \end{lemma}
 
-\begin{proof}
-Existence: take $q := \lfloor x/m \rfloor$ and $r := x - qm$; then $q \le x/m <
-q+1$ (Definition~\ref{def:floor}) gives $0 \le r < m$ after multiplying by $m$.
-Uniqueness: if $qm + r = q'm + r'$ with both $r, r'$ in $[0, m)$, then $m(q - q')
-= r' - r$ is a multiple of $m$ of absolute value $< m$, hence $0$.
-\end{proof}
-
 \subsection{Greatest common divisors, and B\'ezout's lemma}
 
 The \emph{greatest common divisor} $\gcd(a, b)$ of integers $a, b$ (not both $0$)
@@ -2285,35 +2310,9 @@ Let $a, b$ be integers, not both $0$. Then there exist integers $x, y$ with
 \]
 \end{lemma}
 
-\begin{proof}
-Consider all integers of the form $a x + b y$ ($x, y$ ranging over all integers,
-positive and negative) and let $d$ be the \emph{smallest positive} one. Two
-things justify that phrase: at least one such integer is positive (take $x = a$,
-$y = b$, giving $a^2 + b^2 > 0$), and \emph{every nonempty set of positive
-integers has a least element} --- the well-ordering principle of
-Appendix~\ref{app:howtoread}, which is what makes ``the smallest'' meaningful. We claim
-$d = \gcd(a,b)$.
-
-First, $d \mid a$: divide with remainder, $a = q d + r$ with $0 \le r < d$; then
-\[
-  r \;=\; a - q\,d \;=\; a - q\,(ax + by) \;=\; a\,(1 - qx) + b\,(-qy)
-\]
-is itself of the form $a x' + b y'$, nonnegative and smaller than $d$ --- by
-minimality of $d$, $r$ cannot be positive, so $r = 0$. Likewise $d \mid b$. So
-$d$ is a common divisor. Finally, any common divisor $c$ of $a$ and $b$ divides
-$ax + by = d$; in particular $\gcd(a,b) \le d$ and $\gcd(a,b) \mid d$, while $d
-\le \gcd(a,b)$ since $d$ is a common divisor. Hence $d = \gcd(a,b)$.
-\end{proof}
-
 \begin{lemma}[Euclid's cancellation]\label{lem:euclid-cancel}
 If $m \mid u\,\alpha$ and $\gcd(m, \alpha) = 1$, then $m \mid u$.
 \end{lemma}
-
-\begin{proof}
-B\'ezout gives $\alpha x + m y = 1$. Multiply by $u$: $\,u = u\alpha\,x + u m\,y$.
-Both terms on the right are divisible by $m$ (the first because $m \mid u\alpha$),
-so $m \mid u$.
-\end{proof}
 
 \subsection{Congruence}
 
@@ -2333,11 +2332,6 @@ looser equality; two operations are always legal:
 If $x \equiv y$ and $u \equiv v \pmod m$, then $x + u \equiv y + v$ and $x\,u
 \equiv y\,v \pmod m$.
 \end{lemma}
-
-\begin{proof}
-$(x+u) - (y+v) = (x-y) + (u-v)$: a sum of multiples of $m$. And $xu - yv = (x -
-y)u + y(u - v)$: likewise.
-\end{proof}
 
 Division, by contrast, is \emph{not} generally legal: $6 \equiv 16 \pmod{10}$,
 i.e.\ $2 \cdot 3 \equiv 2 \cdot 8$, yet $3 \not\equiv 8 \pmod{10}$. The correct
@@ -3030,44 +3024,28 @@ exhibits it.)
 
 \subsection{Suprema, and limits}
 
-Two notions from analysis, in the exact strength we need.
+We use suprema and limits only in their standard senses, and only in the following
+strength: every nonempty set of reals bounded above has a least upper bound
+$\sup S$ (this is the completeness of the real line, the same axiom behind the
+nested interval theorem of \S\ref{sec:nested}); $x_n \to x$ means every
+$\varepsilon > 0$ has all but finitely many $n$ with $|x_n - x| < \varepsilon$; and
+a limit cannot escape a bound that all its terms respect.
 
-\emph{Supremum.} A set $S$ of real numbers that is nonempty and bounded above has a
-\emph{least upper bound} $\sup S$: an upper bound of $S$ that is $\le$ every other
-upper bound. (Its existence is, again, the completeness of the real line --- the
-same axiom behind the nested interval theorem of \S\ref{sec:nested}; indeed each
-implies the other.) Likewise a nonempty set bounded below has a greatest lower
-bound $\inf S$. Two reflexes to internalize: every element of $S$ is
-$\le \sup S$; and for any $\varepsilon > 0$, some element of $S$ exceeds
-$\sup S - \varepsilon$ (else $\sup S - \varepsilon$ would be a smaller upper bound).
-
-One warning that will matter: \emph{a supremum need not belong to its set}. The
-set $\{\tfrac12, \tfrac23, \tfrac34, \tfrac45, \dots\}$ --- the numbers
-$1 - \tfrac1n$ --- has supremum $1$, yet no element equals $1$. When
-\S\ref{sec:sturmian-course} defines a certain slope as a supremum, this
-distinction is load-bearing: read ``$\sup$'' as \emph{least upper bound}, never
-as \emph{maximum}.
-
-To see the exact supremum that section will use, take the alternating word
-$0101\cdots$, whose counting function we tabulated above, and list the quantities
-$(q_n - 1)/n$:
+One point does deserve emphasis, because it is load-bearing later and is the sort
+of thing that is easy to read past: \emph{a supremum need not belong to its set}.
+When \S\ref{sec:sturmian-course} defines a slope as a supremum, read ``$\sup$'' as
+\emph{least upper bound}, never as \emph{maximum}. The exact instance that section
+uses is worth seeing now. For the alternating word $0101\cdots$, the quantities
+$(q_n - 1)/n$ run
 \[
   \tfrac{-1}{1},\quad \tfrac{0}{2},\quad \tfrac{0}{3},\quad \tfrac{1}{4},\quad
   \tfrac{1}{5},\quad \tfrac{2}{6},\quad \tfrac{2}{7},\quad \tfrac{3}{8},\ \dots
-  \;=\; -1,\ 0,\ 0,\ 0.25,\ 0.2,\ 0.333,\ 0.286,\ 0.375,\ \dots
 \]
-These creep upward toward $\tfrac12$ without ever reaching it (the even terms are
-$\tfrac{n/2 - 1}{n} = \tfrac12 - \tfrac1n$). So the supremum is $\tfrac12$ --- the
-density of $1$s in the word, exactly as it should be --- and it is attained by no
-term. That is why \S\ref{sec:sturmian-course} must build the slope as a supremum
-and only afterwards prove it is the limit.
-
-\emph{Limits.} A sequence $x_1, x_2, \dots$ of reals \emph{converges} to $x$
-(written $x_n \to x$) if for every $\varepsilon > 0$, all but finitely many $n$ have
-$|x_n - x| < \varepsilon$. We need only three facts, each immediate from the
-definition: (i) $1/n \to 0$; (ii) if $x_n \to x$ and $x_n \le C$ for all $n$, then
-$x \le C$ (a limit cannot escape a closed bound); (iii) if $x_n \to x$ and $x_n \ge
-c$ for all $n$, then $x \ge c$.
+and creep up toward $\tfrac12$ without ever reaching it --- the even terms are
+$\tfrac{n/2-1}{n} = \tfrac12 - \tfrac1n$. The supremum is $\tfrac12$, the density
+of $1$s in the word, and no term attains it. That is why
+\S\ref{sec:sturmian-course} must build the slope as a supremum and only afterwards
+prove it is the limit.
 
 \subsection{The discrete intermediate value theorem}
 
@@ -3466,7 +3444,7 @@ k-1$): done, by (a) and the sweep. If every $W_2(\sigma) \le 1$: the word is
 balanced, and the next section classifies it --- eventually periodic (done, by
 \S\ref{sec:periodic}) or Sturmian (handled in \S\ref{sec:sturmian-endgame}). The
 one remaining configuration, $k$ even with $d_2 = k$ and the word unbalanced, is
-also settled in \S\ref{sec:sturmian-endgame}. The ledger stays honest.
+also settled in \S\ref{sec:sturmian-endgame}.
 
 \begin{example}[An unbalanced word has two-index width]
 For $h = 0011\,0011\cdots$ the counting function runs $q = 0,0,1,2,2,2,3,4,\dots$,
@@ -4279,7 +4257,7 @@ three rotation points summing to depth $0.647$. One such triple is $i = (10, 26,
 \lfloor (n+1)\alpha \rfloor$), so indeed $100 = 1 \cdot 72 + 1 \cdot 28 \in 3A -
 3a_1$.
 
-\emph{An honest caveat about this example.} Step 2 guarantees such a triple only
+\emph{A caveat about this example.} Step 2 guarantees such a triple only
 for budgets $s \ge S_0$, and $S_0$ is built from the hitting constant $L$ of
 Lemma~\ref{lem:hitting-friendly} --- which, for these parameters, is enormous: the
 arc has length $\varepsilon_0 \approx 0.024$, Dirichlet's pigeonhole with $Q = 85$
@@ -5234,7 +5212,7 @@ multiset $\{5, 5, 5, 7\}$ has subset sums $\{0, 5, 7, 10, 12, 15, 17, 22\}$,
 missing $11$ inside the interval $[10, 12]$ that the un-repaired statement would
 promise. (An early draft of this staircase lemma omitted this hypothesis;
 the formalization caught it, and the counterexample is now permanently pinned in
-the Lean development as a guard. A cautionary tale told honestly:
+the Lean development as a guard.
 machine-checking is not decoration.) Figure~\ref{fig:merge-hole} shows the merge
 working and failing, side by side.
 \end{remark}
@@ -6939,7 +6917,7 @@ commands, and links a public log of a complete run).
 
 \subsection{What machine-checking does not promise}
 
-Honesty requires the other half. A formal verification establishes: \emph{these
+The other half matters as much. A formal verification establishes: \emph{these
 formal statements follow from these axioms}. It does not establish:
 
 \begin{itemize}
@@ -6958,7 +6936,7 @@ formal statements follow from these axioms}. It does not establish:
       documented search --- no computer can settle it.
 \item \emph{That nothing outside the trusted base is wrong.} The kernel, the
       pinned compiler and library versions --- these are trusted. The trust
-      base is small and standard, but it is not zero; no honest account says
+      base is small and standard, but it is not zero; it will not do to say
       otherwise.
 \end{itemize}
 
@@ -7154,14 +7132,23 @@ against their published SHA-256 digests; confirming that the declarations of
 Appendix~\ref{app:lean} are present in the Lean sources; and hand-checking
 $m(\{3,4,5\}) = 4$.
 
-Neither report is a referee's report, and neither claims to be. As of this writing
-no one has stated publicly that they have read and understood the argument of
-Parts~II--IV. That is the thing this paper is asking for, and it is the reason the
-paper is written the way it is.
+Neither report is a referee's report, and neither claims to be.
+
+Successive drafts were also put through repeated adversarial review, which found
+several real defects --- a lemma cited outside its stated hypothesis, an
+incorrectly graded induction hypothesis, a novelty claim that a one-line argument
+refutes. Those passes were \emph{automated}, part of the process described in
+\S\ref{sec:provenance}; they are not expert opinion and we do not present them as
+such.
+
+So, as of this writing: the formal statement has been checked against the problem
+by one other person, the build reproduced by another, and no human specialist has
+stated that they have read and understood the argument of Parts~II--IV. That last
+is what this paper is asking for, and the reason it is written as it is.
 
 \subsection{What machine-checking still does not settle}
 
-Two honest caveats. ``Depends only on three axioms'' is a statement about the
+Two caveats. ``Depends only on three axioms'' is a statement about the
 \emph{logical} axiom report; the operative trusted base is larger, and includes the
 Lean kernel and elaborator, the Mathlib source at the pinned revision, and the
 dependency snapshot. And an axiom audit cannot detect a mismatch between a numbered
@@ -7217,13 +7204,19 @@ author and the automated systems used is set out in \S\ref{sec:provenance}.
 \textbf{Use of generative AI.} Automated systems played a substantial role in
 producing this work; the full account --- models, tasks, division of labour, and
 verification --- is \S\ref{sec:provenance}. The author personally checked every
-proof and every computational specification in this paper, verified each citation
-used to support an attribution or novelty claim, reviewed every sentence for its
-intended mathematical meaning, and adopted the final text as his own. Where a
-result is established only by machine --- the finite layer of \S\ref{sec:computer}
---- the paper says so explicitly and states what the machine did. The author directed the work, audited
-the output, and takes full responsibility for the content; the systems are tools,
-not authors. Every mathematical claim used in the proof of
+proof and every computational specification in this paper, reviewed every sentence
+for its intended mathematical meaning, and adopted the final text as his own. Every
+citation has been checked to say what we attribute to it; we make the narrower
+claim here deliberately, because an earlier draft of this paper drew a wrong
+\emph{inference} from a correctly cited source --- reading \cite{Ch00} as leaving
+the diagonal $b = 2a$ open, when a one-line monotonicity argument settles it
+(\S\ref{sec:prior}). That was a failure of scholarship, not of citation, and the
+distinction is the one a reader should hold us to. The comparison in
+\S\ref{sec:prior} is our reading of the literature, and \S\ref{sec:prior} says so.
+Where a result is established only by machine --- the finite layer of
+\S\ref{sec:computer} --- the paper says so explicitly and states what the machine
+did. The author directed the work, audited the output, and takes full
+responsibility for the content; the systems are tools, not authors. Every mathematical claim used in the proof of
 Theorem~\ref{thm:main-friendly} has been checked by at least one of the routes of
 \S\ref{sec:computer}, and the dichotomy is machine-checked in Lean~4 within the
 scope stated in \S\ref{sec:faithful}.
@@ -7295,70 +7288,6 @@ of \S\ref{sec:computer}.
 \appendix
 
 %======================================================================
-\section{How to read this proof}\label{app:howtoread}\label{sec:howtoread}
-
-Mathematics has a craft as well as a content, and this paper assumes a little of
-the craft while building all of the content. Here is the whole of what is assumed,
-in two pages. Skim it now; come back when a phrase in a proof feels like a move you
-were not taught.
-
-\emph{Direct proof, contradiction, contrapositive.} To prove ``if $P$ then $Q$'',
-you may assume $P$ and derive $Q$ (direct); or assume $P$ together with ``not $Q$''
-and derive something absurd (contradiction); or prove ``if not $Q$ then not $P$'',
-which says exactly the same thing (contrapositive). All three appear here, and we
-name which one we are using whenever it might not be obvious.
-
-\emph{``It suffices to show.''} A proof often replaces its goal with a stronger or
-more convenient one: \emph{it suffices to show $R$}, meaning ``$R$ implies what we
-want, so let us prove $R$ instead''. This is not a weakening --- proving more than
-you need is always allowed. \S\ref{sec:windows} does this deliberately and says so.
-
-\emph{``Fix an arbitrary $x$.''} To prove something about \emph{every} $x$, we take
-one, refuse to assume anything special about it, and argue. Because nothing special
-was assumed, the argument covers all of them. The mirror move, ``there exists'', is
-discharged by \emph{exhibiting} one --- which is why so many proofs here consist of
-writing down a construction and then checking it works.
-
-\emph{Induction, ordinary and strong.} To prove a statement $S(n)$ for every $n$:
-prove $S(1)$, then prove that $S(n)$ implies $S(n+1)$. \emph{Strong} induction
-allows the stronger assumption that $S(1), \dots, S(n)$ \emph{all} hold when proving
-$S(n+1)$ --- used once, in \S\ref{sec:sharp-assembly}, where a statement about a
-number $M$ is proved using the same statement for all smaller values.
-
-\emph{The well-ordering principle.} Every nonempty set of positive integers has a
-smallest element. Obvious-sounding, genuinely load-bearing: it is what licenses
-phrases like ``let $n^*$ be the \emph{first} index such that\dots'', which appear in
-\S\ref{sec:slot} and \S\ref{sec:remainders}.
-
-\emph{Chains of inequalities.} A display like
-\[
-  A \;\le\; B \;=\; C \;\le\; D
-\]
-asserts each link separately and concludes $A \le D$. Read it one link at a time,
-and ask of each: which hypothesis makes \emph{this} step true? Where a link is not
-immediate we say why, either inline or in Appendix~\ref{app:algebra}.
-
-\emph{Mechanism versus bookkeeping.} This is the distinction most worth internalizing
-before Part~II. Nearly every proof here has two ingredients: a \emph{mechanism} ---
-the construction or idea that makes the thing work --- and \emph{bookkeeping} --- the
-inequalities confirming that the particular constants chosen are large enough. The
-mechanism is what you should remember; the bookkeeping is what you should be able to
-check but need not carry in your head. We flag the seam explicitly, and passages of
-pure verification are marked \emph{(first pass: skippable)}.
-
-\emph{Passing to a tail.} Several arguments discard a finite initial segment of an
-infinite sequence and work only with what remains --- ``pass to the tail''. This is
-harmless when the property in question concerns only large numbers, and we always say
-why it is harmless when we do it.
-
-\emph{What is \emph{not} assumed.} No calculus, no set theory beyond ``$\in$'' and
-``$\subseteq$'', no combinatorics, no number theory beyond what
-\S\ref{sec:remainders} builds, no analysis beyond what \S\ref{sec:words} builds. If
-you have met proof by induction and can manipulate an inequality without panic, you
-have enough.
-
-%======================================================================
-
 \section{A referee's guide: what to check, and in what order}\label{app:referee}
 
 A hundred pages is a lot to be handed, and not all of it carries weight. This
@@ -7366,7 +7295,7 @@ appendix is written for a reader whose job is to decide whether
 Theorem~\ref{thm:main-friendly} is true, and who would like to spend their
 scepticism where it buys the most. It says which results are load-bearing, what
 each one rests on, where the proof would most plausibly break, and roughly how long
-an honest audit takes.
+a full audit takes.
 
 Nothing here is needed to \emph{read} the paper; \S\ref{sec:map-friendly} is the
 guide for that.
@@ -7467,13 +7396,10 @@ where we suggest scepticism is best spent; the obligation labels
 
 \subsection{Where we would attack it}
 
-If this proof is wrong, the likeliest places, in order. The ordering below is not
-our original guess: an earlier draft of this appendix ranked the boundary case
-first and the induction fourth, and three independent readers reported the reverse
---- the boundary case survived every attack, while the induction's \emph{statement}
-did not. We have reordered accordingly, and left the correction visible because it
-is itself information about where the risk sits: the danger was in the bookkeeping,
-not in the delicate estimate.
+If this proof is wrong, the likeliest places, in order. An earlier draft ranked the
+boundary case first and the induction fourth; repeated attempts found the reverse,
+and the reordering is left visible because it is itself information --- the danger
+was in the bookkeeping, not in the delicate estimate.
 
 \begin{enumerate}
 \item \emph{The induction in Theorem~\ref{thm:sharp-friendly}}, and in particular
@@ -7483,7 +7409,7 @@ not in the delicate estimate.
       Lemma~\ref{lem:graham-red} with an ungraded hypothesis --- ``if SHARP holds
       for all irreducible alphabets'' --- which is not available at the point
       \S\ref{sec:sharp-assembly} uses it; the lemma is now graded by the maximum.
-      Check that the grading is honest and that no appeal raises the pair.
+      Check the grading, and that no appeal raises the pair.
 \item \emph{Completeness of the Case-T scan} (\textbf{T1} of
       \S\ref{sec:obligations}). The uniform bound closes $a \ge 3000$ by hand;
       below that, completeness rests on an exhaustive enumeration. The hand
@@ -7506,23 +7432,24 @@ not in the delicate estimate.
       Definition~\ref{def:gwalk} exists to keep this honest, and every statement in
       \S\S\ref{sec:widths}--\ref{sec:sturmian-endgame} is phrased so that the
       rescaled object satisfies it. Confirm that no statement applied after
-      rescaling secretly assumes $d_1$. (Readers who have checked this reported it
-      clean; we leave it on the list because it is cheap to check and fatal if
-      wrong.)
+      rescaling secretly assumes $d_1$. We leave it on the list because it is cheap
+      to check and fatal if wrong.
 \item \emph{The boundary case, Proposition~\ref{prop:boundary-friendly}}, and
       \emph{exhaustiveness of the six-branch routing}. When $k$ is even and
       $d_2 = k$ the sweep guarantees width $k-2$ and needs $k-1$: no slack, and it
       is closed by a separate argument (border--period duality,
-      Lemma~\ref{lem:border-period}). We ranked this first for two drafts and it has
-      now been checked closely by several readers without a defect being found. It
-      remains the most delicate estimate in the paper; it is no longer our best
-      guess at where an error would be.
+      Lemma~\ref{lem:border-period}). We ranked this first for two drafts, and
+      repeated attempts on it --- ours and automated --- have not dented it. It
+      remains the most delicate estimate in the paper, and it is still entirely
+      possible that it is where an error hides; it is simply no longer the place we
+      would look first.
 \end{enumerate}
 
-\subsection{Honest time estimates}
+\subsection{Time estimates}
 
 For a professional reader checking every line, our estimate of a complete audit is
-\textbf{forty to fifty hours}, distributed roughly as follows.
+\textbf{fifty to sixty-five hours}, distributed roughly as follows. An earlier
+draft said forty to fifty; the two lines that were optimistic are marked.
 
 \begin{center}\small
 \begin{tabular}{@{}lr@{}}
@@ -7533,8 +7460,9 @@ Part~III: certificate, reductions, easy cases & 3--4 h \\
 Part~III: the two-letter campaign, \S\S\ref{sec:widths}--\ref{sec:sturmian-endgame}
  & 10--12 h \\
 Part~IV: machinery and reduction to the hard core & 7--8 h \\
-Part~IV: the six branches & 9--10 h \\
-Finite layer: rerun the harnesses, spot-check rows & 1--2 h \\
+Part~IV: the six branches (re-deriving Case~P's corner inequalities
+ and Case~E's endpoint argument) & 12--15 h \\
+Finite layer: \emph{write your own} harness, not ours & 3--5 h \\
 \hline
 \end{tabular}
 \end{center}
@@ -7660,6 +7588,62 @@ So (E1) holds whenever $ar^2 - 2ar - 2r^2 + 3r - 2 \ge 0$, i.e.\ whenever
 $a\,r\,(r-2) \ge 2r^2 - 3r + 2$ --- the condition $(\ast)$ of the text.
 
 %======================================================================
+
+\subsection*{The four standard facts of \S\ref{sec:remainders}}
+
+These are the classical statements the argument leans on. Their proofs are
+included so that the paper needs no reference shelf, and are placed here rather
+than in \S\ref{sec:remainders} because a reader who knows them should not have to
+walk past them.
+
+\medskip\noindent\textbf{Division with remainder} (Lemma~\ref{lem:division}).
+
+\begin{proof}
+Existence: take $q := \lfloor x/m \rfloor$ and $r := x - qm$; then $q \le x/m <
+q+1$ (Definition~\ref{def:floor}) gives $0 \le r < m$ after multiplying by $m$.
+Uniqueness: if $qm + r = q'm + r'$ with both $r, r'$ in $[0, m)$, then $m(q - q')
+= r' - r$ is a multiple of $m$ of absolute value $< m$, hence $0$.
+\end{proof}
+
+\medskip\noindent\textbf{B\'ezout's lemma} (Lemma~\ref{lem:bezout}).
+
+\begin{proof}
+Consider all integers of the form $a x + b y$ ($x, y$ ranging over all integers,
+positive and negative) and let $d$ be the \emph{smallest positive} one. Two
+things justify that phrase: at least one such integer is positive (take $x = a$,
+$y = b$, giving $a^2 + b^2 > 0$), and \emph{every nonempty set of positive
+integers has a least element} (the well-ordering principle), which is what makes
+``the smallest'' meaningful. We claim
+$d = \gcd(a,b)$.
+
+First, $d \mid a$: divide with remainder, $a = q d + r$ with $0 \le r < d$; then
+\[
+  r \;=\; a - q\,d \;=\; a - q\,(ax + by) \;=\; a\,(1 - qx) + b\,(-qy)
+\]
+is itself of the form $a x' + b y'$, nonnegative and smaller than $d$ --- by
+minimality of $d$, $r$ cannot be positive, so $r = 0$. Likewise $d \mid b$. So
+$d$ is a common divisor. Finally, any common divisor $c$ of $a$ and $b$ divides
+$ax + by = d$; in particular $\gcd(a,b) \le d$ and $\gcd(a,b) \mid d$, while $d
+\le \gcd(a,b)$ since $d$ is a common divisor. Hence $d = \gcd(a,b)$.
+\end{proof}
+
+\medskip\noindent\textbf{Euclid's cancellation} (Lemma~\ref{lem:euclid-cancel}).
+
+\begin{proof}
+B\'ezout gives $\alpha x + m y = 1$. Multiply by $u$: $\,u = u\alpha\,x + u m\,y$.
+Both terms on the right are divisible by $m$ (the first because $m \mid u\alpha$),
+so $m \mid u$.
+\end{proof}
+
+\medskip\noindent\textbf{Congruence operations} (Lemma~\ref{lem:cong-ops}).
+
+\begin{proof}
+$(x+u) - (y+v) = (x-y) + (u-v)$: a sum of multiples of $m$. And $xu - yv = (x -
+y)u + y(u - v)$: likewise.
+\end{proof}
+
+%======================================================================
+
 \section{Symbol glossary}\label{app:symbols}
 
 By part, in rough order of first appearance. A few letters are reused across

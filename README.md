@@ -193,10 +193,10 @@ from the two halves.
 | III — bounded subset-sum theorem | §4 | [`Sharp/`](lean/Erdos1112Proof/Sharp) |
 | IV — Assembly | §5 | [`Final.lean`](lean/Erdos1112Proof/Final.lean) |
 | Verification / trust base | §26 · [Python harnesses](paper/scripts) | [`AxiomsCheck.lean`](lean/Erdos1112Proof/AxiomsCheck.lean) |
-| Certificate tables | Appendix E · [canonical data](paper/data/certificate-data.md) | — |
+| Certificate tables | Appendix D · [canonical data](paper/data/certificate-data.md) | — |
 
 The full lemma-by-lemma correspondence (paper result → Lean declaration → file) is in
-Appendix F of the paper.
+Appendix E of the paper.
 
 ---
 
