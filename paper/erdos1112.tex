@@ -704,9 +704,11 @@ Lev \cite[Thm.~1]{Lev97} \newline \emph{(the one to check first)}
 & \emph{a statement about $kA$, not about one multiset.} With $0 \in A$, $kA$ is the
   \emph{union} $\bigcup_{|S| \le k}\{\text{sums of } S\}$ over all multisets $S$
   drawn from $A$; $m(G)$ demands a \emph{single} $S$ whose own $0/1$ subset sums
-  contain the run, and those sums lie strictly inside that union. The obvious
-  bridge --- take $k$ copies of each element --- costs $|S| = k\,|G|$ and does not
-  recover $M-1$ even up to a constant \\
+  contain the run, and those sums lie strictly inside that union. The bridge ---
+  take $k$ copies of each element, whose subset sums then contain all of $kA$ ---
+  does give a single multiset, of size $k\,|G| \le 3(M-1)$ at $k = 2\kappa$. So
+  \cite{Lev97} does yield a linear bound; it is weaker than the elementary
+  $2M-3$ of Lemma~\ref{lem:basegrid}, and neither reaches $M-1$ \\
 Lev \cite{Lev99}, S\'ark\"ozy \cite{Sarkozy89,Sarkozy94}
 & an AP inside the subset sums $S(A)$
 & the common difference cannot be forced to $1$, so not consecutive integers; needs
@@ -4793,9 +4795,7 @@ that $k = M$ pays for.
 For $G = \{1, 2, M\}$ one has $m(G) \le \lceil M/2 \rceil$: one copy of $1$
 together with $j := \lceil (M-2)/2 \rceil$ copies of $2$ has subset sums filling
 $[\,0,\ 2j+1\,]$, a run of $2j + 2 \ge M$ at size $1 + j = \lceil M/2 \rceil$.
-(Equality holds --- any covering multiset needs at least one copy of $1$, since
-otherwise every subset sum is even, and then the odd elements available force
-$i + 2j \ge M-1$, whence $i + j \ge M/2$ --- but we need only the upper bound.)
+(Equality in fact holds, but we need only the upper bound and do not prove it.)
 Theorem~\ref{thm:sharp-friendly} is a uniform budget, not a formula: $m(G)$ is
 typically far smaller than $M-1$, and we make no attempt here to determine it in
 general.
@@ -5303,7 +5303,7 @@ every such sum lies in $\{0,2\} \bmod 5$. What is missing is a box covering
 un-hypothesized staircase statement lacked.
 \end{remark}
 
-\begin{remark}[Necessity of the box-size condition]
+\begin{remark}[Necessity of the box-size condition]\label{rem:boxsize}
 The hypothesis $Y + Z \le a-1$ caps the budget growth at $Y + Z + 1 \le a$ per
 lift, matching the target's growth of exactly $a$. With $Y + Z = a$ the margin
 leaks one unit per step. Take $a = 5$ and the box $(Y,Z) = (3,2)$ on the class base
@@ -6751,10 +6751,11 @@ $i + j + 1 \ge M$, and the multiset has size $i + j + k \ge i + j \ge M-1$.
 
 \noindent So sharpness is not a small-$M$ accident: it recurs at every maximum, and
 $M-1$ is the exact worst case rather than a bound that happens to bind once. A
-second family behaves the same way --- $m(\{M-2, M-1, M\}) = M-1$, whose upper
-bound is Case~L at $g = 1$ (Lemma~\ref{lem:caseL-friendly}), where the budget
-$a + 2g - 1 = M-1$ is met with equality; we have verified its lower bound
-exhaustively for $M \le 20$ but have not written out a proof for general $M$.
+second family appears to behave the same way: for $\{M-2, M-1, M\}$, Case~L at
+$g = 1$ (Lemma~\ref{lem:caseL-friendly}) gives $m \le M-1$ for every $M$, its
+budget $a + 2g - 1 = M-1$ being met with equality, and we have checked
+$m = M-1$ exhaustively for $M \le 20$. We have not proved the lower bound in
+general and do not assert it.
 
 Exhaustive computation of $m(G)$ over all $G$ with $|G| = 3$ and $\max G \le 15$
 finds the maximum to be exactly $M-1$ at every single $M$, and finds many
@@ -6785,8 +6786,10 @@ The remaining section is not part of the proof; it is about how the proof is
 This proof is computer-assisted, and this paper has flagged every place the
 assistance occurs: the $172$ Table-A certificates and the $a \le 3000$ scan
 (Case T), and the $178$ Table-B base certificates with the class enumeration
-(Case B) --- those four items are the load-bearing finite layer. (This paper
-paper's harnesses additionally run corroborating enumerations that this
+(Case B), together with the minimality of those bases --- those five items are the
+load-bearing finite layer, and they are exactly the obligations
+\textbf{T1}--\textbf{B3} of \S\ref{sec:obligations}. (This paper's harnesses
+additionally run corroborating enumerations that this
 document's proofs never lean on, such as listing all minimal alphabets with
 $M \le 130$; corroboration is welcome, but the ledger above is complete without
 it.) This
@@ -6852,10 +6855,10 @@ each. Only the proofs address that, and only a reader does.
       transcribed into the formal development and re-decided by Lean's kernel.
 \end{enumerate}
 
-\subsection{The four finite obligations, named}\label{sec:obligations}
+\subsection{The five finite obligations, named}\label{sec:obligations}
 
-``The computer checked it'' is too coarse to audit. Exactly four finite statements
-are needed from outside the prose, two for Case~T and two for Case~B, and they are
+``The computer checked it'' is too coarse to audit. Exactly five finite statements
+are needed from outside the prose, two for Case~T and three for Case~B, and they are
 worth separating because they are not all closed the same way --- and one of them is
 closed by hand.
 
@@ -6883,9 +6886,9 @@ closed by hand.
       $0,1,6,5,20,17,32,25,72$ for $a = 3,\dots,11$, which sum to $178$. No scan is
       involved in this one; the computation only confirms it.
 \item[\textbf{B2}] \emph{Validity of the B witnesses, and the lift.} Each printed
-      base is valid --- budget, coverage, and the frame-merge condition
+      base is valid --- budget, coverage, and the box-size condition
       $Y + Z \le a-1$ that Lemma~\ref{lem:lift-friendly} requires and
-      Remark~\ref{rem:579} shows cannot be dropped --- and the $\lambda$-lift
+      Remark~\ref{rem:boxsize} shows cannot be dropped --- and the $\lambda$-lift
       carries it to every larger member of its class. \emph{How it is closed:}
       finite arithmetic for the bases (as in \textbf{T2}), and a proof ---
       Lemma~\ref{lem:lift-friendly} --- for the propagation, which is where the
@@ -7400,13 +7403,13 @@ Lem.~\ref{lem:caseT-friendly}, Prop.~\ref{prop:ttail-friendly}
  & \textbf{partly computational} (\textbf{T1}, \textbf{T2}) \\
 Lem.~\ref{lem:caseB-count}, \ref{lem:lift-friendly}
  & Case~B: $178$ classes counted by hand, lifted by proof
- & prose $+$ table (\textbf{B1}, \textbf{B2}) \\
+ & prose $+$ table (\textbf{B1}, \textbf{B2}, \textbf{B3}) \\
 \hline
 \end{tabular}
 \caption{The critical path. ``Lean'' means the result corresponds to a declaration
 in the formal development, listed in Appendix~\ref{app:lean}. The bold entries are
 where we suggest scepticism is best spent; the obligation labels
-\textbf{T1}--\textbf{B2} are those of \S\ref{sec:obligations}.}
+\textbf{T1}--\textbf{B3} are those of \S\ref{sec:obligations}.}
 \label{tab:audit}
 \end{table}
 
