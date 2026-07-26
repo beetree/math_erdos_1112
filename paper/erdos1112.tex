@@ -697,14 +697,16 @@ Lev \cite[Thm.~1]{Lev98} \newline \emph{(closest antecedent)}
 & same conclusion type (a genuine interval, from genuine $0/1$ subset sums), but a
   \emph{dense-set} theorem: $|A| \gtrsim \tfrac23 M$, vacuous at $|G| = 3$, and no
   multiset. Ours is its density-free multiset analogue \\
-Lev \cite[Thm.~1]{Lev97}
-& a long run of consecutive integers inside the $h$-fold sumset $hA$
-& \emph{a statement about $hA$, not about one multiset.} With $0 \in A$, $hA$ is the
-  \emph{union} $\bigcup_{|S| \le h} \{\text{sums of } S\}$ over all multisets of
-  size $\le h$; $m(G)$ demands a \emph{single} $S$ whose own $0/1$ subset sums
-  contain the run. The obvious bridge --- take $h$ copies of each element --- costs
-  $|S| = h\,|G|$ and does not recover $M-1$ even up to a constant. This separation
-  is independent of what density or threshold hypotheses the source carries \\
+Lev \cite[Thm.~1]{Lev97} \newline \emph{(the one to check first)}
+& for $A \subseteq [0,l]$ with $0, l \in A$, $\gcd(A) = 1$, $|A| = n \ge 3$ and
+  $\kappa := \lfloor (l-1)/(n-2) \rfloor$: a long run of consecutive integers inside
+  $kA$, for every $k \ge 2\kappa$
+& \emph{a statement about $kA$, not about one multiset.} With $0 \in A$, $kA$ is the
+  \emph{union} $\bigcup_{|S| \le k}\{\text{sums of } S\}$ over all multisets $S$
+  drawn from $A$; $m(G)$ demands a \emph{single} $S$ whose own $0/1$ subset sums
+  contain the run, and those sums lie strictly inside that union. The obvious
+  bridge --- take $k$ copies of each element --- costs $|S| = k\,|G|$ and does not
+  recover $M-1$ even up to a constant \\
 Lev \cite{Lev99}, S\'ark\"ozy \cite{Sarkozy89,Sarkozy94}
 & an AP inside the subset sums $S(A)$
 & the common difference cannot be forced to $1$, so not consecutive integers; needs
@@ -762,14 +764,28 @@ the constant is.
 
 Two cautions, stated rather than buried. First, this is a negative claim in a mature
 area, it warrants a specialist's confirmation, and we have not obtained one. Second,
-and more specifically: the separations in Table~\ref{tab:novelty} are stated from
-our own reading of the sources, and we have deliberately phrased each one so that it
-turns on the shape of the conclusion --- one multiset versus a union over many,
-a box versus a simplex, a fixed set versus a chosen one --- rather than on a density
-or threshold hypothesis we might have misread. A row that turns on the shape is
-robust; a row that turns on a hypothesis is only as good as our reading. We adopted
-that discipline after discovering that our earlier treatment of \cite{Ch00} in
-\S\ref{sec:prior} was wrong in exactly this way.
+the separations in Table~\ref{tab:novelty} are our own reading of the sources, and
+we have deliberately phrased each so that it turns on the \emph{shape} of the
+conclusion --- one multiset versus a union over many, a box versus a simplex, a
+fixed generating set versus a chosen one --- rather than on a density or threshold
+hypothesis we might have misread. A row that turns on shape is robust; a row that
+turns on a hypothesis is only as good as our reading. We adopted that discipline
+after finding that an earlier draft mishandled \cite{Ch00} in exactly this way
+(\S\ref{sec:prior}).
+
+The row deserving the most scrutiny is \cite[Thm.~1]{Lev97}, for a reason worth
+naming before a referee names it. That theorem needs $k \ge 2\kappa$ summands, and
+at $|G| = 3$ --- taking $A = G \cup \{0\}$, so $n = 4$ and $l = M$ --- this reads
+$k \ge 2\lfloor (M-1)/2 \rfloor$, which is $M-1$ up to parity: numerically the same
+budget as Theorem~\ref{thm:sharp-friendly}. The coincidence is real and is not
+evidence that the theorems coincide. Both quantities are $\approx M$ because
+covering a window of length $M$ from generators of size up to $M$ costs about $M$
+summands either way; what differs is that Lev bounds the summands entering a
+\emph{union} of multisets and we bound the size of \emph{one}. An earlier draft of
+this table asserted that \cite{Lev97} carries a density hypothesis. It does not ---
+its hypotheses are $0, l \in A$, $\gcd(A) = 1$ and $l \ge n-1$, the last automatic
+--- and we have corrected the row accordingly; the statement is quoted verbatim as
+Theorem~2 of \cite{Lev08}.
 
 The sharpest places for a specialist to look are the neighbourhood of
 \cite{Lev97,Lev98}, and --- in a language we do not speak fluently --- the
@@ -7905,6 +7921,11 @@ J.\ Number Theory \textbf{62} (1997), no.~1, 127--143.
 V.~F.~Lev,
 \emph{On consecutive subset sums},
 Discrete Math.\ \textbf{187} (1998), no.~1--3, 151--160.
+
+\bibitem[Lev08]{Lev08}
+V.~F.~Lev,
+\emph{Consecutive integers in high-multiplicity sumsets},
+arXiv:0806.4580 (2008).
 
 \bibitem[Lev99]{Lev99}
 V.~F.~Lev,
