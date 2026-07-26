@@ -71,8 +71,8 @@ your effort here.**
 
 ### What has already been checked — please do not redo these
 
-Reported sound by multiple independent readers, several with their own
-reimplementations of the finite layer:
+Reported sound by several prior review passes, some of which reimplemented the
+finite layer independently. Those passes were automated, not expert opinion:
 
 - Proposition 14.6, the $k$ even, $d_2 = k$ boundary case, and Lemma 14.5's
   palindrome/border/period chain.
