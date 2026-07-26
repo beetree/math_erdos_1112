@@ -36,9 +36,9 @@
 \DeclareUnicodeCharacter{00B7}{\ensuremath{\cdot}}
 \usepackage[colorlinks=true,linkcolor=blue!55!black,citecolor=blue!55!black,
             urlcolor=blue!55!black,
-            pdftitle={Erdos problem 1112, from scratch},
+            pdftitle={A dichotomy for k-fold sumsets of bounded-gap sequences (Erdos problem 1112)},
             pdfauthor={Johan Land},
-            pdfsubject={Additive combinatorics, explained from first principles}]{hyperref}
+            pdfsubject={Additive combinatorics; Erdos problem 1112}]{hyperref}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,decorations.pathreplacing,positioning}
 
@@ -121,11 +121,7 @@ phrasing.
 
 The proof is presented at length and from first principles: the background it needs
 is developed in the text, and the mechanism of each construction is separated from
-the estimates that bound its constants. \S\ref{sec:onform} explains that choice.
-Appendix~\ref{app:referee} is a guide to the critical path for a reader whose
-purpose is to check the theorem rather than to learn the proof: it identifies the
-load-bearing results, the five places we think the argument is most likely to
-break, and what an audit costs in hours.
+the estimates that bound its constants.
 \end{abstract}
 
 \maketitle
@@ -602,20 +598,27 @@ settle into a period yet remain too regular to be exploited. Those are the Sturm
 walks of \S\ref{sec:sturmian-endgame}, and they are the reason this proof needs a
 theory of infinite words rather than a counting argument.
 
-One consequence of the existence half is worth recording here, since it fills
-exactly the gap Chen's exclusion left. Theorem~\ref{thm:existence-friendly} is
-proved for all $k \ge 2$, and for $(d_1,d_2) = (a, 2a)$ with $a \ge 2$ we have
-$d_2 = 2a \ge 4 \ge k+1 = 3$; so:
-
-\begin{corollary}[Two summands on the excluded diagonal]\label{cor:chen-diagonal}
-For every integer $a \ge 2$, the ratio $r_2(a, 2a)$ exists, and
-$r_2(a,2a) \le 384\,a$.
-\end{corollary}
-
-\noindent Together with \cite{Ch00} this settles existence for every pair
-$a < b$ with $b \ge 3$, leaving only $(d_1,d_2) = (1,2)$ at $k = 2$ undecided ---
-which is consistent with Remark~\ref{rem:k-ge-3}, where our own machinery is
-recorded as not deciding that case either.
+A word on the excluded diagonal $b = 2a$, since it is easy to overstate what is
+open there. Chen's exclusion is not a gap in knowledge: the diagonal follows from
+the off-diagonal case by monotonicity. The parameter $d_2$ is an \emph{upper} bound
+on the gaps, so enlarging it enlarges the class of admissible $A$ and can only make
+avoidance easier:
+\[
+  d_2 \le d_2' \quad\Longrightarrow\quad r_k(d_1, d_2') \;\le\; r_k(d_1, d_2) ,
+\]
+because a walk with gaps in $[d_1,d_2]$ is a fortiori one with gaps in
+$[d_1,d_2']$. Taking $d_2 = a+1$ and $d_2' = 2a$ (legitimate for $a \ge 1$) and
+applying \cite{Ch00} off the diagonal --- $a + 1 \ne 2a$ once $a \ge 2$ --- gives
+$r_2(a,2a) \le r_2(a,a+1) \le 2$, and with Chen's lower bound $r_2(a,2a) \ge 2$,
+\[
+  r_2(a,2a) \;=\; 2 \qquad (a \ge 2) .
+\]
+Our Theorem~\ref{thm:existence-friendly} also yields existence here, but only with
+the bound $192\,d_2 = 384\,a$, which the above supersedes completely. We record
+this because an earlier draft of this paper presented the $384\,a$ bound as filling
+a gap Chen left open; it does not, and we are grateful to the referee who pointed
+out the one-line monotonicity argument. Nothing elsewhere in this paper depends on
+the claim.
 
 \emph{What is new here.} Three things. First, the dichotomy itself
 (Theorem~\ref{thm:main-friendly}): existence for every $d_2 \ge k+1$, with the
@@ -655,6 +658,20 @@ box inside --- so their conclusion is a weaker statement about a larger set.
 traditions \cite{Gr64,ErGr80,Alfonsin,GS20} concern infinite sequences, or use
 unboundedly many summands, or optimise the generating set; none bounds a multiset
 drawn from an arbitrary given set.
+
+\emph{What is new is the constant, not the phenomenon.} It would be easy to read
+the above as claiming that no bounded multiset of any size was previously known to
+cover a run. That would be false, and we say so plainly: a short greedy argument
+gives $m(G) \le a + M - 1 \le 2M-3$ with no hypothesis beyond
+$\gcd(G) = 1$ and $|G| \ge 3$ (Lemma~\ref{lem:basegrid}). So the $O(M)$ phenomenon
+is elementary and we claim no novelty for it. What
+Theorem~\ref{thm:sharp-friendly} adds is the sharp constant $M-1$ --- roughly a
+factor of two better, attained with equality at every maximum
+(Propositions~\ref{prop:sharpness-friendly}
+and~\ref{prop:extremal-families}), and small enough to be consumed by the slot
+lemma at the corner $M = d_2 = k$, where $2M-3$ would be useless. Everything
+difficult in Part~IV exists to buy that factor, and the novelty claim below is
+about that factor only.
 
 Table~\ref{tab:novelty} states, for each nearest result, exactly which hypothesis
 separates it from Theorem~\ref{thm:sharp-friendly}. A reader who wants to overturn
@@ -724,13 +741,17 @@ uniformly in $G$ down to $|G| = 3$.}
 \label{tab:novelty}
 \end{table}
 
-We are not aware of a result implying Theorem~\ref{thm:sharp-friendly}, even with a
-worse constant, and after a documented search\footnote{Conducted July 2026 over
-MathSciNet, zbMATH, arXiv and Google Scholar citation chains around the works cited
-here; the search record is in the repository as \texttt{paper/novelty-search.md}.}
-it appears to be new. As with any negative claim in a mature area this warrants a
-specialist's confirmation; the sharpest place to look is the neighbourhood of
-\cite{Lev97,Lev98}.
+Our claim is therefore narrow, and we state it in the narrow form: after a
+documented search\footnote{Conducted July 2026 over MathSciNet, zbMATH, arXiv and
+Google Scholar citation chains around the works cited here; the search record is in
+the repository as \texttt{paper/novelty-search.md}.} we found no result implying
+the sharp bound $m(G) \le M-1$. We do \emph{not} claim that the $O(M)$ phenomenon
+is new --- Lemma~\ref{lem:basegrid} shows it is elementary --- only that
+the constant is. As with any negative claim in a mature area this warrants a
+specialist's confirmation, and we have not obtained one; the sharpest place to look
+is the neighbourhood of \cite{Lev97,Lev98}, and, in language we do not speak
+fluently, the Ap\'ery-set and factorization-length literature for numerical
+semigroups.
 
 \subsection{Map of the paper}\label{sec:map-friendly}
 
@@ -1277,7 +1298,7 @@ gives the lemma.
 \end{proof}
 
 (If $\gamma$ is an integer, only the value $\lfloor \gamma \rfloor = \gamma$ actually
-occurs, and the walk is an arithmetic progression --- Exercise below. For
+occurs, and the walk is an arithmetic progression. For
 non-integer $\gamma$, both values occur infinitely often, though we will not need
 that.)
 
@@ -1431,7 +1452,7 @@ Proposition~\ref{prop:criterion} needs, in two ways, and both are deliberate.
 
 The cost of this generosity is real but affordable: some slopes that would in fact
 dodge $b$ are not certified safe. You will meet a concrete instance in
-Exercise~\ref{chk:conservative} --- the walk of Example~\ref{ex:beatty35} really
+Remark~\ref{chk:conservative} --- the walk of Example~\ref{ex:beatty35} really
 does miss $25$, yet the criterion declines to vouch for it. We simply will not care:
 the free-gap lemma of \S\ref{sec:freegap} finds slopes that pass even the stricter
 test.
@@ -4627,24 +4648,40 @@ For perspective --- not needed below --- a much cruder bound is easy to prove an
 shows the mechanism in miniature:
 
 \begin{lemma}[Base grid]\label{lem:basegrid}
-Let $G$ have $|G| \ge 3$, $\gcd(G) = 1$, $a := \min G$, $M := \max G$, and suppose
-some $c \in G$ has $\gcd(a, c) = 1$. Then $m(G) \le a + M - 1 \le 2M - 3$.
+Let $G$ have $|G| \ge 3$, $\gcd(G) = 1$, $a := \min G$ and $M := \max G$. Then
+$m(G) \le a + M - 1 \le 2M - 3$.
 \end{lemma}
 
 \begin{proof}
-Take $a - 1$ copies of $c$ and $p := \lceil ((a-1)c + M - 1)/a \rceil$ copies of
-$a$. For any $n \in [(a-1)c,\ pa]$: the residues $0, c, 2c, \dots, (a-1)c$ modulo
-$a$ are pairwise distinct (as $\gcd(a,c)=1$), so a unique $i \in [0, a-1]$ has
-$ic \equiv n \pmod a$; then $ic \le (a-1)c \le n$, and $(n - ic)/a$ is an integer
-in $[0, p]$, so $n = ic + a \cdot \frac{n-ic}{a}$ is a subset sum. The interval
-has length $pa - (a-1)c + 1 \ge M$ by the choice of $p$. The size: $c \le M$ gives
-$p \le \lceil ((a-1)M + M - 1)/a \rceil = \lceil (aM-1)/a \rceil = M$, so
-$(a-1) + p \le a + M - 1$; and $|G| \ge 3$ squeezes $a \le M - 2$.
+First collect residues, greedily. Let $H \subseteq \mathbb{Z}/a$ be the set of
+residues achievable as subset sums of the multiset built so far, starting from
+$H = \{0\}$ and the empty multiset. While $H \ne \mathbb{Z}/a$, some $g \in G$ has
+$H + g \not\subseteq H$: otherwise $H$ would be closed under adding every element
+of $G$, hence under the subgroup they generate modulo $a$, which is all of
+$\mathbb{Z}/a$ since $\gcd(a, \gcd(G)) = \gcd(a,1) = 1$ --- and as $0 \in H$ that
+would force $H = \mathbb{Z}/a$. Adjoin one copy of such a $g$; the achievable set
+becomes $H \cup (H+g)$, strictly larger. Each step gains at least one residue, so
+after at most $a-1$ steps every residue is achievable. Call the resulting multiset
+$R$, so $|R| \le a-1$, and for each residue $\rho$ let $v_\rho \ge 0$ be the
+smallest subset sum of $R$ in class $\rho$. Put $S := \max_\rho v_\rho$; since every
+subset sum of $R$ is at most $(a-1)M$, we have $S \le (a-1)M$.
+
+Now adjoin $x := \lceil (S + M - 1)/a \rceil$ copies of $a$. For any
+$n \in [S,\ S + M - 1]$, take $\rho := n \bmod a$; then $v_\rho \le S \le n$ and
+$a \mid n - v_\rho$, and $(n - v_\rho)/a \le (S + M - 1)/a \le x$, so
+$n = v_\rho + a \cdot \frac{n - v_\rho}{a}$ is a subset sum. That is $M$
+consecutive integers. Finally $x \le \lceil ((a-1)M + M - 1)/a \rceil =
+\lceil (aM-1)/a \rceil = M$, so the total size is $|R| + x \le a + M - 1$; and
+$|G| \ge 3$ squeezes $a \le M - 2$.
 \end{proof}
 
-The gap between $2M - 3$ and SHARP's $M - 1$ is the gap between an evening's
-exercise and Part~IV; note also the extra hypothesis, which genuinely can fail
-($G = \{6, 10, 15\}$ has $\gcd 1$ but no element coprime to $6$).
+The gap between $2M - 3$ and SHARP's $M - 1$ is the gap between an evening's work
+and Part~IV. It is worth being precise about what that gap is worth: the
+\emph{existence} of an $O(M)$-sized bounded multiset is elementary, as the proof
+above shows, and we claim no novelty for it. What Part~IV buys is the factor of
+roughly two that brings the budget down to exactly $M-1$ --- and only $M-1$ is
+small enough for the slot lemma to afford at the corner $k = d_2 = M$, where
+$2M-3$ would be useless.
 
 \subsection{The non-existence half, assembled (modulo SHARP)}
 
@@ -4753,15 +4790,18 @@ more room; three elements is where the uniform budget $M-1$ becomes available.
 
 Finally, a caution about what SHARP does \emph{not} say: it is not a formula for
 $m(G)$, which is usually far smaller than $M-1$ (for $G = \{1, 2, M\}$ it is
-tiny --- see the exercise). It is a \emph{uniform budget},
+tiny --- Example~\ref{ex:m12M}). It is a \emph{uniform budget},
 tuned to be exactly what the slot lemma's corner $k = d_2 = M$ can afford ---
 recall \S\ref{sec:slot}: one dial summand plus at most $M - 1$ slot summands is all
 that $k = M$ pays for.
 
-\begin{example}[A case where $m(G)$ is far below the bound]
-For $G = \{1, 2, M\}$ one has $m(G) = \lceil M/2 \rceil$: one copy of $1$ together
-with $j := \lceil (M-2)/2 \rceil$ copies of $2$ has subset sums filling
+\begin{example}[A case where $m(G)$ is far below the bound]\label{ex:m12M}
+For $G = \{1, 2, M\}$ one has $m(G) \le \lceil M/2 \rceil$: one copy of $1$
+together with $j := \lceil (M-2)/2 \rceil$ copies of $2$ has subset sums filling
 $[\,0,\ 2j+1\,]$, a run of $2j + 2 \ge M$ at size $1 + j = \lceil M/2 \rceil$.
+(Equality holds --- any covering multiset needs at least one copy of $1$, since
+otherwise every subset sum is even, and then the odd elements available force
+$i + 2j \ge M-1$, whence $i + j \ge M/2$ --- but we need only the upper bound.)
 Theorem~\ref{thm:sharp-friendly} is a uniform budget, not a formula: $m(G)$ is
 typically far smaller than $M-1$, and we make no attempt here to determine it in
 general.
@@ -5131,7 +5171,7 @@ In the setting above:
       $\mathcal{O}_{c+1} \supseteq [\max(C', 1),\ V']$, and if additionally
       $V' \ge a + \max(C', 1) - 1$ the subset sums cover
       $[\,ca + C',\ (c+1)a + V'\,]$.
-\item[\textup{(d)}] \textup{(Phase union; $g \ge 2$.)} If $x = c + g$, the subset
+\item[\textup{(d)}] \textup{(Phase union; any $g \ge 1$.)} If $x = c + g$, the subset
       sums cover $[\,(c + g - 1)a + gC',\ ca + gV'\,]$ with \emph{no} further
       hypothesis (the \emph{base form}). If moreover $x \ge c + g$ and the
       \emph{frame-merge condition} $V' - C' \ge a - 1$ holds, they cover
@@ -5174,6 +5214,15 @@ to $(t_0 + Jg)a + gV'$, where $J := \lfloor (x - t_0)/g \rfloor$. Over $t_0 \in
 [c, c+g-1]$, all left endpoints are $\le (c+g-1)a + gC'$, and maximality of $J$
 ($t_0 + Jg > x - g$) makes all right endpoints $\ge (x - g + 1)a + gV'$; so every
 integer of the stated interval is covered within its own class.
+
+Nothing in this argument needs $g \ge 2$. At $g = 1$ the modular bookkeeping simply
+degenerates: there is one residue class modulo $1$, served by the single level
+$t_0 = c$, the frames at $c, c+1, c+2, \dots$ chain under the same merge condition
+$V' - C' \ge a - 1$, and both displayed intervals read correctly. Clause~(b) is then
+the two-frame instance ($x = c+1$) of the extended form. We state (d) for all
+$g \ge 1$ because Case~L (\S\ref{sec:caseDL}) invokes it on an infinite family with
+$g = 1$: the triples $(a, a+1, a+2)$ with $a$ even, of which $(4,5,6)$ is the
+smallest.
 \end{proof}
 
 \begin{remark}[The merge condition is real]\label{rem:579}
@@ -5334,11 +5383,21 @@ Call an alphabet $G$ \emph{irreducible} if $|G| = 3$, or $|G| \ge 4$ and $G$ is
 \emph{minimal}: no proper subset of size $\ge 3$ has $\gcd$ equal to $1$.
 
 \begin{lemma}[Graham reduction]\label{lem:graham-red}
-If SHARP holds for all irreducible alphabets, it holds for all alphabets.
+Fix $M \ge 2$. If SHARP holds for every irreducible alphabet of maximum $\le M$,
+then it holds for every alphabet of maximum $\le M$.
 \end{lemma}
 
+\noindent The grading by $M$ matters. \S\ref{sec:sharp-assembly} applies this lemma
+\emph{inside} a strong induction on the maximum, at a stage where SHARP is
+available only below $M$ and, concurrently, for irreducible alphabets at $M$. An
+ungraded statement --- ``if SHARP holds for all irreducible alphabets'' --- would
+have a hypothesis that is not yet in hand at that moment, and invoking it would
+look circular even though the underlying recursion is not. The proof below is
+unchanged by the grading: every alphabet it touches has maximum $\le M$.
+
 \begin{proof}
-Induct on $|G|$. Let $|G| \ge 4$ be non-minimal: some $e^\dagger \in G$ is
+Induct on $|G|$, with the maximum bound $M$ fixed throughout. Let $|G| \ge 4$ be
+non-minimal: some $e^\dagger \in G$ is
 \emph{redundant}, meaning $G \setminus \{e^\dagger\}$ still has $\gcd 1$ (and size
 $\ge 3$). Two cases.
 
@@ -5719,7 +5778,10 @@ in all parity cases. Three sub-cases, one per applicable staircase clause.
 
 \emph{$a$ even.} Then $z = \frac{a-2}{2}$ and $x - c = 2g - 1 \ge g$, so $x \ge c
 + g$; the frame-merge condition $V' - C' = 2z + 1 = a - 1 \ge a - 1$ holds
-\emph{with equality}. The extended form (Lemma~\ref{lem:staircase-friendly}(d))
+\emph{with equality}. (This branch includes $g = 1$ --- the triples $(a,a+1,a+2)$
+with $a$ even, smallest $(4,5,6)$ --- which is why
+Lemma~\ref{lem:staircase-friendly}(d) is stated for all $g \ge 1$.) The extended
+form (Lemma~\ref{lem:staircase-friendly}(d))
 covers a solid interval of length $(x - c - 2g + 2)a + g(2z+1) + 1 = a + g(a-1) +
 1 \ge a + 2g = M$ (i.e.\ $g(a-3) \ge -1$: always).
 
@@ -6210,7 +6272,7 @@ Across all Case-T lines, the applicable variant's budget exceeds $M - 1$ for
 precisely $172$ triples, all with $a \le 29$; each of these carries an explicit
 box certificate --- a triple $(x, Y, Z)$ with $Y + Z \le a - 1$ and budget $\le
 M-1$, verified by the two-line computation of
-Lemma~\ref{lem:frame-friendly} --- listed as \emph{Table~A} of the parent
+Lemma~\ref{lem:frame-friendly} --- listed as \emph{Table~A} in Appendix~\ref{app:tables} of this paper
 repository. For $a > 3000$ no failures occur; the range $a \le 3000$ was checked
 exhaustively by computer.
 \end{proposition}
@@ -6248,7 +6310,11 @@ A Case-T line is a pair $(e,h)$ with $e \ne h$, $e, h \ge 1$ and $e + h \le 11$,
 and (as noted above) $\mu' \ge 3$ on every one of them; there are exactly $50$ such
 lines. On each, $g \le \mu \le 11$, $e' \le e \le 10$, $\mu' \le \mu \le 11$ and
 $C' = (e'-1)(\mu'-1) \le 9 \cdot 10 = 90$, so every term of $K$ is bounded
-independently of $a$; evaluating $K$ over all $50$ lines gives $K \le 40$. Hence
+independently of $a$. Evaluating $K$ over all $50$ lines gives
+$\max K = 435/11 = 39.5\overline{45}$, attained on the single line $(e,h) = (10,1)$
+(there $\mu = \mu' = 11$, $e' = 10$, $g = 1$, $C' = 90$); the runners-up are
+$(9,2)$ at $415/11$ and $(8,3)$ at $395/11$, both below $38$. In particular
+$K \le 40$, with $0.45$ to spare on the worst line. Hence
 for every line and every $a \ge 3000$,
 \[
   \tau(a) - \beta(a) \;=\; a + \mu - 1 - \frac{2a}{\mu'} - K
@@ -6434,7 +6500,7 @@ concrete, here are the first rows of each, verbatim:
 Table A row $(a,b,M;\ x,Y,Z)$ & budget & vs.\ $M - 1$ \\
 \midrule
 $(4,\ 9,\ 10;\ 7, 1, 1)$ & $9$ & $9$ (tight) \\
-$(5,\ 8,\ 9;\ 5, 2, 1)$ & $8$ & $8$ (tight; \S\ref{sec:caseT-friendly}'s exercise) \\
+$(5,\ 8,\ 9;\ 5, 2, 1)$ & $8$ & $8$ (tight; Example~\ref{chk:caseT-cert}) \\
 $(7,\ 12,\ 13;\ 7, 3, 1)$ & $11$ & $12$ \\
 $(8,\ 13,\ 14;\ 7, 3, 2)$ & $12$ & $13$ \\
 \midrule
@@ -6484,13 +6550,24 @@ the margin in practice widens faster than the bound promises.
 \section{The proof of SHARP, and its sharpness}\label{sec:sharp-assembly}
 
 \begin{proof}[Proof of Theorem~\ref{thm:sharp-friendly}]
-By strong induction on $M$: proving the statement for maximum $M$, we may assume
-it for every alphabet with a smaller maximum. (Two places consume it.
-Lemma~\ref{lem:L4-friendly} passes to the rescaled alphabet $H$ of maximum
-$M/d < M$; and Lemma~\ref{lem:graham-red}, in its case $e^\dagger = M$, invokes the
-statement for $G \setminus \{M\}$, of maximum $M' < M$. Both appeals are to
-strictly smaller maxima. No hard-core branch invokes the hypothesis, and no branch
-re-enters either lemma at a larger maximum, so the recursion terminates.)
+The recursion is well-founded on the pair $(M, |G|)$ ordered lexicographically, and
+it is worth naming that explicitly rather than saying ``induction on $M$'', because
+one of the descents does \emph{not} lower $M$.
+
+\emph{Descents that lower $M$.} Lemma~\ref{lem:L4-friendly} passes to the rescaled
+alphabet $H$ of maximum $M/d < M$; and Lemma~\ref{lem:graham-red}, in its case
+$e^\dagger = M$, invokes the statement for $G \setminus \{M\}$, of maximum
+$M' < M$.
+
+\emph{The descent that does not.} Lemma~\ref{lem:graham-red}, in its case
+$e^\dagger \ne M$, passes to $G \setminus \{e^\dagger\}$ --- the same maximum $M$,
+one element fewer. This is why the lemma is stated graded by $M$ and proved by an
+inner induction on $|G|$: at maximum $M$ the pair drops in its second coordinate.
+
+Every appeal therefore strictly decreases $(M, |G|)$. No hard-core branch invokes
+the induction hypothesis at all, and no branch re-enters either lemma at a larger
+maximum, so the recursion terminates. Fix $M$ and assume SHARP for every alphabet
+with smaller maximum.
 
 If $1 \in G$: done (\S\ref{sec:sharp-intro}). By
 Lemma~\ref{lem:graham-red}, reduce to irreducible $G$; by
@@ -6602,10 +6679,11 @@ descending order of how much we would like to know the answer.
 
 \textbf{1. Is $r_k(d_1,d_2)$ bounded?} Theorem~\ref{thm:existence-friendly} gives
 $r_k(d_1,d_2) \le 192\,d_2$ whenever $d_2 \ge k+1$ --- a bound that grows with
-$d_2$. Every value anyone has computed exactly is $2$: Chen \cite{Ch00} shows
-$r_2(a,b) \le 2$ off the diagonal $b = 2a$, and $r_2(2,3) = 2$
-\cite{ErGr80,BHJ97}. We are not aware of a single instance where the answer exceeds
-$2$.
+$d_2$. Every exact value cited in this paper is $2$: Chen \cite{Ch00} shows
+$r_2(a,b) \le 2$ off the diagonal $b = 2a$, whence $r_2(a,2a) = 2$ on it by the
+monotonicity of \S\ref{sec:prior}, and $r_2(2,3) = 2$ \cite{ErGr80,BHJ97}. We know
+of no instance where the answer exceeds $2$, though we have not surveyed the
+literature exhaustively for one.
 
 \begin{quote}
 \emph{Question.} Is there an absolute constant $C$ with $r_k(d_1,d_2) \le C$ for
@@ -6616,9 +6694,11 @@ Our $192\,d_2$ is not close to optimal and we make no claim that it is. It is wh
 the nested-interval construction of Part~II pays for being uniform: the constant
 absorbs a safety margin at every scale, and the $d_2$ absorbs the width of the
 window the walker must be denied. Either could plausibly be pushed hard. The
-sharpest concrete instance is Chen's diagonal, where
-Corollary~\ref{cor:chen-diagonal} improves the situation from ``no bound known'' to
-$2 \le r_2(a,2a) \le 384\,a$ --- a factor of $192\,a$ of pure ignorance.
+gap is starkest wherever an exact value is known: at $k = 2$ the truth is $2$ and
+our uniform machinery would deliver only $192\,d_2$, so the construction is
+overpaying by a factor of order $d_2$ in every case anyone can check. Whether that
+factor is an artefact of insisting on one construction for all parameters, or
+whether $r_k$ genuinely grows for $k \ge 3$, is exactly what Question~1 asks.
 
 \textbf{2. Lower bounds.} The gap in Problem~1 is embarrassing from both ends, and
 the lower end is the neglected one. For $k \ge 3$ we know of no lower bound on
@@ -6651,21 +6731,53 @@ each time --- the $\eta$-box argument needs $\mu \ge 12$ and $a \ge 12$
 simultaneously, and both small-parameter corners genuinely behave differently ---
 but that is evidence about our ingenuity, not about the problem.
 
-\textbf{4. How large is $m(G)$, really?} The bound $m(G) \le M-1$ of
-Theorem~\ref{thm:sharp-friendly} cannot be improved to $M-2$ in general:
-$m(\{3,4,5\}) = 4$ (Proposition~\ref{prop:sharpness-friendly}). But that witness
-has $M = 5$, and the extremal examples we know are all small.
+\textbf{4. Which $G$ are extremal?} Sharpness is not confined to small $M$, and it
+is worth recording why, since Proposition~\ref{prop:sharpness-friendly} on its own
+might leave the impression that $m(\{3,4,5\}) = 4$ is a small-parameter accident.
+It is not: the bound is attained at \emph{every} maximum, by at least two families.
+
+\begin{proposition}[An extremal family at every maximum]\label{prop:extremal-families}
+For every $M \ge 3$, \; $m(\{1,\, M-1,\, M\}) = M-1$.
+\end{proposition}
+
+\begin{proof}
+\emph{Upper bound.} The $M-1$ copies of $1$ have subset sums $\{0, 1, \dots, M-1\}$.
+
+\emph{Lower bound.} Let a multiset consist of $i$ copies of $1$, $j$ of $M-1$ and
+$k$ of $M$. A subset sum taking $p \le i$, $q \le j$ and $r \le k$ of them equals
+\[
+  p + q(M-1) + rM \;=\; (q+r)M + (p - q) ,
+\]
+so every subset sum lies in $sM + [-j,\ i]$ for some integer $s \ge 0$. Suppose
+$i + j + 1 < M$. Then $[-j, i]$ meets fewer than $M$ residue classes modulo $M$, so
+some class $\rho$ is missed entirely --- and every one of any $M$ consecutive
+integers would have to be a subset sum, including the one in class $\rho$. Hence
+$i + j + 1 \ge M$, and the multiset has size $i + j + k \ge i + j \ge M-1$.
+\end{proof}
+
+\noindent So sharpness is not a small-$M$ accident: it recurs at every maximum, and
+$M-1$ is the exact worst case rather than a bound that happens to bind once. A
+second family behaves the same way --- $m(\{M-2, M-1, M\}) = M-1$, whose upper
+bound is Case~L at $g = 1$ (Lemma~\ref{lem:caseL-friendly}), where the budget
+$a + 2g - 1 = M-1$ is met with equality; we have verified its lower bound
+exhaustively for $M \le 20$ but have not written out a proof for general $M$.
+
+Exhaustive computation of $m(G)$ over all $G$ with $|G| = 3$ and $\max G \le 15$
+finds the maximum to be exactly $M-1$ at every single $M$, and finds many
+extremals --- so ``are there large extremal sets'' has the dull answer \emph{yes,
+always}. The live question is which ones.
 
 \begin{quote}
-\emph{Question.} Characterise the $G$ with $m(G) = M-1$. Are there any with $M$
-large --- or is $m(G) \le M-2$ for all $M \ge M_0$, and what is the true order of
-$\max_{\max G = M} m(G)$?
+\emph{Question.} Characterise the $G$ with $m(G) = M-1$. Are the two families above
+the basic extremizers, in the sense that every extremal $G$ contains one of the
+configurations driving them? Is there a stability statement --- if $m(G)$ is close
+to $M-1$, must $G$ be close to an extremal family?
 \end{quote}
 
 This one is asked out of curiosity rather than need: the slot lemma consumes
 exactly $m(G) \le M-1 \le k-1$, so a sharper bound would not shorten the proof of
-the dichotomy. It might well shorten the proof of
-Theorem~\ref{thm:sharp-friendly}.
+the dichotomy --- and, by the above, no sharper bound exists to be had. It might
+well shorten the proof of Theorem~\ref{thm:sharp-friendly}.
 
 \medskip
 
@@ -6679,7 +6791,7 @@ The remaining section is not part of the proof; it is about how the proof is
 This proof is computer-assisted, and this paper has flagged every place the
 assistance occurs: the $172$ Table-A certificates and the $a \le 3000$ scan
 (Case T), and the $178$ Table-B base certificates with the class enumeration
-(Case B) --- those four items are the load-bearing finite layer. (The parent
+(Case B) --- those four items are the load-bearing finite layer. (This paper
 paper's harnesses additionally run corroborating enumerations that this
 document's proofs never lean on, such as listing all minimal alphabets with
 $M \le 130$; corroboration is welcome, but the ledger above is complete without
@@ -6696,7 +6808,7 @@ correctness is a finite, mindless computation. A Table-A or Table-B row
 $(a, b, M;\ x, Y, Z)$ asserts two things --- the multiset of $x$ copies of $a$,
 $Y$ of $b$, $Z$ of $M$ has size $\le M - 1$, and its subset sums contain $M$
 consecutive integers --- and \emph{you} can check any row with pencil and paper
-in minutes (Exercises in \S\S\ref{sec:caseT-friendly}--\ref{sec:caseB-friendly}
+in minutes (the worked instances in \S\S\ref{sec:caseT-friendly}--\ref{sec:caseB-friendly}
 did exactly this). How the rows were \emph{found} is irrelevant to their truth:
 a certificate severs the proof from the search that produced it. The same holds
 for the scans: ``this formula exceeds that bound at exactly these $172$ inputs''
@@ -6777,16 +6889,27 @@ closed by hand.
       $0,1,6,5,20,17,32,25,72$ for $a = 3,\dots,11$, which sum to $178$. No scan is
       involved in this one; the computation only confirms it.
 \item[\textbf{B2}] \emph{Validity of the B witnesses, and the lift.} Each printed
-      base is valid, and the $\lambda$-lift carries it to every larger $a$ in its
-      class. \emph{How it is closed:} finite arithmetic for the bases (as in
-      \textbf{T2}), and a proof --- Lemma~\ref{lem:lift-friendly} --- for the
-      propagation, which is where the ``forever'' comes from and is not a finite
-      claim at all.
+      base is valid --- budget, coverage, and the frame-merge condition
+      $Y + Z \le a-1$ that Lemma~\ref{lem:lift-friendly} requires and
+      Remark~\ref{rem:579} shows cannot be dropped --- and the $\lambda$-lift
+      carries it to every larger member of its class. \emph{How it is closed:}
+      finite arithmetic for the bases (as in \textbf{T2}), and a proof ---
+      Lemma~\ref{lem:lift-friendly} --- for the propagation, which is where the
+      ``forever'' comes from and is not a finite claim at all.
+\item[\textbf{B3}] \emph{Minimality of the B bases.} For each of the $178$ classes,
+      the printed base is the \emph{first} member of that class routed to Case~B.
+      \emph{How it is closed:} finite check. This obligation is easy to miss, and
+      we missed it in an earlier draft: \textbf{B1} says which classes need a base
+      and \textbf{B2} says each base is valid and lifts \emph{upward}, but neither
+      forbids a base sitting one $\lambda$-rung too high --- which would leave the
+      genuine Case-B members below it certified by nothing at all. It is a separate
+      finite assertion and is checked as one.
 \end{enumerate}
 
-So of the four, one is a theorem with a finite check attached (\textbf{B2}), one is
-now a hand proof (\textbf{B1}), one is finite table arithmetic (\textbf{T2}), and
-exactly one leans on an exhaustive enumeration (\textbf{T1}).
+So of the five, one is a theorem with a finite check attached (\textbf{B2}), one is
+a hand proof (\textbf{B1}), and three are finite checks (\textbf{T2}, \textbf{B3},
+and the enumeration half of \textbf{T1}) --- of which only \textbf{T1} is an
+exhaustive search rather than the validation of a printed list.
 
 \subsection{What a Lean formalization is}
 
@@ -7344,35 +7467,56 @@ where we suggest scepticism is best spent; the obligation labels
 
 \subsection{Where we would attack it}
 
-If this proof is wrong, our own estimate of the likeliest places, in order:
+If this proof is wrong, the likeliest places, in order. The ordering below is not
+our original guess: an earlier draft of this appendix ranked the boundary case
+first and the induction fourth, and three independent readers reported the reverse
+--- the boundary case survived every attack, while the induction's \emph{statement}
+did not. We have reordered accordingly, and left the correction visible because it
+is itself information about where the risk sits: the danger was in the bookkeeping,
+not in the delicate estimate.
 
 \begin{enumerate}
-\item \emph{The boundary case, Proposition~\ref{prop:boundary-friendly}.} When $k$ is
-      even and $d_2 = k$, the sweep guarantees width $k-2$ and needs $k-1$. Every
-      other configuration has slack; this one has none, and it is closed by a
-      separate argument (border--period duality,
-      Lemma~\ref{lem:border-period}) rather than by the main machinery. A single
-      off-by-one here would be fatal and would not be caught by any machine check
-      that shares the paper's case analysis.
+\item \emph{The induction in Theorem~\ref{thm:sharp-friendly}}, and in particular
+      how Lemma~\ref{lem:graham-red} is invoked. The recursion is well-founded on
+      $(\max G, |G|)$ ordered lexicographically, and one of the three descents
+      lowers only the second coordinate. An earlier draft stated
+      Lemma~\ref{lem:graham-red} with an ungraded hypothesis --- ``if SHARP holds
+      for all irreducible alphabets'' --- which is not available at the point
+      \S\ref{sec:sharp-assembly} uses it; the lemma is now graded by the maximum.
+      Check that the grading is honest and that no appeal raises the pair.
 \item \emph{Completeness of the Case-T scan} (\textbf{T1} of
-      \S\ref{sec:obligations}). The uniform bound closes $a \ge 3000$ by hand; below
-      that, completeness rests on an exhaustive enumeration. The hand calculation is
-      short and we recommend checking it directly --- it is the paragraph
-      establishing $K \le 40$ over the $50$ Case-T lines.
+      \S\ref{sec:obligations}). The uniform bound closes $a \ge 3000$ by hand;
+      below that, completeness rests on an exhaustive enumeration. The hand
+      calculation is short and worth checking directly --- it is the paragraph
+      establishing $\max K = 435/11$ over the $50$ Case-T lines. Note that this
+      calculation is easy to get wrong by inserting a ceiling that the definition
+      of $\beta$ does not contain; doing so yields $41$ and appears to break the
+      bound.
+\item \emph{Hypothesis-matching between prose lemmas and the results that cite
+      them.} This is where the one real defect of the previous draft was found: the
+      even branch of Case~L (Lemma~\ref{lem:caseL-friendly}) cited
+      Lemma~\ref{lem:staircase-friendly}(d) on an infinite family with $g = 1$,
+      while that clause was stated for $g \ge 2$. The construction was correct
+      throughout and the formalization accepted it, because the formal staircase
+      statement carries no such restriction --- which is exactly why
+      Appendix~\ref{app:lean} matching \emph{names} is not enough. Clause~(d) now
+      covers $g \ge 1$. A referee should spot-check other citations the same way.
 \item \emph{The type discipline around rescaling.} Lemma~\ref{lem:rescale-friendly}
       divides all gaps by $g$, destroying the lower bound $d_1$.
       Definition~\ref{def:gwalk} exists to keep this honest, and every statement in
       \S\S\ref{sec:widths}--\ref{sec:sturmian-endgame} is phrased so that the
-      rescaled object satisfies it. A referee should confirm that no statement
-      applied after rescaling secretly assumes $d_1$.
-\item \emph{The induction in Theorem~\ref{thm:sharp-friendly}.} It is a strong
-      induction on $\max(G)$ with two recursive appeals
-      (Lemmas~\ref{lem:L4-friendly}, \ref{lem:graham-red}). Both are argued to go to
-      strictly smaller maxima. If either did not, the whole of Part~IV would be
-      circular.
-\item \emph{Exhaustiveness of the six-branch routing.} The branches must partition
-      the hard core. The argument is given at the end of
-      \S\ref{sec:sharp-assembly}, including the one genuine overlap, $(3,4,5)$.
+      rescaled object satisfies it. Confirm that no statement applied after
+      rescaling secretly assumes $d_1$. (Readers who have checked this reported it
+      clean; we leave it on the list because it is cheap to check and fatal if
+      wrong.)
+\item \emph{The boundary case, Proposition~\ref{prop:boundary-friendly}}, and
+      \emph{exhaustiveness of the six-branch routing}. When $k$ is even and
+      $d_2 = k$ the sweep guarantees width $k-2$ and needs $k-1$: no slack, and it
+      is closed by a separate argument (border--period duality,
+      Lemma~\ref{lem:border-period}). We ranked this first for two drafts and it has
+      now been checked closely by several readers without a defect being found. It
+      remains the most delicate estimate in the paper; it is no longer our best
+      guess at where an error would be.
 \end{enumerate}
 
 \subsection{Honest time estimates}
@@ -7397,9 +7541,9 @@ Finite layer: rerun the harnesses, spot-check rows & 1--2 h \\
 
 Three shorter routes are defensible:
 
-\emph{The existence half only} (6--8 hours). Self-contained, and a complete referee
-report on a genuine result --- Corollary~\ref{cor:chen-diagonal} alone closes a gap
-left open by \cite{Ch00}.
+\emph{The existence half only} (6--8 hours). Self-contained, uses no modular
+arithmetic and nothing from Parts~III--IV, and settles half of
+Theorem~\ref{thm:main-friendly} on its own.
 
 \emph{Architecture plus the five attack points above} (8--10 hours). Enough to form
 a confident view on whether the proof is sound in design, without verifying every
@@ -7615,7 +7759,7 @@ that residue cover to a solid run.
 
 \emph{You can check any row of these tables by hand in a few minutes}, and that
 is the point of printing them. Take the row $(5,8,9) \to (5,2,1)$, which is
-Exercise~\ref{chk:caseT-cert}'s worked instance: the multiset is $\{5,5,5,5,5,\,
+Example~\ref{chk:caseT-cert}'s worked instance: the multiset is $\{5,5,5,5,5,\,
 8,8,\, 9\}$, of size $5+2+1 = 8 = M-1$, meeting the budget exactly. Its parts
 $8j + 9k$ with $j \le 2$, $k \le 1$ take the values $\{0, 8, 16, 9, 17\}$, whose
 residues modulo $5$ are $\{0, 3, 1, 4, 2\}$ --- all five. Lifting by the copies
