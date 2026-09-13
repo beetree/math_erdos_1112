@@ -1,12 +1,14 @@
 # Short-proof migration progress
 
-**Last updated:** September 12, 2026, 19:40 PDT
+**Last updated:** September 12, 2026, 19:57 PDT
 
 **Branch:** `simplify-paper`
 
-**Checkpoint:** `de8aa9c` — short paper and checked initial Lean migration.
+**Checkpoint:** `496a1b1` — binary alternative, residue helpers, and finite Kneser verified.
 
-**Overall status:** Paper replacement implemented; full Lean migration in progress. No PR opened yet.
+**Draft PR:** [#1](https://github.com/beetree/math_erdos_1112/pull/1)
+
+**Overall status:** Paper replacement implemented; full Lean migration in progress. Draft PR open; not ready for final review.
 
 ## Objective and completion rule
 
@@ -33,32 +35,33 @@ correspondence documentation match that implementation.
 | Gcd normalization | **Verified** | `normalized_walk`: complete tail normalization, recurring alphabet, cardinality and gcd |
 | New SHARP induction reduction | **Verified** | `sharpAt_of_funnel` compiles; dense-triple construction is its explicit remaining input |
 | New SHARP paired movers | **Verified** | `paired_movers` and its exact `M−1` witness count compile and audit |
-| Signed residue frames and even-case budgets | **Verified components** | Generic forward/reverse frames, `K` bound, even numerical cases and classification compile |
+| Signed residue frames and odd/even-case budgets | **Verified components** | Generic forward/reverse frames, `K` bound, both sets of budget cases, and even classification compile |
 | Complete symmetric residue proof | In progress | Separate odd/even assembly agents |
 | Revised critical two-letter argument | **Verified and integrated** | `binary_dichotomy` discharges the growth/covering input in `normalized_cases` |
 | Finite Kneser dependency | **Verified** | `Finset.add_kneser` and strict refinement compile and audit cleanly |
 | Odd-spacing SHARP exceptions | **Verified** | `spacing_one` and `spacing_two` compile |
 | Kneser density shortcut | In progress; main dependency | Elementary pieces and finite Kneser verified; asymptotic-density theorem still open |
-| Assemble new non-existence theorem | Pending | Requires SHARP, binary argument, and density shortcut |
+| Density limit argument | **Verified component** | Least-choice fairness, finite absorption, survivor-to-progression and finite-prefix deletion; actual transformation sequence remains to be connected |
+| Assemble new non-existence theorem | Pending | Requires complete SHARP and density shortcut; binary alternative is integrated |
 | Remove obsolete non-existence / certificate machinery | Pending | Follows verified replacement assembly |
 | Final full build, audit, paper correspondence, and PR | Pending | Component checks currently pass; migration is not complete |
 
 ## Active Sonnet agents
 
-Five agents are running; the independent paper review has finished. All use `claude-leet --model claude-sonnet-5 --effort high`.
+Six agents are running; the independent paper review has finished. All use `claude-leet --model claude-sonnet-5 --effort high`.
 Each has separate file ownership. Codex handles shared lemmas, integration, validation,
 and this report.
 
 | Agent | Assignment | Current state | Owned output |
 |---|---|---|---|
 | `density` | Growth-to-density and periodicity-to-tail infrastructure | **Elementary pieces verified; agent finished.** Full Kneser remains open | `Short/Density.lean` |
-| `kneser-finite` | Port an existing finite Kneser proof to pinned Lean/Mathlib | **Verified:** finite Kneser and strict refinement; agent finished | `Short/KneserFinite/` |
+| `kneser-finite` / `kneser-compression` | Finite Kneser, then residue-compression algebra/counts | **Finite theorem verified**; compression task active | `Short/KneserFinite/`, `Short/KneserCompression.lean` |
 | `kneser-density` | Establish the passage to the density theorem | Resumed on source-backed e-transform dependencies and the weaker arithmetic-progression-tail consequence | `Short/KneserDensity*` |
 | `sharp` / `eta-odd` | Paired movers, then complete odd residue cases | **Movers verified**; odd assembly active | `Short/Movers.lean`, `Short/EtaOdd.lean` |
 | `funnel` / `residue-frame` / `eta-even` | Funnel and residue frames, then complete even residue cases | **Funnel and frames verified**; even assembly active | `Short/Funnel.lean`, `Short/ResidueFrame.lean`, `Short/EtaEven.lean` |
-| `binary` / `binary-growth` / `density-iteration` | Binary proof, then density-count and sumset iteration bridges | **Complete binary dichotomy verified**; density bridge task active | `Short/Binary*`, `Short/DensityIteration.lean` |
-| `odd-budget` | Odd residue-case budget inequalities | Formalizing arithmetic independently | `Short/OddBudget.lean` |
-| `even-budget` | Even residue-case budget inequalities | **Verified, including maximal-K classification; agent finished** | `Short/EvenBudget.lean` |
+| `binary` / `binary-growth` / `density-iteration` | Binary proof, then density-count and sumset iteration bridges | **Complete binary dichotomy verified**; density bridge submitted, awaiting stable shared definitions for integration | `Short/Binary*`, `Short/DensityIteration.lean` |
+| `odd-budget` / `kneser-blocks` | Odd budgets, then the long-block density estimate | **Odd budgets verified**; density estimate active | `Short/OddBudget.lean`, `Short/KneserBlocks.lean` |
+| `even-budget` / `kneser-mann` | Even budgets, then finite Mann count theorem | **Even budgets verified**; finite count theorem active | `Short/EvenBudget.lean`, `Short/KneserMann.lean` |
 | `spacing` | Two explicit odd-spacing SHARP exceptions | **Verified:** both constructions; agent finished | `Short/OddSpacing.lean` |
 | `paper-review` | Independent mathematical review of shortened paper | **Finished:** no mathematical errors found; reported an earlier tooling issue already fixed | Review report; no repository edits |
 
@@ -72,7 +75,7 @@ records, not durable proof artifacts; accepted results and findings will be summ
 - [Slots](lean/Erdos1112Proof/Short/Slots.lean): target build passes.
 - [Normalization](lean/Erdos1112Proof/Short/Normalization.lean): target build passes.
 - [Final theorem interface](lean/Erdos1112Proof/Final.lean): compiles with the improved existence bound.
-- Axiom audit: 30 audited declarations use only `propext`, `Classical.choice`, and `Quot.sound`.
+- Axiom audit: 41 audited declarations use only `propext`, `Classical.choice`, and `Quot.sound`.
 - Finite corroboration: all **77,770 dense triples through maximum 150** and **73,295 alphabets**
   checked by the new construction script pass. These finite checks are regression evidence,
   not a substitute for the general theorem.
@@ -91,6 +94,16 @@ another local Lean development and has now been ported and verified. The additio
 asymptotic-density argument remains unformalized. Primary-source proofs have been
 located for the next implementation phase. This remains the largest open part of
 the migration.
+
+| Density dependency | Status |
+|---|---|
+| Counts, lower-density definitions, maximal pairs and e-transform identities | Active agent |
+| Finite Mann count inequality | Active agent |
+| Long-block density estimate | Active agent; finite Mann is an explicit pending input |
+| Fairness, limit survivors, finite-prefix deletion and progression growth | Verified abstract components |
+| Residue compression and density rescaling | Active agent |
+| Growth-to-density and iteration over `k` summands | Submitted; independent integration pending shared definitions; Kneser remains an explicit input |
+| Complete transformation sequence and zero-limit density argument | Remaining assembly and proof work |
 
 ## Next integration steps
 
@@ -176,3 +189,14 @@ python3 ../paper/scripts/check_axioms.py /tmp/erdos1112-axioms.txt
   hypothesis now gives an explicit count bound. A separate agent is connecting
   growth to lower density and iterating the pending pairwise Kneser consequence;
   this does not assume that consequence has been proved.
+
+- **19:50 PDT**: Draft PR #1 is open; its finite-construction CI passes and Lean CI
+  is running. Local root build passes with 37 audited declarations. Both odd/even
+  budget families are verified. The new fairness/limit lemmas also pass; the
+  density transformation process and its full density bound are still unfinished.
+
+- **19:57 PDT**: Both checks on PR #1 are green. The local root build passes
+  with 41 audited declarations, including the new fair transformation-sequence
+  construction and limit lemmas. The sequence construction has explicit operation
+  laws; connecting the concrete maximal transform and proving the zero-limit
+  density bound remain required.

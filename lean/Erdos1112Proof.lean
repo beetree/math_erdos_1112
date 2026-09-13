@@ -17,6 +17,9 @@ import Erdos1112Proof.Short.Binary
 import Erdos1112Proof.Short.Density
 import Erdos1112Proof.Short.ResidueFrame
 import Erdos1112Proof.Short.EvenBudget
+import Erdos1112Proof.Short.OddBudget
+import Erdos1112Proof.Short.DensityLimit
+import Erdos1112Proof.Short.KneserSequence
 import Erdos1112Proof.Short.Funnel
 import Erdos1112Proof.Short.OddSpacing
 import Erdos1112Proof.Short.Movers

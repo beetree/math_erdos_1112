@@ -13,6 +13,9 @@ import Erdos1112Proof.Short.Binary
 import Erdos1112Proof.Short.Density
 import Erdos1112Proof.Short.ResidueFrame
 import Erdos1112Proof.Short.EvenBudget
+import Erdos1112Proof.Short.OddBudget
+import Erdos1112Proof.Short.DensityLimit
+import Erdos1112Proof.Short.KneserSequence
 import Erdos1112Proof.Short.Funnel
 import Erdos1112Proof.Short.OddSpacing
 import Erdos1112Proof.Short.Movers
@@ -52,3 +55,17 @@ import Erdos1112Proof.Short.KneserFinite.FinsetKneserTheorem
 #print axioms Erdos1112.Proof.Short.even_budget_eta_minus
 #print axioms Erdos1112.Proof.Short.even_budget_eta_plus
 #print axioms Erdos1112.Proof.Short.count_bound_of_growth
+
+#print axioms Erdos1112.Proof.Short.odd_budget_eta_two
+#print axioms Erdos1112.Proof.Short.odd_budget_eta_neg2_ge3
+#print axioms Erdos1112.Proof.Short.odd_budget_eta_n
+#print axioms Erdos1112.Proof.Short.KneserDensity.fair_of_least_choices
+#print axioms Erdos1112.Proof.Short.KneserDensity.finite_absorption
+#print axioms Erdos1112.Proof.Short.KneserDensity.progression_of_limit
+#print axioms Erdos1112.Proof.Short.KneserDensity.finite_prefix_eventually_deleted
+
+#print axioms Erdos1112.Proof.Short.KneserDensity.arbitrary_progressions_of_pairs
+
+#print axioms Erdos1112.Proof.Short.KneserDensity.transformSequence_fair
+#print axioms Erdos1112.Proof.Short.KneserDensity.transformSequence_score
+#print axioms Erdos1112.Proof.Short.KneserDensity.transformSequence_sum_subset
