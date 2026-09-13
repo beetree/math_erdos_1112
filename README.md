@@ -18,12 +18,14 @@ This branch replaces the previous paper and migrates the entire Lean proof to th
 argument. The reciprocal interpolation and improved existence bound are kernel-checked.
 The elementary rectangle, interlacing, centered frame, and two-generator target lemmas
 are also checked, as are slots, gcd normalization, and the zero-liminf binary argument.
-The new density theorem, binary growth bridge, and SHARP reductions are being formalized.
+The complete binary alternative and table-free SHARP theorem are checked and integrated.
+The Kneser density dependency is being assembled from verified components.
 
 **The full proof migration is not complete.** The current final non-existence theorem
 still uses the previous verified development. Its axiom audit does not establish that
-the new paper's non-existence and SHARP arguments have been formalized. The previous
-proof and certificate machinery will be removed after their replacements are checked.
+the new paper's density argument has been formalized. The old SHARP proof and
+certificate machinery have been removed; the remaining old non-existence internals
+will be removed after the density argument is complete.
 The original release remains available in Git history and at
 [Zenodo](https://doi.org/10.5281/zenodo.21568276).
 

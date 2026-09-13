@@ -28,7 +28,7 @@ equivalent source. Nothing here closes that gap; it only builds the
 import Mathlib
 import Erdos1112Proof.Short.KneserDensity.Defs
 import Erdos1112Proof.Short.Density
-import Erdos1112Proof.NonEx.Kit
+import Erdos1112Proof.Short.Kit
 
 namespace Erdos1112.Proof.Short
 

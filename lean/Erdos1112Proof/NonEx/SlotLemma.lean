@@ -9,7 +9,7 @@ The `sharp`-independent sub-lemmas live in `SlotLemmaParts.lean`; this file
 holds only the final assembly, the sole part that imports `Sharp.Main`.
 -/
 import Erdos1112Proof.NonEx.SlotLemmaParts
-import Erdos1112Proof.Sharp.Main
+import Erdos1112Proof.Short.Sharp
 
 namespace Erdos1112
 namespace Proof
@@ -57,7 +57,7 @@ theorem slot_core_gcd_one {k d₁ d₂ : ℕ} {a : ℕ → ℕ}
     exact h3c ▸ Finset.card_le_card hsub
   -- the slot-lemma ↔ subset-sum seam: SharpAt hands `|S| ≤ M − 1`, and `M ≤ d₂ ≤ k`
   -- gives `|S| ≤ k − 1`, with the binding corner `k = d₂ = M`.
-  obtain ⟨S, hSmem, hScard, hSrun⟩ := sharp M G hpos hcard3 hgcd1 hleM hMG
+  obtain ⟨S, hSmem, hScard, hSrun⟩ := Short.sharp_all M G hpos hcard3 hgcd1 hleM hMG
   have hMd2 : M ≤ d₂ := (Finset.mem_Icc.mp (Finset.mem_filter.mp (hGdef ▸ hMG)).1).2
   have hSk : S.card ≤ k - 1 := le_trans hScard (by omega)
   obtain ⟨c, hc⟩ := hSrun

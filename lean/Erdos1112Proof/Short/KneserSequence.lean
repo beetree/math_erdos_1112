@@ -118,4 +118,18 @@ theorem transformSequence_sum_subset {step : PairState → ℕ → PairState}
         (hstep _ _ (leastUnresolved_spec h)).trans ih
     · simpa [transformSequence, transformNext, h] using ih
 
+/-- Sumsets decrease from every intermediate stage, allowing compression at a
+later stabilized pair rather than at the original pair. -/
+theorem transformSequence_sum_antitone {step : PairState → ℕ → PairState}
+    (hstep : ∀ s e, Unresolved s e → (step s e).1 + (step s e).2 ⊆ s.1 + s.2)
+    (s : PairState) : Antitone (fun n =>
+      (transformSequence step s n).1 + (transformSequence step s n).2) := by
+  classical
+  apply antitone_nat_of_succ_le
+  intro n
+  by_cases h : ∃ e, Unresolved (transformSequence step s n) e
+  · simpa [transformSequence, transformNext, h] using
+      hstep _ _ (leastUnresolved_spec h)
+  · simp [transformSequence, transformNext, h]
+
 end Erdos1112.Proof.Short.KneserDensity

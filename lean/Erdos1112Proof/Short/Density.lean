@@ -3,7 +3,7 @@ linear growth gives a density-count bound, and eventual periodicity gives a
 congruence-class tail. The density structure theorem is a separate dependency;
 see PROGRESS.md for its verification status. -/
 import Mathlib
-import Erdos1112Proof.NonEx.TailCovering
+import Erdos1112Proof.Short.TailCovering
 
 namespace Erdos1112.Proof.Short
 

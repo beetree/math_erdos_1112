@@ -27,5 +27,5 @@ on bounded inputs. It does not replace the proof or supply certificates used by 
 The second checks the names and source locations of the paper's listed Lean declarations.
 The paper and repository explicitly track the unfinished parts of the Lean migration.
 
-The old table files and harnesses are temporarily retained while the corresponding
-Lean proof is replaced. They are not dependencies of this paper or its PDF build.
+The complete table-free SHARP theorem now compiles in Lean. The old table files,
+generators and certificate harnesses have been removed.

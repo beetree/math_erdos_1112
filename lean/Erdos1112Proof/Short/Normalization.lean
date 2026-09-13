@@ -1,5 +1,5 @@
 /- The short paper's initial translation and gcd normalization of a walk. -/
-import Erdos1112Proof.NonEx.GapWord
+import Erdos1112Proof.Short.GapWord
 
 namespace Erdos1112.Proof.Short
 

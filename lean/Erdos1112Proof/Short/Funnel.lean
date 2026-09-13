@@ -8,7 +8,7 @@ Reduces `SharpAt M` to the pairwise coprime dense triples `a < b < M`,
 No imports of the old `Sharp/Graham.lean` case analysis, tables, or
 staircase; only the definitions from `Sharp/Defs.lean` and the elementary
 constructions of `Short/Intervals.lean`. -/
-import Erdos1112Proof.Sharp.Defs
+import Erdos1112Proof.Short.SharpDefs
 import Erdos1112Proof.Short.Intervals
 
 namespace Erdos1112.Proof.Short

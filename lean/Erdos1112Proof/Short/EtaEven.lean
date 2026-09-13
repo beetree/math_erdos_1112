@@ -7,7 +7,7 @@ owned by another agent, read-only here) to prove the even-`a` case of
 
 No SHARP table/lift/staircase machinery; only `Sharp/Defs`,
 `Short/Intervals`, `Short/ResidueFrame`, `Short/EvenBudget`, and Mathlib. -/
-import Erdos1112Proof.Sharp.Defs
+import Erdos1112Proof.Short.SharpDefs
 import Erdos1112Proof.Short.ResidueFrame
 import Erdos1112Proof.Short.EvenBudget
 

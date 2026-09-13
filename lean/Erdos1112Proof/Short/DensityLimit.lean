@@ -167,4 +167,12 @@ theorem finite_prefix_eventually_deleted {B : ℕ → Set ℕ} (hanti : Antitone
       exact False.elim (hj (hanti (le_max_right i j) hb))
     · exact hi b (hanti (le_max_left i j) hb) (by omega)
 
+/-- Discarding finitely many stages preserves fair absorption. -/
+theorem FairAbsorption.tail {A B : ℕ → Set ℕ} (hfair : FairAbsorption A B)
+    (N : ℕ) : FairAbsorption (fun n => A (N+n)) (fun n => B (N+n)) := by
+  intro i a ha
+  obtain ⟨j,hj,hl⟩ := hfair (N+i) a ha
+  refine ⟨j-N,by omega,?_⟩
+  simpa [Nat.add_sub_of_le (show N ≤ j by omega)] using hl
+
 end Erdos1112.Proof.Short.KneserDensity

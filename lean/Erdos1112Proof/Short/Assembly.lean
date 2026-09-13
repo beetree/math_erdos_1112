@@ -3,7 +3,7 @@ import Erdos1112Proof.Short.Normalization
 import Erdos1112Proof.Short.Slots
 import Erdos1112Proof.Short.BinaryGrowth
 import Erdos1112Proof.Short.DensityIteration
-import Erdos1112Proof.Sharp.Defs
+import Erdos1112Proof.Short.Sharp
 
 namespace Erdos1112.Proof.Short
 
@@ -29,14 +29,13 @@ def SmallGrowth (k : ℕ) (P : ℕ → ℕ) : Prop :=
     ∀ᶠ n in Filter.atTop, (P n : ℝ) ≤ c*n+C
 
 /-- The normalized case split of the paper. Its remaining inputs are
-explicit: the weak pairwise Kneser law and SHARP must be proved before this can
-close the final theorem. The density iteration and binary alternative are
+explicit: the weak pairwise Kneser law must be proved before this can close
+the final theorem. SHARP, density iteration and the binary alternative are
 discharged here. -/
 theorem normalized_cases {k : ℕ} (hk : 3 ≤ k)
     (hkn : ∀ A B : Set ℕ, 0 ∈ A → 0 ∈ B →
       KneserDensity.lowerDensity A + KneserDensity.lowerDensity B ≤
         KneserDensity.lowerDensity (A + B) ∨ HasAPTail (A + B))
-    (hsharp : ∀ M, SharpAt M)
     (P : ℕ → ℕ) (G : Finset ℕ) (hP0 : P 0=0) (hmono : StrictMono P)
     (hGne : G.Nonempty) (hGpos : ∀ x ∈ G, 0 < x ∧ x ≤ k)
     (hGgcd : G.gcd id=1) (hGgap : ∀ n, gap P n ∈ G)
@@ -62,7 +61,7 @@ theorem normalized_cases {k : ℕ} (hk : 3 ≤ k)
   have hMk' : M=k := by omega
   have hkG : k ∈ G := hMk' ▸ hMG
   by_cases hcard : 3 ≤ G.card
-  · obtain ⟨S,hSmem,hScard,hSrun⟩ := hsharp M G
+  · obtain ⟨S,hSmem,hScard,hSrun⟩ := sharp_all M G
       (fun x hx => (hGpos x hx).1) hcard hGgcd hmax hMG
     apply TailCovering.of_cofinite
     apply slots_from_run hP0 hmono hMpos ?_ ?_ (hScard.trans (by omega)) (by omega) hSrun

@@ -1,3 +1,18 @@
+import Erdos1112Proof.Short.KneserMinima
+import Erdos1112Proof.Short.KneserGridAssembly
+import Erdos1112Proof.Short.KneserFiniteRight
+import Erdos1112Proof.Short.KneserSpacing
+import Erdos1112Proof.Short.Sharp
+import Erdos1112Proof.Short.KneserConcrete
+import Erdos1112Proof.Short.KneserBlocks
+import Erdos1112Proof.Short.KneserStabilization
+import Erdos1112Proof.Short.KneserCompressionSequence
+import Erdos1112Proof.Short.KneserMann
+import Erdos1112Proof.Short.KneserGrid
+import Erdos1112Proof.Short.KneserResidues
+import Erdos1112Proof.Short.KneserCompression
+import Erdos1112Proof.Short.KneserShift
+import Erdos1112Proof.Short.SharpAssembly
 /-
 Root of the `Erdos1112Proof` library: the proof development that proves the
 three target theorems stated against the definitions in the frozen statement
@@ -30,21 +45,6 @@ import Erdos1112Proof.Short.BinaryGrowth
 import Erdos1112Proof.Short.KneserFinite.FinsetKneserTheorem
 import Erdos1112Proof.Existence.Beatty
 import Erdos1112Proof.Existence.Reciprocal
-import Erdos1112Proof.Sharp.Defs
-import Erdos1112Proof.Sharp.TwoGen
-import Erdos1112Proof.Sharp.Frame
-import Erdos1112Proof.Sharp.Staircase
-import Erdos1112Proof.Sharp.Tables
-import Erdos1112Proof.Sharp.TablesData
-import Erdos1112Proof.Sharp.Lift
-import Erdos1112Proof.Sharp.Graham
-import Erdos1112Proof.Sharp.CaseD
-import Erdos1112Proof.Sharp.CaseP
-import Erdos1112Proof.Sharp.CaseL
-import Erdos1112Proof.Sharp.CaseE
-import Erdos1112Proof.Sharp.CaseT
-import Erdos1112Proof.Sharp.CaseB
-import Erdos1112Proof.Sharp.Main
 import Erdos1112Proof.NonEx.TailCovering
 import Erdos1112Proof.NonEx.Certificate
 import Erdos1112Proof.NonEx.GapWord

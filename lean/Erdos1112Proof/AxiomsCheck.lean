@@ -1,3 +1,18 @@
+import Erdos1112Proof.Short.KneserMinima
+import Erdos1112Proof.Short.KneserGridAssembly
+import Erdos1112Proof.Short.KneserFiniteRight
+import Erdos1112Proof.Short.KneserSpacing
+import Erdos1112Proof.Short.Sharp
+import Erdos1112Proof.Short.KneserConcrete
+import Erdos1112Proof.Short.KneserBlocks
+import Erdos1112Proof.Short.KneserStabilization
+import Erdos1112Proof.Short.KneserCompressionSequence
+import Erdos1112Proof.Short.KneserMann
+import Erdos1112Proof.Short.KneserGrid
+import Erdos1112Proof.Short.KneserResidues
+import Erdos1112Proof.Short.KneserCompression
+import Erdos1112Proof.Short.KneserShift
+import Erdos1112Proof.Short.SharpAssembly
 /-
 Axiom audit for the three target theorems of Erdős Problem #1112.
 
@@ -79,3 +94,31 @@ import Erdos1112Proof.Short.KneserFinite.FinsetKneserTheorem
 #print axioms Erdos1112.Proof.Short.density_iterate
 #print axioms Erdos1112.Proof.Short.tailCovering_of_growth_lt
 #print axioms Erdos1112.Proof.Short.KneserDensity.twoFoldLowerDensity_eTransform_eq
+
+#print axioms Erdos1112.Proof.Short.KneserMann.mann_count
+#print axioms Erdos1112.Proof.Short.KneserDensity.finite_grid_of_pairs
+#print axioms Erdos1112.Proof.Short.KneserDensity.bounded_residue_frame
+#print axioms Erdos1112.Proof.Short.KneserDensity.realization_of_modular_subset_sums
+#print axioms Erdos1112.Proof.Short.exists_modular_cover
+#print axioms Erdos1112.Proof.Short.exists_stable_residues
+#print axioms Erdos1112.Proof.Short.KneserCompression.compressedSet_add
+#print axioms Erdos1112.Proof.Short.KneserCompression.posCount_compressedSet_eq_add_O1
+#print axioms Erdos1112.Proof.Short.lowerDensity_shiftedDown
+#print axioms Erdos1112.Proof.Short.twoFoldLowerDensity_shiftedDown_both
+#print axioms Erdos1112.Proof.Short.HasAPTail.of_shiftedDown_add
+#print axioms Erdos1112.Proof.Short.sharpTriple_of_paired_movers
+#print axioms Erdos1112.Proof.Short.sharp_all_of_odd
+
+#print axioms Erdos1112.Proof.Short.eta_odd
+#print axioms Erdos1112.Proof.Short.sharp_all
+#print axioms Erdos1112.Proof.Short.KneserDensity.fair_Aseq_Bseq
+#print axioms Erdos1112.Proof.Short.KneserDensity.twoFoldLowerDensity_Aseq_Bseq
+#print axioms Erdos1112.Proof.Short.KneserDensity.lane_theorem13_absorbed
+#print axioms Erdos1112.Proof.Short.stabilization_bundle
+#print axioms Erdos1112.Proof.Short.KneserCompression.compressed_fair
+#print axioms Erdos1112.Proof.Short.KneserCompression.hasAPTail_of_compressed_cofinite
+
+#print axioms Erdos1112.Proof.Short.KneserDensity.classMin_Aseq_eq_of_multiples
+#print axioms Erdos1112.Proof.Short.KneserDensity.interval_of_scaled_cover
+#print axioms Erdos1112.Proof.Short.KneserFiniteRight.twoFoldLowerDensity_eq_lowerDensity_of_finite_right
+#print axioms Erdos1112.Proof.Short.KneserDensity.transformSequence_sum_antitone

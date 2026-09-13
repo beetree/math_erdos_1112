@@ -164,11 +164,10 @@ congruence-class tail.
 \end{lemma}
 \begin{proof}
 For large $N$, take $n=\floor{(N-C)/c}$. Then $p_n\le N$, so
-$\dd(P)\ge1/c>1/k$. The lower-density form of Kneser's theorem
-\cite{Kneser53,ENS88} states that either $\dd(kP)\ge k\dd(P)$ or $kP$
-is eventually periodic. The first alternative is impossible because density
-is at most one. Since $0\in P$, the set $kP$ contains the infinite set $P$;
-its eventual periodicity therefore supplies a congruence-class tail.
+$\dd(P)\ge1/c>1/k$. The lower-density consequence of Kneser's theorem
+\cite{Kneser53,ENS88} needed here is that either $\dd(kP)\ge k\dd(P)$
+or $kP$ contains a congruence-class tail. The first alternative is impossible
+because density is at most one, proving the claim.
 \end{proof}
 For a finite multiset $S$, write
 $\ssum(S)=\{\sum_{x\in T}x:T\text{ is a submultiset of }S\}$.
@@ -591,6 +590,8 @@ Zero-liminf binary width argument & \texttt{binary\_eventual\_width}\\
 Binary covering from zero liminf & \texttt{binary\_tail\_covering}\\
 \multicolumn{2}{l}{\texttt{Short/Funnel.lean}}\\
 Inductive funnel & \texttt{sharpAt\_of\_funnel}\\
+\multicolumn{2}{l}{\texttt{Short/Sharp.lean}}\\
+Complete finite interval lemma & \texttt{sharp\_all}\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -605,10 +606,12 @@ Inductive funnel & \texttt{sharpAt\_of\_funnel}\\
 % lean-correspondence: binary_eventual_width | Erdos1112Proof/Short/Binary.lean
 % lean-correspondence: binary_tail_covering | Erdos1112Proof/Short/Binary.lean
 % lean-correspondence: sharpAt_of_funnel | Erdos1112Proof/Short/Funnel.lean
-The migration of the non-existence and finite interval proofs to the argument
-of this paper is in progress. The previously verified proofs temporarily
-remain in the development; their verification does not certify the new
-Kneser shortcut or the symmetric residue argument.
+% lean-correspondence: sharp_all | Erdos1112Proof/Short/Sharp.lean
+The reciprocal construction, binary alternative and complete finite interval
+lemma follow this paper in Lean. The old SHARP proof and certificate tables
+have been removed. The density dependency is still being formalized; the
+final non-existence theorem temporarily retains the earlier argument, whose
+verification does not certify the new Kneser shortcut.
 The definitions in \texttt{lean/Erdos1112.lean} allow repeated summands,
 phrase gap bounds additively, and include a proved equivalence between
 natural and integer ratio formulations. The repository records the current

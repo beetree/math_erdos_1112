@@ -1,6 +1,6 @@
 /- Short paper: toggled slots and the final summand as a dial. -/
 import Erdos1112Proof.Short.Intervals
-import Erdos1112Proof.NonEx.Kit
+import Erdos1112Proof.Short.Kit
 
 namespace Erdos1112.Proof.Short
 

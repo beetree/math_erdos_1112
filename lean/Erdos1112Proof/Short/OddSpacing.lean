@@ -1,7 +1,7 @@
 /- Short paper `lem:eta`, odd `a = 2n+1`, the `η = 2`, `λ = 0` exceptional
 constructions ("For `g = 1` ..." / "For `g = 2` ...", explicit `n+1, 1, n`
 and `n+3, 1, n` witnesses). No SHARP table/lift/staircase machinery. -/
-import Erdos1112Proof.Sharp.Defs
+import Erdos1112Proof.Short.SharpDefs
 import Erdos1112Proof.Short.Intervals
 
 namespace Erdos1112.Proof.Short

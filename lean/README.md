@@ -32,10 +32,14 @@ truncated subtraction. `question_iff_questionInt` proves the ratio-formulation b
 | Complete even SHARP residue argument | [Short/EtaEven.lean](Erdos1112Proof/Short/EtaEven.lean) |
 | Growth-to-density and iteration, with Kneser explicitly pending | [Short/DensityIteration.lean](Erdos1112Proof/Short/DensityIteration.lean) |
 | E-transform density invariance | [Short/KneserDensity/ETransform.lean](Erdos1112Proof/Short/KneserDensity/ETransform.lean) |
-| Weak pairwise Kneser law and odd SHARP residue assembly | In progress |
+| Complete table-free SHARP theorem | [Short/Sharp.lean](Erdos1112Proof/Short/Sharp.lean) |
+| Finite Mann, transformation sequence, long-block estimate | [Short/KneserMann.lean](Erdos1112Proof/Short/KneserMann.lean), [Short/KneserConcrete.lean](Erdos1112Proof/Short/KneserConcrete.lean), [Short/KneserBlocks.lean](Erdos1112Proof/Short/KneserBlocks.lean) |
+| Weak pairwise Kneser law | Final assembly in progress |
 
-The final non-existence theorem currently retains the earlier implementation. The
-new proof must be completed before retiring the old `Sharp/` and `NonEx/` internals.
+The final non-existence theorem currently retains the earlier implementation. The old
+`Sharp/` proof and certificate files have been removed; its callers now use
+`Short.sharp_all`. The density dependency must be completed before retiring the
+remaining old `NonEx/` proofs.
 A successful audit of that theorem certifies the current implementation, not full
 correspondence with the new paper.
 

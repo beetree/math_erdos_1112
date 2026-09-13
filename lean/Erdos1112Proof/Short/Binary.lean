@@ -2,7 +2,7 @@
 case `G = {δ, k}`, density-free branch (`liminf z_n/n = 0`).
 
 Reuses the generic composition-band interval/sweep machinery from
-`NonEx.TwoLetter.Core` (`qCount`, `Wset`, `sweep`, `WidthTwoAt`,
+`Short.BinaryCore` (`qCount`, `Wset`, `sweep`, `WidthTwoAt`,
 `width_of_unbalanced`) verbatim — that file depends only on `NonEx.GapWord`
 and contains no balanced-classification / Morse–Hedlund content.
 
@@ -14,7 +14,7 @@ tail-balanced word, which (since zero recurs) forces a zero in every long
 enough window, hence positive zero density. Neither step uses the
 Morse–Hedlund classification of balanced words (`NonEx.TwoLetter.Balanced`,
 `NonEx.TwoLetter.MH.*`), which this file does not import. -/
-import Erdos1112Proof.NonEx.TwoLetter.Core
+import Erdos1112Proof.Short.BinaryCore
 
 namespace Erdos1112.Proof.Short
 
