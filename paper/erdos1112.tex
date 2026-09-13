@@ -1,4 +1,4 @@
-% Short reconstruction: SHARP is proved here without certificate tables.
+% The finite interval lemma is proved in the main text without certificate tables.
 \documentclass[11pt,a4paper,reqno]{amsart}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -17,6 +17,7 @@
 \newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
+\newtheorem*{problem}{Problem}
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 \newcommand{\NN}{\mathbb N}
@@ -40,6 +41,7 @@ reciprocal Beatty construction, Kneser's density theorem, and an elementary
 proof of the sharp finite subset-sum lemma required at the boundary.
 \end{abstract}
 \maketitle
+\section{Introduction}
 For a set $A\subset\NN$, write
 \[
  kA:=\{a_1+\cdots+a_k:a_1,\ldots,a_k\in A\},
@@ -47,15 +49,18 @@ For a set $A\subset\NN$, write
 with repetitions allowed. A sequence $A=\{a_1<a_2<\cdots\}$ is
 \emph{$(d_1,d_2)$-admissible} if
 $d_1\le a_{n+1}-a_n\le d_2$ for every $n$.
-We address the formulation recorded as Erd\H{o}s Problem~1112~\cite{E1112},
+We consider the following formulation recorded as Erd\H{o}s Problem~1112~\cite{E1112},
 inspired by a remark of Erd\H{o}s and Graham~\cite{ErGr80}.
-The earlier Lean-verified proof~\cite{Land26} gave the bound $192d_2$.
-This version improves that bound and replaces finite certificates with an
-elementary proof.
-
-I am deeply grateful to Stijn Cambie for his substantial contributions to
-simplifying the proof and for providing the manuscript on which this shortened
-presentation is based.
+\begin{problem}
+Let $k\ge3$ and $1\le d_1<d_2$ be integers. Does there exist an integer $r$
+such that every increasing sequence $B=\{b_1<b_2<\cdots\}$ of positive
+integers satisfying $b_{n+1}\ge rb_n$ admits an increasing sequence
+$A=\{a_1<a_2<\cdots\}$ of positive integers with
+\[
+ d_1\le a_{n+1}-a_n\le d_2\quad(n\ge1),\qquad kA\cap B=\varnothing?
+\]
+\end{problem}
+The following theorem determines exactly when such a ratio exists.
 
 \begin{maintheorem}[Sharp dichotomy]\label{thm:main}
 Let $k\ge3$ and $1\le d_1<d_2$ be integers.
@@ -70,10 +75,21 @@ which meets $kA$ for every $(d_1,d_2)$-admissible $A$.
 \end{enumerate}
 Thus the answer is yes exactly when $d_2\ge k+1$.
 \end{maintheorem}
+The earlier proof~\cite{Land26}, formally verified in Lean, established this
+dichotomy with the bound $192d_2$. The present proof improves that bound and
+replaces the finite certificate argument with an elementary construction.
+
 Above the threshold, a reciprocal Beatty sequence avoids a prescribed lacunary
 sequence. Below it, every admissible walk has a congruence-class tail in its
 $k$-fold sumset; a diagonal construction then meets every such sumset. The
-sharp finite input is Theorem~\ref{thm:sharp}, proved in the appendix.
+finite interval lemma, Theorem~\ref{thm:sharp}, supplies the required offsets
+at the boundary. Its proof is given in Section~\ref{sec:sharp-proof}.
+Appendix~\ref{sec:formal} records the correspondence with the Lean formalization.
+
+\medskip\noindent\emph{Acknowledgment.}
+I am deeply grateful to Stijn Cambie for his substantial contributions to
+simplifying the proof and for providing the manuscript on which this shortened
+presentation is based.
 
 \section{The existence construction}
 Put $D=d_2$ and assume $D\ge k+1$.
@@ -157,10 +173,10 @@ and $X_0$,
 \begin{equation}\label{eq:tail-covering}
  \{x\ge X_0:x\equiv r\pmod q\}\subseteq kA.
 \end{equation}
-\subsection{The density shortcut and the finite input}
+\subsection{Density and finite subset sums}
 For $X\subseteq\NN_0$ write
 $\dd(X)=\liminf_{N\to\infty}|X\cap[1,N]|/N$.
-\begin{lemma}[Kneser shortcut]\label{lem:density}
+\begin{lemma}[A consequence of Kneser's theorem]\label{lem:density}
 Let $P=\{p_0<p_1<\cdots\}$ with $p_0=0$. If $p_n\le cn+C$
 eventually, for constants $0<c<k$ and $C$, then $kP$ contains a
 congruence-class tail.
@@ -174,13 +190,13 @@ because density is at most one, proving the claim.
 \end{proof}
 For a finite multiset $S$, write
 $\ssum(S)=\{\sum_{x\in T}x:T\text{ is a submultiset of }S\}$.
-\begin{theorem}[Finite interval lemma (SHARP)]\label{thm:sharp}
+\begin{theorem}[Finite interval lemma]\label{thm:sharp}
 If $G$ is a finite set of positive integers with $|G|\ge3$, $\gcd(G)=1$,
 and $M=\max G$, some multiset of at most $M-1$ elements of $G$ has
 $M$ consecutive subset sums.
 \end{theorem}
-The elementary proof in Appendix~\ref{sec:sharp-proof} uses no search or
-certificate list.
+We prove this in Section~\ref{sec:sharp-proof}. First we explain how an interval
+of subset sums yields representations of all sufficiently large integers.
 \subsection{A slot lemma}
 For a gap word $g_1,g_2,\ldots$, put $p_0=0$ and
 $p_n=g_1+\cdots+g_n$. A tail of the walk is a translate of $P=\{p_n:n\ge0\}$.
@@ -190,11 +206,11 @@ often, $|G|\ge3$, $\gcd(G)=1$, and $M=\max G\le k$. Then $kP$
 contains every sufficiently large integer.
 \end{lemma}
 \begin{proof}
-By SHARP choose $S=\{\delta_1,\ldots,\delta_m\}$, $m\le M-1\le k-1$,
+By Theorem~\ref{thm:sharp} choose $S=\{\delta_1,\ldots,\delta_m\}$, $m\le M-1\le k-1$,
 with $[c,c+M-1]\subseteq\ssum(S)$. Choose distinct occurrences
 $g_{n_j}=\delta_j$. In summand slot $j$ choose $p_{n_j-1}$ or $p_{n_j}$.
 These slots realize a fixed base plus every offset in $[c,c+M-1]$.
-Park $k-1-m$ summands at $p_0=0$. The last summand is a dial $p_n$.
+Set another $k-1-m$ summands equal to $p_0=0$ and let the last summand vary over $p_n$.
 For a large target $x$, the residual $x-\mathrm{base}-p_n$ decreases to
 $-\infty$ in jumps at most $M$. Its first value at most $c+M-1$ is at
 least $c$, so the slots supply the residual. This represents $x$ in $kP$.
@@ -212,8 +228,9 @@ $p_n=g_1+\cdots+g_n$. Divide all gaps and prefix sums by $g=\gcd(G)$.
 A class tail modulo $q$ rescales to one modulo $gq$; translating back only
 changes the residue. Relabel so that $\gcd(G)=1$.
 If $M=\max G<k$, then $p_n\le Mn$, and Lemma~\ref{lem:density} applies.
-Thus assume $M=k$. If $|G|\ge3$, use Lemma~\ref{lem:slots}. The remaining
-alphabet is $G=\{\delta,k\}$ with $1\le\delta<k$ and $\gcd(\delta,k)=1$.
+Thus assume $M=k$. If $|G|\ge3$, use Lemma~\ref{lem:slots}.
+It remains to consider an alphabet with two elements: a singleton would have
+gcd $k>1$. Hence $G=\{\delta,k\}$ with $1\le\delta<k$ and $\gcd(\delta,k)=1$.
 Set $e=k-\delta$, encode gap $k$ by $h_n=1$ and gap $\delta$ by $h_n=0$,
 and write $q_n=h_1+\cdots+h_n$. Then
 \begin{equation}\label{eq:prefix-binary}
@@ -258,7 +275,7 @@ Let $z_n=n-q_n$ count zeros. Then
  p_n=kn-ez_n.
 \end{equation}
 If $\liminf z_n/n>0$, choose $0<\gamma\le1$ with $z_n\ge\gamma n$
-eventually; then $p_n\le(k-e\gamma)n$, and the density shortcut applies.
+eventually; then $p_n\le(k-e\gamma)n$, and Lemma~\ref{lem:density} applies.
 Assume $\liminf z_n/n=0$. There are infinitely many $\sigma$ with
 $V(\sigma)\ge2$. Otherwise a sufficiently late tail would be balanced
 by the same endpoint comparison. Since zero recurs, it has a length-$L$
@@ -270,7 +287,10 @@ split the slots into $u$ pairs of subtotal $\sigma_0$ and a singleton
 carrying the rest. Independent variation gives width at least
 $uV(\sigma_0)\ge k-1$, so the sweep applies.
 
-For $k=2u$, $u\ge2$, choose $\sigma_0<\sigma_1$ with
+For even $k$, pairing all the summands leaves no singleton to absorb the
+remaining index sum. We instead show that repeated failures of the width
+bound would force the binary word to be periodic.
+Write $k=2u$, $u\ge2$, and choose $\sigma_0<\sigma_1$ with
 $V(\sigma_i)\ge2$, and put $\Delta=\sigma_1-\sigma_0$.
 Suppose at a sufficiently large $s$ the width is at most $k-2$, and put
 $\tau=s-(u-1)\sigma_0$. Using $u-1$ pairs of subtotal $\sigma_0$ and one
@@ -287,7 +307,10 @@ A period contains a zero, contradicting $\liminf z_n/n=0$.
 Thus width is eventually at least $k-1$, and the sweep finishes.
 \end{proof}
 
-\section{The universal lacunary certificate}
+\section{Proof of the non-existence direction}
+The preceding proposition gives a congruence-class tail for each admissible
+sequence. The following diagonal construction meets all such tails while
+allowing arbitrary prescribed growth.
 \begin{lemma}\label{lem:certificate}
 If every admissible walk is $k$-tail-covering, then any prescribed positive
 integer ratios $R_n$ admit one increasing $B$ with $b_{n+1}\ge R_nb_n$
@@ -307,10 +330,12 @@ Part (1) is Proposition~\ref{prop:existence}. For $d_2\le k$,
 Proposition~\ref{prop:walk} and Lemma~\ref{lem:certificate} give part (2).
 \end{proof}
 
-\appendix
 \section{Proof of the finite interval lemma}\label{sec:sharp-proof}
+We first reduce Theorem~\ref{thm:sharp} to triples of pairwise coprime
+integers. Two constructions then cover the remaining triples, according to
+whether their two largest elements sum to a multiple of the smallest.
 Write $u^m$ for the multiset of $m$ copies of the positive integer $u$.
-\subsection{Reduction to a dense triple}
+\subsection{Reduction to three generators}
 \begin{lemma}[Coprime rectangle]\label{lem:rectangle}
 If $1\le p<q$ and $\gcd(p,q)=1$, then
 \[
@@ -347,8 +372,8 @@ The translates overlap or abut and cover at least $N$ integers, at cost
 $h+p+s-3+\ind_{\{r\ge p\}}$. At $s=2$ its slack below $N-s$ is
 $h+r-p-1-\ind_{\{r\ge p\}}\ge0$; increasing $s$ increases slack by $h-2$.
 \end{proof}
-\begin{proposition}[Inductive funnel]\label{prop:funnel}
-Assuming SHARP below maximum $M$, it suffices at $M$ to treat triples
+\begin{proposition}[Reduction to three generators]\label{prop:funnel}
+Assuming Theorem~\ref{thm:sharp} for maxima below $M$, it suffices at $M$ to treat triples
 \begin{equation}\label{eq:funnel}
  G=\{a<b<M\},\quad
  \gcd(a,b)=\gcd(a,M)=\gcd(b,M)=1,\quad a+b\ge M+2.
@@ -488,7 +513,10 @@ $\floor{(a-1)/t}\le c-t+1$. Since $S\le KM$, the budget holds whenever
 \begin{equation}\label{eq:crude-budget}
  (a-K-1)M\ge a(K+1)-1.
 \end{equation}
-For $a=3$ all unit residues are already excluded.
+For $a=3$ all unit residues are already excluded. We now check the bound
+$\mathcal B\le M-1$ separately for odd and even $a$. In each case,
+\eqref{eq:crude-budget} handles the smaller values of $K$; only its largest
+possible value requires a more precise choice of representatives.
 
 \smallskip\noindent\emph{Odd $a=2n+1$.}
 If $K\le n$, the slack in \eqref{eq:crude-budget} at $K=n$ is
@@ -560,7 +588,7 @@ $8(M-5)-(3M+2b-1)=3e+5h-15>0$.
 For $a=10$, reverse if necessary to make the ratio $3$.
 The height is at most $2b+2M$, and slack is
 $10(M-6)-(3M+2b-1)=5e+7h-9>0$.
-All cases succeed.
+This proves the required bound in every case.
 \end{proof}
 \begin{proof}[Proof of Theorem~\ref{thm:sharp}]
 Use strong induction on $M$, with the statement vacuous for $M<3$.
@@ -568,8 +596,22 @@ Proposition~\ref{prop:funnel} leaves a triple satisfying \eqref{eq:funnel}.
 If $a\mid b+M$, use Lemma~\ref{lem:movers}; otherwise use Lemma~\ref{lem:eta}.
 \end{proof}
 
+\begin{samepage}
+\section*{Use of AI tools}
+Generative AI tools contributed to the development of the original proof,
+the drafting and revision of the manuscript, and the construction and debugging
+of the Lean formalization.\footnote{In the original development, Claude
+(Fable 5 and Opus 4.8) contributed to the mathematical arguments; GPT-5.5 and
+Gemini 3.1 assisted with advice and review.}
+The shortened presentation is based on a manuscript supplied by Stijn Cambie.
+GPT-6-Astra and Claude Sonnet 5 assisted with its revision and formalization.
+The formalization was checked by Lean's kernel. The author takes responsibility
+for the mathematical claims and their presentation.\par
+\end{samepage}
+
+\appendix
 \section{Formal verification and correspondence}\label{sec:formal}
-Both directions, including the density dependency and elementary SHARP proof,
+Both directions, including the density dependency and finite interval lemma,
 are checked in Lean. Selected declarations are listed below; paths are relative
 to \texttt{lean/Erdos1112Proof/}.
 \begin{center}\small
@@ -593,13 +635,13 @@ Tail alphabet and gcd normalization & \texttt{normalized\_walk}\\
 Zero-liminf binary width argument & \texttt{binary\_eventual\_width}\\
 Binary covering from zero liminf & \texttt{binary\_tail\_covering}\\
 \multicolumn{2}{l}{\texttt{Short/Funnel.lean}}\\
-Inductive funnel & \texttt{sharpAt\_of\_funnel}\\
+Reduction to three generators & \texttt{sharpAt\_of\_funnel}\\
 \multicolumn{2}{l}{\texttt{Short/Sharp.lean}}\\
 Complete finite interval lemma & \texttt{sharp\_all}\\
 \multicolumn{2}{l}{\texttt{Short/KneserWeak.lean}}\\
 Pairwise density/AP-tail alternative & \texttt{weak\_kneser}\\
 \multicolumn{2}{l}{\texttt{Short/Main.lean}}\\
-Kneser shortcut & \texttt{density\_shortcut}\\
+Consequence of Kneser's theorem & \texttt{density\_shortcut}\\
 Subcritical walk covering & \texttt{all\_tailCovering}\\
 Universal lacunary construction & \texttt{strong\_nonexistence}\\
 \bottomrule

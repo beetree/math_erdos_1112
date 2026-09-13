@@ -7,7 +7,8 @@ $k$-fold sumset of every admissible bounded-gap sequence.
 
 The [short paper](paper/erdos1112.pdf), with [TeX source](paper/erdos1112.tex), proves this
 using reciprocal Beatty interpolation, a Kneser density shortcut, and an elementary
-proof of the sharp finite subset-sum lemma. The appendix uses no certificate tables.
+proof of the sharp finite subset-sum lemma in the main text. The appendix records
+the Lean correspondence. The proof uses no certificate tables.
 
 Follow the [live progress report](PROGRESS.md) for milestones, agent assignments,
 verified results, and open dependencies.
@@ -54,7 +55,9 @@ presentation is based.
 
 Author: Johan Land. The original release was human-orchestrated, with Claude (Fable 5
 and Opus 4.8) doing core mathematical work and GPT-5.5 and Gemini 3.1 assisting with
-advice and review. This simplification was implemented with Codex and Claude
+advice and review. This simplification was implemented with GPT-6-Astra and Claude
 Sonnet 5, following Stijn Cambie's manuscript. Johan Land directs and audits the work.
+The paper includes an explicit AI declaration covering contributions to the
+mathematical arguments, exposition, and Lean formalization.
 
 Licensed under the [Apache License 2.0](LICENSE); see [NOTICE](NOTICE).

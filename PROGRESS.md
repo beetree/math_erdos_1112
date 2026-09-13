@@ -1,24 +1,27 @@
 # Short-proof migration progress
 
-**Last updated:** September 12, 2026, 21:05 PDT
+**Last updated:** September 13, 2026, 09:12 PDT
 
-**Branch:** `simplify-paper` · **PR:** [#1](https://github.com/beetree/math_erdos_1112/pull/1)
+**Branch:** `main` · **Merged PR:** [#1](https://github.com/beetree/math_erdos_1112/pull/1)
 
 **Final integration:** Closed Kneser dependency and canonical non-existence proof;
 old proof implementations removed. The checkpoint includes the matching TeX/PDF.
 
-**Overall status:** Full paper-aligned Lean proof implemented, locally verified,
-and pushed in `5b6a415`. The clean build and all 83 axiom checks pass. The final
-seven-page PDF and all 16 correspondence checks pass. See the
-[PR checks](https://github.com/beetree/math_erdos_1112/pull/1/checks) for live CI
-results and the PR page for review readiness.
+**Overall status:** The full paper-aligned Lean proof is merged into `main`.
+The implementation passed the clean build, all 83 axiom checks, and CI.
+The editorial revision following Stijn Cambie's feedback adds the original
+problem to a numbered introduction, moves the acknowledgment to its end,
+includes the finite interval proof in the main text, and adds the AI declaration.
+The revised PDF is eight pages and all 16 correspondence checks pass.
+[Repository CI](https://github.com/beetree/math_erdos_1112/actions/workflows/verify.yml)
+records verification of subsequent commits.
 
 ## Milestones
 
 | Milestone | Status | Evidence / remaining work |
 |---|---|---|
 | Branch and PR | Done | `simplify-paper`, PR #1 |
-| Short paper | Implemented | Seven-page final PDF and source archive build; no layout warnings |
+| Short paper | Verified | Eight-page editorial revision and source archive build; no LaTeX warnings |
 | Reciprocal existence, ratio `d₂ + 2` | Verified | `reciprocal_interpolation`, `existence_bound_reciprocal`, canonical existence theorem |
 | Interval constructions, slots, gcd normalization | Verified | Complete replacements compile |
 | Elementary SHARP | Verified and integrated | Closed `sharp_all`: inductive funnel, paired movers, symmetric residue path, odd/even budgets |
@@ -30,13 +33,14 @@ results and the PR page for review readiness.
 | Remove obsolete proofs and certificates | Done | Old existence, `NonEx/`, `Sharp/`, certificate machinery and unused exploratory ports removed |
 | Clean build and strict axiom audit | Verified | Clean project build: 7,942 jobs; all 83 expected declarations pass |
 | Final documentation and implementation commit | Done | 16 correspondence checks pass; implementation pushed in `5b6a415` |
-| CI and review readiness | Live on GitHub | [Current PR checks](https://github.com/beetree/math_erdos_1112/pull/1/checks) |
+| Original PR integration | Done | PR #1 merged; both CI jobs passed |
 
 ## Agent status
 
 **0 subagents currently running.** The requested burst of **ten concurrent Sonnet 5
 workers**, all using `claude-leet --model claude-sonnet-5 --effort high`, has finished.
-Codex completed final integration and local verification and is monitoring CI.
+GPT-6-Astra completed final integration and local verification. The editorial
+revision does not change the Lean source.
 Worker logs are in `/tmp/erdos1112-agents/`; accepted results are in the source tree.
 
 ## Verification evidence
@@ -48,10 +52,11 @@ Worker logs are in `/tmp/erdos1112-agents/`; accepted results are in the source 
 - Finite corroboration passed for **77,770 dense triples through maximum 150** and
   **73,295 alphabets**. These checks corroborate explicit constructions; the general
   SHARP theorem is proved in Lean.
-- Final PDF: **seven pages**, no layout warnings; final page inspected. Source
+- Revised PDF: **eight pages**, no LaTeX warnings; first and final pages inspected. Source
   archive builds. All **16** paper declaration/file correspondences pass.
-- The task is complete only after the clean build/audit, final TeX/PDF checks,
-  committed and pushed changes, and latest-commit CI verification all succeed.
+- The original proof migration passed these checks before PR #1 was merged.
+  The editorial revision changes the exposition and attribution; the Lean
+  statements and proofs remain unchanged.
 
 ## Reproduction
 
@@ -160,3 +165,9 @@ python3 ../paper/scripts/check_axioms.py /tmp/erdos1112-axioms.txt
 
 - **21:05 PDT**: Pushed final implementation `5b6a415` and updated PR #1.
   The finite-construction/correspondence CI job passes; Lean CI is running.
+
+- **September 13, 2026, 09:12 PDT**: Implemented Stijn Cambie's editorial feedback: numbered
+  introduction with the original problem, acknowledgment at its end, finite
+  interval proof in Section 6, conventional headings and explanatory transitions,
+  and an AI declaration naming GPT-6-Astra and Claude Sonnet 5. PDF and source
+  archive build without warnings; eight pages and 16 correspondence checks pass.

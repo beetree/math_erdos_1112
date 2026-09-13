@@ -1,7 +1,7 @@
 # The short paper
 
 [erdos1112.tex](erdos1112.tex) is the self-contained source; [erdos1112.pdf](erdos1112.pdf)
-is the compiled paper. It replaces the original long exposition on this branch.
+is the compiled paper. It replaces the original long exposition.
 
 ```bash
 make
@@ -14,8 +14,13 @@ TeX source.
 
 The proof has four parts: reciprocal interpolation giving ratio $d_2+2$, tail covering
 using Kneser's density theorem and a binary-word argument, a universal congruence-class
-construction, and the elementary SHARP appendix. The appendix reduces to dense triples
-and uses paired movers or a symmetric residue path.
+construction, and the elementary finite interval lemma. All four parts appear in
+the main text. The finite interval proof reduces to dense triples and uses paired
+movers or a symmetric residue path. The sole appendix records the Lean correspondence.
+
+The introduction states the original problem and ends with the acknowledgment of
+Stijn Cambie's contribution. A declaration near the end describes the use of AI
+tools, including GPT-6-Astra and Claude Sonnet 5 for the revision and formalization.
 
 ```bash
 python3 scripts/check_short_proof.py --max 150
