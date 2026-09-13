@@ -1,54 +1,39 @@
 #!/usr/bin/env python3
-"""Mechanically check the name-and-location layer of the paper's Lean correspondence
-table (Appendix E): every Lean declaration named there must exist in the Lean tree.
+"""Check the short paper's explicit Lean declaration/file correspondence.
 
-The statement-level match (that each declaration SAYS what the prose result says)
-is a human judgment, as the paper states; this script pins the layer a machine can
-pin -- the named declarations exist, so the table cannot silently rot as the
-development evolves. Run from anywhere; exits nonzero on any missing name.
+Each lean-correspondence directive must name a declaration displayed in the
+formalization appendix and defined in its exact source file. This checks names
+and locations, not theorem semantics or kernel verification; use lake build too.
 """
 import re
 import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-TEX = HERE.parent / "erdos1112.tex"
-LEAN = HERE.parent.parent / "lean"
-
+ROOT = Path(__file__).resolve().parents[2]
+TEX = ROOT / "paper/erdos1112.tex"
 text = TEX.read_text(encoding="utf-8")
-
-# isolate the Appendix C table: from the correspondence section header to its tabular end
-start = text.index("Correspondence with the Lean development")
-seg = text[start:]
-seg = seg[: seg.index("\\end{tabular}")]
-
-# every \texttt{...} token; unescape \_; keep identifier-shaped names, drop file paths
-tokens = re.findall(r"\\texttt\{([^}]*)\}", seg)
-names = set()
-for tok in tokens:
-    tok = tok.replace("\\_", "_").replace("\\#", "#").strip()
-    tok = tok.lstrip(".")  # table abbreviates shared prefixes as "..._of_foo"
-    if not tok or tok.endswith(".lean") or "/" in tok or "#" in tok or " " in tok:
+appendix = text.split(r"\section{Formal verification and correspondence}", 1)[1]
+visible = re.sub(r"(?<!\\)%[^\n]*", "", appendix).replace(r"\_", "_")
+entries = re.findall(r"^% lean-correspondence: ([\w.']+) \| ([\w/.-]+\.lean)$", text, re.M)
+errors = []
+if not entries:
+    errors.append("No correspondence entries found")
+if len(entries) != len(set(entries)):
+    errors.append("Duplicate correspondence entries")
+for name, source in entries:
+    path = ROOT / "lean" / source
+    if not path.is_file():
+        errors.append(f"Missing source: {source}")
         continue
-    if re.fullmatch(r"[A-Za-z][A-Za-z0-9_.']*", tok):
-        names.add(tok)
-
-sources = list(LEAN.glob("Erdos1112*.lean")) + list(
-    (LEAN / "Erdos1112Proof").rglob("*.lean")
-)
-corpus = "\n".join(f.read_text(encoding="utf-8") for f in sources)
-
-missing = []
-for name in sorted(names):
-    # namespaced names (FrameCert.lift) may be declared inside namespace blocks:
-    # accept the full dotted name or its final component as a declared word
-    tail = name.split(".")[-1]
-    if not (re.search(rf"\b{re.escape(name)}\b", corpus)
-            or re.search(rf"\b{re.escape(tail)}\b", corpus)):
-        missing.append(name)
-        print(f"  MISSING: {name}")
-
-print(f"correspondence check: {len(names)} declaration names from the correspondence appendix, "
-      f"{len(names) - len(missing)} found in {len(sources)} Lean files, "
-      f"{len(missing)} missing")
-sys.exit(1 if missing else 0)
+    if rf"\texttt{{{name}}}" not in visible:
+        errors.append(f"Declaration absent from printed appendix: {name}")
+    lean = path.read_text(encoding="utf-8")
+    # A mention in an import, comment, or proof body is not a declaration.
+    lean = re.sub(r"/-.*?-/", "", lean, flags=re.S)
+    lean = re.sub(r"--[^\n]*", "", lean)
+    if not re.search(rf"\b(?:theorem|lemma|def|abbrev)\s+{re.escape(name)}(?=\s|\{{|\()", lean):
+        errors.append(f"Declaration {name} not defined in {source}")
+for error in errors:
+    print(f"ERROR: {error}")
+print(f"Correspondence: {len(entries)} declarations, {len(errors)} errors")
+sys.exit(bool(errors))

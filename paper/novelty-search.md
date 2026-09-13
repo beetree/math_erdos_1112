@@ -1,10 +1,11 @@
 > **Search record.** This documents the novelty search for Theorem B; it is a search record, not a
-> proof of novelty. The authoritative discussion is in the paper (`paper/erdos1112.tex`, §1.8).
+> proof of novelty. It accompanies the original long-paper release; Theorem B is
+> the finite interval lemma (SHARP) in the current short paper.
 
 # Novelty search for the bounded subset-sum interval theorem (Theorem B)
 
-*Documented literature search supporting the novelty discussion in the paper (§1.8 /
-`sec:novelty`). Conducted July 2026 over MathSciNet, zbMATH, arXiv, and Google Scholar citation
+*Historical literature search supporting the original paper's novelty discussion.
+Conducted July 2026 over MathSciNet, zbMATH, arXiv, and Google Scholar citation
 chains around the works listed below. Search terms combined "subset sums" with
 "interval"/"consecutive integers", and included "finite addition theorem", "complete sequence",
 "Frobenius"/"postage-stamp", "restricted additive basis", and "bounded-coefficient"/"bounded-stock

@@ -5,20 +5,20 @@ statement file `Erdos1112.lean` (`erdos_1112`, `erdos_1112_existence_bound`,
 namespace `Erdos1112.Proof`. These are the canonical `Erdos1112.*` results;
 `Erdos1112.lean` carries their definitions, this file carries their proofs.
 -/
-import Erdos1112Proof.Existence.Nested
-import Erdos1112Proof.NonEx.Main
+import Erdos1112Proof.Existence.Reciprocal
+import Erdos1112Proof.Short.Main
 
 namespace Erdos1112
 
 /-- Existence half with the paper's explicit ratio bound: when
-`d₂ ≥ k + 1`, the concrete ratio `192 · d₂` works. -/
+`d₂ ≥ k + 1`, the concrete ratio `d₂ + 2` works. -/
 theorem erdos_1112_existence_bound (k d₁ d₂ : ℕ) (hk : 3 ≤ k) (hd₁ : 1 ≤ d₁)
     (hd : d₁ < d₂) (h : k + 1 ≤ d₂) :
-    RatioWorks k d₁ d₂ (192 * d₂) :=
-  Proof.existence_bound k d₁ d₂ hk hd₁ hd h
+    RatioWorks k d₁ d₂ (d₂ + 2) :=
+  Proof.existence_bound_reciprocal k d₁ d₂ hk hd₁ hd h
 
 /-- Non-existence half in the strong, constructive `Nonempty`-intersection
-form. The underlying `Proof.strong_nonexistence` produces
+form. The underlying `Proof.Short.strong_nonexistence` produces
 the `¬ Disjoint` witness; `Set.not_disjoint_iff_nonempty_inter` exhibits the actual
 collision point `kA ∩ B`. -/
 theorem erdos_1112_strong_nonexistence (k d₁ d₂ : ℕ) (hk : 3 ≤ k)
@@ -26,7 +26,7 @@ theorem erdos_1112_strong_nonexistence (k d₁ d₂ : ℕ) (hk : 3 ≤ k)
     ∃ b : ℕ → ℕ, IsVarLacunaryWith R b ∧
       ∀ a : ℕ → ℕ, HasGapsIn d₁ d₂ a →
         (kFoldSumset k a ∩ Set.range b).Nonempty := by
-  obtain ⟨b, hb, hdef⟩ := Proof.strong_nonexistence k d₁ d₂ hk hd₁ hd h R
+  obtain ⟨b, hb, hdef⟩ := Proof.Short.strong_nonexistence k d₁ d₂ hk hd₁ h R
   exact ⟨b, hb, fun a ha => Set.not_disjoint_iff_nonempty_inter.mp (hdef a ha)⟩
 
 /-- **Erdős Problem 1112, the dichotomy**: `r` exists iff
@@ -42,7 +42,7 @@ theorem erdos_1112 (k d₁ d₂ : ℕ) (hk : 3 ≤ k) (hd₁ : 1 ≤ d₁) (hd :
     obtain ⟨a, ha, hdisj⟩ := hr b (isVarLacunaryWith_const_iff.mp hb)
     exact (Set.not_disjoint_iff_nonempty_inter.mpr (hdef a ha)) hdisj
   · intro h
-    exact ⟨192 * d₂, erdos_1112_existence_bound k d₁ d₂ hk hd₁ hd h⟩
+    exact ⟨d₂ + 2, erdos_1112_existence_bound k d₁ d₂ hk hd₁ hd h⟩
 
 /-- **Erdős Problem 1112, in the problem's literal integer phrasing.**
 
