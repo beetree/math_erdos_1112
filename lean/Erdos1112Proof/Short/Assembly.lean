@@ -2,9 +2,12 @@
 import Erdos1112Proof.Short.Normalization
 import Erdos1112Proof.Short.Slots
 import Erdos1112Proof.Short.BinaryGrowth
+import Erdos1112Proof.Short.DensityIteration
 import Erdos1112Proof.Sharp.Defs
 
 namespace Erdos1112.Proof.Short
+
+open scoped Pointwise
 
 /-- Bounded gaps give the linear growth estimate used in the density branch. -/
 lemma growth_of_gap_bound {P : ℕ → ℕ} {M : ℕ}
@@ -26,16 +29,23 @@ def SmallGrowth (k : ℕ) (P : ℕ → ℕ) : Prop :=
     ∀ᶠ n in Filter.atTop, (P n : ℝ) ≤ c*n+C
 
 /-- The normalized case split of the paper. Its remaining inputs are
-explicit: the density shortcut and SHARP must be proved before this can close
-the final theorem. The binary growth/covering alternative is discharged here. -/
+explicit: the weak pairwise Kneser law and SHARP must be proved before this can
+close the final theorem. The density iteration and binary alternative are
+discharged here. -/
 theorem normalized_cases {k : ℕ} (hk : 3 ≤ k)
-    (hdensity : ∀ P : ℕ → ℕ, P 0=0 → StrictMono P → SmallGrowth k P → TailCovering k P)
+    (hkn : ∀ A B : Set ℕ, 0 ∈ A → 0 ∈ B →
+      KneserDensity.lowerDensity A + KneserDensity.lowerDensity B ≤
+        KneserDensity.lowerDensity (A + B) ∨ HasAPTail (A + B))
     (hsharp : ∀ M, SharpAt M)
     (P : ℕ → ℕ) (G : Finset ℕ) (hP0 : P 0=0) (hmono : StrictMono P)
     (hGne : G.Nonempty) (hGpos : ∀ x ∈ G, 0 < x ∧ x ≤ k)
     (hGgcd : G.gcd id=1) (hGgap : ∀ n, gap P n ∈ G)
     (hrec : ∀ x ∈ G, ∀ N, ∃ n ≥ N, gap P n=x) : TailCovering k P := by
   classical
+  have hdensity (P : ℕ → ℕ) (hzero : P 0=0) (hPmono : StrictMono P)
+      (hgrowth : SmallGrowth k P) : TailCovering k P := by
+    obtain ⟨c,C,hc,hck,hbound⟩ := hgrowth
+    exact tailCovering_of_growth_lt hkn hzero hPmono hc hck hbound
   let M := G.max' hGne
   have hMG : M ∈ G := Finset.max'_mem _ _
   have hMpos : 0 < M := (hGpos M hMG).1

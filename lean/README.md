@@ -29,7 +29,10 @@ truncated subtraction. `question_iff_questionInt` proves the ratio-formulation b
 | SHARP induction reduction and paired movers | [Short/Funnel.lean](Erdos1112Proof/Short/Funnel.lean), [Short/Movers.lean](Erdos1112Proof/Short/Movers.lean) |
 | Odd-spacing exceptions | [Short/OddSpacing.lean](Erdos1112Proof/Short/OddSpacing.lean) |
 | Finite Kneser theorem | [Short/KneserFinite/](Erdos1112Proof/Short/KneserFinite/) |
-| Asymptotic-density Kneser shortcut and complete new SHARP proof | In progress |
+| Complete even SHARP residue argument | [Short/EtaEven.lean](Erdos1112Proof/Short/EtaEven.lean) |
+| Growth-to-density and iteration, with Kneser explicitly pending | [Short/DensityIteration.lean](Erdos1112Proof/Short/DensityIteration.lean) |
+| E-transform density invariance | [Short/KneserDensity/ETransform.lean](Erdos1112Proof/Short/KneserDensity/ETransform.lean) |
+| Weak pairwise Kneser law and odd SHARP residue assembly | In progress |
 
 The final non-existence theorem currently retains the earlier implementation. The
 new proof must be completed before retiring the old `Sharp/` and `NonEx/` internals.
