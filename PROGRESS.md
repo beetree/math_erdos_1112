@@ -1,21 +1,23 @@
 # Short-proof migration progress
 
-**Last updated:** September 12, 2026, 21:04 PDT
+**Last updated:** September 12, 2026, 21:05 PDT
 
-**Branch:** `simplify-paper` · **Draft PR:** [#1](https://github.com/beetree/math_erdos_1112/pull/1)
+**Branch:** `simplify-paper` · **PR:** [#1](https://github.com/beetree/math_erdos_1112/pull/1)
 
 **Final integration:** Closed Kneser dependency and canonical non-existence proof;
 old proof implementations removed. The checkpoint includes the matching TeX/PDF.
 
-**Overall status:** Full paper-aligned Lean proof implemented and locally verified.
-The clean build and all 83 axiom checks pass. The final seven-page PDF and all
-16 correspondence checks pass. Final commit and latest-commit CI remain.
+**Overall status:** Full paper-aligned Lean proof implemented, locally verified,
+and pushed in `5b6a415`. The clean build and all 83 axiom checks pass. The final
+seven-page PDF and all 16 correspondence checks pass. See the
+[PR checks](https://github.com/beetree/math_erdos_1112/pull/1/checks) for live CI
+results and the PR page for review readiness.
 
 ## Milestones
 
 | Milestone | Status | Evidence / remaining work |
 |---|---|---|
-| Branch and draft PR | Done | `simplify-paper`, PR #1 |
+| Branch and PR | Done | `simplify-paper`, PR #1 |
 | Short paper | Implemented | Seven-page final PDF and source archive build; no layout warnings |
 | Reciprocal existence, ratio `d₂ + 2` | Verified | `reciprocal_interpolation`, `existence_bound_reciprocal`, canonical existence theorem |
 | Interval constructions, slots, gcd normalization | Verified | Complete replacements compile |
@@ -27,13 +29,14 @@ The clean build and all 83 axiom checks pass. The final seven-page PDF and all
 | Final dichotomy | Verified target build | `Final.lean` imports the new proof throughout |
 | Remove obsolete proofs and certificates | Done | Old existence, `NonEx/`, `Sharp/`, certificate machinery and unused exploratory ports removed |
 | Clean build and strict axiom audit | Verified | Clean project build: 7,942 jobs; all 83 expected declarations pass |
-| Final documentation, commit, CI, PR readiness | In progress | 16 correspondence checks pass; final commit and latest-commit CI remain |
+| Final documentation and implementation commit | Done | 16 correspondence checks pass; implementation pushed in `5b6a415` |
+| CI and review readiness | Live on GitHub | [Current PR checks](https://github.com/beetree/math_erdos_1112/pull/1/checks) |
 
 ## Agent status
 
 **0 subagents currently running.** The requested burst of **ten concurrent Sonnet 5
 workers**, all using `claude-leet --model claude-sonnet-5 --effort high`, has finished.
-Codex is performing final integration, independent verification and release cleanup.
+Codex completed final integration and local verification and is monitoring CI.
 Worker logs are in `/tmp/erdos1112-agents/`; accepted results are in the source tree.
 
 ## Verification evidence
@@ -154,3 +157,6 @@ python3 ../paper/scripts/check_axioms.py /tmp/erdos1112-axioms.txt
 - **21:04 PDT**: Clean proof build passes (7,942 jobs), with all 83 expected
   axiom checks passing. Final seven-page PDF has no layout warnings; all 16
   correspondence checks and the complete finite regression suite pass.
+
+- **21:05 PDT**: Pushed final implementation `5b6a415` and updated PR #1.
+  The finite-construction/correspondence CI job passes; Lean CI is running.
