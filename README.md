@@ -57,6 +57,8 @@ Author: Johan Land. The original release was human-orchestrated, with Claude (Fa
 and Opus 4.8) doing core mathematical work and GPT-5.5 and Gemini 3.1 assisting with
 advice and review. This simplification was implemented with GPT-6-Astra and Claude
 Sonnet 5, following Stijn Cambie's manuscript. Johan Land directs and audits the work.
+Other models used during the project included Gemini-3.8-Flash, GLM-5.3 Flash,
+Kimi K2.7, Fable 5.1, GPT-5.6 Sol, and GPT-5.6 Terra.
 The paper includes an explicit AI declaration covering contributions to the
 mathematical arguments, exposition, and Lean formalization.
 
