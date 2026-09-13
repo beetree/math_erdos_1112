@@ -48,9 +48,13 @@ See the [Lean README](lean/README.md) for statements and verification details.
 
 ## Authorship and provenance
 
+I am deeply grateful to Stijn Cambie for his substantial contributions to
+simplifying the proof and for providing the manuscript on which this shortened
+presentation is based.
+
 Author: Johan Land. The original release was human-orchestrated, with Claude (Fable 5
 and Opus 4.8) doing core mathematical work and GPT-5.5 and Gemini 3.1 assisting with
 advice and review. This simplification was implemented with Codex and Claude
-Sonnet 5, following the supplied reconstruction. Johan Land directs and audits the work.
+Sonnet 5, following Stijn Cambie's manuscript. Johan Land directs and audits the work.
 
 Licensed under the [Apache License 2.0](LICENSE); see [NOTICE](NOTICE).

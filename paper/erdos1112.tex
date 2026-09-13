@@ -49,10 +49,13 @@ with repetitions allowed. A sequence $A=\{a_1<a_2<\cdots\}$ is
 $d_1\le a_{n+1}-a_n\le d_2$ for every $n$.
 We address the formulation recorded as Erd\H{o}s Problem~1112~\cite{E1112},
 inspired by a remark of Erd\H{o}s and Graham~\cite{ErGr80}.
-The earlier proof~\cite{Land26} established the dichotomy with the explicit
-bound $192d_2$ and was formally verified in Lean. The present reconstruction
-improves the positive bound and replaces the finite certificate layer with
-an elementary proof. The verification scope is recorded in Appendix~\ref{sec:formal}.
+The earlier Lean-verified proof~\cite{Land26} gave the bound $192d_2$.
+This version improves that bound and replaces finite certificates with an
+elementary proof.
+
+I am deeply grateful to Stijn Cambie for his substantial contributions to
+simplifying the proof and for providing the manuscript on which this shortened
+presentation is based.
 
 \begin{maintheorem}[Sharp dichotomy]\label{thm:main}
 Let $k\ge3$ and $1\le d_1<d_2$ be integers.
