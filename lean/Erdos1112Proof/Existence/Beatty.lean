@@ -1,6 +1,5 @@
 /-
-Shifted Beatty sequences, their gaps, cluster containment, and the safety
-criterion. Paper: the existence section.
+Beatty sequences, their gaps, and the floor-sum bounds. Paper: the existence section.
 -/
 import Erdos1112Proof.Basic
 
@@ -13,9 +12,9 @@ noncomputable def beatty (γ : ℝ) (c : ℕ) (i : ℕ) : ℕ :=
   c + (⌊((i : ℝ) + 1) * γ⌋).toNat
 
 /-- Floors of consecutive Beatty terms differ by `d₂ − 1` or `d₂` when the
-slope lies in `(d₂ − 1, d₂)`. -/
+slope lies in `(d₂ − 1, d₂]`. -/
 lemma beatty_floor_gap {d₂ : ℕ} {γ : ℝ} (hγl : (d₂ : ℝ) - 1 < γ)
-    (hγu : γ < d₂) (x : ℝ) :
+    (hγu : γ ≤ d₂) (x : ℝ) :
     ⌊x * γ⌋ + ((d₂ : ℤ) - 1) ≤ ⌊(x + 1) * γ⌋ ∧
       ⌊(x + 1) * γ⌋ ≤ ⌊x * γ⌋ + (d₂ : ℤ) := by
   have hx : (x + 1) * γ = x * γ + γ := by ring
@@ -34,11 +33,11 @@ lemma beatty_floor_gap {d₂ : ℕ} {γ : ℝ} (hγl : (d₂ : ℝ) - 1 < γ)
     calc ⌊(x + 1) * γ⌋ ≤ ⌊x * γ + ((d₂ : ℤ) : ℝ)⌋ := Int.floor_le_floor h2
       _ = ⌊x * γ⌋ + (d₂ : ℤ) := Int.floor_add_intCast _ _
 
-/-- For slope `γ ∈ (d₂−1, d₂)`, the Beatty gaps lie in `{d₂−1, d₂} ⊆ [d₁, d₂]`,
+/-- For slope `γ ∈ (d₂−1, d₂]`, the Beatty gaps lie in `{d₂−1, d₂} ⊆ [d₁, d₂]`,
 and the sequence starts positive: it is an admissible `A`. -/
 theorem beatty_hasGapsIn {d₁ d₂ c : ℕ} {γ : ℝ}
     (hd₁ : 1 ≤ d₁) (hd : d₁ < d₂)
-    (hγl : (d₂ : ℝ) - 1 < γ) (hγu : γ < d₂) :
+    (hγl : (d₂ : ℝ) - 1 < γ) (hγu : γ ≤ d₂) :
     HasGapsIn d₁ d₂ (beatty γ c) := by
   have hd₂ : 2 ≤ d₂ := by omega
   have hγ1 : (1 : ℝ) ≤ γ := by
@@ -117,18 +116,6 @@ theorem beatty_mem_cluster {k c : ℕ} {γ : ℝ} (hk : 0 < k) (hγ : 0 < γ) {n
       Finset.sum_le_sum fun j _ => Int.floor_le _
     rw [hn']
     linarith [hs ▸ hle]
-
-/-- Safety criterion (1.1): if no integer `s ≥ 1` has `s·γ ∈ [b − k·c, b − k·c + k]`
-then `b ∉ k·A_{γ,c}`. -/
-theorem beatty_avoids {k c b : ℕ} {γ : ℝ} (hk : 0 < k) (hγ : 0 < γ)
-    (hsafe : ∀ s : ℕ, 0 < s →
-      (s * γ : ℝ) ∉ Set.Icc ((b : ℝ) - k * c) ((b : ℝ) - k * c + k)) :
-    b ∉ kFoldSumset k (beatty γ c) := by
-  intro hb
-  obtain ⟨s, hsk, hlo, hhi⟩ := beatty_mem_cluster hk hγ hb
-  refine hsafe s (lt_of_lt_of_le hk hsk) ⟨?_, ?_⟩
-  · linarith
-  · linarith
 
 end Proof
 end Erdos1112

@@ -12,9 +12,15 @@ Layer plan:
 -/
 import Erdos1112Proof.Basic
 import Erdos1112Proof.SubsetSums
+import Erdos1112Proof.Short.Intervals
+import Erdos1112Proof.Short.Slots
+import Erdos1112Proof.Short.Normalization
+import Erdos1112Proof.Short.Assembly
+import Erdos1112Proof.Short.Binary
+import Erdos1112Proof.Short.Density
+import Erdos1112Proof.Short.Funnel
 import Erdos1112Proof.Existence.Beatty
-import Erdos1112Proof.Existence.FreeGap
-import Erdos1112Proof.Existence.Nested
+import Erdos1112Proof.Existence.Reciprocal
 import Erdos1112Proof.Sharp.Defs
 import Erdos1112Proof.Sharp.TwoGen
 import Erdos1112Proof.Sharp.Frame
