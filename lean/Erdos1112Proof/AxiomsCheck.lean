@@ -11,7 +11,13 @@ import Erdos1112Proof.Short.Slots
 import Erdos1112Proof.Short.Normalization
 import Erdos1112Proof.Short.Binary
 import Erdos1112Proof.Short.Density
+import Erdos1112Proof.Short.ResidueFrame
+import Erdos1112Proof.Short.EvenBudget
 import Erdos1112Proof.Short.Funnel
+import Erdos1112Proof.Short.OddSpacing
+import Erdos1112Proof.Short.Movers
+import Erdos1112Proof.Short.BinaryGrowth
+import Erdos1112Proof.Short.KneserFinite.FinsetKneserTheorem
 #print axioms Erdos1112.erdos_1112
 #print axioms Erdos1112.erdos_1112_existence_bound
 #print axioms Erdos1112.erdos_1112_strong_nonexistence
@@ -32,3 +38,17 @@ import Erdos1112Proof.Short.Funnel
 #print axioms Erdos1112.Proof.Short.exists_index_le_of_growth
 #print axioms Erdos1112.Proof.Short.tailCovering_of_eventually_periodic
 #print axioms Erdos1112.Proof.Short.sharpAt_of_funnel
+#print axioms Erdos1112.Proof.Short.spacing_one
+#print axioms Erdos1112.Proof.Short.spacing_two
+#print axioms Finset.add_kneser
+#print axioms Finset.add_strict_kneser
+
+#print axioms Erdos1112.Proof.Short.paired_movers
+#print axioms Erdos1112.Proof.Short.binary_dichotomy
+
+#print axioms Erdos1112.Proof.Short.residue_frame_pos_run
+#print axioms Erdos1112.Proof.Short.residue_frame_neg_run
+#print axioms Erdos1112.Proof.Short.path_K_le
+#print axioms Erdos1112.Proof.Short.even_budget_eta_minus
+#print axioms Erdos1112.Proof.Short.even_budget_eta_plus
+#print axioms Erdos1112.Proof.Short.count_bound_of_growth

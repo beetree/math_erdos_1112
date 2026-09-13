@@ -25,8 +25,11 @@ truncated subtraction. `question_iff_questionInt` proves the ratio-formulation b
 | Reciprocal interpolation and existence | [Existence/Reciprocal.lean](Erdos1112Proof/Existence/Reciprocal.lean) |
 | Coprime rectangle, interlacing, centered frame, two-generator targets | [Short/Intervals.lean](Erdos1112Proof/Short/Intervals.lean) |
 | Slots and gcd normalization | [Short/Slots.lean](Erdos1112Proof/Short/Slots.lean), [Short/Normalization.lean](Erdos1112Proof/Short/Normalization.lean) |
-| Zero-liminf binary argument | [Short/Binary.lean](Erdos1112Proof/Short/Binary.lean) |
-| Kneser shortcut, binary growth bridge, complete new SHARP proof | In progress |
+| Complete binary growth/covering alternative | [Short/BinaryGrowth.lean](Erdos1112Proof/Short/BinaryGrowth.lean), [Short/Binary.lean](Erdos1112Proof/Short/Binary.lean) |
+| SHARP induction reduction and paired movers | [Short/Funnel.lean](Erdos1112Proof/Short/Funnel.lean), [Short/Movers.lean](Erdos1112Proof/Short/Movers.lean) |
+| Odd-spacing exceptions | [Short/OddSpacing.lean](Erdos1112Proof/Short/OddSpacing.lean) |
+| Finite Kneser theorem | [Short/KneserFinite/](Erdos1112Proof/Short/KneserFinite/) |
+| Asymptotic-density Kneser shortcut and complete new SHARP proof | In progress |
 
 The final non-existence theorem currently retains the earlier implementation. The
 new proof must be completed before retiring the old `Sharp/` and `NonEx/` internals.

@@ -76,4 +76,35 @@ theorem exists_index_le_of_growth {p : ℕ → ℕ} {c C : ℝ} (hc : 0 < c)
   refine ⟨⌊((N : ℝ) - C) / c⌋₊, hpnN', ?_⟩
   linarith [hsub, hnlb]
 
+open scoped Classical
+
+/-- Counting the first `n+1` distinct sequence values below `N`. -/
+lemma prefix_count_le {p : ℕ → ℕ} (hmono : StrictMono p) {n N : ℕ}
+    (hpn : p n ≤ N) :
+    n + 1 ≤ ((Finset.range (N + 1)).filter (fun x => x ∈ Set.range p)).card := by
+  have hsub : (Finset.range (n + 1)).image p ⊆
+      (Finset.range (N + 1)).filter (fun x => x ∈ Set.range p) := by
+    intro x hx
+    obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hx
+    have hin : i ≤ n := by simpa only [Finset.mem_range, Nat.lt_succ_iff] using hi
+    have hiN := (hmono.monotone hin).trans hpn
+    exact Finset.mem_filter.mpr ⟨Finset.mem_range.mpr (by omega), ⟨i, rfl⟩⟩
+  have hc := Finset.card_le_card hsub
+  simpa only [Finset.card_image_of_injective _ hmono.injective, Finset.card_range] using hc
+
+/-- The linear-growth hypothesis supplies the quantitative count estimate
+underlying the lower-asymptotic-density bound `d̲(range p) ≥ 1/c`. -/
+theorem count_bound_of_growth {p : ℕ → ℕ} {c C : ℝ}
+    (hmono : StrictMono p) (hc : 0 < c)
+    (hbound : ∀ᶠ n in atTop, (p n : ℝ) ≤ c * n + C) :
+    ∀ᶠ N : ℕ in atTop, (N : ℝ) / c - C / c ≤
+      (((Finset.range (N + 1)).filter (fun x => x ∈ Set.range p)).card : ℝ) := by
+  filter_upwards [exists_index_le_of_growth hc hbound] with N hN
+  obtain ⟨n, hpn, hn⟩ := hN
+  have hh := prefix_count_le hmono hpn
+  have hr : (n : ℝ) + 1 ≤
+      (((Finset.range (N + 1)).filter (fun x => x ∈ Set.range p)).card : ℝ) := by
+    exact_mod_cast hh
+  linarith
+
 end Erdos1112.Proof.Short

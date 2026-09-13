@@ -3,12 +3,9 @@ Root of the `Erdos1112Proof` library: the proof development that proves the
 three target theorems stated against the definitions in the frozen statement
 file `Erdos1112.lean`.
 
-Layer plan:
-  Layer 0  — Basic, SubsetSums
-  Layer I  — Existence/ (Part I of the paper)
-  Layer II — NonEx/ (Part II, reduction + two-letter core + slot lemma)
-  Layer III — Sharp/ (Part III, the SHARP theorem)
-  Layer IV — Final, AxiomsCheck
+The Short/ modules implement the replacement paper proof. The legacy Sharp/ and
+NonEx/ imports remain during migration because Final still uses their non-existence
+proof. See PROGRESS.md for the exact verification boundary.
 -/
 import Erdos1112Proof.Basic
 import Erdos1112Proof.SubsetSums
@@ -18,7 +15,13 @@ import Erdos1112Proof.Short.Normalization
 import Erdos1112Proof.Short.Assembly
 import Erdos1112Proof.Short.Binary
 import Erdos1112Proof.Short.Density
+import Erdos1112Proof.Short.ResidueFrame
+import Erdos1112Proof.Short.EvenBudget
 import Erdos1112Proof.Short.Funnel
+import Erdos1112Proof.Short.OddSpacing
+import Erdos1112Proof.Short.Movers
+import Erdos1112Proof.Short.BinaryGrowth
+import Erdos1112Proof.Short.KneserFinite.FinsetKneserTheorem
 import Erdos1112Proof.Existence.Beatty
 import Erdos1112Proof.Existence.Reciprocal
 import Erdos1112Proof.Sharp.Defs

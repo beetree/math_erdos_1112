@@ -1,6 +1,7 @@
 /- Interfaces for assembling the short paper's normalized cases. -/
 import Erdos1112Proof.Short.Normalization
 import Erdos1112Proof.Short.Slots
+import Erdos1112Proof.Short.BinaryGrowth
 import Erdos1112Proof.Sharp.Defs
 
 namespace Erdos1112.Proof.Short
@@ -24,16 +25,12 @@ def SmallGrowth (k : ℕ) (P : ℕ → ℕ) : Prop :=
   ∃ c C : ℝ, 0 < c ∧ c < k ∧
     ∀ᶠ n in Filter.atTop, (P n : ℝ) ≤ c*n+C
 
-/-- The normalized case split of the paper. Its three inputs are deliberately
-explicit: the density shortcut, SHARP, and the two-letter growth/covering
-alternative must each be proved before this can close the final theorem. -/
+/-- The normalized case split of the paper. Its remaining inputs are
+explicit: the density shortcut and SHARP must be proved before this can close
+the final theorem. The binary growth/covering alternative is discharged here. -/
 theorem normalized_cases {k : ℕ} (hk : 3 ≤ k)
     (hdensity : ∀ P : ℕ → ℕ, P 0=0 → StrictMono P → SmallGrowth k P → TailCovering k P)
     (hsharp : ∀ M, SharpAt M)
-    (hbinary : ∀ (P : ℕ → ℕ) (δ : ℕ), P 0=0 → StrictMono P →
-      0 < δ → δ < k → Nat.Coprime δ k →
-      (∀ n, gap P n=δ ∨ gap P n=k) →
-      (∀ N, ∃ n ≥ N, gap P n=δ) → SmallGrowth k P ∨ TailCovering k P)
     (P : ℕ → ℕ) (G : Finset ℕ) (hP0 : P 0=0) (hmono : StrictMono P)
     (hGne : G.Nonempty) (hGpos : ∀ x ∈ G, 0 < x ∧ x ≤ k)
     (hGgcd : G.gcd id=1) (hGgap : ∀ n, gap P n ∈ G)
@@ -90,7 +87,7 @@ theorem normalized_cases {k : ℕ} (hk : 3 ≤ k)
   have hδpos : 0 < δ := (hGpos δ hδG).1
   have hδk : δ < k := lt_of_le_of_ne (hGpos δ hδG).2 hδne
   have hco : Nat.Coprime δ k := by simpa [hshape] using hGgcd
-  have hb := hbinary P δ hP0 hmono hδpos hδk hco
+  have hb := binary_dichotomy hk hP0 hmono hδpos hδk hco
     (fun n => by simpa [hshape] using hGgap n) (hrec δ hδG)
   rcases hb with hgrowth | hcover
   · exact hdensity P hP0 hmono hgrowth
