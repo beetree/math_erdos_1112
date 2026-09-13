@@ -1,30 +1,7 @@
-/- The elementary iteration and growth-to-density bridge around the
-*pending* Kneser density theorem.
-
-This file does **not** discharge Kneser's theorem. The weak pairwise law
-(`hkn` below) is an *explicit hypothesis* to every theorem that needs it —
-never a hidden or declared `axiom` — and is documented as pending: the root
-of the project is responsible for discharging it from Lane's published
-dissertation proof (see `Short/KneserDensity/Defs.lean`'s header) or an
-equivalent source. Nothing here closes that gap; it only builds the
-*elementary* machinery around it:
-
-1. `lowerDensity_range_ge_inv_of_growth`: a growth bound `P n ≤ c·n + C`
-   (`c > 0`, `StrictMono P`) gives `1/c ≤ lowerDensity (Set.range P)` — the
-   bridge from `Short/Density.count_bound_of_growth`'s `Finset`-count
-   estimate (which counts `0` too, unlike `posCount`) to `lowerDensity`
-   itself; the discrepancy is exactly the `+1`/`-1` noted in the task.
-2. Standard bounds `0 ≤ lowerDensity A ≤ 1`, monotonicity under `⊆`, and the
-   super-additivity `lowerDensity A + lowerDensity B ≤ twoFoldLowerDensity A B`
-   (from Mathlib's generic `le_liminf_add`).
-3. `HasAPTail`, and — *parameterized by* the pending law `hkn` — the
-   induction `density_iterate`: for every `k`, either
-   `k · lowerDensity (Set.range P) ≤ lowerDensity (kFoldSumset k P)` or
-   `kFoldSumset k P` already has an AP tail.
-4. `tailCovering_of_growth_lt`: combining (1)–(3), a growth bound with
-   `c < k` cannot survive the density branch (it would force
-   `lowerDensity (kFoldSumset k P) > 1`), so the AP-tail branch fires,
-   giving `TailCovering k P` outright — again *conditional on* `hkn`. -/
+/- Growth-to-density estimates and iteration of the pairwise density/AP-tail
+law. The iteration is parameterized by that law; `Short/Main.lean` supplies
+`KneserWeak.weak_kneser` to obtain the paper's density shortcut. This module
+also defines AP tails and the basic density bounds used in the Kneser proof. -/
 import Mathlib
 import Erdos1112Proof.Short.KneserDensity.Defs
 import Erdos1112Proof.Short.Density
@@ -177,16 +154,10 @@ theorem add_lowerDensity_le_twoFoldLowerDensity (A B : Set ℕ) :
 
 /-! ### 3. `HasAPTail` and the density/AP-tail iteration
 
-**Important**: `density_iterate` and everything after it take the weak
-pairwise Kneser law `hkn` as an *explicit hypothesis*. This is Lane's
-dissertation result (a genuine, published, nontrivial density theorem); it
-is *not* proved in this file, and no `axiom` declaration is used to smuggle
-it in. Every theorem that needs it lists it as a named argument, so the
-dependency is visible at every call site and in every signature. Whoever
-finishes the Kneser development (the root, per this task's instructions)
-supplies a proof term for `hkn`; nothing here can be used to close the
-Erdős 1112 proof without that term. -/
-
+`density_iterate` and the growth corollary take a pairwise density/AP-tail
+law as an explicit input. `Short/Main.lean` supplies the closed theorem
+`KneserWeak.weak_kneser`, keeping the iteration independent of the proof
+of that law. -/
 /-- `S` contains a full arithmetic-progression tail: `x + q·j ∈ S` for every
 `j ≥ 0`, some `q > 0`. -/
 def HasAPTail (S : Set ℕ) : Prop := ∃ q : ℕ, 0 < q ∧ ∃ x : ℕ, ∀ j, x + q * j ∈ S
@@ -269,7 +240,7 @@ held at this `k`, it would force `lowerDensity (kFoldSumset k P) ≥ k/c > 1`,
 contradicting `lowerDensity_le_one`. So the AP-tail branch must hold, and
 `tailCovering_of_hasAPTail` finishes. This is exactly the paper's "density
 shortcut": `p_n ≤ cn + C` with `c < k` gives a congruence-class tail in
-`kP` — **conditional on `hkn`**, the pending weak pairwise Kneser law. -/
+`kP`, using the supplied weak pairwise Kneser law `hkn`. -/
 theorem tailCovering_of_growth_lt
     (hkn : ∀ A B : Set ℕ, 0 ∈ A → 0 ∈ B →
       lowerDensity A + lowerDensity B ≤ lowerDensity (A + B) ∨ HasAPTail (A + B))

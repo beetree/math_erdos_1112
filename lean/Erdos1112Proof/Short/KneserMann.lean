@@ -2,13 +2,8 @@
 Lane's Chapter One, Theorem 12 (the finite Dyson/Mann counting theorem),
 proved via Lane's own route: pick a minimal counterexample and derive a
 contradiction by constructing a strictly smaller one with the `e`-transform
-of Theorem 4 (already formalized, read-only, in
-`Erdos1112Proof/Short/KneserDensity/ETransform.lean`).
-
-Source: John B. Lane, *A New Approach to Kneser's Theorem on Asymptotic
-Density*, Ph.D. dissertation, Virginia Polytechnic Institute and State
-University, 1973, Chapter I, Theorem 12, pp. 13-17 (PDF pp. 16-20 of
-`/tmp/lane1973.pdf`).
+of Theorem 4 (`Short/KneserDensity/ETransform.lean`). See
+`Short/KneserDensity/README.md` for the source and page references.
 -/
 import Mathlib
 import Erdos1112Proof.Short.KneserDensity.Defs

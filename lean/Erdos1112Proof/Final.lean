@@ -6,7 +6,7 @@ namespace `Erdos1112.Proof`. These are the canonical `Erdos1112.*` results;
 `Erdos1112.lean` carries their definitions, this file carries their proofs.
 -/
 import Erdos1112Proof.Existence.Reciprocal
-import Erdos1112Proof.NonEx.Main
+import Erdos1112Proof.Short.Main
 
 namespace Erdos1112
 
@@ -18,7 +18,7 @@ theorem erdos_1112_existence_bound (k d₁ d₂ : ℕ) (hk : 3 ≤ k) (hd₁ : 1
   Proof.existence_bound_reciprocal k d₁ d₂ hk hd₁ hd h
 
 /-- Non-existence half in the strong, constructive `Nonempty`-intersection
-form. The underlying `Proof.strong_nonexistence` produces
+form. The underlying `Proof.Short.strong_nonexistence` produces
 the `¬ Disjoint` witness; `Set.not_disjoint_iff_nonempty_inter` exhibits the actual
 collision point `kA ∩ B`. -/
 theorem erdos_1112_strong_nonexistence (k d₁ d₂ : ℕ) (hk : 3 ≤ k)
@@ -26,7 +26,7 @@ theorem erdos_1112_strong_nonexistence (k d₁ d₂ : ℕ) (hk : 3 ≤ k)
     ∃ b : ℕ → ℕ, IsVarLacunaryWith R b ∧
       ∀ a : ℕ → ℕ, HasGapsIn d₁ d₂ a →
         (kFoldSumset k a ∩ Set.range b).Nonempty := by
-  obtain ⟨b, hb, hdef⟩ := Proof.strong_nonexistence k d₁ d₂ hk hd₁ hd h R
+  obtain ⟨b, hb, hdef⟩ := Proof.Short.strong_nonexistence k d₁ d₂ hk hd₁ h R
   exact ⟨b, hb, fun a ha => Set.not_disjoint_iff_nonempty_inter.mp (hdef a ha)⟩
 
 /-- **Erdős Problem 1112, the dichotomy**: `r` exists iff

@@ -1,12 +1,4 @@
-/- Short paper `lem:eta`, even `a = 2n`: the full symmetric-η argument.
-
-Combines the generic signed residue frames (`Short/ResidueFrame.lean`) with
-the even-`a` numeric budget/classification facts (`Short/EvenBudget.lean`,
-owned by another agent, read-only here) to prove the even-`a` case of
-`lem:eta` outright, including the `a = 4, 6, 8, 10` small cases.
-
-No SHARP table/lift/staircase machinery; only `Sharp/Defs`,
-`Short/Intervals`, `Short/ResidueFrame`, `Short/EvenBudget`, and Mathlib. -/
+/- The symmetric residue argument for even a, including the small cases. Signed residue frames combine with the numeric budgets and classification in Short/EvenBudget. -/
 import Erdos1112Proof.Short.SharpDefs
 import Erdos1112Proof.Short.ResidueFrame
 import Erdos1112Proof.Short.EvenBudget

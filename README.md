@@ -14,18 +14,14 @@ verified results, and open dependencies.
 
 ## Simplification branch
 
-This branch replaces the previous paper and migrates the entire Lean proof to the new
-argument. The reciprocal interpolation and improved existence bound are kernel-checked.
-The elementary rectangle, interlacing, centered frame, and two-generator target lemmas
-are also checked, as are slots, gcd normalization, and the zero-liminf binary argument.
-The complete binary alternative and table-free SHARP theorem are checked and integrated.
-The Kneser density dependency is being assembled from verified components.
+This branch replaces the paper and the entire Lean proof with the new argument.
+Both canonical directions use the reciprocal construction, density shortcut,
+revised binary-word argument, and elementary SHARP proof. The Kneser consequence
+needed for the shortcut is also proved in Lean, using e-transforms, compression,
+and finite Mann estimates. It is not an extra hypothesis or axiom.
 
-**The full proof migration is not complete.** The current final non-existence theorem
-still uses the previous verified development. Its axiom audit does not establish that
-the new paper's density argument has been formalized. The old SHARP proof and
-certificate machinery have been removed; the remaining old non-existence internals
-will be removed after the density argument is complete.
+The obsolete existence, non-existence, SHARP and certificate implementations have
+been removed. The final theorems are checked using only Lean's standard foundations.
 The original release remains available in Git history and at
 [Zenodo](https://doi.org/10.5281/zenodo.21568276).
 
@@ -54,7 +50,7 @@ See the [Lean README](lean/README.md) for statements and verification details.
 
 Author: Johan Land. The original release was human-orchestrated, with Claude (Fable 5
 and Opus 4.8) doing core mathematical work and GPT-5.5 and Gemini 3.1 assisting with
-advice and review. This simplification is being implemented with Codex and Claude
+advice and review. This simplification was implemented with Codex and Claude
 Sonnet 5, following the supplied reconstruction. Johan Land directs and audits the work.
 
 Licensed under the [Apache License 2.0](LICENSE); see [NOTICE](NOTICE).

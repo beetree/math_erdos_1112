@@ -156,7 +156,7 @@ and $X_0$,
 \end{equation}
 \subsection{The density shortcut and the finite input}
 For $X\subseteq\NN_0$ write
-$\dd(X)=\liminf_{N\to\infty}|X\cap[0,N]|/(N+1)$.
+$\dd(X)=\liminf_{N\to\infty}|X\cap[1,N]|/N$.
 \begin{lemma}[Kneser shortcut]\label{lem:density}
 Let $P=\{p_0<p_1<\cdots\}$ with $p_0=0$. If $p_n\le cn+C$
 eventually, for constants $0<c<k$ and $C$, then $kP$ contains a
@@ -566,8 +566,9 @@ If $a\mid b+M$, use Lemma~\ref{lem:movers}; otherwise use Lemma~\ref{lem:eta}.
 \end{proof}
 
 \section{Formal verification and correspondence}\label{sec:formal}
-The following parts of the new argument are checked in Lean. File paths are
-relative to \texttt{lean/Erdos1112Proof/}.
+Both directions, including the density dependency and elementary SHARP proof,
+are checked in Lean. Selected declarations are listed below; paths are relative
+to \texttt{lean/Erdos1112Proof/}.
 \begin{center}\small
 \begin{tabular}{ll}
 \toprule
@@ -592,6 +593,12 @@ Binary covering from zero liminf & \texttt{binary\_tail\_covering}\\
 Inductive funnel & \texttt{sharpAt\_of\_funnel}\\
 \multicolumn{2}{l}{\texttt{Short/Sharp.lean}}\\
 Complete finite interval lemma & \texttt{sharp\_all}\\
+\multicolumn{2}{l}{\texttt{Short/KneserWeak.lean}}\\
+Pairwise density/AP-tail alternative & \texttt{weak\_kneser}\\
+\multicolumn{2}{l}{\texttt{Short/Main.lean}}\\
+Kneser shortcut & \texttt{density\_shortcut}\\
+Subcritical walk covering & \texttt{all\_tailCovering}\\
+Universal lacunary construction & \texttt{strong\_nonexistence}\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -607,15 +614,16 @@ Complete finite interval lemma & \texttt{sharp\_all}\\
 % lean-correspondence: binary_tail_covering | Erdos1112Proof/Short/Binary.lean
 % lean-correspondence: sharpAt_of_funnel | Erdos1112Proof/Short/Funnel.lean
 % lean-correspondence: sharp_all | Erdos1112Proof/Short/Sharp.lean
-The reciprocal construction, binary alternative and complete finite interval
-lemma follow this paper in Lean. The old SHARP proof and certificate tables
-have been removed. The density dependency is still being formalized; the
-final non-existence theorem temporarily retains the earlier argument, whose
-verification does not certify the new Kneser shortcut.
-The definitions in \texttt{lean/Erdos1112.lean} allow repeated summands,
-phrase gap bounds additively, and include a proved equivalence between
-natural and integer ratio formulations. The repository records the current
-migration status and reproduction commands.
+% lean-correspondence: weak_kneser | Erdos1112Proof/Short/KneserWeak.lean
+% lean-correspondence: density_shortcut | Erdos1112Proof/Short/Main.lean
+% lean-correspondence: all_tailCovering | Erdos1112Proof/Short/Main.lean
+% lean-correspondence: strong_nonexistence | Erdos1112Proof/Short/Main.lean
+The canonical theorems in \texttt{Final.lean} use these proofs throughout.
+The Kneser consequence is proved using e-transforms, residue compression and
+finite Mann estimates; it is not assumed. The old proofs and certificate tables
+have been removed. The definitions in \texttt{lean/Erdos1112.lean} allow repeated
+summands, phrase gap bounds additively, and prove equivalence of natural and
+integer ratio formulations. The repository supplies build and axiom-audit commands.
 
 \begin{thebibliography}{9}
 \bibitem{E1112} T.~F.~Bloom, \emph{Erd\H{o}s Problem \#1112},

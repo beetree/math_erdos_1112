@@ -1,30 +1,22 @@
 /-
-Closes the finite-`B` gap identified by the independent review of
-`WEAK_KNESER_PLAN.md` (see `/tmp/erdos1112-agents/weak-kneser-review-report.md`):
-`Short/KneserBlocks.lean`'s absorbed-block estimate needs `B.Infinite`, but nothing
-in the plan established that the (compressed) second component is ever infinite
-at the stage that estimate is applied to.
-
-This file closes the finite case directly and elementarily, with **no**
-Frobenius/numerical-semigroup argument and **no** appeal to the transform process
-terminating in finitely many steps: a finite `B` contributes `o(n)` to the count
-`A(n) + B(n)`, so the *joint* density `twoFoldLowerDensity A B` collapses to the
-*plain* density `lowerDensity A` outright (`liminf_add_of_tendsto_zero`, the same
-analytic fact already used, unconditionally, to prove the `e`-transform's own
-density invariance in `KneserDensity/ETransform.lean`). Combined with
-`0 ∈ B ⟹ A ⊆ A + B`, this gives the density half of the weak-Kneser law `hkn`
+The finite-`B` case of the weak pairwise Kneser law, for the density route
+documented in `Short/KneserDensity/README.md`: a finite `B` contributes
+`o(n)` to the count `A(n) + B(n)`, so the joint density
+`twoFoldLowerDensity A B` collapses to the plain density `lowerDensity A`
+outright (`liminf_add_of_tendsto_zero`, the same analytic fact used to
+prove the `e`-transform's own density invariance in
+`KneserDensity/ETransform.lean`). Combined with `0 ∈ B ⟹ A ⊆ A + B`, this
+gives the density half of the weak pairwise Kneser law `hkn`
 (`Short/DensityIteration.lean`) directly whenever `B` is finite.
 
-The sequence version (§4) generalizes this to any stage of an
-invariant-joint-density process (e.g. the ordinary-`e`-transform sequence): if the
-joint density there still equals the original one and the first component still
-sits inside the ambient sumset, a finite second component at *that* stage already
-forces the density alternative for the *whole* process. Contrapositively
-(`infinite_of_not_le_lowerDensity`), whenever the density alternative fails, every
-later second component in the sequence must be infinite — exactly the missing
-fact `WEAK_KNESER_PLAN.md` needed before invoking `Short/KneserBlocks.lean`.
-
-No `sorry`, no custom axioms.
+The sequence version generalizes this to any stage of a process with
+invariant joint density and first component inside an ambient sumset: if
+the joint density there still equals the original one and the first
+component still sits inside the ambient sumset, a finite second component
+at that stage already forces the density alternative for the whole
+process. Contrapositively (`infinite_of_not_le_lowerDensity`), whenever the
+density alternative fails, every later second component in the sequence
+must be infinite.
 -/
 import Mathlib
 import Erdos1112Proof.Short.KneserDensity.Defs

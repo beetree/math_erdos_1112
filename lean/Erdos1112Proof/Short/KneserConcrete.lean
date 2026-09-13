@@ -1,12 +1,11 @@
 /-
 The concrete instantiation of the abstract fair-transform sequence
-(`Short/KneserSequence.lean`, root-owned) by the ordinary `e`-transform
-(`Short/KneserDensity/ETransform.lean`, submitted).
-
-Per the root's "weak Kneser" plan (`/tmp/erdos1112-agents/WEAK_KNESER_PLAN.md`):
-ordinary `e`-transforms suffice for the route to `hkn`
-(`Short/DensityIteration.lean`'s pending weak pairwise law) — no maximal-pair
-construction and no `B*` case split are needed. This file supplies:
+(`Short/KneserSequence.lean`) by the ordinary `e`-transform
+(`Short/KneserDensity/ETransform.lean`), for the density route documented
+in `Short/KneserDensity/README.md`: ordinary `e`-transforms suffice for the
+route to the weak pairwise Kneser law `hkn` (`Short/DensityIteration.lean`)
+— no maximal-pair construction and no `B*` case split are needed. This
+file supplies:
 
 * `eStep`, the ordinary `e`-transform packaged as a `PairState` step, and a
   proof that it satisfies `TransformLaws`;
@@ -15,15 +14,16 @@ construction and no `B*` case split are needed. This file supplies:
   containment in `A + B`, and *constant* joint density `δ(A_n,B_n) = δ(A,B)`
   (via `twoFoldLowerDensity_eTransform_eq`);
 * the resolution of the `B_n = {0}` case: it already gives
-  `δ(A,B) ≤ δ(A+B)`, one whole disjunct of `hkn`.
+  `δ(A,B) ≤ δ(A+B)`, one whole disjunct of `hkn`;
+* a spacing count bound and its density consequence for `Bseq A B n`
+  directly (`spacing_mul_posCount_le`,
+  `twoFoldLowerDensity_le_lowerDensity_add_add_inv_of_spacing`), the density
+  half of the unbounded minimum-gap alternative for this concrete sequence.
 
 The remaining case (`B_n ≠ {0}` for every `n`) needs the min-gap/residue
-dichotomy and block-growth argument from `WEAK_KNESER_PLAN.md` steps 2–7,
-owned by other workers (min-gap function/stabilization, compression,
-modular generation, block growth); this file does not duplicate that and
-consumes none of it. See `/tmp/erdos1112-agents/kneser-concrete-report.md`.
-
-No `sorry`, no custom axiom.
+dichotomy and block-growth argument (`Short/KneserStabilization.lean`,
+`Short/KneserCompression.lean`, `Short/KneserResidues.lean`,
+`Short/KneserBlockSequence.lean`); this file does not duplicate that.
 -/
 import Mathlib
 import Erdos1112Proof.Short.KneserDensity.ETransform

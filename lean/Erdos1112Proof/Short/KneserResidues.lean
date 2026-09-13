@@ -1,17 +1,20 @@
 /-
-Finite modular subset-sum covering, for the Kneser weak-density proof.
+Finite modular subset-sum covering, for the density route documented in
+`Short/KneserDensity/README.md`.
 
 Given a finite alphabet `G : Finset ℕ` and a modulus `F > 0` with
-`gcd (insert F G) = 1`, this produces a single finite multiset `S` with all
-entries in `G` whose subset sums hit *every* residue mod `F`. Built from
-Bézout's identity for a finite set (elementary finite cyclic group
-generation: `ZMod F` is a finite additive group, so a generating set's
-additive submonoid is already the whole group) plus a stacking trick to turn
-one representative of residue `1` into representatives of every residue.
+`gcd (insert F G) = 1`, produces a single finite multiset `S` with all
+entries in `G` whose subset sums hit *every* residue mod `F`
+(`exists_modular_cover`). Built from Bézout's identity for a finite set
+(elementary finite cyclic group generation: `ZMod F` is a finite additive
+group, so a generating set's additive submonoid is already the whole
+group) plus a stacking trick to turn one representative of residue `1`
+into representatives of every residue.
 
-Independent of the old `Sharp.Main`/tables/staircase and of the new `SHARP`
-lemma: this file imports only `Erdos1112Proof.SubsetSums` (the multiset
-subset-sum API) and core Mathlib (`Nat.gcd_eq_gcd_ab`, `Finset.gcd`, `ZMod`).
+Also proves that the finite set of residues mod `F` realized by a
+`⊆`-decreasing family `B : ℕ → Set ℕ` is eventually constant
+(`exists_stable_residues`), so a caller can fix a single stable alphabet
+to feed into `exists_modular_cover`.
 -/
 import Erdos1112Proof.SubsetSums
 

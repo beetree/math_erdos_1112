@@ -28,10 +28,9 @@ def SmallGrowth (k : ℕ) (P : ℕ → ℕ) : Prop :=
   ∃ c C : ℝ, 0 < c ∧ c < k ∧
     ∀ᶠ n in Filter.atTop, (P n : ℝ) ≤ c*n+C
 
-/-- The normalized case split of the paper. Its remaining inputs are
-explicit: the weak pairwise Kneser law must be proved before this can close
-the final theorem. SHARP, density iteration and the binary alternative are
-discharged here. -/
+/-- The normalized case split, parameterized by the pairwise density law
+supplied in `Short/Main.lean`. SHARP and the binary alternative are applied
+here, followed by the density shortcut in the strict-growth cases. -/
 theorem normalized_cases {k : ℕ} (hk : 3 ≤ k)
     (hkn : ∀ A B : Set ℕ, 0 ∈ A → 0 ∈ B →
       KneserDensity.lowerDensity A + KneserDensity.lowerDensity B ≤

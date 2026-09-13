@@ -1,9 +1,8 @@
-/- Finite stabilization lemmas for the "weak Kneser via ordinary e-transforms"
-route (`/tmp/erdos1112-agents/WEAK_KNESER_PLAN.md`, step 2–3).
+/- Finite stabilization lemmas for the minimum-gap/residue-alphabet route
+documented in `Short/KneserDensity/README.md`.
 
 Given an antitone sequence `B : ℕ → Set ℕ` with `0 ∈ B n` and a positive
-element in every `B n` (the case `B n = {0}` is handled elsewhere, per the
-plan — it is excluded here by hypothesis, not derived):
+element in every `B n`:
 
 1. `gapMin (B n)`, the least positive gap between two elements of `B n`, is
    positive, is attained by an actual pair, separates every pair of `B n`,
@@ -20,17 +19,14 @@ plan — it is excluded here by hypothesis, not derived):
    representative combined with `b = f·(b/f) + b%f`), and the normalized
    finite alphabet `insert (f/g) (R.image (·/g))` has gcd `1`
    (`Finset.gcd_div_id_eq_one` transported through `Finset.gcd_eq_gcd_image`
-   and `Finset.image_insert` — no need for `Short.Normalization`'s bundled
-   `normalized_alphabet`, whose `∀x∈G,0<x` hypothesis fails here since `0`
-   is always a represented residue).
+   and `Finset.image_insert`).
 
 Every conclusion is a concrete `Set`/`Finset` fact (an actual minimum, an
 actual stabilization index, an actual gcd), not an abstract convergence
-assumption — exactly what the plan's compression step (5) needs to consume.
+assumption.
 
 Pure `ℕ`/finite-set combinatorics throughout; no density/analytic content
-(that lives in `Short/KneserDensity/*` and `Short/DensityIteration.lean`,
-owned elsewhere). No `sorry`, no custom axioms. -/
+(that lives in `Short/KneserDensity/*` and `Short/DensityIteration.lean`). -/
 import Mathlib
 
 namespace Erdos1112.Proof.Short

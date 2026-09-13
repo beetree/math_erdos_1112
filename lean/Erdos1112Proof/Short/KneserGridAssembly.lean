@@ -1,23 +1,20 @@
-/- Weak-Kneser plan, steps 5+6 composed with the missing scale `h`.
+/- Composes the finite-word realization and residue-frame lemmas of
+`Short/KneserGrid.lean` with the modular covering multiset of
+`Short/KneserResidues.exists_modular_cover`, scaled by the class count `h`,
+for the density route documented in `Short/KneserDensity/README.md`.
 
-Step 4 (owned by `KneserCompression`/`KneserStabilization`) produces a
-compressed pair `(A, B)` with a fixed base interval `[0,h)` in `A_i`, a
+Given a compressed pair with a fixed base interval `[0,h)` in `A_i`, a
 persistent pair at distance `F := (f/g)*h`, and a persistent residue
-alphabet `h * (R/g)` modulo `F`. Step 5 (`KneserResidues.exists_modular_cover`,
-at the *unscaled* modulus `F0 := f/g` over the alphabet `G := R/g`) supplies
-the finite-cyclic-group covering multiset; this file scales it by `h`,
-threads it through `Short/KneserGrid.realization_of_modular_subset_sums`
-(step 5's finite-word realization) starting from `Finset.range h`, proves
-the scaled multiset's subset sums realize every residue mod `F0*h` (the
-"missing scale `h`" arithmetic), and finishes with
-`Short/KneserGrid.bounded_residue_frame` (step 6) to produce arbitrarily
-long intervals in a later first component.
+alphabet `h * (R/g)` modulo `F`: scales the unscaled covering multiset (at
+modulus `F0 := f/g` over alphabet `G := R/g`) by `h`, threads it through
+`Short/KneserGrid.realization_of_modular_subset_sums` starting from
+`Finset.range h`, proves the scaled multiset's subset sums realize every
+residue mod `F0*h`, and finishes with
+`Short/KneserGrid.bounded_residue_frame` to produce arbitrarily long
+intervals in a later first component (`interval_of_scaled_cover`).
 
-Read-only imports: `Short/Intervals` (`subsetSums_scale`), `Short/KneserResidues`
-(`exists_modular_cover`), `Short/KneserGrid` (`realization_of_modular_subset_sums`,
-`bounded_residue_frame`, and the ambient `FairAbsorption` API re-exported
-from `Short/DensityLimit`). No compression algebra, no long-block density
-estimate, no Mann count: those remain other workers' scope. -/
+No compression algebra, no long-block density estimate, no Mann count:
+those are separate files. -/
 import Erdos1112Proof.Short.Intervals
 import Erdos1112Proof.Short.KneserResidues
 import Erdos1112Proof.Short.KneserGrid

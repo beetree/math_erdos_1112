@@ -1,3 +1,13 @@
+/- Axiom audit for the canonical Erdős 1112 theorems and the principal
+components of the short proof. `lake build` prints their transitive axiom
+dependencies; `paper/scripts/check_axioms.py` requires every listed result
+and permits only `propext`, `Classical.choice`, and `Quot.sound`. -/
+import Erdos1112Proof.Short.KneserDensityScaling
+import Erdos1112Proof.Short.KneserBoundedData
+import Erdos1112Proof.Short.KneserFrame
+import Erdos1112Proof.Short.KneserSubsequence
+import Erdos1112Proof.Short.KneserBlockSequence
+import Erdos1112Proof.Short.Main
 import Erdos1112Proof.Short.KneserMinima
 import Erdos1112Proof.Short.KneserGridAssembly
 import Erdos1112Proof.Short.KneserFiniteRight
@@ -13,13 +23,7 @@ import Erdos1112Proof.Short.KneserResidues
 import Erdos1112Proof.Short.KneserCompression
 import Erdos1112Proof.Short.KneserShift
 import Erdos1112Proof.Short.SharpAssembly
-/-
-Axiom audit for the three target theorems of Erdős Problem #1112.
 
-`lake build` compiles this file as its last step and prints, for each of the
-three theorems, the axioms its proof depends on. The whole development is
-`sorry`-free, so only Lean's three standard foundational axioms appear.
--/
 import Erdos1112Proof.Final
 import Erdos1112Proof.Short.Intervals
 import Erdos1112Proof.Short.Slots
@@ -38,14 +42,13 @@ import Erdos1112Proof.Short.Funnel
 import Erdos1112Proof.Short.OddSpacing
 import Erdos1112Proof.Short.Movers
 import Erdos1112Proof.Short.BinaryGrowth
-import Erdos1112Proof.Short.KneserFinite.FinsetKneserTheorem
 #print axioms Erdos1112.erdos_1112
 #print axioms Erdos1112.erdos_1112_existence_bound
 #print axioms Erdos1112.erdos_1112_strong_nonexistence
 #print axioms Erdos1112.erdos_1112_int
 #print axioms Erdos1112.question_iff_questionInt
 
--- Audit the checked replacements independently of the legacy final theorem.
+-- Audit the paper’s principal components as well as its final theorems.
 #print axioms Erdos1112.Proof.reciprocal_interpolation
 #print axioms Erdos1112.Proof.Short.coprime_rectangle
 #print axioms Erdos1112.Proof.Short.interlacing
@@ -61,8 +64,6 @@ import Erdos1112Proof.Short.KneserFinite.FinsetKneserTheorem
 #print axioms Erdos1112.Proof.Short.sharpAt_of_funnel
 #print axioms Erdos1112.Proof.Short.spacing_one
 #print axioms Erdos1112.Proof.Short.spacing_two
-#print axioms Finset.add_kneser
-#print axioms Finset.add_strict_kneser
 
 #print axioms Erdos1112.Proof.Short.paired_movers
 #print axioms Erdos1112.Proof.Short.binary_dichotomy
@@ -122,3 +123,19 @@ import Erdos1112Proof.Short.KneserFinite.FinsetKneserTheorem
 #print axioms Erdos1112.Proof.Short.KneserDensity.interval_of_scaled_cover
 #print axioms Erdos1112.Proof.Short.KneserFiniteRight.twoFoldLowerDensity_eq_lowerDensity_of_finite_right
 #print axioms Erdos1112.Proof.Short.KneserDensity.transformSequence_sum_antitone
+
+#print axioms Erdos1112.Proof.Short.KneserDensity.exists_frame
+#print axioms Erdos1112.Proof.Short.lowerDensity_eq_liminf_along_mul
+#print axioms Erdos1112.Proof.Short.twoFoldLowerDensity_eq_liminf_along_mul
+#print axioms Erdos1112.Proof.Short.block_sequence_dichotomy
+#print axioms Erdos1112.Proof.Short.KneserSpacing.lowerDensity_le_of_unbounded_spacing
+#print axioms Erdos1112.Proof.Short.all_tailCovering
+#print axioms Erdos1112.Proof.Short.strong_nonexistence
+
+#print axioms Erdos1112.Proof.Short.KneserDensityScaling.twoFoldLowerDensity_scaling
+#print axioms Erdos1112.Proof.Short.KneserDensityScaling.lowerDensity_scaling
+#print axioms Erdos1112.Proof.Short.compressed_grid_bundle_unconditional
+
+#print axioms Erdos1112.Proof.Short.density_shortcut
+#print axioms Erdos1112.Proof.Short.KneserWeak.weak_kneser
+#print axioms Erdos1112.Proof.Short.bounded_density_or_tail

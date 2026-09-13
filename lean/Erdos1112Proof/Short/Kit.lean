@@ -1,13 +1,4 @@
-/-
-Shared toolkit for the non-existence "easy half" files (`Short/Certificate.lean`,
-`Short/GapWord.lean`, `NonEx/TwoLetter/Core.lean`, `NonEx/SlotLemma.lean`).
-
-`TailCoveringN` is the normalized tail-covering notion (reduced residue
-`ρ < m`, so the covered congruence class is genuinely infinite). It is the
-form produced by all non-existence case lemmas and consumed by the certificate lemma (the
-certificate). It coincides definitionally with `TailCovering`, which also
-requires `ρ < m`.
--/
+/- Shared sumset and congruence-class tools for the paper’s tail-covering and diagonal arguments. -/
 import Erdos1112Proof.Short.TailCovering
 
 namespace Erdos1112

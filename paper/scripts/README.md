@@ -18,4 +18,4 @@ in `lean/Erdos1112Proof/Short/Sharp.lean`.
 `check_correspondence.py` checks every explicitly listed paper declaration
 against its named source file. `check_axioms.py` requires every declaration
 listed in the Lean audit and rejects axioms beyond Lean’s standard foundations.
-The final density-proof migration remains tracked in `PROGRESS.md`.
+Verification milestones are recorded in `PROGRESS.md`.

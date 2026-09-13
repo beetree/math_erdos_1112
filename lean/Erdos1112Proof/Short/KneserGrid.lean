@@ -1,19 +1,19 @@
-/- Weak-Kneser plan, steps 5-6: the finite word-to-block link.
+/- The finite word-to-block link, for the density route documented in
+`Short/KneserDensity/README.md`.
 
-Generalizes `DensityLimit.arbitrary_progressions_of_pairs` from a single
-generated point to an arbitrary finite starting set `E`, then specializes
-this "grid" to a genuine bounded interval once `E` hits every residue class
-modulo the pair-distance `F` (step 6's "residue-frame" argument), and
-separately realizes the modular subset sums of an arbitrary finite multiset
-`S` of prescribed residues as an actual finite subset (step 5's "modular
-generation", consuming a modular-coverage witness `S` supplied elsewhere by
-the `KneserResidues` worker rather than proving finite-cyclic-group coverage
-here).
+Generalizes `Short/DensityLimit.arbitrary_progressions_of_pairs` from a
+single generated point to an arbitrary finite starting set `E`
+(`finite_grid_of_pairs`), specializes this to a genuine bounded interval
+once `E` hits every residue class modulo the pair-distance `F`
+(`bounded_residue_frame`), and realizes the modular subset sums of an
+arbitrary finite multiset of prescribed residues as an actual finite
+subset (`realization_of_modular_subset_sums`), given a modular-coverage
+witness from `Short/KneserResidues.lean`.
 
-Reuses `Short/DensityLimit.FairAbsorption`/`finite_absorption` unmodified
-(read-only import; `arbitrary_progressions_of_pairs` is not imported, since
+Reuses `Short/DensityLimit.FairAbsorption`/`finite_absorption` unmodified;
+`arbitrary_progressions_of_pairs` is not imported, since
 `finite_grid_of_pairs` below proves the genuinely more general statement it
-would otherwise be used to source). No SHARP/table/staircase machinery. -/
+would otherwise be used to source. -/
 import Erdos1112Proof.SubsetSums
 import Erdos1112Proof.Short.DensityLimit
 

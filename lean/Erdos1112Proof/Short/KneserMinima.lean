@@ -1,31 +1,15 @@
 /-
-Weak-Kneser plan step 4 (`/tmp/erdos1112-agents/WEAK_KNESER_PLAN.md`):
-fixed residue classes and minima under ordinary `e`-transforms.
+Invariance of residue classes and their minima under the ordinary
+`e`-transform (`Short/KneserDensity/ETransform.lean`), for the density
+route documented in `Short/KneserDensity/README.md`.
 
-"A_n has a fixed set of residue classes modulo g: ordinary e-transforms add
-only e+b with e already in A_n and g dividing b. The minimum r_j of each
-represented class also stays fixed, since e+b>=e."
-
-For `g > 0`, `B` a set of multiples of `g`, and `e ∈ A`, the ordinary
-`e`-transform `eA A B e = A ∪ (B + e)`
-(`Short/KneserDensity/ETransform.lean`) has *exactly* the same set of
-residues mod `g` as `A`, and the same minimum in every represented residue
-class. This is lifted to the concrete ordinary-transform sequence
-`Aseq`/`Bseq` (`Short/KneserConcrete.lean`, read-only import here, not
-edited): once `Bseq A B N` consists of multiples of `g`, every later
-`Aseq A B n` (`n ≥ N`) has the same residues mod `g` and the same class
-minima as `Aseq A B N`. `Bseq` is antitone, so "multiples of `g` at `N`"
-propagates to every later stage for free — no extra hypothesis on `n > N`
-is needed, matching the task's framing of a single stabilization stage `N`.
-
-Only natural-number, nonnegative reasoning throughout (no signed
-coefficients): the invariance rests entirely on `e + b ≥ e` and `g ∣ b`.
-
-Owns only this file. `KneserConcrete.lean`, `KneserSequence.lean`, and
-`KneserDensity/ETransform.lean` are read-only imports (their `Aseq`, `Bseq`,
-`eA`, `eB`, `Unresolved`, `transformNext`, `Bseq_antitone`), never edited.
-`KneserCompression.lean` (a different worker's file) is untouched and
-unimported. No `sorry`, no custom axiom.
+For `g > 0` and `B` confined to multiples of `g`, the `e`-transform
+`eA A B e = A ∪ (B + e)` has exactly the same residues mod `g` as `A`, and
+the same minimum in every represented class (since `e + b ≥ e`). Lifted to
+the concrete transform sequence `Aseq`/`Bseq` (`Short/KneserConcrete.lean`):
+once `Bseq A B N` consists of multiples of `g`, every later `Aseq A B n`
+(`n ≥ N`) has the same residues mod `g` and the same class minima as
+`Aseq A B N`.
 -/
 import Erdos1112Proof.Short.KneserConcrete
 

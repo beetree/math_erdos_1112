@@ -1,19 +1,4 @@
-/- Short paper: "Every subcritical walk is tail-covering", binary-alphabet
-case `G = {δ, k}`, density-free branch (`liminf z_n/n = 0`).
-
-Reuses the generic composition-band interval/sweep machinery from
-`Short.BinaryCore` (`qCount`, `Wset`, `sweep`, `WidthTwoAt`,
-`width_of_unbalanced`) verbatim — that file depends only on `NonEx.GapWord`
-and contains no balanced-classification / Morse–Hedlund content.
-
-What is new here is the discharge of `width_of_unbalanced`'s two side
-hypotheses (`hnp`, `hunbal`) directly from "zero recurs" and
-"liminf zero-frequency `= 0`", following the paper's argument: a period
-forces a positive-density zero, and only-finitely-many-`V(σ)≥2` forces a
-tail-balanced word, which (since zero recurs) forces a zero in every long
-enough window, hence positive zero density. Neither step uses the
-Morse–Hedlund classification of balanced words (`NonEx.TwoLetter.Balanced`,
-`NonEx.TwoLetter.MH.*`), which this file does not import. -/
+/- The recurring two-letter case with zero lower zero-frequency. Periodicity or eventual balance would force positive zero-frequency; the resulting pair widths feed the sweep in Short/BinaryCore. -/
 import Erdos1112Proof.Short.BinaryCore
 
 namespace Erdos1112.Proof.Short
@@ -246,7 +231,7 @@ theorem infinitely_many_widthTwo_of_liminfZero {h : ℕ → Bool}
 /-- **Desired theorem, width part**: a binary word with a recurring zero and
 vanishing liminf zero-frequency has eventual `k`-slot width `≥ k - 1`, for
 every `k ≥ 3`. Combines the two discharges above with `width_of_unbalanced`
-(`NonEx.TwoLetter.Core`, unmodified, density/Morse–Hedlund-free). -/
+(`Short.BinaryCore`, unmodified, density/Morse–Hedlund-free). -/
 theorem binary_eventual_width {k : ℕ} (h : ℕ → Bool) (hk : 3 ≤ k)
     (hzr : ZeroRecurs h) (hlim : ZeroFreqLiminfZero h) :
     ∃ S₀, ∀ s, S₀ ≤ s → ∃ w w', w ∈ Wset h k s ∧ w' ∈ Wset h k s ∧ w + (k - 1) ≤ w' := by
@@ -258,7 +243,7 @@ theorem binary_eventual_width {k : ℕ} (h : ℕ → Bool) (hk : 3 ≤ k)
 /-- **Desired theorem, covering part**: for the binary alphabet
 `G = {δ, k}` with `gcd(δ, k) = 1`, a recurring zero and vanishing liminf
 zero-frequency give eventual tail-covering. Combines
-`binary_eventual_width` with `sweep` (`NonEx.TwoLetter.Core`, unmodified). -/
+`binary_eventual_width` with `sweep` (`Short.BinaryCore`, unmodified). -/
 theorem binary_tail_covering {k d₁ : ℕ} {a : ℕ → ℕ} (hk : 3 ≤ k)
     (hgaps : HasGapsIn d₁ k a) (h : ℕ → Bool) (δ e : ℕ) (hδ : 0 < δ) (he : 0 < e)
     (hco : Nat.Coprime δ k) (hk_eq : δ + e = k)

@@ -1,16 +1,9 @@
 /-
-Translation / tail-cut invariance of `lowerDensity` and `twoFoldLowerDensity`
-(`Short/KneserDensity/Defs.lean`), needed for step 7 of the weak-Kneser plan
-(`/tmp/erdos1112-agents/WEAK_KNESER_PLAN.md`): "Shift that first component
-down by `x` and discard its finite prefix ... Translation/discarding a
-finite prefix leaves density unchanged."
-
-This file owns exactly the elementary shift step: it does *not* touch
-residue compression, the cofinite-set/AP-tail argument, or any other part
-of the plan (those are other workers' files, read-only here).
-
-No `sorry`, no custom `axiom`; every boundary case (`N = 0`, `x` arbitrary
-relative to `N`) is derived by the same general argument, not assumed.
+Translation and tail-cut invariance of `lowerDensity` and
+`twoFoldLowerDensity` (`Short/KneserDensity/Defs.lean`): shifting a set up
+or down by a fixed amount, or discarding a finite prefix, does not change
+its lower density or its joint lower density with another set. Part of the
+density route documented in `Short/KneserDensity/README.md`.
 -/
 import Mathlib
 import Erdos1112Proof.Short.KneserDensity.Defs

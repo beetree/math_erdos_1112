@@ -2,27 +2,21 @@
 Lane's Chapter Two, Definition 6 and Lemmas 7-9: the residue-compression
 map `Λ` ("the basic map") used to rescale a pair `A, B` (`B` confined to
 multiples of a modulus `g`) down to a pair on a smaller modulus `h`, the
-number of residue classes mod `g` actually occurring in `A`. See `Defs.lean`
-(`posCount`, `lowerDensity`, `twoFoldLowerDensity`) and
-`/tmp/erdos1112-agents/kneser-density-report.md` for shared background; this
-file's own audit is `/tmp/erdos1112-agents/kneser-compression-report.md`.
+number of residue classes mod `g` actually occurring in `A`. See
+`Defs.lean` (`posCount`, `lowerDensity`, `twoFoldLowerDensity`) and
+`Short/KneserDensity/README.md` for the source and page references.
 
-  John B. Lane, *A New Approach to Kneser's Theorem on Asymptotic Density*,
-  Ph.D. dissertation, Virginia Polytechnic Institute and State University,
-  1973, Chapter Two, Definition 6 and Lemmas 7-9 (pp. 27-31 as printed,
-  PDF pages 30-34 of `/tmp/lane1973.pdf`).
-
-Lane's setup (Definition 6, p. 27): `A ⊆ J`, `g ∈ J⁺`, and
+Lane's setup (Definition 6): `A ⊆ J`, `g ∈ J⁺`, and
 `0 = r₀ < r₁ < ⋯ < r_{h-1}` are the *smallest representatives in `A`* of the
-`h` residue classes mod `g` that occur in `A`. The point of this file is
-**not** to fix "smallest representative" as part of any definition (that
-choice belongs to whoever instantiates these lemmas from an actual `A`);
-every lemma below instead takes `r : Fin h → ℕ` together with exactly the two
-properties of the representatives Lane's proofs actually use:
+`h` residue classes mod `g` that occur in `A`. Rather than fixing "smallest
+representative" as part of any definition (that choice belongs to whoever
+instantiates these lemmas from an actual `A`), every lemma below instead
+takes `r : Fin h → ℕ` together with exactly the two properties of the
+representatives Lane's proofs actually use:
 
 * `hr_inj`: distinct indices give distinct residues mod `g` (this, plus
-  `j < h`, is what makes the encoding below injective — Lane's remark right
-  after Definition 6 that "`Λ` is one to one");
+  `j < h`, is what makes the encoding below injective — Lane's remark that
+  "`Λ` is one to one");
 * `hA`: every element of the target set is *some* `r j + g * t`
   (Lane's standing fact that `A` is contained in the union of the residue
   classes with representatives `r j`, restated concretely with `t : ℕ`

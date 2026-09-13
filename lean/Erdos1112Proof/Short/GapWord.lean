@@ -1,23 +1,4 @@
-/-
-The non-existence reductions: tail alphabet `G∞`, the tail index,
-gcd rescaling, the one-letter case, and the eventually-periodic case.
-Paper: the non-existence section.
-
-Interface notes:
-* `tailCovering_of_single_letter` and `tailCovering_of_eventually_periodic`
-  require `hd₁ : 1 ≤ d₁`. Without it both statements are *false* (with
-  `d₁ = 0` the sequence may be eventually constant — e.g. all gaps eventually
-  `0` — making `kA` finite, while the hypotheses hold). `NonEx/Main.lean` has
-  `hd₁` ambiently available.
-* `tailCovering_of_rescaled` uses the additive shape
-  `∀ n, a (T + n) = c + g * a' n` for an arbitrary offset `c`, which the
-  caller realizes with e.g. `c := a T`, `a' n := (a (T+n) - a T) / g` (or any
-  positive-base variant). Phrasing it additively avoids `ℕ`-subtraction
-  truncation; no gap or positivity hypotheses on `a'` are needed.
-* Each lemma is proved in normalized form (`tailCoveringN_*`, reduced residue
-  `ρ < m`; see `Short/Kit.lean`) and then weakened to the `TailCovering`
-  form under the original name.
--/
+/- Tail alphabets, gap bounds, and transport of congruence-class tails under translation and gcd rescaling. -/
 import Erdos1112Proof.Short.Kit
 
 namespace Erdos1112

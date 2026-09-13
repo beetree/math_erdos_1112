@@ -1,7 +1,7 @@
 /-
 Lane's Chapter One, Definition 3 and Theorem 4: the `e`-transformation and
-its basic properties. See `Defs.lean`, `MaximalPair.lean` and
-`/tmp/erdos1112-agents/kneser-density-report.md` for the source and plan.
+its basic properties. See `Defs.lean` and `Short/KneserDensity/README.md`
+for the source and page references.
 -/
 import Mathlib
 import Erdos1112Proof.Short.KneserDensity.Defs

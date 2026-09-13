@@ -1,15 +1,16 @@
 /-
-Weak Kneser plan (`/tmp/erdos1112-agents/WEAK_KNESER_PLAN.md`), step 2: the
-spacing count bound and the *unbounded* minimum-gap density alternative.
+The spacing count bound and the *unbounded* minimum-gap density
+alternative, for the density route documented in
+`Short/KneserDensity/README.md`.
 
-If `B` contains `0` and is `f`-spaced (distinct elements at distance `≥ f`),
-then `posCount B N ≤ N/f` up to an additive `+1`, giving
+If `B` is `f`-spaced (distinct elements at distance `≥ f`), then
+`posCount B N ≤ N/f` up to an additive `+1`, giving
 `twoFoldLowerDensity A B ≤ lowerDensity A + 1/f`. Consequently, for an
 increasing family `A n ⊆ C`, a decreasing family `B n`, constant joint
 density `d`, if `B n` is `f`-spaced for arbitrarily large `f`, then
-`d ≤ lowerDensity C` (send `f → ∞`). This is one *alternative* of the
-dichotomy at step 2 of the plan; the other (`B n` eventually spaced at a
-fixed `f`) is a separate worker's task (residue stabilization).
+`d ≤ lowerDensity C` (send `f → ∞`). This is one alternative of the
+minimum-gap dichotomy; the other (`B n` eventually spaced at a fixed `f`)
+is the residue-stabilization route (`Short/KneserStabilization.lean`).
 -/
 import Mathlib
 import Erdos1112Proof.Short.KneserDensity.Defs

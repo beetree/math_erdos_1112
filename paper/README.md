@@ -25,7 +25,8 @@ python3 scripts/check_correspondence.py
 The first command checks the explicit finite constructions and induction reduction
 on bounded inputs. It does not replace the proof or supply certificates used by it.
 The second checks the names and source locations of the paper's listed Lean declarations.
-The paper and repository explicitly track the unfinished parts of the Lean migration.
+The full Lean development follows this paper, including a proof of the density
+consequence used by the Kneser shortcut.
 
 The complete table-free SHARP theorem now compiles in Lean. The old table files,
 generators and certificate harnesses have been removed.

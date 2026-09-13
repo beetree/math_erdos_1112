@@ -1,125 +1,64 @@
 # Short-proof migration progress
 
-**Last updated:** September 12, 2026, 20:30 PDT
+**Last updated:** September 12, 2026, 21:04 PDT
 
-**Branch:** `simplify-paper`
+**Branch:** `simplify-paper` · **Draft PR:** [#1](https://github.com/beetree/math_erdos_1112/pull/1)
 
-**Checkpoint:** `d87433a` — even SHARP and density infrastructure; next verified batch awaiting commit.
+**Final integration:** Closed Kneser dependency and canonical non-existence proof;
+old proof implementations removed. The checkpoint includes the matching TeX/PDF.
 
-**Draft PR:** [#1](https://github.com/beetree/math_erdos_1112/pull/1)
-
-**Overall status:** Paper replacement implemented; full Lean migration in progress. Draft PR open; not ready for final review.
-
-## Objective and completion rule
-
-Replace the long paper with the supplied short proof and make the Lean development
-follow that proof throughout, including the improved `d₂ + 2` theorem, the Kneser
-density shortcut, the revised binary-word argument, and the table-free SHARP proof.
-Retire obsolete proofs and certificates after their replacements pass.
-
-A component is **verified** below only after its replacement compiles in Lean, or its
-specified document/checking validation passes. An agent writing code does not count
-as a completed formal proof. The full task is complete only when the final theorems
-use the new arguments, the complete build and axiom audit pass, and the TeX/PDF and
-correspondence documentation match that implementation.
+**Overall status:** Full paper-aligned Lean proof implemented and locally verified.
+The clean build and all 83 axiom checks pass. The final seven-page PDF and all
+16 correspondence checks pass. Final commit and latest-commit CI remain.
 
 ## Milestones
 
 | Milestone | Status | Evidence / remaining work |
 |---|---|---|
-| Create isolated branch | Done | `simplify-paper` |
-| Replace paper source and PDF | **Verified document build** | Seven-page PDF; no layout warnings; independent review found no mathematical errors |
-| Improved existence proof | **Verified** | `reciprocal_interpolation`, `existence_bound_reciprocal`, and headline `RatioWorks … (d₂ + 2)` compile; obsolete existence files removed |
-| Elementary interval constructions | **Verified** | Coprime rectangle, interlacing, centered frame, and exact two-generator target bound |
-| Slot lemma and final-summand sweep | **Verified** | `slots_from_run`, independent of old SHARP proof |
-| Gcd normalization | **Verified** | `normalized_walk`: complete tail normalization, recurring alphabet, cardinality and gcd |
-| New SHARP induction reduction | **Verified** | `sharpAt_of_funnel` compiles; dense-triple input is discharged in `sharp_all` |
-| New SHARP paired movers | **Verified** | `paired_movers` and its exact `M−1` witness count compile and audit |
-| Signed residue frames and odd/even-case budgets | **Verified components** | Generic forward/reverse frames, `K` bound, both sets of budget cases, and even classification compile |
-| Complete symmetric residue proof and SHARP | **Verified and integrated** | `eta_even`, `eta_odd`, and closed `sharp_all` build and audit; all SHARP callers now use the new proof |
-| Revised critical two-letter argument | **Verified and integrated** | `binary_dichotomy` discharges the growth/covering input in `normalized_cases` |
-| Finite Kneser dependency | **Verified** | `Finset.add_kneser` and strict refinement compile and audit cleanly |
-| Odd-spacing SHARP exceptions | **Verified** | `spacing_one` and `spacing_two` compile |
-| Kneser density shortcut | In progress; main dependency | Growth-to-density, iteration, and e-transform density invariance verified; the weak pairwise law remains open |
-| Density limit argument | **Verified component** | Least-choice fairness, finite absorption, survivor-to-progression and finite-prefix deletion; actual transformation sequence remains to be connected |
-| Assemble new non-existence theorem | Pending | Requires complete SHARP and density shortcut; binary alternative is integrated |
-| Remove obsolete non-existence / certificate machinery | **SHARP/certificates removed** | Old SHARP case tree and table generators/data/harnesses deleted; old non-existence case proofs await density completion |
-| Final full build, audit, paper correspondence, and PR | Pending | Component checks currently pass; migration is not complete |
+| Branch and draft PR | Done | `simplify-paper`, PR #1 |
+| Short paper | Implemented | Seven-page final PDF and source archive build; no layout warnings |
+| Reciprocal existence, ratio `d₂ + 2` | Verified | `reciprocal_interpolation`, `existence_bound_reciprocal`, canonical existence theorem |
+| Interval constructions, slots, gcd normalization | Verified | Complete replacements compile |
+| Elementary SHARP | Verified and integrated | Closed `sharp_all`: inductive funnel, paired movers, symmetric residue path, odd/even budgets |
+| Critical binary argument | Verified and integrated | Growth alternative, zero-liminf widths, palindrome/periodicity and sweep |
+| Kneser dependency | Verified and integrated | Closed `weak_kneser`; e-transforms, finite Mann, residue compression, density scaling, bounded/unbounded cases |
+| Density shortcut and all subcritical walks | Verified | Closed `density_shortcut` and `all_tailCovering` compile |
+| Universal lacunary sequence | Verified and integrated | Closed `strong_nonexistence` supplies the canonical final theorem |
+| Final dichotomy | Verified target build | `Final.lean` imports the new proof throughout |
+| Remove obsolete proofs and certificates | Done | Old existence, `NonEx/`, `Sharp/`, certificate machinery and unused exploratory ports removed |
+| Clean build and strict axiom audit | Verified | Clean project build: 7,942 jobs; all 83 expected declarations pass |
+| Final documentation, commit, CI, PR readiness | In progress | 16 correspondence checks pass; final commit and latest-commit CI remain |
 
-## Active Sonnet agents
+## Agent status
 
-**Concurrency target: ten Sonnet subagents.** At this update, **10 processes were running**.
-All use `claude-leet --model claude-sonnet-5 --effort high`. Completed workers
-are reassigned to independent remaining work; Codex handles integration,
-verification, shared interfaces, cleanup, and this report.
+**0 subagents currently running.** The requested burst of **ten concurrent Sonnet 5
+workers**, all using `claude-leet --model claude-sonnet-5 --effort high`, has finished.
+Codex is performing final integration, independent verification and release cleanup.
+Worker logs are in `/tmp/erdos1112-agents/`; accepted results are in the source tree.
 
-Current process names: `binary-core-migration`, `kneser-weak-assembly`, `kneser-block-sequence`, `kneser-bounded-data`, `kneser-frame`, `nonex-infrastructure-migration`, `short-main-assembly`, `kneser-density-scaling`, `kneser-subsequence`, `short-sharp-audit`.
+## Verification evidence
 
-Agent logs and interim reports are in `/tmp/erdos1112-agents/`. Those are live
-working records; durable accepted results are recorded in the milestones and commits.
-Agents have separate file ownership. A submitted result counts as verified only
-after independent checking, and an explicitly conditional lemma does not discharge
-its remaining hypothesis.
+- Complete `KneserBoundedConclusion`, `KneserWeak`, `Short.Main`, and canonical
+  `Final` target builds pass, with no remaining mathematical input hypotheses.
+- Clean full proof build passed (7,942 jobs). All **83** expected declarations
+  pass the strict audit, using only `propext`, `Classical.choice`, and `Quot.sound`.
+- Finite corroboration passed for **77,770 dense triples through maximum 150** and
+  **73,295 alphabets**. These checks corroborate explicit constructions; the general
+  SHARP theorem is proved in Lean.
+- Final PDF: **seven pages**, no layout warnings; final page inspected. Source
+  archive builds. All **16** paper declaration/file correspondences pass.
+- The task is complete only after the clean build/audit, final TeX/PDF checks,
+  committed and pushed changes, and latest-commit CI verification all succeed.
 
-## Verified results and checks
-
-- [Reciprocal existence](lean/Erdos1112Proof/Existence/Reciprocal.lean): target build passes.
-- [Intervals](lean/Erdos1112Proof/Short/Intervals.lean): target build passes.
-- [Slots](lean/Erdos1112Proof/Short/Slots.lean): target build passes.
-- [Normalization](lean/Erdos1112Proof/Short/Normalization.lean): target build passes.
-- [Final theorem interface](lean/Erdos1112Proof/Final.lean): compiles with the improved existence bound.
-- Axiom audit: 72 audited declarations use only `propext`, `Classical.choice`, and `Quot.sound`.
-- Finite corroboration: all **77,770 dense triples through maximum 150** and **73,295 alphabets**
-  checked by the new construction script pass. These finite checks are regression evidence,
-  not a substitute for the general theorem.
-- Paper correspondence: twelve explicitly listed declaration/file pairs pass the name check.
-- PDF: seven pages, no LaTeX layout warnings on the last build; first and final pages inspected.
-
-**Important boundary:** The current final non-existence theorem still imports the old
-verified argument. Its successful build and audit do **not** certify full alignment
-with the new paper. No replacement is being accepted with `sorry`, a custom axiom,
-or an unproved Kneser assumption.
-
-## Main open dependency
-
-The pinned Mathlib lacks Kneser's density theorem. A finite Kneser proof was found in
-another local Lean development and has now been ported and verified. The asymptotic-density proof now has verified finite Mann, transformation,
-stabilization, block-estimate, compression-count, and translation components.
-Its final compression and case assembly remain the largest open part of the migration.
-
-| Density dependency | Status |
-|---|---|
-| Counts, lower-density definitions and e-transform identities | Verified, including joint-density invariance |
-| Finite Mann count inequality | Verified: `mann_count`; independent target and root builds pass |
-| Long-block density estimate | Verified with explicit Mann input; actual Mann is available and sequence assembly is active |
-| Fairness, limit survivors, finite-prefix deletion and progression growth | Verified abstract components |
-| Residue compression and density rescaling | Algebra and bounded count error verified; density rescaling active |
-| Growth-to-density and iteration over `k` summands | Verified and integrated; Kneser remains an explicit input |
-| Concrete transformation sequence | Verified: fairness, sumset containment, invariant joint density |
-| Finite second sets, residue minima, modular interval generation | Verified components |
-| Complete bounded/unbounded density argument | Remaining compression and case assembly |
-
-## Next integration steps
-
-1. Review and compile agent submissions; record exact completed lemmas here.
-2. Assemble the SHARP theorem from the new induction and residue constructions.
-3. Complete the density dependency and binary branch; assemble tail covering and the
-   universal lacunary construction.
-4. Replace the final non-existence imports and retire obsolete files.
-5. Run the full build and audit, rebuild the PDF, finalize correspondence, and prepare the PR.
-
-## Reproduction commands
-
-From the repository root:
+## Reproduction
 
 ```bash
 make -C paper
 python3 paper/scripts/check_short_proof.py --max 150
 python3 paper/scripts/check_correspondence.py
 cd lean
-lake build Erdos1112Proof.Existence.Reciprocal \
-  Erdos1112Proof.Short.Intervals Erdos1112Proof.Short.Slots \
-  Erdos1112Proof.Short.Normalization
+lake exe cache get
+lake build
 lake env lean Erdos1112Proof/AxiomsCheck.lean > /tmp/erdos1112-axioms.txt
 python3 ../paper/scripts/check_axioms.py /tmp/erdos1112-axioms.txt
 ```
@@ -204,3 +143,14 @@ python3 ../paper/scripts/check_axioms.py /tmp/erdos1112-axioms.txt
 - **20:22 PDT**: Ten live Sonnet workers confirmed after reassigning completed tasks. Finite Mann, modular subset-sum covering, finite grids and interval growth, compression counts, and translation density invariance independently build. Root build passes with 72 audited declarations. SHARP induction assembly compiles with the odd case as its explicit remaining input. Independent review identified the need to handle finite second sets before using the infinite-set block estimate; a worker is closing this directly via zero density.
 
 - **20:30 PDT**: Closed `sharp_all` independently builds; new SHARP is integrated and the entire old SHARP proof/certificate layer is removed. The PDF remains seven pages with 12 correspondence entries. The 72-declaration root audit passes. Finite Mann, long-block estimate, concrete transforms, stabilization, minima, finite-right density and scaled grid constructions are verified components; final density assembly remains open.
+
+- **20:37 PDT**: Removed the unused finite-Kneser port and maximal-pair exploration. The chosen density route uses ordinary e-transforms and finite Mann directly, so those research artifacts are not proof dependencies.
+
+- **21:02 PDT**: Closed pairwise Kneser, density shortcut, walk covering and strong
+  non-existence independently compile. Canonical `Final.lean` now uses the new
+  proof throughout. All old non-existence files removed. Ten-agent work finished;
+  final project-only clean build and PDF/correspondence updates are underway.
+
+- **21:04 PDT**: Clean proof build passes (7,942 jobs), with all 83 expected
+  axiom checks passing. Final seven-page PDF has no layout warnings; all 16
+  correspondence checks and the complete finite regression suite pass.

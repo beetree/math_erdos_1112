@@ -1,51 +1,5 @@
-/-
-Short paper, section "Every subcritical walk is tail-covering": the generic
-two-letter combinatorial core underlying the "Sweep" paragraph and its
-palindrome/border/period continuation (moved here from
-`NonEx/TwoLetter/Core.lean`, which is now an import-only compatibility
-shim re-exporting these declarations under the same names).
-
-Correspondence with the paper's notation (tail gaps `g_n = δ + e·h_n`,
-`h_n ∈ {0,1}`, `gcd(δ, δ+e) = 1`):
-- `q_n = h_1 + ⋯ + h_n` is `qCount`.
-- `W_s = {∑_j q_{i_j} : i_j ≥ 0, ∑_j i_j = s}` (`k` summands, repetitions
-  allowed) is `Wset`; the paper's "interval property" (`W_s` is an integer
-  interval `[w^-(s), w^+(s)]`) is `Wset_interval`, proved by the same
-  "path between extremizers" unit-transfer walk (`connect_aux`).
-- `w^-(s), w^+(s)` are `wmin`, `wmax`; `width(s) = w^+(s) − w^-(s)` is the
-  gap `wmax h k s − wmin h k s` appearing in `sweep`'s hypothesis.
-- The paragraph beginning "Sweep. If `width(s) ≥ k−1` eventually..." —
-  including the "band" `[w^-(s), w^+(s)]` the target must not skip — is
-  `sweep` (`sweep_a_eq`/`mem_kFold_of_Wset` bridge the antidiagonal sets
-  back to the ambient sequence and `kFoldSumset`).
-- `V(σ) = max_{i+j=σ}(q_i+q_j) − min_{i+j=σ}(q_i+q_j) ≥ 2` is `WidthTwoAt`;
-  `width_of_unbalanced` is the paper's width-production lemma ("If some
-  antidiagonal has `V(σ₀) ≥ 2` ..."), covering odd `k` and even `k` below
-  the boundary directly, and even `k` at the boundary `d₂ = k` via the
-  palindrome/border/period argument (`width_even_boundary`).
-- "`V(n) = 0` implies `q_i + q_{n−i}` is constant ... the prefix of length
-  `n` is a palindrome" is `palindrome_of_qCount_const` (`IsPalindromePrefix`).
-- "The prefixes of lengths `τ` and `τ−Δ` are therefore palindromes ... which
-  consequently has period `Δ`" (classical border–period duality) is
-  `period_of_two_palindromes`.
-- "Infinitely many width failures would give such periodic prefixes of
-  unbounded length, forcing the whole word to have period `Δ`" is
-  `eventuallyPeriodic_of_period_windows`.
-
-This file is density-free and depends only on `NonEx.GapWord`: no
-balanced-word classification or Morse–Hedlund machinery
-(`NonEx.TwoLetter.Balanced`, `NonEx.TwoLetter.MH.*`) is used or imported —
-those discharge `width_of_unbalanced`'s `hnp`/`hunbal` hypotheses via the
-classification theorem; `Short/Binary.lean` discharges the same hypotheses
-directly from the paper's density argument (`liminf z_n/n = 0`) instead.
-
-Interface note: `Wset` does not constrain `1 ≤ f j`. Index `0`
-(contributing `qCount h 0 = 0`) matches the paper's tail convention
-`a_{1+i}, i ≥ 0` (`x ∈ kA − k·a₁` uses `i_t ≥ 0`), is required for
-the antidiagonal pair placements of the width lemmas (`WidthTwoAt` pairs may
-use index 0), and is harmless in the sweep.
--/
-import Erdos1112Proof.NonEx.GapWord
+/- Composition bands for a binary gap word: fixed-budget intervals, endpoint bounds, the sweep, pair widths, and the palindrome/period argument. These supply the paper’s critical two-letter case. -/
+import Erdos1112Proof.Short.GapWord
 
 namespace Erdos1112
 namespace Proof

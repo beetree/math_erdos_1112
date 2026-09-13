@@ -3,7 +3,8 @@
 The pinned Mathlib does not supply Kneser’s asymptotic-density theorem. This
 branch formalizes the consequence used by the paper: for sets containing zero,
 either the sumset has at least the sum of their lower densities, or it contains
-an arithmetic-progression tail. The final assembly is still in progress.
+an arithmetic-progression tail. The closed theorem is `KneserWeak.weak_kneser`,
+used by the paper's density shortcut in `Short/Main.lean`.
 
 The proof uses ordinary e-transforms, a fair least-unresolved-element sequence,
 and a minimum-gap dichotomy. Unbounded gaps give the density alternative by
@@ -23,12 +24,14 @@ Primary mathematical sources:
   Chapter II, Definition 6 and Lemmas 7–9 supply compression and density scaling.
 
 The Lean code is a new formalization of these mathematical arguments. The source
-PDFs are not distributed with this repository. The finite Kneser port in the
-separate `KneserFinite` directory has its own provenance; it does not establish
-this asymptotic-density result.
+PDFs are not distributed with this repository.
+
+The paper and Lean use the positive-window convention `|A ∩ [1,N]|/N`
+for lower density.
 
 `Defs.lean` defines counts, lower density, joint lower density and analytic
 helpers. `ETransform.lean` proves the transform identities. The remaining
-components are in `Short/Kneser*.lean`; see the root `PROGRESS.md` for which
-assemblies are verified. An explicit theorem hypothesis is not an axiom, but
-it remains an obligation until its caller supplies a proved result.
+components are in `Short/Kneser*.lean`. `KneserBoundedConclusion.lean` assembles
+the stabilized-gap case; `KneserWeak.lean` combines it with the unbounded-gap
+and finite-second-set cases. All intermediate assumptions are discharged in
+that closed pairwise theorem.

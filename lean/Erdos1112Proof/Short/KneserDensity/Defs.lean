@@ -1,21 +1,16 @@
 /-
-Core definitions for the Kneser density shortcut, matching the Introduction
-(p. 1) of the primary source used for this development:
+Core definitions for the Kneser density shortcut, matching the
+Introduction of the primary source used for this development: John B.
+Lane, *A New Approach to Kneser's Theorem on Asymptotic Density*, Ph.D.
+dissertation, Virginia Polytechnic Institute and State University, 1973.
+See `Short/KneserDensity/README.md` for the full source list and links.
 
-  John B. Lane, *A New Approach to Kneser's Theorem on Asymptotic Density*,
-  Ph.D. dissertation, Virginia Polytechnic Institute and State University,
-  1973.
-
-Lane's convention (stated once, in force throughout his dissertation, and
-kept here): "capital letters denote non-empty sets of non-negative
-integers... unless specifically stated to the contrary, it is assumed that
-all such sets contain zero." We do *not* bake "contains zero" into the
-`Set ℕ` type itself (Lean has no subtyping for that); instead each
-downstream lemma that needs `0 ∈ A` states it as an explicit hypothesis,
-exactly where Lane's blanket convention is actually used.
-
-See `/tmp/erdos1112-agents/kneser-density-report.md` for the full source
-audit and the dependency plan this file is the first step of.
+Lane's convention (in force throughout his dissertation, and kept here):
+sets of non-negative integers are taken to contain zero unless stated
+otherwise. This is not baked into the `Set ℕ` type itself (Lean has no
+subtyping for that); instead each downstream lemma that needs `0 ∈ A`
+states it as an explicit hypothesis, exactly where Lane's blanket
+convention is actually used.
 -/
 import Mathlib
 

@@ -1,13 +1,4 @@
-/- Short paper Appendix A: the inductive funnel (`prop:funnel`).
-
-Reduces `SharpAt M` to the pairwise coprime dense triples `a < b < M`,
-`gcd(a,b) = gcd(a,M) = gcd(b,M) = 1`, `a + b ≥ M + 2`, given `SharpAt` below
-`M` (the outer strong induction) and a solver for that dense-triple case
-(supplied elsewhere, via movers/residue-path arguments).
-
-No imports of the old `Sharp/Graham.lean` case analysis, tables, or
-staircase; only the definitions from `Sharp/Defs.lean` and the elementary
-constructions of `Short/Intervals.lean`. -/
+/- The appendix’s inductive funnel. Strong induction reduces SHARP to pairwise coprime dense triples, using the rectangle, interlacing and long-target constructions from Short/Intervals. -/
 import Erdos1112Proof.Short.SharpDefs
 import Erdos1112Proof.Short.Intervals
 

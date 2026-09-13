@@ -1,7 +1,7 @@
 # Lean formalization of Erdős Problem #1112
 
 The [short paper](../paper/erdos1112.pdf) gives the dichotomy with existence ratio
-$d_2+2$. This branch is migrating the full formal proof to that argument.
+$d_2+2$. The full formal proof follows that argument, including the Kneser dependency.
 
 ## Statements
 
@@ -18,7 +18,7 @@ The hypotheses are `3 ≤ k`, `1 ≤ d₁`, and `d₁ < d₂`. Arbitrary functio
 index the summands, so repetitions are allowed. Additive gap inequalities avoid
 truncated subtraction. `question_iff_questionInt` proves the ratio-formulation bridge.
 
-## Migration status
+## Proof correspondence
 
 | New paper argument | Checked implementation |
 |---|---|
@@ -28,20 +28,20 @@ truncated subtraction. `question_iff_questionInt` proves the ratio-formulation b
 | Complete binary growth/covering alternative | [Short/BinaryGrowth.lean](Erdos1112Proof/Short/BinaryGrowth.lean), [Short/Binary.lean](Erdos1112Proof/Short/Binary.lean) |
 | SHARP induction reduction and paired movers | [Short/Funnel.lean](Erdos1112Proof/Short/Funnel.lean), [Short/Movers.lean](Erdos1112Proof/Short/Movers.lean) |
 | Odd-spacing exceptions | [Short/OddSpacing.lean](Erdos1112Proof/Short/OddSpacing.lean) |
-| Finite Kneser theorem | [Short/KneserFinite/](Erdos1112Proof/Short/KneserFinite/) |
 | Complete even SHARP residue argument | [Short/EtaEven.lean](Erdos1112Proof/Short/EtaEven.lean) |
-| Growth-to-density and iteration, with Kneser explicitly pending | [Short/DensityIteration.lean](Erdos1112Proof/Short/DensityIteration.lean) |
+| Growth-to-density and iteration | [Short/DensityIteration.lean](Erdos1112Proof/Short/DensityIteration.lean) |
 | E-transform density invariance | [Short/KneserDensity/ETransform.lean](Erdos1112Proof/Short/KneserDensity/ETransform.lean) |
 | Complete table-free SHARP theorem | [Short/Sharp.lean](Erdos1112Proof/Short/Sharp.lean) |
 | Finite Mann, transformation sequence, long-block estimate | [Short/KneserMann.lean](Erdos1112Proof/Short/KneserMann.lean), [Short/KneserConcrete.lean](Erdos1112Proof/Short/KneserConcrete.lean), [Short/KneserBlocks.lean](Erdos1112Proof/Short/KneserBlocks.lean) |
-| Weak pairwise Kneser law | Final assembly in progress |
+| Closed pairwise Kneser law | [Short/KneserWeak.lean](Erdos1112Proof/Short/KneserWeak.lean) |
+| Density shortcut, tail covering and strong non-existence | [Short/Main.lean](Erdos1112Proof/Short/Main.lean) |
 
-The final non-existence theorem currently retains the earlier implementation. The old
-`Sharp/` proof and certificate files have been removed; its callers now use
-`Short.sharp_all`. The density dependency must be completed before retiring the
-remaining old `NonEx/` proofs.
-A successful audit of that theorem certifies the current implementation, not full
-correspondence with the new paper.
+The canonical final theorems use this development throughout. The old `Sharp/`
+and `NonEx/` case proofs, certificate machinery, and unused exploratory ports
+have been removed. The density shortcut calls the closed `weak_kneser` theorem;
+no Kneser hypothesis remains in the final statements. See the
+[density dependency notes](Erdos1112Proof/Short/KneserDensity/README.md) for the
+mathematical sources and proof structure.
 
 ## Build and audit
 
@@ -61,6 +61,6 @@ Keep the dependency pins in `lake-manifest.json` and `lean-toolchain`; do not ru
 lake build Erdos1112Proof.Existence.Reciprocal Erdos1112Proof.Short.Intervals
 ```
 
-The completed theorem audit must contain only `propext`, `Classical.choice`, and
-`Quot.sound`. No unproved assumptions or computational trust axioms may be introduced
-for the missing density or finite interval arguments.
+The theorem audit permits only `propext`, `Classical.choice`, and
+`Quot.sound`. The audit rejects unproved assumptions and computational trust axioms, and
+requires every declaration listed in `AxiomsCheck.lean` to appear in its output.
